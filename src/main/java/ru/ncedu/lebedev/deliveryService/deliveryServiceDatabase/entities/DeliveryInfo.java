@@ -4,12 +4,27 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Delivery")
-public class Delivery {
+@Table(name = "Delivery_Info")
+public class DeliveryInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Delivery_ID")
     private Integer deliveryId;
+
+    @OneToOne
+    @JoinColumn(name = "Orders_ID")
+    private Orders order;
+
+/*    @OneToOne
+    private Orders delivery;*/
+
+/*    @OneToOne(mappedBy = "Orders")
+    private Orders owner;*/
+
+/*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Orders_ID")
+    private Orders orders;*/
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Delivery_Date", nullable = false)
@@ -20,14 +35,6 @@ public class Delivery {
 
     @Column(name = "Comment")
     private String comment;
-
-    public Integer getDeliveryId() {
-        return deliveryId;
-    }
-
-    public void setDeliveryId(Integer deliveryId) {
-        this.deliveryId = deliveryId;
-    }
 
     public Date getDeliveryDate() {
         return deliveryDate;

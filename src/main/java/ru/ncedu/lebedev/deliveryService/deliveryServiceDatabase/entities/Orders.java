@@ -3,12 +3,23 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Orders")
 public class Orders {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer ordersId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Order_ID")
+    private Integer orderId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Delivery_ID")
+    private DeliveryInfo deliveryInfo;
+
+/*    @OneToOne(mappedBy = "delivery")
+    private Delivery delivery;*/
+
+/*    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Delivery_ID")
+    private Delivery delivery;*/
 
     @Column(name = "Department_ID", nullable = false)
     private Integer departmentId;
@@ -28,12 +39,12 @@ public class Orders {
     @Column(name = "Discount")
     private Integer discount;
 
-    public Integer getOrdersId() {
-        return ordersId;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrdersId(Integer ordersId) {
-        this.ordersId = ordersId;
+    public void setOrderId(Integer ordersId) {
+        this.orderId = ordersId;
     }
 
     public Integer getDepartmentId() {

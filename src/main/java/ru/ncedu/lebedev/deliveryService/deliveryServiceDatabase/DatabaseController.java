@@ -1,12 +1,15 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Delivery;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Courier;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.DeliveryInfo;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Orders;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.DeliveryRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrdersRepository;
 
@@ -17,12 +20,10 @@ public class DatabaseController {
 
     @Autowired
     private OrdersRepository ordersRepository;
+    @Autowired
     private DeliveryRepository deliveryRepository;
-
-    @GetMapping
-    public String defaultInformation() {
-        return "default";
-    }
+    @Autowired
+    private CouriersRepository couriersRepository;
 
     @GetMapping("/addOrder")
     public @ResponseBody
@@ -40,25 +41,44 @@ public class DatabaseController {
         order.setOrderPrice(orderPrice);
         order.setDiscount(discount);
         ordersRepository.save(order);
-        return "Saved";
+        return "Order saved.";
     }
 
     @GetMapping("/addDeliveryInfo")
     public @ResponseBody
-    String addNewDelivery(@RequestParam Date date,
-                          @RequestParam String address,
-                          @RequestParam String comment) {
-        Delivery delivery = new Delivery();
-        delivery.setDeliveryDate(date);
-        delivery.setDeliveryAddress(address);
-        delivery.setComment(comment);
-        deliveryRepository.save(delivery);
-        return "saved";
+    String addNewDeliveryInfo(@RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date date,
+                              @RequestParam String address,
+                              @RequestParam String comment) {
+        DeliveryInfo deliveryInfo = new DeliveryInfo();
+        deliveryInfo.setDeliveryDate(date);
+        deliveryInfo.setDeliveryAddress(address);
+        deliveryInfo.setComment(comment);
+        deliveryRepository.save(deliveryInfo);
+        return "Delivery info saved.";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/addCourier")
     public @ResponseBody
-    Iterable<Orders> getAllOrders() {
-        return ordersRepository.findAll();
+    String addNewCourier(@RequestParam String firstName,
+                         @RequestParam String lastName,
+                         @RequestParam String eMail,
+                         @RequestParam Integer phoneNumber,
+                         @RequestParam Integer rating,
+                         @RequestParam Integer salary,
+                         @RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
+                         @RequestParam Double premium,
+                         @RequestParam Integer departmentId) {
+        Courier courier = new Courier();
+        courier.setFirstName(firstName);
+        courier.setLastName(lastName);
+        courier.setEmail(eMail);
+        courier.setPhoneNumber(phoneNumber);
+        courier.setRating(rating);
+        courier.setSalary(salary);
+        courier.setHireDate(hireDate);
+        courier.setPremium(premium);
+        courier.setDepartmentId(departmentId);
+        couriersRepository.save(courier);
+        return "Courier saved.";
     }
 }

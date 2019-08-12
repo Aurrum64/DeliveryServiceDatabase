@@ -10,9 +10,9 @@ public class Orders {
     @Column(name = "Order_ID")
     private Integer orderId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+/*    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Delivery_ID")
-    private DeliveryInfo deliveryInfo;
+    private DeliveryInfo deliveryInfo;*/
 
 /*    @OneToOne(mappedBy = "delivery")
     private Delivery delivery;*/
@@ -94,4 +94,5 @@ public class Orders {
     public void setDiscount(Integer discount) {
         this.discount = discount;
     }
+
 }

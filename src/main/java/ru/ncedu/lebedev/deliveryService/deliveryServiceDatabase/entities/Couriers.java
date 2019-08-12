@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Courier {
+public class Couriers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class Courier {
     private Date hireDate;
 
     @Column(name = "Premium")
-    private Double premium;
+    private Integer premium;
 
     public Integer getCourierId() {
         return courierId;
@@ -111,11 +111,11 @@ public class Courier {
         this.hireDate = hireDate;
     }
 
-    public Double getPremium() {
+    public Integer getPremium() {
         return premium;
     }
 
-    public void setPremium(Double premium) {
+    public void setPremium(Integer premium) {
         this.premium = premium;
     }
 }

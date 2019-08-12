@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Courier;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Couriers;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.DeliveryInfo;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Orders;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
@@ -33,24 +33,24 @@ public class DatabaseController {
                        @RequestParam String paymentMethod,
                        @RequestParam Integer orderPrice,
                        @RequestParam Integer discount) {
-        Orders order = new Orders();
-        order.setDepartmentId(departmentId);
-        order.setManagerId(managerId);
-        order.setCourierId(courierId);
-        order.setPaymentMethod(paymentMethod);
-        order.setOrderPrice(orderPrice);
-        order.setDiscount(discount);
-        ordersRepository.save(order);
+        Orders orders = new Orders();
+        orders.setDepartmentId(departmentId);
+        orders.setManagerId(managerId);
+        orders.setCourierId(courierId);
+        orders.setPaymentMethod(paymentMethod);
+        orders.setOrderPrice(orderPrice);
+        orders.setDiscount(discount);
+        ordersRepository.save(orders);
         return "Order saved.";
     }
 
     @GetMapping("/addDeliveryInfo")
     public @ResponseBody
-    String addNewDeliveryInfo(@RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date date,
+    String addNewDeliveryInfo(@RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date deliveryDate,
                               @RequestParam String address,
                               @RequestParam String comment) {
         DeliveryInfo deliveryInfo = new DeliveryInfo();
-        deliveryInfo.setDeliveryDate(date);
+        deliveryInfo.setDeliveryDate(deliveryDate);
         deliveryInfo.setDeliveryAddress(address);
         deliveryInfo.setComment(comment);
         deliveryRepository.save(deliveryInfo);
@@ -66,19 +66,19 @@ public class DatabaseController {
                          @RequestParam Integer rating,
                          @RequestParam Integer salary,
                          @RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
-                         @RequestParam Double premium,
+                         @RequestParam Integer premium,
                          @RequestParam Integer departmentId) {
-        Courier courier = new Courier();
-        courier.setFirstName(firstName);
-        courier.setLastName(lastName);
-        courier.setEmail(eMail);
-        courier.setPhoneNumber(phoneNumber);
-        courier.setRating(rating);
-        courier.setSalary(salary);
-        courier.setHireDate(hireDate);
-        courier.setPremium(premium);
-        courier.setDepartmentId(departmentId);
-        couriersRepository.save(courier);
+        Couriers couriers = new Couriers();
+        couriers.setFirstName(firstName);
+        couriers.setLastName(lastName);
+        couriers.setEmail(eMail);
+        couriers.setPhoneNumber(phoneNumber);
+        couriers.setRating(rating);
+        couriers.setSalary(salary);
+        couriers.setHireDate(hireDate);
+        couriers.setPremium(premium);
+        couriers.setDepartmentId(departmentId);
+        couriersRepository.save(couriers);
         return "Courier saved.";
     }
 }

@@ -7,14 +7,18 @@ import java.util.Date;
 @Table(name = "Delivery_Info")
 public class DeliveryInfo {
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Orders orders;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Delivery_ID")
     private Integer deliveryId;
 
-    @OneToOne
+/*    @OneToOne
     @JoinColumn(name = "Orders_ID")
-    private Orders order;
+    private Orders orders;*/
 
 /*    @OneToOne
     private Orders delivery;*/

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Delivery_Info")
+@Table(name = "delivery_info")
 public class DeliveryInfo {
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -13,31 +13,17 @@ public class DeliveryInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Delivery_ID")
+    @Column(name = "delivery_id")
     private Integer deliveryId;
 
-/*    @OneToOne
-    @JoinColumn(name = "Orders_ID")
-    private Orders orders;*/
-
-/*    @OneToOne
-    private Orders delivery;*/
-
-/*    @OneToOne(mappedBy = "Orders")
-    private Orders owner;*/
-
-/*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Orders_ID")
-    private Orders orders;*/
-
     @Temporal(TemporalType.DATE)
-    @Column(name = "Delivery_Date", nullable = false)
+    @Column(name = "delivery_date", nullable = false)
     private Date deliveryDate;
 
-    @Column(name = "Delivery_Address", nullable = false)
+    @Column(name = "delivery_address", nullable = false)
     private String deliveryAddress;
 
-    @Column(name = "Comment")
+    @Column(name = "comment")
     private String comment;
 
     public Date getDeliveryDate() {

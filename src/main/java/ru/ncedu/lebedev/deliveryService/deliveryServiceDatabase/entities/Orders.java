@@ -5,38 +5,43 @@ import javax.persistence.*;
 @Entity
 public class Orders {
 
+    //Это связь Many to One с таблицей Couriers
+    //http://javastudy.ru/hibernate/hibernate-one-to-many/ пример брал отсюда, завести не удалось
+    //Можете попробовать еще над этим поколдовать
+
+/*    private Couriers couriers;
+
+    @ManyToOne
+    @JoinColumn(name = "courier_id")
+    public Couriers getCourier() {
+        return this.couriers;
+    }
+
+    public void setCourier(Couriers couriers) {
+        this.couriers = couriers;
+    }*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Order_ID")
+    @Column(name = "order_id")
     private Integer orderId;
 
-/*    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Delivery_ID")
-    private DeliveryInfo deliveryInfo;*/
-
-/*    @OneToOne(mappedBy = "delivery")
-    private Delivery delivery;*/
-
-/*    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Delivery_ID")
-    private Delivery delivery;*/
-
-    @Column(name = "Department_ID", nullable = false)
+    @Column(name = "department_id", nullable = false)
     private Integer departmentId;
 
-    @Column(name = "Manager_ID", nullable = false)
+    @Column(name = "manager_id", nullable = false)
     private Integer managerId;
 
-    @Column(name = "Courier_ID", nullable = false)
+    @Column(name = "courier_id", nullable = false)
     private Integer courierId;
 
-    @Column(name = "Payment_method")
+    @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "Order_price", nullable = false)
+    @Column(name = "order_price", nullable = false)
     private Integer orderPrice;
 
-    @Column(name = "Discount")
+    @Column(name = "discount")
     private Integer discount;
 
     public Integer getOrderId() {
@@ -94,5 +99,4 @@ public class Orders {
     public void setDiscount(Integer discount) {
         this.discount = discount;
     }
-
 }

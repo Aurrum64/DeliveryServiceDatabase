@@ -11,9 +11,12 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.Ord
 @Controller
 public class OrdersController {
 
-    //Эта аннотация устарела, Сонар на нее жалуется, лучше делать по другому, позже переделаю
-    @Autowired
     private OrdersRepository ordersRepository;
+
+    @Autowired
+    public OrdersController(OrdersRepository ordersRepository) {
+        this.ordersRepository = ordersRepository;
+    }
 
     @GetMapping("/addOrder")
     public @ResponseBody

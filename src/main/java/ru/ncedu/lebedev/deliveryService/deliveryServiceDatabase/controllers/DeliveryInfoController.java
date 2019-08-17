@@ -14,9 +14,12 @@ import java.util.Date;
 @Controller
 public class DeliveryInfoController {
 
-    //Эта аннотация устарела, Сонар на нее жалуется, лучше делать по другому, позже переделаю
-    @Autowired
     private DeliveryRepository deliveryRepository;
+
+    @Autowired
+    public DeliveryInfoController(DeliveryRepository deliveryRepository) {
+        this.deliveryRepository = deliveryRepository;
+    }
 
     @GetMapping("/addDeliveryInfo")
     public @ResponseBody

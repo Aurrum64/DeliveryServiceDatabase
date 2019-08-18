@@ -1,0 +1,8 @@
+
+Nsquid:S1068"+Remove this unused "userpic" private field.(©î“îıÿÿÿÿ8À¹í±Ê-
+Msquid:S1068"*Remove this unused "locale" private field.(şä…Äüÿÿÿÿ8›®ğ±Ê-
+Psquid:S1068"-Remove this unused "lastVisit" private field.(›ĞÃ•şÿÿÿÿ8›®ğ±Ê-
+rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(•ãìè
+Lsquid:S1068")Remove this unused "email" private field.(ª«Õìùÿÿÿÿ8…î±Ê-
+Hsquid:S1068"*Remove this unused "gender" private field.(ÀÄŒ8›®ğ±Ê-
+Fsquid:S1068"(Remove this unused "name" private field.(Ë¥¼8À¹í±Ê-

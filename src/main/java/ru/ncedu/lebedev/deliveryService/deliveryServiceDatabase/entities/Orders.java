@@ -1,8 +1,11 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Orders {
 
     //Это связь Many to One с таблицей Couriers
@@ -43,60 +46,4 @@ public class Orders {
 
     @Column(name = "discount")
     private Integer discount;
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer ordersId) {
-        this.orderId = ordersId;
-    }
-
-    public Integer getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public Integer getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Integer managerId) {
-        this.managerId = managerId;
-    }
-
-    public Integer getCourierId() {
-        return courierId;
-    }
-
-    public void setCourierId(Integer courierId) {
-        this.courierId = courierId;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public Integer getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(Integer orderPrice) {
-        this.orderPrice = orderPrice;
-    }
-
-    public Integer getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Integer discount) {
-        this.discount = discount;
-    }
 }

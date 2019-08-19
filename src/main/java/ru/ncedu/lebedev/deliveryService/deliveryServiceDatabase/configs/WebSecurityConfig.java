@@ -31,13 +31,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        UserDetails user =
+        UserDetails artem =
                 User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
+                        .username("Artem")
+                        .password("Artem")
                         .roles("USER")
                         .build();
-
-        return new InMemoryUserDetailsManager(user);
+        UserDetails polina =
+                User.withDefaultPasswordEncoder()
+                        .username("Polina")
+                        .password("Polina")
+                        .roles("USER")
+                        .build();
+        UserDetails misha =
+                User.withDefaultPasswordEncoder()
+                        .username("Misha")
+                        .password("Misha")
+                        .roles("USER")
+                        .build();
+        return new InMemoryUserDetailsManager(artem, polina, misha);
     }
 }

@@ -4,6 +4,13 @@ jdk: oraclejdk9
 
 dist: trusty
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+env:
+  global:
+    - CODECOV_TOKEN=:uuid-repo-token
+
 # Improve Build Speed https://dzone.com/articles/travis-ci-tutorial-java-projects
 cache:
   directories:

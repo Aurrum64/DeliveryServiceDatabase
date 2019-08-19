@@ -5,14 +5,14 @@ jdk: oraclejdk9
 dist: trusty
 
 # Improve Build Speed https://dzone.com/articles/travis-ci-tutorial-java-projects
-#cache:
-#  directories:
-#    - $HOME/.m2
+cache:
+  directories:
+    - $HOME/.m2
 
 # Notifications https://docs.travis-ci.com/user/notifications/
-#notifications:
-#  email:
-#    recipients:
-#      - aurrum64@gmail.com
-#    on_success: never # default: change
-#    on_failure: never # default: always
+notifications:
+  email:
+    recipients:
+      - aurrum64@gmail.com
+    on_success: never # default: change
+    on_failure: never # default: always

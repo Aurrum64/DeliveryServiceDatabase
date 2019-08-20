@@ -43,7 +43,16 @@ public class Orders {
 
     @Column(name = "discount")
     private Integer discount;
-
+    public Orders(){}
+    public Orders(Integer departmentId, Integer managerId, Integer courierId, String paymentMethod, Integer orderPrice, Integer discount){
+        this.orderId=orderId;
+        this.departmentId=departmentId;
+        this.managerId=managerId;
+        this.courierId=courierId;
+        this.paymentMethod=paymentMethod;
+        this.discount=discount;
+        this.orderPrice=orderPrice;
+    }
     public Integer getOrderId() {
         return orderId;
     }

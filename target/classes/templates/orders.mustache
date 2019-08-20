@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Spring Boot Mustache</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table, td, th {
+            border: 1px solid #999;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>Orders</h2>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Department Id</th>
+        <th>Manager Id</th>
+        <th>Courier Id</th>
+        <th>Payment Method</th>
+        <th>Price</th>
+        <th>Discount</th>
+    </tr>
+
+    {{#orders}}
+        <tr>
+            <td>{{orderId}}</td>
+            <td>{{departmentId}}</td>
+            <td>{{managerId}}</td>
+            <td>{{courierId}}</td>
+            <td>{{paymentMethod}}</td>
+            <td>{{orderPrice}}</td>
+            <td>{{discount}}</td>
+        </tr>
+    {{/orders}}
+
+</table>
+</body>
+</html>

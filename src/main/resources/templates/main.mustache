@@ -1,0 +1,29 @@
+<html>
+
+<body>
+<div>Список заказов</div>
+<div>
+    <form method="post">
+        <input type="text" name="departmentId" placeholder="Введите id" />
+        <input type="text" name="managerId" placeholder="Введите id">
+        <input type="text" name="courierId" placeholder="Введите id">
+        <input type="text" name="paymentMethod" placeholder="Способ оплаты">
+        <input type="text" name="orderPrice" placeholder="Цена">
+        <input type="text" name="discount" placeholder="Скидка">
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+
+{{#orders}}
+    <div>
+        <span>{{departmentId}}</span>
+        <i>{{managerId}}</i>
+        <i>{{courierId}}</i>
+        <i>{{paymentMethod}}</i>
+        <i>{{orderPrice}}</i>
+        <i>{{discount}}</i>
+    </div>
+{{/orders}}
+</body>
+</html>

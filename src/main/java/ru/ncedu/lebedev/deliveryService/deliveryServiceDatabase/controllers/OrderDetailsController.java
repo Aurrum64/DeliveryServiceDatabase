@@ -23,22 +23,33 @@ public class OrderDetailsController {
     }
 
     @GetMapping("/orderDetails")
-    public String mainView(Map<String, Object> model) {
+    public String orderDetailsView(Map<String, Object> model) {
         Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
         model.put("orderDetails", orderDetails);
-        return "main";
+        return "orderDetails";
     }
 
     @PostMapping("/orderDetails")
     public String add(@RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date orderDate,
                       @RequestParam String orderAddress,
-                      @RequestParam(required = false, defaultValue = "Доставить как можно скорее") String comment,
-                      Map<String, Object> model) {
+                      @RequestParam(required = false, defaultValue = "Доставить как можно скорее") String comment) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
         orderDetail.setOrderDate(orderDate);
         orderDetail.setOrderAddress(orderAddress);
         orderDetail.setComment(comment);
         orderDetailsRepository.save(orderDetail);
         return "redirect:/orderDetails";
+    }
+
+    @PostMapping("/orderDetails/filter")
+    public String findByAddress(@RequestParam String address, Map<String, Object> model) {
+        Iterable<OrderDetailsEntity> orderDetails;
+        if (address != null && !address.isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderAddress(address);
+        } else {
+            orderDetails = orderDetailsRepository.findAll();
+        }
+        model.put("orderDetails", orderDetails);
+        return "orderDetails";
     }
 }

@@ -8,12 +8,21 @@
         <button type="submit">Добавить</button>
     </form>
 </div>
+<div>
+    <form method="post" action="orderDetails/filter">
+        <input type="text" name="address" placeholder="Найти по адресу"/>
+        <button type="submit">Найти</button>
+    </form>
+</div>
 <div><b>Список детальной информации о заказах:</b></div>
 {{#orderDetails}}
 <div>
     <span>{{id}}</span>
+    <b>|</b>
     <i>{{orderDate}}</i>
+    <b>|</b>
     <span>{{orderAddress}}</span>
+    <b>|</b>
     <i>{{comment}}</i>
 </div>
 {{/orderDetails}}

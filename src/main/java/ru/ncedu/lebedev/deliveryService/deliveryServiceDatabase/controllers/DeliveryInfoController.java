@@ -25,7 +25,7 @@ public class DeliveryInfoController {
     public @ResponseBody
     String addNewDeliveryInfo(@RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date deliveryDate,
                               @RequestParam String address,
-                              @RequestParam String comment) {
+                              @RequestParam(required = false, defaultValue = "Доставить как можно скорее") String comment) {
         DeliveryInfo deliveryInfo = new DeliveryInfo();
         deliveryInfo.setDeliveryDate(deliveryDate);
         deliveryInfo.setDeliveryAddress(address);

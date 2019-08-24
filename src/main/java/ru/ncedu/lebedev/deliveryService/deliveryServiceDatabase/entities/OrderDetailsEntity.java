@@ -15,11 +15,11 @@ public class OrderDetailsEntity {
     @Column(name = "order_details_id")
     private Integer id;
 
-/*    @Temporal(TemporalType.DATE)
-    @Column(name = "order_date")
-    private Date orderDate;*/
+    @Temporal(TemporalType.DATE)
+    @Column(name = "order_date", nullable = false)
+    private Date orderDate;
 
-    @Column(name = "order_address")
+    @Column(name = "order_address", nullable = false)
     private String orderAddress;
 
     @Column(name = "comment")

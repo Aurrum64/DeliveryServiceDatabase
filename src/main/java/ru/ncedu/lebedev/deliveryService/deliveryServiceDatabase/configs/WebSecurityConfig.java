@@ -1,4 +1,4 @@
-package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.configs;
+/*package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,4 +53,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .build();
         return new InMemoryUserDetailsManager(artem, polina, misha);
     }
-}
+}*/

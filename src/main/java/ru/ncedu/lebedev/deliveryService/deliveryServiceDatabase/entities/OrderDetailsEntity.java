@@ -10,6 +10,10 @@ import java.util.Date;
 @Data
 public class OrderDetailsEntity {
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Orders orders;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_details_id")

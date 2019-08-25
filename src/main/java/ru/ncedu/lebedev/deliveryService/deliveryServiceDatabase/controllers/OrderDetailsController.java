@@ -41,7 +41,7 @@ public class OrderDetailsController {
         return "redirect:/orderDetails";
     }
 
-    @PostMapping("/orderDetails/filter")
+    @PostMapping("/orderDetailsFilter")
     public String findByAddress(@RequestParam String address, Map<String, Object> model) {
         Iterable<OrderDetailsEntity> orderDetails;
         if (address != null && !address.isEmpty()) {

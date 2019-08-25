@@ -4,8 +4,11 @@
     <title>Delivery service authorization</title>
 </head>
 <body>
-<div>Login page</div>
-<form action="/login" method="post">
+Add new user
+{{#message}}
+{{message}}
+{{/message}}
+<form action="/registration" method="post">
     <div><label> Username: <input type="text" name="username"/> </label></div>
     <div>---------------------------------------------</div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
@@ -13,6 +16,5 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <div><input type="submit" value="Sign In"/></div>
 </form>
-<p>Click <a href="/registration">here</a> to sign up.</p>
 </body>
 </html>

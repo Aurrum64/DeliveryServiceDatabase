@@ -14,8 +14,12 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
 
-    @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    public RegistrationController(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     @GetMapping("/registration")
     public String registration() {
@@ -25,7 +29,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(UsersEntity user, Map<String, Object> model) {
         UsersEntity userFromDb = usersRepository.findByUsername(user.getUsername());
-        if (userFromDb != null){
+        if (userFromDb != null) {
             model.put("message", "User exists!");
             return "registration";
         }
@@ -34,5 +38,4 @@ public class RegistrationController {
         usersRepository.save(user);
         return "redirect:/login";
     }
-
 }

@@ -1,16 +1,24 @@
 <html>
 <body>
 <div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
     <form method="post">
         <input type="text" name="orderDate" placeholder="Введите дату доставки"/>
         <input type="text" name="orderAddress" placeholder="Введите адрес доставки"/>
         <input type="text" name="comment" placeholder="Введите комментарий"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit">Добавить</button>
     </form>
 </div>
 <div>
     <form method="post" action="orderDetailsFilter">
         <input type="text" name="address" placeholder="Найти по адресу"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit">Найти</button>
     </form>
 </div>

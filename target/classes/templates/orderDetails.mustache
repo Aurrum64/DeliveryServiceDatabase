@@ -30,13 +30,13 @@
         <div class="form-group mt-3">
             <form method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="orderDate" placeholder="Введите дату доставки"/>
+                    <input type="text" class="form-control" name="orderDate" placeholder="Введите дату доставки..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="orderAddress" placeholder="Введите адрес доставки"/>
+                    <input type="text" class="form-control" name="orderAddress" placeholder="Введите адрес доставки..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="comment" placeholder="Введите комментарий"/>
+                    <input type="text" class="form-control" name="comment" placeholder="Введите комментарий..."/>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group">
@@ -46,8 +46,8 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-5">
-    <div class="card-columns">
+<div class="container mt-5 ml-4">
+    <div class="card-body">
         {{#orderDetails}}
         <div class="card my-3" style="width:600px">
             <div class="card-footer text-muted">

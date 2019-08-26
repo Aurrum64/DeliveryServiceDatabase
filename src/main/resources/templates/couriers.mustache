@@ -1,0 +1,35 @@
+<html>
+<head>
+</head>
+<body>
+<div>
+    <form action="/couriers" method="post">
+        <input type="text" name="firstName" placeholder="Введите имя курьера"/>
+        <input type="text" name="lastName" placeholder="Введите фамилию курьера"/>
+        <input type="text" name="email" placeholder="Введите e-mail курьера"/>
+        <input type="text" name="phoneNumber" placeholder="Введите телефон курьера"/>
+        <input type="text" name="rating" placeholder="Введите рейтинг курьера"/>
+        <input type="text" name="salary" placeholder="Введите зарплату курьера"/>
+        <input type="text" name="hireDate" placeholder="Введите дату трудоустройства курьера"/>
+        <input type="text" name="premium" placeholder="Введите премию курьера"/>
+        <input type="text" name="departmentId" placeholder="Введите департамент курьера"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+{{#couriers}}
+<div>
+    <b>{{courierId}}</b>
+    <span>{{firstName}}</span>
+    <i>{{lastName}}</i>
+    <span>{{email}}</span>
+    <i>{{phoneNumber}}</i>
+    <span>{{rating}}</span>
+    <i>{{salary}}</i>
+    <span>{{hireDate}}</span>
+    <i>{{premium}}</i>
+    <span>{{departmentId}}</span>
+</div>
+{{/couriers}}
+</body>
+</html>

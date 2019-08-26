@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Couriers;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
 import java.util.Date;
+import java.util.Map;
 
 @Controller
 public class CouriersController {
@@ -21,28 +22,34 @@ public class CouriersController {
         this.couriersRepository = couriersRepository;
     }
 
-    @GetMapping("/addCourier")
-    public @ResponseBody
-    String addNewCourier(@RequestParam String firstName,
-                         @RequestParam String lastName,
-                         @RequestParam String eMail,
-                         @RequestParam Integer phoneNumber,
-                         @RequestParam Integer rating,
-                         @RequestParam Integer salary,
-                         @RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
-                         @RequestParam Integer premium,
-                         @RequestParam Integer departmentId) {
-        Couriers couriers = new Couriers();
-        couriers.setFirstName(firstName);
-        couriers.setLastName(lastName);
-        couriers.setEmail(eMail);
-        couriers.setPhoneNumber(phoneNumber);
-        couriers.setRating(rating);
-        couriers.setSalary(salary);
-        couriers.setHireDate(hireDate);
-        couriers.setPremium(premium);
-        couriers.setDepartmentId(departmentId);
-        couriersRepository.save(couriers);
-        return "Courier saved.";
+    @GetMapping("/couriers")
+    public String couriersView(Map<String, Object> model) {
+        Iterable<Couriers> couriers = couriersRepository.findAll();
+        model.put("couriers", couriers);
+        return "couriers";
+    }
+
+    @PostMapping("/couriers")
+    public String addCourier(@RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam(required = false) String email,
+                             @RequestParam(required = false, defaultValue = "+7(000)-000-00-00") String phoneNumber,
+                             @RequestParam(required = false, defaultValue = "0") Integer rating,
+                             @RequestParam(required = false, defaultValue = "0") Integer salary,
+                             @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
+                             @RequestParam(required = false, defaultValue = "0") Integer premium,
+                             @RequestParam(required = false, defaultValue = "0") Integer departmentId) {
+        Couriers courier = new Couriers();
+        courier.setFirstName(firstName);
+        courier.setLastName(lastName);
+        courier.setEmail(email);
+        courier.setPhoneNumber(phoneNumber);
+        courier.setRating(rating);
+        courier.setSalary(salary);
+        courier.setHireDate(hireDate);
+        courier.setPremium(premium);
+        courier.setDepartmentId(departmentId);
+        couriersRepository.save(courier);
+        return "redirect:/couriers";
     }
 }

@@ -49,13 +49,15 @@
 <div class="container mt-5 ml-5">
     <div class="card-columns">
         {{#orderDetails}}
-        <div class="card my-3" style="width: 18rem;">
+        <div class="card my-3" style="width:600px">
             <div class="card-footer text-muted">
                 <span>ID: {{id}}</span>
             </div>
-            <i>{{orderDate}}</i>
-            <span>{{orderAddress}}</span>
-            <i>{{comment}}</i>
+            <div class="container ml-1">
+                <span><b>Дата доставки:</b> {{orderDate}}<br/></span>
+                <span><b>Адрес доставки:</b> {{orderAddress}}<br/></span>
+                <span><b>Комментарий:</b> {{comment}}<br/></span>
+            </div>
         </div>
         {{/orderDetails}}
     </div>

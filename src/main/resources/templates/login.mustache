@@ -2,28 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     {{> parts/headerLinks}}
-    <title>Delivery service authorization</title>
+    <title>Authorization</title>
 </head>
 <body>
 {{> parts/navBar}}
-<div class="container mt-5">
+<div class="container mt-5 ml-5">
     <form action="/login" method="post">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Username: </label>
+            <label class="col-sm-2 ml-3 col-form-label"> Username: </label>
             <div class="col-sm-6">
                 <input type="text" name="username" class="form-control" placeholder="Username..."/>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Password: </label>
+            <label class="col-sm-2 ml-3 col-form-label"> Password: </label>
             <div class="col-sm-6">
                 <input type="password" name="password" class="form-control" placeholder="Password..."/>
             </div>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-primary">Sign In</button>
+        <button type="submit" class="btn btn-primary ml-3">Sign In</button>
     </form>
-    <p>Click <a href="/registration">here</a> to sign up.</p>
+    <div class="container mt-3 ml-1">
+        <p>Click <a href="/registration">here</a> to Sign Up.</p>
+    </div>
 </div>
 {{> parts/footerScripts}}
 </body>

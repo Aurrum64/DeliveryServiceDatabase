@@ -3,6 +3,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,5 +66,12 @@ public class CouriersController {
         }
         model.put("couriers", couriers);
         return "couriers";
+    }
+
+    @Transactional
+    @PostMapping("/couriersDelete")
+    public String deleteCourier(@RequestParam Integer courierId, Map<String, Object> model) {
+        couriersRepository.deleteByCourierId(courierId);
+        return "redirect:/couriers";
     }
 }

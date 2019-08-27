@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface CouriersRepository extends CrudRepository<Couriers, Integer> {
 
+    void deleteByCourierId(Integer id);
+
     List<Couriers> findByCourierId(Integer id);
 }

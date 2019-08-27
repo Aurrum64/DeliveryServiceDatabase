@@ -3,6 +3,13 @@
 </head>
 <body>
 <div>
+    <form action="/couriersFilter" method="post">
+        <input type="text" name="courierId" placeholder="Найти курьера по ID"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Найти</button>
+    </form>
+</div>
+<div>
     <form action="/couriers" method="post">
         <input type="text" name="firstName" placeholder="Введите имя курьера"/>
         <input type="text" name="lastName" placeholder="Введите фамилию курьера"/>

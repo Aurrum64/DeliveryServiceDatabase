@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Couriers;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -51,5 +53,17 @@ public class CouriersController {
         courier.setDepartmentId(departmentId);
         couriersRepository.save(courier);
         return "redirect:/couriers";
+    }
+
+    @PostMapping("/couriersFilter")
+    public String findCourier(@RequestParam(required = false) Integer courierId, Map<String, Object> model) {
+        Iterable<Couriers> couriers;
+        if (courierId != null) {
+            couriers = couriersRepository.findByCourierId(courierId);
+        } else {
+            couriers = couriersRepository.findAll();
+        }
+        model.put("couriers", couriers);
+        return "couriers";
     }
 }

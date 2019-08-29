@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Couriers;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -70,8 +68,15 @@ public class CouriersController {
 
     @Transactional
     @PostMapping("/couriersDelete")
-    public String deleteCourier(@RequestParam Integer courierId, Map<String, Object> model) {
+    public String deleteCourier(@RequestParam Integer courierId) {
         couriersRepository.deleteByCourierId(courierId);
+        return "redirect:/couriers";
+    }
+
+    @Transactional
+    @PostMapping("/couriersUpdate")
+    public String updateCourier(@RequestParam String firstName, Integer courierId) {
+        couriersRepository.setFirstnameFor(firstName, courierId);
         return "redirect:/couriers";
     }
 }

@@ -12,7 +12,16 @@
             <form action="/couriersFilter" method="post" class="form-inline">
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <input type="text" name="courierId" class="form-control" placeholder="Найти по ID..."/>
+                        <input type="text" name="courierId" class="form-control"
+                               placeholder="Найти по ID..."/>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" name="firstName" class="form-control"
+                               placeholder="Найти по имени..."/>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" name="lastName" class="form-control"
+                               placeholder="Найти по фамилии..."/>
                     </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

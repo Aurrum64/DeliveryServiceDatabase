@@ -55,10 +55,21 @@ public class CouriersController {
     }
 
     @PostMapping("/couriersFilter")
-    public String findCourier(@RequestParam(required = false) Integer courierId, Map<String, Object> model) {
+    public String findCourier(@RequestParam(required = false) Integer courierId,
+                              @RequestParam(required = false) String firstName,
+                              @RequestParam(required = false) String lastName,
+                              Map<String, Object> model) {
         Iterable<Couriers> couriers;
-        if (courierId != null) {
+        if (courierId != null & firstName.isEmpty() & lastName.isEmpty()) {
             couriers = couriersRepository.findByCourierId(courierId);
+        } else if (courierId == null & !firstName.isEmpty() & !lastName.isEmpty()) {
+            couriers = couriersRepository.findByFirstNameAndLastName(firstName, lastName);
+        } else if (courierId == null & !firstName.isEmpty() & lastName.isEmpty()) {
+            couriers = couriersRepository.findByFirstName(firstName);
+        } else if (courierId == null & firstName.isEmpty() & !lastName.isEmpty()) {
+            couriers = couriersRepository.findByLastName(lastName);
+        } else if (courierId != null & !firstName.isEmpty() & !lastName.isEmpty()) {
+            couriers = couriersRepository.findByCourierIdAndFirstNameAndLastName(courierId, firstName, lastName);
         } else {
             couriers = couriersRepository.findAll();
         }
@@ -76,7 +87,7 @@ public class CouriersController {
     @Transactional
     @PostMapping("/couriersUpdate")
     public String updateCourier(@RequestParam String firstName, Integer courierId) {
-        couriersRepository.setFirstnameFor(firstName, courierId);
+        couriersRepository.setFirstNameFor(firstName, courierId);
         return "redirect:/couriers";
     }
 }

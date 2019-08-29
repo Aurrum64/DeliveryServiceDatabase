@@ -11,7 +11,10 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Courier
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 public class CouriersController {
@@ -77,14 +80,25 @@ public class CouriersController {
         } else {
             couriers = couriersRepository.findAll();
         }
-        model.put("couriers", couriers);
+        if (!couriers.iterator().hasNext()) {
+            model.put("filterCheck", "Courier with such index does not exist!");
+            return "couriers";
+        } else {
+            model.put("couriers", couriers);
+        }
         return "couriers";
     }
 
     @Transactional
     @PostMapping("/couriersDelete")
-    public String deleteCourier(@RequestParam Integer courierId) {
-        couriersRepository.deleteByCourierId(courierId);
+    public String deleteCourier(@RequestParam Integer courierId, Map<String, Object> model) {
+        List<Couriers> courier = couriersRepository.findByCourierId(courierId);
+        if (courier.isEmpty()) {
+            model.put("deleteIdCheck", "Courier with such index does not exist!");
+            return "couriers";
+        } else {
+            couriersRepository.deleteByCourierId(courierId);
+        }
         return "redirect:/couriers";
     }
 
@@ -99,33 +113,40 @@ public class CouriersController {
                                 @RequestParam(required = false) Integer salary,
                                 @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
                                 @RequestParam(required = false) Integer premium,
-                                @RequestParam(required = false) Integer departmentId) {
-        if (!firstName.isEmpty()) {
-            couriersRepository.setFirstNameFor(firstName, courierId);
-        }
-        if (!lastName.isEmpty()) {
-            couriersRepository.setLastNameFor(lastName, courierId);
-        }
-        if (!email.isEmpty()) {
-            couriersRepository.setEmailFor(email, courierId);
-        }
-        if (!phoneNumber.isEmpty()) {
-            couriersRepository.setPhoneNumberFor(phoneNumber, courierId);
-        }
-        if (rating != null) {
-            couriersRepository.setRatingFor(rating, courierId);
-        }
-        if (salary != null) {
-            couriersRepository.setSalaryFor(salary, courierId);
-        }
-        if (hireDate != null) {
-            couriersRepository.setHireDateFor(hireDate, courierId);
-        }
-        if (premium != null) {
-            couriersRepository.setPremiumFor(premium, courierId);
-        }
-        if (departmentId != null) {
-            couriersRepository.setDepartmentFor(departmentId, courierId);
+                                @RequestParam(required = false) Integer departmentId,
+                                Map<String, Object> model) {
+        List<Couriers> courier = couriersRepository.findByCourierId(courierId);
+        if (courier.isEmpty()) {
+            model.put("updateIdCheck", "Courier with such index does not exist!");
+            return "couriers";
+        } else {
+            if (!firstName.isEmpty()) {
+                couriersRepository.setFirstNameFor(firstName, courierId);
+            }
+            if (!lastName.isEmpty()) {
+                couriersRepository.setLastNameFor(lastName, courierId);
+            }
+            if (!email.isEmpty()) {
+                couriersRepository.setEmailFor(email, courierId);
+            }
+            if (!phoneNumber.isEmpty()) {
+                couriersRepository.setPhoneNumberFor(phoneNumber, courierId);
+            }
+            if (rating != null) {
+                couriersRepository.setRatingFor(rating, courierId);
+            }
+            if (salary != null) {
+                couriersRepository.setSalaryFor(salary, courierId);
+            }
+            if (hireDate != null) {
+                couriersRepository.setHireDateFor(hireDate, courierId);
+            }
+            if (premium != null) {
+                couriersRepository.setPremiumFor(premium, courierId);
+            }
+            if (departmentId != null) {
+                couriersRepository.setDepartmentFor(departmentId, courierId);
+            }
         }
         return "redirect:/couriers";
     }

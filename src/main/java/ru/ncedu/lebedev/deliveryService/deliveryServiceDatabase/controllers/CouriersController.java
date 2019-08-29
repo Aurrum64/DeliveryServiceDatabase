@@ -66,6 +66,10 @@ public class CouriersController {
             couriers = couriersRepository.findByFirstNameAndLastName(firstName, lastName);
         } else if (courierId == null & !firstName.isEmpty() & lastName.isEmpty()) {
             couriers = couriersRepository.findByFirstName(firstName);
+        } else if (courierId != null & !firstName.isEmpty() & lastName.isEmpty()) {
+            couriers = couriersRepository.findByCourierIdAndFirstName(courierId, firstName);
+        } else if (courierId != null & firstName.isEmpty() & !lastName.isEmpty()) {
+            couriers = couriersRepository.findByCourierIdAndLastName(courierId, lastName);
         } else if (courierId == null & firstName.isEmpty() & !lastName.isEmpty()) {
             couriers = couriersRepository.findByLastName(lastName);
         } else if (courierId != null & !firstName.isEmpty() & !lastName.isEmpty()) {

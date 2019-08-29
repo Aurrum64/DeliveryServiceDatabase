@@ -12,6 +12,10 @@ public interface CouriersRepository extends CrudRepository<Couriers, Integer> {
 
     List<Couriers> findByCourierId(Integer id);
 
+    List<Couriers> findByCourierIdAndFirstName(Integer id, String firstName);
+
+    List<Couriers> findByCourierIdAndLastName(Integer id, String lastName);
+
     List<Couriers> findByFirstName(String firstName);
 
     List<Couriers> findByLastName(String lastName);

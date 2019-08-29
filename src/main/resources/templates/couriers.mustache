@@ -6,41 +6,43 @@
 </head>
 <body>
 {{> parts/navBarWithSignBtn}}
-<div>
-    {{#filterCheck}}
-    {{filterCheck}}
-    {{/filterCheck}}
-</div>
 <div class="container mt-5 ml-5">
+    {{#filterCheck}}
+    <div class="alert alert-danger" role="alert" style="width: 736px">
+        {{filterCheck}}
+    </div>
+    {{/filterCheck}}
     <div class="form-row">
         <div class="form-group col-md-6">
             <form action="/couriersFilter" method="post" class="form-inline">
                 <div class="form-group row">
-                    <div class="col-sm-6">
-                        <input type="text" name="courierId" class="form-control"
+                    <div>
+                        <input type="text" name="courierId" class="form-control ml-3"
                                placeholder="Найти по ID..."/>
                     </div>
-                    <div class="col-sm-6">
-                        <input type="text" name="firstName" class="form-control"
+                    <div>
+                        <input type="text" name="firstName" class="form-control ml-3"
                                placeholder="Найти по имени..."/>
                     </div>
-                    <div class="col-sm-6">
-                        <input type="text" name="lastName" class="form-control"
+                    <div>
+                        <input type="text" name="lastName" class="form-control ml-3"
                                placeholder="Найти по фамилии..."/>
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div>
+                        <button type="submit" class="btn btn-primary ml-3">Найти</button>
+                    </div>
                 </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary ml-2">Найти</button>
             </form>
         </div>
     </div>
 </div>
-<div>
-    {{#deleteIdCheck}}
-    {{deleteIdCheck}}
-    {{/deleteIdCheck}}
-</div>
 <div class="container mt-5 ml-5">
+    {{#deleteIdCheck}}
+    <div class="alert alert-danger" role="alert" style="width: 305px">
+        {{deleteIdCheck}}
+    </div>
+    {{/deleteIdCheck}}
     <div class="form-row">
         <div class="form-group col-md-6">
             <form action="/couriersDelete" method="post" class="form-inline">
@@ -50,17 +52,17 @@
                     </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary ml-2">Удалить</button>
+                <button type="submit" class="btn btn-primary ml-3">Удалить</button>
             </form>
         </div>
     </div>
 </div>
-<div>
-    {{#updateIdCheck}}
-    {{updateIdCheck}}
-    {{/updateIdCheck}}
-</div>
 <div class="container mt-5 ml-5">
+    {{#updateIdCheck}}
+    <div class="alert alert-danger" role="alert" style="width: 589px">
+        {{updateIdCheck}}
+    </div>
+    {{/updateIdCheck}}
     <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
        aria-controls="collapseExample">
         Открыть меню изменения информации о существующем в системе курьере

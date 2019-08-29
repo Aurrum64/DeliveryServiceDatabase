@@ -81,7 +81,7 @@ public class CouriersController {
             couriers = couriersRepository.findAll();
         }
         if (!couriers.iterator().hasNext()) {
-            model.put("filterCheck", "Courier with such index does not exist!");
+            model.put("filterCheck", "No courier with such index!");
             return "couriers";
         } else {
             model.put("couriers", couriers);
@@ -94,7 +94,7 @@ public class CouriersController {
     public String deleteCourier(@RequestParam Integer courierId, Map<String, Object> model) {
         List<Couriers> courier = couriersRepository.findByCourierId(courierId);
         if (courier.isEmpty()) {
-            model.put("deleteIdCheck", "Courier with such index does not exist!");
+            model.put("deleteIdCheck", "No courier with such index!");
             return "couriers";
         } else {
             couriersRepository.deleteByCourierId(courierId);

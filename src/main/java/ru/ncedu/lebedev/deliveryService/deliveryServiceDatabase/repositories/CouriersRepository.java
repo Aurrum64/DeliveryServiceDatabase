@@ -28,37 +28,37 @@ public interface CouriersRepository extends CrudRepository<Couriers, Integer> {
 
     @Modifying
     @Query("update Couriers c set c.firstName = ?1 where c.courierId = ?2")
-    int setFirstNameFor(String firstName, Integer id);
+    void setFirstNameFor(String firstName, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.lastName = ?1 where c.courierId = ?2")
-    int setLastNameFor(String lastName, Integer id);
+    void setLastNameFor(String lastName, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.email = ?1 where c.courierId = ?2")
-    int setEmailFor(String email, Integer id);
+    void setEmailFor(String email, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.phoneNumber = ?1 where c.courierId = ?2")
-    int setPhoneNumberFor(String phoneNumber, Integer id);
+    void setPhoneNumberFor(String phoneNumber, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.rating = ?1 where c.courierId = ?2")
-    int setRatingFor(Integer rating, Integer id);
+    void setRatingFor(Integer rating, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.salary = ?1 where c.courierId = ?2")
-    int setSalaryFor(Integer salary, Integer id);
+    void setSalaryFor(Integer salary, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.hireDate = ?1 where c.courierId = ?2")
-    int setHireDateFor(Date hireDate, Integer id);
+    void setHireDateFor(Date hireDate, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.premium = ?1 where c.courierId = ?2")
-    int setPremiumFor(Integer premium, Integer id);
+    void setPremiumFor(Integer premium, Integer id);
 
     @Modifying
     @Query("update Couriers c set c.departmentId = ?1 where c.courierId = ?2")
-    int setDepartmentFor(Integer departmentId, Integer id);
+    void setDepartmentFor(Integer departmentId, Integer id);
 }

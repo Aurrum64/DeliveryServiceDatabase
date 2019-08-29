@@ -90,8 +90,43 @@ public class CouriersController {
 
     @Transactional
     @PostMapping("/couriersUpdate")
-    public String updateCourier(@RequestParam String firstName, Integer courierId) {
-        couriersRepository.setFirstNameFor(firstName, courierId);
+    public String updateCourier(@RequestParam Integer courierId,
+                                @RequestParam(required = false) String firstName,
+                                @RequestParam(required = false) String lastName,
+                                @RequestParam(required = false) String email,
+                                @RequestParam(required = false) String phoneNumber,
+                                @RequestParam(required = false) Integer rating,
+                                @RequestParam(required = false) Integer salary,
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
+                                @RequestParam(required = false) Integer premium,
+                                @RequestParam(required = false) Integer departmentId) {
+        if (!firstName.isEmpty()) {
+            couriersRepository.setFirstNameFor(firstName, courierId);
+        }
+        if (!lastName.isEmpty()) {
+            couriersRepository.setLastNameFor(lastName, courierId);
+        }
+        if (!email.isEmpty()) {
+            couriersRepository.setEmailFor(email, courierId);
+        }
+        if (!phoneNumber.isEmpty()) {
+            couriersRepository.setPhoneNumberFor(phoneNumber, courierId);
+        }
+        if (rating != null) {
+            couriersRepository.setRatingFor(rating, courierId);
+        }
+        if (salary != null) {
+            couriersRepository.setSalaryFor(salary, courierId);
+        }
+        if (hireDate != null) {
+            couriersRepository.setHireDateFor(hireDate, courierId);
+        }
+        if (premium != null) {
+            couriersRepository.setPremiumFor(premium, courierId);
+        }
+        if (departmentId != null) {
+            couriersRepository.setDepartmentFor(departmentId, courierId);
+        }
         return "redirect:/couriers";
     }
 }

@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-5">
+<!--<div class="container mt-5 ml-5">
     <div class="form-row">
         <div class="form-group col-md-6">
             <form action="/couriersUpdate" method="post" class="form-inline">
@@ -62,13 +62,64 @@
             </form>
         </div>
     </div>
+</div>-->
+<div class="container mt-5 ml-5">
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Открыть меню изменения информации о существующем в системе курьере
+    </a>
+    <div class="collapse" id="collapse1">
+        <div class="form-group mt-3">
+            <form action="/couriersUpdate" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="courierId"
+                           placeholder="Введите ID курьера, информацию о котором нужно изменить..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="firstName" placeholder="Изменить имя курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="lastName" placeholder="Изменить фамилию курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="Изменить e-mail курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="phoneNumber"
+                           placeholder="Изменить телефон курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="rating" placeholder="Изменить рейтинг курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="salary" placeholder="Изменить зарплату курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="hireDate"
+                           placeholder="Изменить дату трудоустройства курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="premium"
+                           placeholder="Изменить размер премии курьера..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="departmentId"
+                           placeholder="Изменить департамент курьера..."/>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Изменить</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <div class="container mt-5 ml-5">
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-       aria-controls="collapseExample">
-        Добавить информацию о курьере
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+       aria-controls="collapse2">
+        Открыть меню добавления нового курьера в систему
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse" id="collapse2">
         <div class="form-group mt-3">
             <form action="/couriers" method="post">
                 <div class="form-group">
@@ -95,7 +146,8 @@
                            placeholder="Введите дату трудоустройства курьера..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="premium" placeholder="Введите премию курьера..."/>
+                    <input type="text" class="form-control" name="premium"
+                           placeholder="Введите размер премии курьера..."/>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="departmentId"

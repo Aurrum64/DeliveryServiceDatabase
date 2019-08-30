@@ -13,8 +13,6 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.Cou
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Controller
 public class CouriersController {

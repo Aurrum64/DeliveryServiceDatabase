@@ -17,7 +17,7 @@ public class OrderDetailsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_details_id")
-    private Integer id;
+    private Integer orderDetailsId;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date", nullable = false)

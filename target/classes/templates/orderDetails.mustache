@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {{> parts/headerLinks}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {{> interfaceParts/bootstrapHeaderLinks}}
     <title>Order details</title>
 </head>
 <body>
-{{> parts/navBarWithSignBtn}}
+{{> interfaceParts/bootstrapNavBarWithSignBtn}}
 <div class="container mt-5 ml-5">
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -33,7 +34,8 @@
                     <input type="text" class="form-control" name="orderDate" placeholder="Введите дату доставки..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="orderAddress" placeholder="Введите адрес доставки..."/>
+                    <input type="text" class="form-control" name="orderAddress"
+                           placeholder="Введите адрес доставки..."/>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="comment" placeholder="Введите комментарий..."/>
@@ -60,8 +62,11 @@
             </div>
         </div>
         {{/orderDetails}}
+        {{^orderDetails}}
+        Your order details list is empty so far! Please, enter some data.
+        {{/orderDetails}}
     </div>
 </div>
-{{> parts/footerScripts}}
+{{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

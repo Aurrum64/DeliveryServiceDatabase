@@ -1,35 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {{> parts/headerLinks}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {{> interfaceParts/bootstrapHeaderLinks}}
     <title>Registration</title>
 </head>
 <body>
-{{> parts/navBar}}
-<div>
-    {{#message}}
-    {{message}}
-    {{/message}}
-</div>
-<!--<div class="container mt-5 ml-5">
-    <form action="/registration" method="post">
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Username:</label>
-            <div class="col-sm-6">
-                <input type="text" name="username" class="form-control" placeholder="Username..."/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Password:</label>
-            <div class="col-sm-6">
-                <input type="password" name="password" class="form-control" placeholder="Password..."/>
-            </div>
-        </div>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
-    </form>
-</div>-->
+{{> interfaceParts/bootstrapNavBar}}
 <div class="container mt-5 ml-5">
+    {{#errorMessage}}
+    <div class="alert alert-danger" role="alert" style="width: 750px">
+        {{errorMessage}}
+    </div>
+    {{/errorMessage}}
+    {{#successMessage}}
+    <div class="alert alert-success" role="alert" style="width: 750px">
+        <span>{{successMessage}} Follow on <a href="/login" class="alert-link"> authorization page</a> to log in.</span>
+    </div>
+    {{/successMessage}}
     <form action="/registration" method="post">
         <div class="form-group row">
             <label class="col-sm-2 ml-3 col-form-label"> Username: </label>
@@ -50,6 +38,6 @@
         <p>Click <a href="/login">here</a> to Sign In.</p>
     </div>
 </div>
-{{> parts/footerScripts}}
+{{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

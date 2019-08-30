@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {{> interfaceParts/bootstrapHeaderLinks}}
+    <title>Managers</title>
+</head>
+<body>
+{{> interfaceParts/bootstrapNavBarWithSignBtn}}
+<div class="container mt-5 ml-4">
+    <div class="card-body">
+        {{#managers}}
+        <div class="card my-3" style="width:600px">
+            {{managers}}
+            <div class="card-footer text-muted">
+                <span>ID: {{managerId}}</span>
+            </div>
+            <div class="container ml-1">
+                <span><b>Имя:</b> {{firstName}}<br/></span>
+                <span><b>Фамилия:</b> {{lastName}}<br/></span>
+                <span><b>Электронная почта:</b> {{email}}<br/></span>
+                <span><b>Номер телефона:</b> {{phoneNumber}}<br/></span>
+                <span><b>Зарплата:</b> {{salary}}<br/></span>
+                <span><b>Дата трудоустройства:</b> {{hireDate}}<br/></span>
+                <span><b>Размер премиальных:</b> {{premium}}<br/></span>
+            </div>
+        </div>
+        {{/managers}}
+    </div>
+</div>
+{{> interfaceParts/bootstrapFooterScripts}}
+</body>
+</html>

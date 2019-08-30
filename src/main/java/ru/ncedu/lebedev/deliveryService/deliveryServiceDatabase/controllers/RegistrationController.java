@@ -30,12 +30,14 @@ public class RegistrationController {
     public String addUser(UsersEntity user, Map<String, Object> model) {
         UsersEntity userFromDb = usersRepository.findByUsername(user.getUsername());
         if (userFromDb != null) {
-            model.put("message", "User exists!");
+            model.put("errorMessage", "User already exists!");
             return "registration";
+        } else {
+            model.put("successMessage", "You are successfully Sign Up!");
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(RolesEntity.USER));
         usersRepository.save(user);
-        return "redirect:/login";
+        return "registration";
     }
 }

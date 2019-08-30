@@ -34,7 +34,8 @@
                     <input type="text" class="form-control" name="orderDate" placeholder="Введите дату доставки..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="orderAddress" placeholder="Введите адрес доставки..."/>
+                    <input type="text" class="form-control" name="orderAddress"
+                           placeholder="Введите адрес доставки..."/>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="comment" placeholder="Введите комментарий..."/>
@@ -60,6 +61,9 @@
                 <span><b>Комментарий:</b> {{comment}}<br/></span>
             </div>
         </div>
+        {{/orderDetails}}
+        {{^orderDetails}}
+        Your order details list is empty so far! Please, enter some data.
         {{/orderDetails}}
     </div>
 </div>

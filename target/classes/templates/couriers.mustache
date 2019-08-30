@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {{> parts/headerLinks}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {{> interfaceParts/bootstrapHeaderLinks}}
+    {{> mapParts/mapHeaderLinksAndScripts}}
     <title>Couriers</title>
 </head>
 <body>
-{{> parts/navBarWithSignBtn}}
+{{> interfaceParts/bootstrapNavBarWithSignBtn}}
 <div class="container mt-5 ml-5">
     {{#filterCheck}}
     <div class="alert alert-danger" role="alert" style="width: 736px">
@@ -160,6 +162,10 @@
         </div>
     </div>
 </div>
+<div class="container mt-5 ml-5">
+    <div id="map" class="map" style="width: 1200px; height: 600px"></div>
+    {{> mapParts/mapScriptsSources}}
+</div>
 <div class="container mt-5 ml-4">
     <div class="card-body">
         {{#couriers}}
@@ -182,6 +188,6 @@
         {{/couriers}}
     </div>
 </div>
-{{> parts/footerScripts}}
+{{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

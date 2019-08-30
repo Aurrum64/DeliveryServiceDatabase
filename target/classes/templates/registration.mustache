@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {{> parts/headerLinks}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {{> interfaceParts/bootstrapHeaderLinks}}
     <title>Registration</title>
 </head>
 <body>
-{{> parts/navBar}}
+{{> interfaceParts/bootstrapNavBar}}
 <div>
     {{#message}}
     {{message}}
@@ -32,6 +33,6 @@
         <p>Click <a href="/login">here</a> to Sign In.</p>
     </div>
 </div>
-{{> parts/footerScripts}}
+{{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

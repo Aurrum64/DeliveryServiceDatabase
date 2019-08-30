@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {{> parts/headerLinks}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {{> interfaceParts/bootstrapHeaderLinks}}
     <title>Authorization</title>
 </head>
 <body>
-{{> parts/navBar}}
+{{> interfaceParts/bootstrapNavBar}}
 <div class="container mt-5 ml-5">
     <form action="/login" method="post">
         <div class="form-group row">
@@ -27,6 +28,6 @@
         <p>Click <a href="/registration">here</a> to Sign Up.</p>
     </div>
 </div>
-{{> parts/footerScripts}}
+{{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

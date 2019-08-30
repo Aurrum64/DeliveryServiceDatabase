@@ -43,18 +43,6 @@ public class OrderDetailsController {
         return "redirect:/orderDetails";
     }
 
-/*    @PostMapping("/orderDetailsFilter")
-    public String findByAddress(@RequestParam String address, Map<String, Object> model) {
-        Iterable<OrderDetailsEntity> orderDetails;
-        if (address != null && !address.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderAddress(address);
-        } else {
-            orderDetails = orderDetailsRepository.findAll();
-        }
-        model.put("orderDetails", orderDetails);
-        return "orderDetails";
-    }*/
-
     @PostMapping("/orderDetailsFilter")
     public String findOrderDetails(@RequestParam(required = false) Integer orderDetailsId,
                                    @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date orderDate,
@@ -96,6 +84,31 @@ public class OrderDetailsController {
             return "orderDetails";
         } else {
             orderDetailsRepository.deleteByOrderDetailsId(orderDetailsId);
+        }
+        return "redirect:/orderDetails";
+    }
+
+    @Transactional
+    @PostMapping("/orderDetailsUpdate")
+    public String updateCourier(@RequestParam Integer orderDetailsId,
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date orderDate,
+                                @RequestParam(required = false) String orderAddress,
+                                @RequestParam(required = false) String comment,
+                                Map<String, Object> model) {
+        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
+        if (orderDetails.isEmpty()) {
+            model.put("updateIdCheck", "Order details with such index does not exist!");
+            return "orderDetails";
+        } else {
+            if (orderDate != null) {
+                orderDetailsRepository.setOrderDateFor(orderDate, orderDetailsId);
+            }
+            if (!orderAddress.isEmpty()) {
+                orderDetailsRepository.setOrderAddressFor(orderAddress, orderDetailsId);
+            }
+            if (!comment.isEmpty()) {
+                orderDetailsRepository.setCommentFor(comment, orderDetailsId);
+            }
         }
         return "redirect:/orderDetails";
     }

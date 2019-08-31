@@ -95,4 +95,45 @@ public class ManagersController {
         }
         return "redirect:/managers";
     }
+
+    @Transactional
+    @PostMapping("/managersUpdate")
+    public String updateCourier(@RequestParam Integer managerId,
+                                @RequestParam(required = false) String firstName,
+                                @RequestParam(required = false) String lastName,
+                                @RequestParam(required = false) String email,
+                                @RequestParam(required = false) String phoneNumber,
+                                @RequestParam(required = false) Integer salary,
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
+                                @RequestParam(required = false) Integer premium,
+                                Map<String, Object> model) {
+        List<ManagersEntity> manager = managersRepository.findByManagerId(managerId);
+        if (manager.isEmpty()) {
+            model.put("updateIdCheck", "Manager with such index does not exist!");
+            return "managers";
+        } else {
+            if (!firstName.isEmpty()) {
+                managersRepository.setFirstNameFor(firstName, managerId);
+            }
+            if (!lastName.isEmpty()) {
+                managersRepository.setLastNameFor(lastName, managerId);
+            }
+            if (!email.isEmpty()) {
+                managersRepository.setEmailFor(email, managerId);
+            }
+            if (!phoneNumber.isEmpty()) {
+                managersRepository.setPhoneNumberFor(phoneNumber, managerId);
+            }
+            if (salary != null) {
+                managersRepository.setSalaryFor(salary, managerId);
+            }
+            if (hireDate != null) {
+                managersRepository.setHireDateFor(hireDate, managerId);
+            }
+            if (premium != null) {
+                managersRepository.setPremiumFor(premium, managerId);
+            }
+        }
+        return "redirect:/managers";
+    }
 }

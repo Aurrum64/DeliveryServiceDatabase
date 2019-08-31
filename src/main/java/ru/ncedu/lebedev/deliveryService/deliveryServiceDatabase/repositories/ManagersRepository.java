@@ -9,5 +9,17 @@ public interface ManagersRepository extends CrudRepository<ManagersEntity, Integ
 
     List<ManagersEntity> findByManagerId(Integer id);
 
+    List<ManagersEntity> findByManagerIdAndFirstName(Integer id, String firstName);
+
+    List<ManagersEntity> findByManagerIdAndLastName(Integer id, String lastName);
+
+    List<ManagersEntity> findByFirstName(String firstName);
+
+    List<ManagersEntity> findByLastName(String lastName);
+
+    List<ManagersEntity> findByFirstNameAndLastName(String firstName, String lastName);
+
+    List<ManagersEntity> findByManagerIdAndFirstNameAndLastName(Integer id, String firstName, String lastName);
+
     void deleteByManagerId(Integer id);
 }

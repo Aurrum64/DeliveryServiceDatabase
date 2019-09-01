@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Orders;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.OrdersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrdersRepository;
 
 @Controller
@@ -26,14 +26,14 @@ public class OrdersController {
                        @RequestParam String paymentMethod,
                        @RequestParam Integer orderPrice,
                        @RequestParam Integer discount) {
-        Orders orders = new Orders();
-        orders.setDepartmentId(departmentId);
-        orders.setManagerId(managerId);
-        orders.setCourierId(courierId);
-        orders.setPaymentMethod(paymentMethod);
-        orders.setOrderPrice(orderPrice);
-        orders.setDiscount(discount);
-        ordersRepository.save(orders);
+        OrdersEntity ordersEntity = new OrdersEntity();
+        ordersEntity.setDepartmentId(departmentId);
+        ordersEntity.setManagerId(managerId);
+        ordersEntity.setCourierId(courierId);
+        ordersEntity.setPaymentMethod(paymentMethod);
+        ordersEntity.setOrderPrice(orderPrice);
+        ordersEntity.setDiscount(discount);
+        ordersRepository.save(ordersEntity);
         return "Order saved.";
     }
 }

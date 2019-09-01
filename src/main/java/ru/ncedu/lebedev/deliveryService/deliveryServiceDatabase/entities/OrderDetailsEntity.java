@@ -12,7 +12,7 @@ public class OrderDetailsEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Orders orders;
+    private OrdersEntity ordersEntity;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

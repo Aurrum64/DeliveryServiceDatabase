@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Orders {
+public class OrdersEntity {
 
     //Это связь Many to One с таблицей Couriers
     //http://javastudy.ru/hibernate/hibernate-one-to-many/ пример брал отсюда, завести не удалось

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Couriers;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
 import java.util.Date;
@@ -26,7 +26,7 @@ public class CouriersController {
 
     @GetMapping("/couriers")
     public String couriersView(Map<String, Object> model) {
-        Iterable<Couriers> couriers = couriersRepository.findAll();
+        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
         model.put("couriers", couriers);
         return "couriers";
     }
@@ -41,7 +41,7 @@ public class CouriersController {
                              @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
                              @RequestParam(required = false, defaultValue = "0") Integer premium,
                              @RequestParam(required = false, defaultValue = "0") Integer departmentId) {
-        Couriers courier = new Couriers();
+        CouriersEntity courier = new CouriersEntity();
         courier.setFirstName(firstName);
         courier.setLastName(lastName);
         courier.setEmail(email);
@@ -60,7 +60,7 @@ public class CouriersController {
                               @RequestParam(required = false) String firstName,
                               @RequestParam(required = false) String lastName,
                               Map<String, Object> model) {
-        Iterable<Couriers> couriers;
+        Iterable<CouriersEntity> couriers;
         if (courierId != null & firstName.isEmpty() & lastName.isEmpty()) {
             couriers = couriersRepository.findByCourierId(courierId);
         } else if (courierId == null & !firstName.isEmpty() & !lastName.isEmpty()) {
@@ -90,7 +90,7 @@ public class CouriersController {
     @Transactional
     @PostMapping("/couriersDelete")
     public String deleteCourier(@RequestParam Integer courierId, Map<String, Object> model) {
-        List<Couriers> courier = couriersRepository.findByCourierId(courierId);
+        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierId);
         if (courier.isEmpty()) {
             model.put("deleteIdCheck", "No courier with such index!");
             return "couriers";
@@ -113,7 +113,7 @@ public class CouriersController {
                                 @RequestParam(required = false) Integer premium,
                                 @RequestParam(required = false) Integer departmentId,
                                 Map<String, Object> model) {
-        List<Couriers> courier = couriersRepository.findByCourierId(courierId);
+        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierId);
         if (courier.isEmpty()) {
             model.put("updateIdCheck", "Courier with such index does not exist!");
             return "couriers";

@@ -42,4 +42,10 @@ public class CouriersEntity {
 
     @Column(name = "department_id")
     private Integer departmentId;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
 }

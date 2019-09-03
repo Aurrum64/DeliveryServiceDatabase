@@ -7,12 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.ResponseEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.AjaxResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class CouriersController {
@@ -40,7 +41,9 @@ public class CouriersController {
                              @RequestParam(required = false, defaultValue = "0") Integer salary,
                              @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
                              @RequestParam(required = false, defaultValue = "0") Integer premium,
-                             @RequestParam(required = false, defaultValue = "0") Integer departmentId) {
+                             @RequestParam(required = false, defaultValue = "0") Integer departmentId,
+                             @RequestParam Double latitude,
+                             @RequestParam Double longitude) {
         CouriersEntity courier = new CouriersEntity();
         courier.setFirstName(firstName);
         courier.setLastName(lastName);
@@ -51,6 +54,8 @@ public class CouriersController {
         courier.setHireDate(hireDate);
         courier.setPremium(premium);
         courier.setDepartmentId(departmentId);
+        courier.setLatitude(latitude);
+        courier.setLongitude(longitude);
         couriersRepository.save(courier);
         return "redirect:/couriers";
     }
@@ -147,5 +152,27 @@ public class CouriersController {
             }
         }
         return "redirect:/couriers";
+    }
+
+    @GetMapping(value = "/couriersCoordinates", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendCouriersCoordinates() {
+
+        AjaxResponseEntity result = new AjaxResponseEntity();
+        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
+        /*List<String> coordinates = new ArrayList<>();*/
+
+ /*       if (!couriers.iterator().hasNext()) {
+            result.setMsg("Couriers list is empty!");
+        } else {
+            result.setMsg("success");
+        }*/
+        for (Iterator<CouriersEntity> iterator = couriers.iterator(); iterator.hasNext(); ) {
+            CouriersEntity courier = iterator.next();
+            result.setLatitude(Double.toString(courier.getLatitude()));
+            result.setLongitude(Double.toString(courier.getLongitude()));
+        }
+       /* result.setResult(couriers);*/
+        return ResponseEntity.ok(result);
     }
 }

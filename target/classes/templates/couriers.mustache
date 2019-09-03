@@ -154,6 +154,14 @@
                     <input type="text" class="form-control" name="departmentId"
                            placeholder="Введите департамент курьера..."/>
                 </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="latitude"
+                           placeholder="Введите широту..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="longitude"
+                           placeholder="Введите долготу..."/>
+                </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Добавить</button>
@@ -165,6 +173,14 @@
 <div class="container mt-5 ml-5">
     <div id="map" class="map" style="width: 1200px; height: 600px"></div>
     {{> mapParts/mapScriptsSources}}
+</div>
+<form action="/couriersCoordinates" method="get">
+    <div class="container mt-5 ml-5">
+        <button type="submit" class="btn btn-primary">Тест данных</button>
+    </div>
+</form>
+<div class="container mt-5 ml-5">
+    <button id="test" class="btn btn-primary">Показать координаты курьера</button>
 </div>
 <div class="container mt-5 ml-4">
     <div class="card-body">
@@ -183,6 +199,8 @@
                 <span><b>Зарплата: </b>{{salary}}<br/></span>
                 <span><b>Дата трудоустройства: </b>{{hireDate}}<br/></span>
                 <span><b>Премиальные: </b>{{premium}}<br/></span>
+                <span><b>Широта: </b>{{latitude}}<br/></span>
+                <span><b>Долгота: </b>{{longitude}}<br/></span>
             </div>
         </div>
         {{/couriers}}

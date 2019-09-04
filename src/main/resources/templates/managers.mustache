@@ -8,6 +8,9 @@
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
 <div class="container mt-5 ml-5">
+    <h1>Managers management page</h1>
+</div>
+<div class="container mt-5 ml-5">
     {{#filterCheck}}
     <div class="alert alert-danger" role="alert" style="width: 736px">
         {{filterCheck}}
@@ -147,26 +150,49 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-4">
-    <div class="card-body">
+<div class="container mt-5 ml-5">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Сотовый</th>
+            <th scope="col">Зарплата</th>
+            <th scope="col">Трудоустроился</th>
+            <th scope="col">Премиальные</th>
+        </tr>
+        </thead>
+        <tbody>
         {{#managers}}
-        <div class="card my-3" style="width:600px">
-            <div class="card-footer text-muted">
-                <span>ID: {{managerId}}</span>
-            </div>
-            <div class="container ml-1">
-                <span><b>Имя:</b> {{firstName}}<br/></span>
-                <span><b>Фамилия:</b> {{lastName}}<br/></span>
-                <span><b>Электронная почта:</b> {{email}}<br/></span>
-                <span><b>Номер телефона:</b> {{phoneNumber}}<br/></span>
-                <span><b>Зарплата:</b> {{salary}}<br/></span>
-                <span><b>Дата трудоустройства:</b> {{hireDate}}<br/></span>
-                <span><b>Размер премиальных:</b> {{premium}}<br/></span>
-            </div>
-        </div>
+        <tr>
+            <th scope="row">{{managerId}}</th>
+            <td>{{firstName}}</td>
+            <td>{{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{phoneNumber}}</td>
+            <td>{{salary}}</td>
+            <td>{{hireDate}}</td>
+            <td>{{premium}}</td>
+        </tr>
         {{/managers}}
-    </div>
+        {{^managers}}
+        <tr>
+            <th scope="row">List of managers is empty yet!</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {{/managers}}
+        </tbody>
+    </table>
 </div>
+<p class="text-center mt-5">Delivery Service. 2019</p>
 {{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

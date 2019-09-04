@@ -8,6 +8,9 @@
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
 <div class="container mt-5 ml-5">
+    <h1>Order details management page</h1>
+</div>
+<div class="container mt-5 ml-5">
     {{#filterCheck}}
     <div class="alert alert-danger" role="alert" style="width: 736px">
         {{filterCheck}}
@@ -79,7 +82,8 @@
                     <input type="text" class="form-control" name="orderDate" placeholder="Изменить дату доставки..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="orderAddress" placeholder="Изменить адрес доставки..."/>
+                    <input type="text" class="form-control" name="orderAddress"
+                           placeholder="Изменить адрес доставки..."/>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="comment" placeholder="Изменить комментарий..."/>
@@ -118,22 +122,37 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-4">
-    <div class="card-body">
+<div class="container mt-5 ml-5">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Дата доставки</th>
+            <th scope="col">Адрес доставки</th>
+            <th scope="col">Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
         {{#orderDetails}}
-        <div class="card my-3" style="width:600px">
-            <div class="card-footer text-muted">
-                <span>ID: {{orderDetailsId}}</span>
-            </div>
-            <div class="container ml-1">
-                <span><b>Дата доставки:</b> {{orderDate}}<br/></span>
-                <span><b>Адрес доставки:</b> {{orderAddress}}<br/></span>
-                <span><b>Комментарий:</b> {{comment}}<br/></span>
-            </div>
-        </div>
+        <tr>
+            <th scope="row">{{orderDetailsId}}</th>
+            <td>{{orderDate}}</td>
+            <td>{{orderAddress}}</td>
+            <td>{{comment}}</td>
+        </tr>
         {{/orderDetails}}
-    </div>
+        {{^orderDetails}}
+        <tr>
+            <th scope="row">List of detailed order information is empty yet!</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {{/orderDetails}}
+        </tbody>
+    </table>
 </div>
+<p class="text-center mt-5">Delivery Service. 2019</p>
 {{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

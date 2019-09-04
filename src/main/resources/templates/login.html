@@ -8,6 +8,9 @@
 <body>
 <div th:insert="~{interfaceParts/bootstrapNavBarThymeleaf :: copy}"></div>
 <div class="container mt-5 ml-5">
+    <p class="h1 ml-3">Authorization page</p>
+</div>
+<div class="container mt-5 ml-5">
     <div th:if="${param.error}">
         <div class="alert alert-danger" role="alert" style="width: 750px">
             <span>  Invalid username or password. Please, <a th:href="@{/registration}" class="alert-link">register</a>, if you haven’t done so yet.</span>

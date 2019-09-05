@@ -52,13 +52,14 @@ jQuery(document).ready(function ($) {
             url: "/couriersCoordinates",
             type: "GET",
             dataType: 'json',
-            success: function (data, status) {
-                var stringifyData = JSON.stringify(data);
-                var json = JSON.parse(stringifyData);
-                var latitude = json[Object.keys(json)[0]];
-                var longitude = json[Object.keys(json)[1]];
-                alert("Latitude: " + latitude + "\nLongitude: " + longitude);
-                var destination1 = L.marker([latitude, longitude]).addTo(myDeliveryServiceMap);
+            success: function (data) {
+                for (var i = 0; i <= data.toString().length - 1; i++) {
+                    alert(data.result[i].latitude + "\n" + data.result[i].longitude);
+                    var latitude = data.result[i].latitude;
+                    var longitude = data.result[i].longitude;
+                    var courierMarker = L.marker([latitude, longitude]).addTo(myDeliveryServiceMap);
+                    courierMarker.bindPopup(data.result[i].firstName + data.result[i].lastName);
+                }
             }
         })
     });

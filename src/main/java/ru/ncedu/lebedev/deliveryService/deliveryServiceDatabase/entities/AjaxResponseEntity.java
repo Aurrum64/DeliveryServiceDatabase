@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class AjaxResponseEntity {
 
-  /*  String latitude;
-    String longitude;*/
     String msg;
     Iterable<CouriersEntity> result;
 }

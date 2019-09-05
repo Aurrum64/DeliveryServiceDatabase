@@ -160,18 +160,11 @@ public class CouriersController {
 
         AjaxResponseEntity result = new AjaxResponseEntity();
         Iterable<CouriersEntity> couriers = couriersRepository.findAll();
-        /*List<String> coordinates = new ArrayList<>();*/
-
         if (!couriers.iterator().hasNext()) {
             result.setMsg("Couriers list is empty!");
         } else {
             result.setMsg("success");
         }
-/*        for (Iterator<CouriersEntity> iterator = couriers.iterator(); iterator.hasNext(); ) {
-            CouriersEntity courier = iterator.next();
-            result.setLatitude(Double.toString(courier.getLatitude()));
-            result.setLongitude(Double.toString(courier.getLongitude()));
-        }*/
         result.setResult(couriers);
         return ResponseEntity.ok(result);
     }

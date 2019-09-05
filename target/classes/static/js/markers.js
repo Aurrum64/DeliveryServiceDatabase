@@ -24,27 +24,7 @@ destination4.bindPopup("Точка доставки №4");
 destination5.bindPopup("Точка доставки №5");
 destination6.bindPopup("Точка доставки №6");*/
 
-/*jQuery(document).ready(function($) {
-    $("#test").click(function () {
-        var marker;
-        $.ajax({
-            url: "/ajaxTest",
-            type: "GET",
-            dataType: 'json',
-            success: function (data) {
-                marker = L.marker(data).addTo(myDeliveryServiceMap);
-            }
-        });
-    });
-});*/
-
-/*jQuery(document).ready(function ($) {
-    $("#test").click(function () {
-        $.get("/couriersCoordinates", function (data, status) {
-            alert("Data: " + data. + "\nStatus: " + status);
-        });
-    });
-});*/
+var courierMarker;
 
 jQuery(document).ready(function ($) {
     $("#test").click(function () {
@@ -54,11 +34,12 @@ jQuery(document).ready(function ($) {
             dataType: 'json',
             success: function (data) {
                 for (var i = 0; i <= data.toString().length - 1; i++) {
-                    alert(data.result[i].latitude + "\n" + data.result[i].longitude);
                     var latitude = data.result[i].latitude;
                     var longitude = data.result[i].longitude;
-                    var courierMarker = L.marker([latitude, longitude]).addTo(myDeliveryServiceMap);
-                    courierMarker.bindPopup(data.result[i].firstName + data.result[i].lastName);
+                    courierMarker = L.marker([latitude, longitude],
+                        {icon: oldMan}).addTo(myDeliveryServiceMap);
+                    courierMarker.bindPopup("Курьер №" + [i + 1] + "<br>" +
+                        data.result[i].firstName + " " + data.result[i].lastName);
                 }
             }
         })

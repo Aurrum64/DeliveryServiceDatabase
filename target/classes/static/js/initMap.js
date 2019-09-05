@@ -1,4 +1,10 @@
-var myDeliveryServiceMap = L.map('map').setView([55.75195, 37.62165], 11.5);
+var myDeliveryServiceMap = L.map('map', {
+    center: [55.75195, 37.62165],
+    zoom: 11.5,
+    minZoom: 10,
+    maxZoom: 13,
+    scrollWheelZoom: false
+});
 
 //OneBox maps tiles - !!! ТАРИФИЦИРУЮТСЯ !!!
 /*

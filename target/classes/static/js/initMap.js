@@ -6,18 +6,50 @@ var myDeliveryServiceMap = L.map('map', {
     scrollWheelZoom: false
 });
 
-//OneBox maps tiles - !!! ТАРИФИЦИРУЮТСЯ !!!
-/*
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' +
-    'pk.eyJ1IjoiYXVycnVtIiwiYSI6ImNqemUwZXFqbTAyNjczYm9id3Fia3g1Z3UifQ.UoaEszu5I-aX3iVxzQpTdw', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
-        ' <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiYXVycnVtIiwiYSI6ImNqemUwZXFqbTAyNjczYm9id3Fia3g1Z3UifQ.UoaEszu5I-aX3iVxzQpTdw'
-}).addTo(myDeliveryServiceMap);*/
-
-//Open street maps tiles - !!! БЕСПЛАТНЫЕ !!!
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myDeliveryServiceMap);
+
+const address = "Москва, ул. Тверская";
+L.esri.Geocoding.geocode()
+    .text(address)
+    .run((err, results, response) => {
+        console.log(results.results[0].latlng);
+        const {lat, lng} = results.results[0].latlng;
+        L.marker([lat, lng])
+            .addTo(myDeliveryServiceMap)
+            .bindPopup(address)
+            .openPopup();
+    });
+
+
+/*L.Control.geocoder().addTo(myDeliveryServiceMap);*/
+
+/*geocoder = new L.Control.Geocoder.Nominatim();
+
+var addres = "Москва, ул. Тверская";
+
+geocoder.geocode(addres, function (results) {
+    markGeocode(results);*/
+/*  var latLng = L.LatLng(results[0].center.lat, results[0].center.lng);
+  var marker = L.marker([latLng]).addTo(myDeliveryServiceMap);*/
+/*})
+;*/
+
+/*
+L.Control.geocoder().addTo(myDeliveryServiceMap);
+
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false
+})
+    .on('markgeocode', function(e) {
+        var bbox = e.geocode.bbox;
+        var poly = L.polygon([
+            bbox.getSouthEast(),
+            bbox.getNorthEast(),
+            bbox.getNorthWest(),
+            bbox.getSouthWest()
+        ]).addTo(myDeliveryServiceMap);
+        map.fitBounds(poly.getBounds());
+    })
+    .addTo(myDeliveryServiceMap);*/

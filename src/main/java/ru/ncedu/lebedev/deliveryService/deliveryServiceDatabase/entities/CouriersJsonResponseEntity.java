@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AjaxResponseEntity {
+public class CouriersJsonResponseEntity {
 
     String msg;
     Iterable<CouriersEntity> result;

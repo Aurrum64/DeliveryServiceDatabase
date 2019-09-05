@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.http.ResponseEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.AjaxResponseEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersJsonResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
@@ -158,7 +158,7 @@ public class CouriersController {
     @ResponseBody
     public ResponseEntity<?> sendCouriersCoordinates() {
 
-        AjaxResponseEntity result = new AjaxResponseEntity();
+        CouriersJsonResponseEntity result = new CouriersJsonResponseEntity();
         Iterable<CouriersEntity> couriers = couriersRepository.findAll();
         if (!couriers.iterator().hasNext()) {
             result.setMsg("Couriers list is empty!");

@@ -2,11 +2,14 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.DetailsJsonResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 
@@ -111,5 +114,20 @@ public class OrderDetailsController {
             }
         }
         return "redirect:/orderDetails";
+    }
+
+    @GetMapping(value = "/deliveryCoordinates", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendDeliveryCoordinates() {
+
+        DetailsJsonResponseEntity result = new DetailsJsonResponseEntity();
+        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+        if (!orderDetails.iterator().hasNext()) {
+            result.setMsg("Order details list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(orderDetails);
+        return ResponseEntity.ok(result);
     }
 }

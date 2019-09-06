@@ -24,6 +24,8 @@ $(document).ready((function () {
                     router: L.Routing.graphHopper('585def41-7ae7-4420-a2b3-b71c919bc166'),
                     routeWhileDragging: true
                 }).addTo(myDeliveryServiceMap);
+                setCouriersMarkers();
+                setDeliveryMarkers();
             }
         }
     });

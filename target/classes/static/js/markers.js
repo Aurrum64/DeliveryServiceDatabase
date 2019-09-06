@@ -13,9 +13,9 @@ var destination5 = L.marker([55.694843, 37.435023]).addTo(myDeliveryServiceMap);
 var destination6 = L.marker([55.790139, 37.814052]).addTo(myDeliveryServiceMap);*/
 
 var couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
-var courierMarker;
+var couriersMarkers = [];
 
-jQuery(document).ready(function ($) {
+$(document).ready((function () {
     $("#couriersCoordinates").click(function () {
         $.ajax({
             url: "/couriersCoordinates",
@@ -26,21 +26,31 @@ jQuery(document).ready(function ($) {
                 for (var i = 0; i <= data.toString().length - 1; i++) {
                     var latitude = data.result[i].latitude;
                     var longitude = data.result[i].longitude;
-                    courierMarker = L.marker([latitude, longitude],
+                    var courierMarker = L.marker([latitude, longitude],
                         {icon: oldMan}).addTo(couriersMarkersLayerGroup);
                     courierMarker.bindPopup("Курьер №" + [i + 1] + "<br>" +
                         data.result[i].firstName + " " + data.result[i].lastName);
+                    couriersMarkers[i] = courierMarker;
                 }
             }
         })
     });
-});
+}));
 
 var deliveryMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
-var deliveryMarker;
-var address;
+var deliveryMarkers = [];
 
-jQuery(document).ready(function ($) {
+function foo(address) {
+    console.log(address);
+    L.esri.Geocoding.geocode()
+        .text(address)
+        .run((err, results) => {
+            console.log(results.results[0].latlng.lat);
+            return results.results[0].latlng.lat;
+        });
+}
+
+$(document).ready((function () {
     $("#deliveryCoordinates").click(function () {
         $.ajax({
             url: "/deliveryCoordinates",
@@ -49,18 +59,30 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 deliveryMarkersLayerGroup.clearLayers();
                 for (var i = 0; i <= data.toString().length - 1; i++) {
-                    address = data.result[i].orderAddress;
-                    L.esri.Geocoding.geocode()
-                        .text(address)
-                        .run((err, results) => {
-                            var {lat, lng} = results.results[0].latlng;
-                            deliveryMarker = L.marker([lat, lng]).addTo(deliveryMarkersLayerGroup);
-                            deliveryMarker.bindPopup(address);
-                        });
+                    if (data.result[i] !== undefined) {
+                        var address = data.result[i].orderAddress;
+                        var lat = foo(address);
+                        console.log(lat);
+                    }
                 }
             }
         })
     });
-});
+}));
+
+/*function foo(address) {
+    L.esri.Geocoding.geocode()
+        .text(address)
+        .run((err, results) => {
+            /!*  var {lat, lng} = results.results[0].latlng;
+              lat = results.results[0].latlng.lat;
+              lng = results.results[0].latlng.lng;*!/
+            return results.results[0].latlng;
+            /!*  var deliveryMarker = L.marker([lat, lng]).addTo(deliveryMarkersLayerGroup);
+              deliveryMarker.bindPopup(address);
+              deliveryMarkers[i] = deliveryMarker;*!/
+        });
+}*/
+
 
 

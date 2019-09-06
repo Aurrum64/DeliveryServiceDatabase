@@ -1,15 +1,28 @@
-L.Routing.control({
-    waypoints: [
-        L.latLng(55.7422, 37.5719),
-        L.latLng(55.687086, 37.529789)
-    ],
-    lineOptions: {
-        styles: [{color: 'green', opacity: 1, weight: 4}]
-    },
-    router: L.Routing.graphHopper('585def41-7ae7-4420-a2b3-b71c919bc166'),
-    routeWhileDragging: true
-}).addTo(myDeliveryServiceMap);
+jQuery(document).ready(function ($) {
+    $("#buildRoute").click(function () {
+        console.log(couriersMarkersLayerGroup);
+        console.log(couriersMarkers[0]);
+        console.log(couriersMarkers[0]._latlng.lat);
+        console.log(couriersMarkers[0]._latlng.lng);
+        console.log(deliveryMarkers[0]);
+        console.log(deliveryMarkers[0]._latlng.lat);
+        console.log(deliveryMarkers[0]._latlng.lng);
+        L.Routing.control({
+            waypoints: [
+                L.latLng(55.7422, 37.5719),
+                L.latLng(55.687086, 37.529789)
+            ],
+            lineOptions: {
+                styles: [{color: 'green', opacity: 1, weight: 4}]
+            },
+            router: L.Routing.graphHopper('585def41-7ae7-4420-a2b3-b71c919bc166'),
+            routeWhileDragging: true
+        }).addTo(myDeliveryServiceMap);
+    });
+});
 
+
+/*
 L.Routing.control({
     waypoints: [
         L.latLng(55.684758, 37.738521),
@@ -35,4 +48,4 @@ L.Routing.control({
     },
     router: L.Routing.graphHopper('585def41-7ae7-4420-a2b3-b71c919bc166'),
     routeWhileDragging: true
-}).addTo(myDeliveryServiceMap);
+}).addTo(myDeliveryServiceMap);*/

@@ -12,8 +12,8 @@ var destination4 = L.marker([55.826479, 37.487208]).addTo(myDeliveryServiceMap);
 var destination5 = L.marker([55.694843, 37.435023]).addTo(myDeliveryServiceMap);
 var destination6 = L.marker([55.790139, 37.814052]).addTo(myDeliveryServiceMap);*/
 
-var couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
-var couriersMarkers = [];
+let couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
+let couriersMarkers = [];
 
 $(document).ready((function () {
     $("#couriersCoordinates").click(function () {
@@ -23,10 +23,10 @@ $(document).ready((function () {
             dataType: 'json',
             success: function (data) {
                 couriersMarkersLayerGroup.clearLayers();
-                for (var i = 0; i <= data.toString().length - 1; i++) {
-                    var latitude = data.result[i].latitude;
-                    var longitude = data.result[i].longitude;
-                    var courierMarker = L.marker([latitude, longitude],
+                for (let i = 0; i <= data.toString().length - 1; i++) {
+                    let latitude = data.result[i].latitude;
+                    let longitude = data.result[i].longitude;
+                    let courierMarker = L.marker([latitude, longitude],
                         {icon: oldMan}).addTo(couriersMarkersLayerGroup);
                     courierMarker.bindPopup("Курьер №" + [i + 1] + "<br>" +
                         data.result[i].firstName + " " + data.result[i].lastName);
@@ -37,18 +37,8 @@ $(document).ready((function () {
     });
 }));
 
-var deliveryMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
-var deliveryMarkers = [];
-
-function foo(address) {
-    console.log(address);
-    L.esri.Geocoding.geocode()
-        .text(address)
-        .run((err, results) => {
-            console.log(results.results[0].latlng.lat);
-            return results.results[0].latlng.lat;
-        });
-}
+let deliveryMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
+let deliveryMarkers = [];
 
 $(document).ready((function () {
     $("#deliveryCoordinates").click(function () {
@@ -58,31 +48,22 @@ $(document).ready((function () {
             dataType: 'json',
             success: function (data) {
                 deliveryMarkersLayerGroup.clearLayers();
-                for (var i = 0; i <= data.toString().length - 1; i++) {
-                    if (data.result[i] !== undefined) {
-                        var address = data.result[i].orderAddress;
-                        var lat = foo(address);
-                        console.log(lat);
-                    }
+                for (let i = 0; i <= data.toString().length - 1; i++) {
+                    let address = data.result[i].orderAddress;
+                    L.esri.Geocoding.geocode()
+                        .text(address)
+                        .run((err, results) => {
+                            /*let {lat, lng} = results.results[0].latlng;*/
+                            let latitude = results.results[0].latlng.lat;
+                            let longitude = results.results[0].latlng.lng;
+                            let deliveryMarker = L.marker([latitude, longitude]).addTo(deliveryMarkersLayerGroup);
+                            deliveryMarker.bindPopup(address);
+                        });
                 }
             }
         })
     });
 }));
-
-/*function foo(address) {
-    L.esri.Geocoding.geocode()
-        .text(address)
-        .run((err, results) => {
-            /!*  var {lat, lng} = results.results[0].latlng;
-              lat = results.results[0].latlng.lat;
-              lng = results.results[0].latlng.lng;*!/
-            return results.results[0].latlng;
-            /!*  var deliveryMarker = L.marker([lat, lng]).addTo(deliveryMarkersLayerGroup);
-              deliveryMarker.bindPopup(address);
-              deliveryMarkers[i] = deliveryMarker;*!/
-        });
-}*/
 
 
 

@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CouriersJsonResponseEntity {
+public class MovingCourierEntity {
 
-    private String msg;
-    private Iterable<CouriersEntity> result;
+    private Double lat;
+    private Double lng;
 }

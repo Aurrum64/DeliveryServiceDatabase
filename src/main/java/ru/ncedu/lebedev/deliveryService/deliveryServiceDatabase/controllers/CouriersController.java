@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersJsonResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.JsonResponse;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.MovingCourierEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
 import java.util.*;
@@ -167,5 +166,16 @@ public class CouriersController {
         }
         result.setResult(couriers);
         return ResponseEntity.ok(result);
+    }
+
+    @Transactional
+    @RequestMapping(value = "/movingCourierCoordinates",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public JsonResponse addPerson(@RequestBody MovingCourierEntity courier) {
+        couriersRepository.setLatitudeFor(courier.getLat(), 1);
+        couriersRepository.setLongitudeFor(courier.getLng(), 1);
+        return new JsonResponse("OK", "");
     }
 }

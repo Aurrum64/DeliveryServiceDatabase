@@ -60,8 +60,12 @@ $(document).ready((function () {
         function move() {
             routesLayerGroup.clearLayers();
             let moveRoute = polyline._latlngs.slice(i, polyline._latlngs.length);
+            let courierCoordinates = polyline._latlngs[i];
             console.log(moveRoute);
-            polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);
+            console.log(courierCoordinates);
+            sendMovingCoordinates(courierCoordinates);
+            /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
+            setCouriersMarkers();
             i++;
             if (i < howManyTimes) {
                 setTimeout(move, 400);
@@ -70,5 +74,17 @@ $(document).ready((function () {
     });
 }));
 
+
+function sendMovingCoordinates(courierCoordinate) {
+    $.ajax({
+        type: "POST",
+        url: "movingCourierCoordinates",
+        data: JSON.stringify(courierCoordinate),
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+        }
+    });
+}
 
 

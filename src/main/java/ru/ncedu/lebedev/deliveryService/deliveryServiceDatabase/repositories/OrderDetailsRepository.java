@@ -3,7 +3,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.OrderDetailsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
 import java.util.Date;
 import java.util.List;

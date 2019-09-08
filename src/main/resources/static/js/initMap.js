@@ -8,7 +8,6 @@ function initMap() {
         center: [55.75195, 37.62165],
         zoom: 11.5,
         minZoom: 10,
-        maxZoom: 14,
         scrollWheelZoom: false
     });
 

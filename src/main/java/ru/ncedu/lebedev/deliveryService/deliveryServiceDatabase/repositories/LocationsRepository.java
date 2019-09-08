@@ -3,7 +3,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.LocationsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.LocationsEntity;
 
 import java.util.List;
 

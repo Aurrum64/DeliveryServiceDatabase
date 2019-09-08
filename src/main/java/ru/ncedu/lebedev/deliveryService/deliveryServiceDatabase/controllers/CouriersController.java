@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersJsonResponseEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.JsonResponse;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.MovingCourierEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendCouriersToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
 import java.util.*;
@@ -157,7 +157,7 @@ public class CouriersController {
     @ResponseBody
     public ResponseEntity<?> sendCouriersCoordinates() {
 
-        CouriersJsonResponseEntity result = new CouriersJsonResponseEntity();
+        SendCouriersToAjax result = new SendCouriersToAjax();
         Iterable<CouriersEntity> couriers = couriersRepository.findAll();
         if (!couriers.iterator().hasNext()) {
             result.setMsg("Couriers list is empty!");
@@ -173,9 +173,9 @@ public class CouriersController {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public JsonResponse courierMove(@RequestBody MovingCourierEntity courier) {
+    public ControllerAnswerToAjax courierMove(@RequestBody CourierCoordinateAfterMove courier) {
         couriersRepository.setLatitudeFor(courier.getLat(), 1);
         couriersRepository.setLongitudeFor(courier.getLng(), 1);
-        return new JsonResponse("Moved, OK!", "");
+        return new ControllerAnswerToAjax("Moved, OK!", "");
     }
 }

@@ -6,8 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -117,7 +120,7 @@ public class OrderDetailsController {
     @ResponseBody
     public ResponseEntity<?> sendDeliveryCoordinates() {
 
-        DetailsJsonResponseEntity result = new DetailsJsonResponseEntity();
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
         if (!orderDetails.iterator().hasNext()) {
             result.setMsg("Order details list is empty!");
@@ -133,8 +136,8 @@ public class OrderDetailsController {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public JsonResponse changeDeliveryStatus(@RequestBody MovingCourierEntity courier) {
+    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CourierCoordinateAfterMove courier) {
         orderDetailsRepository.setStatusFor("Заказ доставлен", 1);
-        return new JsonResponse("Status changed, OK!", "");
+        return new ControllerAnswerToAjax("Status changed, OK!", "");
     }
 }

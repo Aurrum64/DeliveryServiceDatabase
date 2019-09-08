@@ -1,4 +1,4 @@
-package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities;
+package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities;
 
 import lombok.Data;
 
@@ -6,19 +6,19 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "managers")
+@Table(name = "couriers")
 @Data
-public class ManagersEntity {
+public class CouriersEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "manager_id")
-    private Integer managerId;
+    @Column(name = "courier_id")
+    private Integer courierId;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "e_mail")
@@ -26,6 +26,9 @@ public class ManagersEntity {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "rating")
+    private Integer rating;
 
     @Column(name = "salary")
     private Integer salary;
@@ -36,4 +39,13 @@ public class ManagersEntity {
 
     @Column(name = "premium")
     private Integer premium;
+
+    @Column(name = "department_id")
+    private Integer departmentId;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
 }

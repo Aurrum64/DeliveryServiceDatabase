@@ -1,6 +1,7 @@
-package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities;
+package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities;
 
 import lombok.Data;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrdersEntity;
 
 import javax.persistence.*;
 import java.util.Date;

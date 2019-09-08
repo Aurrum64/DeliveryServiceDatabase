@@ -63,7 +63,7 @@ function setDeliveryMarkers() {
                                 let latitude = results.results[0].latlng.lat;
                                 let longitude = results.results[0].latlng.lng;
                                 let deliveryMarker = L.marker([latitude, longitude],
-                                    {icon: deliveryPoint}).addTo(deliveryMarkersLayerGroup);
+                                    {icon: notDeliveredOrderPoint}).addTo(deliveryMarkersLayerGroup);
                                 deliveryMarker.bindPopup(address);
                                 deliveryMarkers[i] = deliveryMarker;
                             });

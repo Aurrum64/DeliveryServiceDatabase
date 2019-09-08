@@ -1,0 +1,45 @@
+<html>
+<body>
+<div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <form method="post">
+        <input type="text" name="departmentId" placeholder="Введите уникальный идентификатор департамента"/>
+        <input type="text" name="managerId" placeholder="Введите уникальный идентификатор менеджера"/>
+        <input type="text" name="courierId" placeholder="Введите уникальный идентификатор курьера"/>
+        <input type="text" name="paymentMethod" placeholder="Введите способ оплаты"/>
+        <input type="text" name="orderPrice" placeholder="Введите стоимость заказа"/>
+        <input type="text" name="discount" placeholder="Введите скидку"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<div>
+    <form method="post" action="ordersFilter">
+        <input type="text" name="paymentMeth" placeholder="Найти по способу оплаты"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Найти</button>
+    </form>
+</div>
+<div><b>Список заказов:</b></div>
+{{#orders}}
+    <div>
+        <span>{{orderId}}</span>
+        <b>|</b>
+        <i>{{departmentId}}</i>
+        <b>|</b>
+        <span>{{courierId}}</span>
+        <b>|</b>
+        <b>{{paymentMethod}}</b>
+        <b>|</b>
+        <span>{{orderPrice}}</span>
+        <b>|</b>
+        <i>{{discount}}</i>
+    </div>
+{{/orders}}
+</body>
+</html>

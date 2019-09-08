@@ -1,0 +1,47 @@
+<html>
+<body>
+<div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <form method="post">
+        <input type="text" name="name" placeholder="Введите имя"/>
+        <input type="text" name="surname" placeholder="Введите фамилию"/>
+        <input type="text" name="email" placeholder="Введите адрес почты"/>
+        <input type="text" name="telephone" placeholder="Введите номер телефона"/>
+        <input type="text" name="rating" placeholder="Введите рейтинг"/>
+        <input type="text" name="address" placeholder="Введите адрес"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<div>
+    <form method="post" action="/clientsFilter">
+        <input type="text" name="surname" placeholder="Найти по фамилии"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">Найти</button>
+    </form>
+</div>
+<div><b>Список клиентов:</b></div>
+{{#clients}}
+    <div>
+        <span>{{clientId}}</span>
+        <b>|</b>
+        <i>{{name}}</i>
+        <b>|</b>
+        <span>{{surname}}</span>
+        <b>|</b>
+        <b>{{email}}</b>
+        <b>|</b>
+        <span>{{telephone}}</span>
+        <b>|</b>
+        <i>{{rating}}</i>
+        <b>|</b>
+        <span>{{address}}</span>
+    </div>
+{{/clients}}
+</body>
+</html>

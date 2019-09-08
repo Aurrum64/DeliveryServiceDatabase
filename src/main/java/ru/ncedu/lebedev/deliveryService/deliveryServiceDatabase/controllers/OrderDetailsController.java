@@ -5,12 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.DetailsJsonResponseEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.OrderDetailsEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 
 import java.util.Date;
@@ -42,6 +38,7 @@ public class OrderDetailsController {
         orderDetail.setOrderDate(orderDate);
         orderDetail.setOrderAddress(orderAddress);
         orderDetail.setComment(comment);
+        orderDetail.setStatus("Заказ не доставлен");
         orderDetailsRepository.save(orderDetail);
         return "redirect:/orderDetails";
     }
@@ -129,5 +126,15 @@ public class OrderDetailsController {
         }
         result.setResult(orderDetails);
         return ResponseEntity.ok(result);
+    }
+
+    @Transactional
+    @RequestMapping(value = "/changeDeliveryStatus",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public JsonResponse changeDeliveryStatus(@RequestBody MovingCourierEntity courier) {
+        orderDetailsRepository.setStatusFor("Заказ доставлен", 1);
+        return new JsonResponse("Status changed, OK!", "");
     }
 }

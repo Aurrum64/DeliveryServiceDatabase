@@ -37,4 +37,8 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
     @Modifying
     @Query("update OrderDetailsEntity o set o.comment = ?1 where o.orderDetailsId = ?2")
     void setCommentFor(String comment, Integer id);
+
+    @Modifying
+    @Query("update OrderDetailsEntity o set o.status = ?1 where o.orderDetailsId = ?2")
+    void setStatusFor(String status, Integer id);
 }

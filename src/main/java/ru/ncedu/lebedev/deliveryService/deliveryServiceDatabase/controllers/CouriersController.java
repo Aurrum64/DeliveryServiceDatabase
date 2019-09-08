@@ -173,9 +173,9 @@ public class CouriersController {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public JsonResponse addPerson(@RequestBody MovingCourierEntity courier) {
+    public JsonResponse courierMove(@RequestBody MovingCourierEntity courier) {
         couriersRepository.setLatitudeFor(courier.getLat(), 1);
         couriersRepository.setLongitudeFor(courier.getLng(), 1);
-        return new JsonResponse("OK", "");
+        return new JsonResponse("Moved, OK!", "");
     }
 }

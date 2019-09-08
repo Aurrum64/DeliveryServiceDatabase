@@ -130,6 +130,7 @@
             <th scope="col">Дата доставки</th>
             <th scope="col">Адрес доставки</th>
             <th scope="col">Комментарий</th>
+            <th scope="col">Статус доставки</th>
         </tr>
         </thead>
         <tbody>
@@ -139,11 +140,13 @@
             <td>{{orderDate}}</td>
             <td>{{orderAddress}}</td>
             <td>{{comment}}</td>
+            <td>{{status}}</td>
         </tr>
         {{/orderDetails}}
         {{^orderDetails}}
         <tr>
             <th scope="row">List of detailed order information is empty yet!</th>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

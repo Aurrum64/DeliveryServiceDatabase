@@ -13,7 +13,7 @@ public class OrderDetailsEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private OrdersEntity ordersEntity;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_details_id")
@@ -28,4 +28,7 @@ public class OrderDetailsEntity {
 
     @Column(name = "comment")
     private String comment;
+
+    @Column(name = "delivery_status")
+    private String status;
 }

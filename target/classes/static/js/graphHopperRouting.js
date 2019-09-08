@@ -67,6 +67,9 @@ $(document).ready((function () {
             /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
             setCouriersMarkers();
             i++;
+            if (i === polyline._latlngs.length) {
+                changeDeliveryStatus(courierCoordinates);
+            }
             if (i < howManyTimes) {
                 setTimeout(move, 400);
             }
@@ -83,8 +86,18 @@ function sendMovingCoordinates(courierCoordinate) {
         contentType: 'application/json',
         success: function (data) {
             console.log(data);
-            /*if(data.status == 'OK') alert('Person has been added');
-            else alert('Failed adding person: ' + data.status + ', ' + data.errorMessage);*/
+        }
+    });
+}
+
+function changeDeliveryStatus(courierCoordinate) {
+    $.ajax({
+        type: "POST",
+        url: "changeDeliveryStatus",
+        data: JSON.stringify(courierCoordinate),
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
         }
     });
 }

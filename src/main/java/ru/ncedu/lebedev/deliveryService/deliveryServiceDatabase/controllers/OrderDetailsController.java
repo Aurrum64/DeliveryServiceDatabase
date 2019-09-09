@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ChangeStatusForOrderDetailsId;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
@@ -136,8 +137,8 @@ public class OrderDetailsController {
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CourierCoordinateAfterMove courier) {
-        orderDetailsRepository.setStatusFor("Заказ доставлен", 1);
+    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {
+        orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());
         return new ControllerAnswerToAjax("OK", "");
     }
 }

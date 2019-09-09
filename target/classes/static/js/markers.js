@@ -38,6 +38,7 @@ function setCouriersMarkers() {
 
 let notDeliveredMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let notDeliveredMarkers = [];
+let deliveryInfos = [];
 
 $(document).ready((function () {
     $("#deliveryCoordinates").click(function () {
@@ -65,6 +66,7 @@ function setNotDeliveredMarkers() {
                                 .run((err, results) => {
                                     let latitude = results.results[0].latlng.lat;
                                     let longitude = results.results[0].latlng.lng;
+                                    deliveryInfos[i] = data.result[i];
                                     let deliveryMarker = L.marker([latitude, longitude],
                                         {icon: notDeliveredOrderPoint}).addTo(notDeliveredMarkersLayerGroup);
                                     deliveryMarker.bindPopup("<b>Заказ по адресу:</b> " + address + "<br>" +
@@ -97,7 +99,7 @@ function setDeliveredMarkers() {
         success: function (data) {
             deliveredMarkersLayerGroup.clearLayers();
             if (data.result[0] === undefined) {
-                alert("Please, add order details with delivery address to the system first!");
+                alert("List of delivered orders is empty, finish one or more orders!");
             } else {
                 for (let i = 0; i <= data.toString().length - 1; i++) {
                     if (data.result[i] !== undefined) {
@@ -154,5 +156,5 @@ $(document).ready((function () {
 }));
 
 function hideDeliveredOrderPoints() {
-    deliveredMarkers.clearLayers();
+    deliveredMarkersLayerGroup.clearLayers();
 }

@@ -52,36 +52,38 @@ function buildRoute() {
 
 $(document).ready((function () {
     $("#move").click(function () {
-        for (let i = 0; i < polylines.length; i++) {
-            let j = 0;
-            let howManyTimes = polylines[i]._latlngs.length;
+        if (couriersMarkers[0] === undefined || notDeliveredMarkers[0] === undefined) {
+            alert("Please, build a route!");
+        } else {
+            for (let i = 0; i < polylines.length; i++) {
+                let j = 0;
+                let howManyTimes = polylines[i]._latlngs.length;
 
-            move();
+                move();
 
-            function move() {
-                routesLayerGroup.clearLayers();
-                let moveRoute = polylines[i]._latlngs.slice(j, polylines[i]._latlngs.length);
-                let courierCoordinates = polylines[i]._latlngs[j];
-                let currentCourierInfo = JSON.stringify({
-                    lat: polylines[i]._latlngs[j].lat,
-                    lng: polylines[i]._latlngs[j].lng,
-                    courierId: couriersInfos[i].courierId
-                });
-                sendMovingCoordinates(currentCourierInfo);
-                /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
-                setCouriersMarkers();
-                j++;
-                if (j === polylines[i]._latlngs.length) {
-                    changeDeliveryStatus(courierCoordinates);
-                    hideCouriersMarkers();
-                    hideNotDeliveredOrderPoints();
-                    hideDeliveredOrderPoints();
+                function move() {
+                    routesLayerGroup.clearLayers();
+                    let moveRoute = polylines[i]._latlngs.slice(j, polylines[i]._latlngs.length);
+                    let courierCoordinates = polylines[i]._latlngs[j];
+                    let currentCourierInfo = JSON.stringify({
+                        lat: polylines[i]._latlngs[j].lat,
+                        lng: polylines[i]._latlngs[j].lng,
+                        courierId: couriersInfos[i].courierId
+                    });
+                    sendMovingCoordinates(currentCourierInfo);
+                    /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
                     setCouriersMarkers();
-                    setNotDeliveredMarkers();
-                    setDeliveredMarkers();
-                }
-                if (j < howManyTimes) {
-                    setTimeout(move, 400);
+                    j++;
+                    if (j === polylines[i]._latlngs.length) {
+                        let currentOrderInfo = JSON.stringify({orderDetailsId: deliveryInfos[i].orderDetailsId});
+                        console.log(deliveryInfos[i]);
+                        changeDeliveryStatus(currentOrderInfo);
+                        hideCouriersMarkers();
+                        setDeliveredMarkers();
+                    }
+                    if (j < howManyTimes) {
+                        setTimeout(move, 400);
+                    }
                 }
             }
         }
@@ -105,11 +107,11 @@ function sendMovingCoordinates(currentCourierInfo) {
     });
 }
 
-function changeDeliveryStatus(courierCoordinate) {
+function changeDeliveryStatus(currentOrderInfo) {
     $.ajax({
         type: "POST",
         url: "changeDeliveryStatus",
-        data: JSON.stringify(courierCoordinate),
+        data: currentOrderInfo,
         contentType: 'application/json',
         success: function (data) {
             if (data.status === 'OK') {

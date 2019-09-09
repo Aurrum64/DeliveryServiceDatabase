@@ -67,13 +67,18 @@ $(document).ready((function () {
                     lng: polylines[i]._latlngs[j].lng,
                     courierId: couriersInfos[i].courierId
                 });
-                console.log(solutionsInfos[i]);
                 sendMovingCoordinates(currentCourierInfo);
                 /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
                 setCouriersMarkers();
                 j++;
                 if (j === polylines[i]._latlngs.length) {
                     changeDeliveryStatus(courierCoordinates);
+                    hideCouriersMarkers();
+                    hideNotDeliveredOrderPoints();
+                    hideDeliveredOrderPoints();
+                    setCouriersMarkers();
+                    setNotDeliveredMarkers();
+                    setDeliveredMarkers();
                 }
                 if (j < howManyTimes) {
                     setTimeout(move, 400);

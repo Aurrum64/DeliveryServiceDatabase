@@ -73,6 +73,12 @@ $(document).ready((function () {
                 j++;
                 if (j === polylines[i]._latlngs.length) {
                     changeDeliveryStatus(courierCoordinates);
+                    hideCouriersMarkers();
+                    hideNotDeliveredOrderPoints();
+                    hideDeliveredOrderPoints();
+                    setCouriersMarkers();
+                    setNotDeliveredMarkers();
+                    setDeliveredMarkers();
                 }
                 if (j < howManyTimes) {
                     setTimeout(move, 400);

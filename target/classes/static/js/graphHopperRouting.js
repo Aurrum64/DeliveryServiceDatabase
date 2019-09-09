@@ -1,7 +1,6 @@
 let routesLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let routes = [];
-let line;
-let polyline;
+let solutionsInfos = [];
 let polylines = [];
 
 $(document).ready((function () {
@@ -43,7 +42,7 @@ function buildRoute() {
                 });
             routes[i].addTo(myDeliveryServiceMap);
             routes[i].on('routesfound', function (e) {
-                /*line = L.Routing.line(e.routes[0]).addTo(routesLayerGroup);*/
+                solutionsInfos[i] = L.Routing.line(e.routes[0]);
                 polylines[i] = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
             });
         }
@@ -68,10 +67,7 @@ $(document).ready((function () {
                     lng: polylines[i]._latlngs[j].lng,
                     courierId: couriersInfos[i].courierId
                 });
-                console.log(couriersInfos[0]);
-                console.log(moveRoute);
-                console.log(courierCoordinates);
-                console.log(currentCourierInfo);
+                console.log(solutionsInfos[i]);
                 sendMovingCoordinates(currentCourierInfo);
                 /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
                 setCouriersMarkers();

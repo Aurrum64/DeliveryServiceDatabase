@@ -68,7 +68,8 @@ function setNotDeliveredMarkers() {
                                     let longitude = results.results[0].latlng.lng;
                                     let deliveryMarker = L.marker([latitude, longitude],
                                         {icon: notDeliveredOrderPoint}).addTo(deliveryMarkersLayerGroup);
-                                    deliveryMarker.bindPopup(address);
+                                    deliveryMarker.bindPopup("<b>Заказ по адресу:</b> " + address + "<br>" +
+                                        "<b>Комментарий заказчика:</b> " + data.result[i].comment);
                                     notDeliveredMarkers[i] = deliveryMarker;
                                 });
                         }
@@ -107,7 +108,9 @@ function setDeliveredMarkers() {
                                     let longitude = results.results[0].latlng.lng;
                                     let deliveryMarker = L.marker([latitude, longitude],
                                         {icon: deliveredOrderPoint}).addTo(deliveryMarkersLayerGroup);
-                                    deliveryMarker.bindPopup(address);
+                                    deliveryMarker.bindPopup("<b>Заказ доставлен по адресу:</b> " + address + "<br>" +
+                                        "<b>Общее расстояние:</b> " + Math.round(solutionsInfos[i]._route.summary.totalDistance / 1000) + " километров<br>" +
+                                        "<b>Время в пути:</b> " + Math.round(solutionsInfos[i]._route.summary.totalTime % 3600 / 60) + " минут");
                                     deliveredMarkers[i] = deliveryMarker;
                                 });
                         }
@@ -117,5 +120,3 @@ function setDeliveredMarkers() {
         }
     })
 }
-
-

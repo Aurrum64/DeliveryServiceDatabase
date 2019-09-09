@@ -37,16 +37,17 @@ function setCouriersMarkers() {
 }
 
 let deliveryMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
-let deliveryMarkers = [];
+let notDeliveredMarkers = [];
+let deliveredMarkers = [];
 
 $(document).ready((function () {
     $("#deliveryCoordinates").click(function () {
 
-        setDeliveryMarkers();
+        setNotDeliveredMarkers();
     });
 }));
 
-function setDeliveryMarkers() {
+function setNotDeliveredMarkers() {
     $.ajax({
         url: "/deliveryCoordinates",
         type: "GET",
@@ -58,17 +59,58 @@ function setDeliveryMarkers() {
             } else {
                 for (let i = 0; i <= data.toString().length - 1; i++) {
                     if (data.result[i] !== undefined) {
-                        let address = data.result[i].orderAddress;
-                        L.esri.Geocoding.geocode()
-                            .text(address)
-                            .run((err, results) => {
-                                let latitude = results.results[0].latlng.lat;
-                                let longitude = results.results[0].latlng.lng;
-                                let deliveryMarker = L.marker([latitude, longitude],
-                                    {icon: notDeliveredOrderPoint}).addTo(deliveryMarkersLayerGroup);
-                                deliveryMarker.bindPopup(address);
-                                deliveryMarkers[i] = deliveryMarker;
-                            });
+                        if (data.result[i].status === "Заказ не доставлен") {
+                            let address = data.result[i].orderAddress;
+                            L.esri.Geocoding.geocode()
+                                .text(address)
+                                .run((err, results) => {
+                                    let latitude = results.results[0].latlng.lat;
+                                    let longitude = results.results[0].latlng.lng;
+                                    let deliveryMarker = L.marker([latitude, longitude],
+                                        {icon: notDeliveredOrderPoint}).addTo(deliveryMarkersLayerGroup);
+                                    deliveryMarker.bindPopup(address);
+                                    notDeliveredMarkers[i] = deliveryMarker;
+                                });
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
+$(document).ready((function () {
+    $("#showDeliveredOrders").click(function () {
+
+        setDeliveredMarkers();
+    });
+}));
+
+function setDeliveredMarkers() {
+    $.ajax({
+        url: "/deliveryCoordinates",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            deliveryMarkersLayerGroup.clearLayers();
+            if (data.result[0] === undefined) {
+                alert("Please, add order details with delivery address to the system first!");
+            } else {
+                for (let i = 0; i <= data.toString().length - 1; i++) {
+                    if (data.result[i] !== undefined) {
+                        if (data.result[i].status === "Заказ доставлен") {
+                            let address = data.result[i].orderAddress;
+                            L.esri.Geocoding.geocode()
+                                .text(address)
+                                .run((err, results) => {
+                                    let latitude = results.results[0].latlng.lat;
+                                    let longitude = results.results[0].latlng.lng;
+                                    let deliveryMarker = L.marker([latitude, longitude],
+                                        {icon: deliveredOrderPoint}).addTo(deliveryMarkersLayerGroup);
+                                    deliveryMarker.bindPopup(address);
+                                    deliveredMarkers[i] = deliveryMarker;
+                                });
+                        }
                     }
                 }
             }

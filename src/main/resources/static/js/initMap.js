@@ -6,8 +6,9 @@ function initMap() {
 
     myDeliveryServiceMap = L.map('map', {
         center: [55.75195, 37.62165],
-        zoom: 11.5,
+        zoom: 11,
         minZoom: 10,
+        maxZoom: 17,
         scrollWheelZoom: false
     });
 

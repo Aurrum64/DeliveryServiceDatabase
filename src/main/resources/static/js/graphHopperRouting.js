@@ -44,7 +44,7 @@ function buildRoute() {
             routes[i].addTo(myDeliveryServiceMap);
             routes[i].on('routesfound', function (e) {
                 /*line = L.Routing.line(e.routes[0]).addTo(routesLayerGroup);*/
-                polyline = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
+                polylines[i] = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
             });
         }
     }
@@ -53,38 +53,37 @@ function buildRoute() {
 
 $(document).ready((function () {
     $("#move").click(function () {
-        //       for (let j = 0; j < polylines.length; j++) {
-        let i = 0;
-        let howManyTimes = polyline._latlngs.length;
+        for (let i = 0; i < polylines.length; i++) {
+            let j = 0;
+            let howManyTimes = polylines[i]._latlngs.length;
 
-        move();
+            move();
 
-        function move() {
-            routesLayerGroup.clearLayers();
-            let moveRoute = polyline._latlngs.slice(i, polyline._latlngs.length);
-            let courierCoordinates = polyline._latlngs[i];
-            let currentCourierInfo = JSON.stringify({
-                lat: polyline._latlngs[i].lat,
-                lng: polyline._latlngs[i].lng,
-                courierId: couriersInfos[0].courierId
-            });
-            console.log(couriersInfos[0]);
-            console.log(moveRoute);
-            console.log(courierCoordinates);
-            console.log(currentCourierInfo);
-            sendMovingCoordinates(currentCourierInfo);
-            /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
-            setCouriersMarkers();
-            i++;
-            if (i === polyline._latlngs.length) {
-                changeDeliveryStatus(courierCoordinates);
-            }
-            if (i < howManyTimes) {
-                setTimeout(move, 400);
+            function move() {
+                routesLayerGroup.clearLayers();
+                let moveRoute = polylines[i]._latlngs.slice(j, polylines[i]._latlngs.length);
+                let courierCoordinates = polylines[i]._latlngs[j];
+                let currentCourierInfo = JSON.stringify({
+                    lat: polylines[i]._latlngs[j].lat,
+                    lng: polylines[i]._latlngs[j].lng,
+                    courierId: couriersInfos[i].courierId
+                });
+                console.log(couriersInfos[0]);
+                console.log(moveRoute);
+                console.log(courierCoordinates);
+                console.log(currentCourierInfo);
+                sendMovingCoordinates(currentCourierInfo);
+                /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
+                setCouriersMarkers();
+                j++;
+                if (j === polylines[i]._latlngs.length) {
+                    changeDeliveryStatus(courierCoordinates);
+                }
+                if (j < howManyTimes) {
+                    setTimeout(move, 400);
+                }
             }
         }
-
-        //      }
     });
 }));
 

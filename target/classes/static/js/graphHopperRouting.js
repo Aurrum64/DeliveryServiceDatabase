@@ -2,6 +2,7 @@ let routesLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let routes = [];
 let line;
 let polyline;
+let polylines = [];
 
 $(document).ready((function () {
     $("#buildRoute").click(function () {
@@ -43,7 +44,7 @@ function buildRoute() {
             routes[i].addTo(myDeliveryServiceMap);
             routes[i].on('routesfound', function (e) {
                 /*line = L.Routing.line(e.routes[0]).addTo(routesLayerGroup);*/
-                polyline = L.polyline(e.routes[0].coordinates, {color: 'green', weight: 3}).addTo(routesLayerGroup);
+                polyline = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
             });
         }
     }
@@ -52,6 +53,7 @@ function buildRoute() {
 
 $(document).ready((function () {
     $("#move").click(function () {
+        //       for (let j = 0; j < polylines.length; j++) {
         let i = 0;
         let howManyTimes = polyline._latlngs.length;
 
@@ -61,9 +63,16 @@ $(document).ready((function () {
             routesLayerGroup.clearLayers();
             let moveRoute = polyline._latlngs.slice(i, polyline._latlngs.length);
             let courierCoordinates = polyline._latlngs[i];
+            let currentCourierInfo = JSON.stringify({
+                lat: polyline._latlngs[i].lat,
+                lng: polyline._latlngs[i].lng,
+                courierId: couriersInfos[0].courierId
+            });
+            console.log(couriersInfos[0]);
             console.log(moveRoute);
             console.log(courierCoordinates);
-            sendMovingCoordinates(courierCoordinates);
+            console.log(currentCourierInfo);
+            sendMovingCoordinates(currentCourierInfo);
             /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
             setCouriersMarkers();
             i++;
@@ -74,18 +83,24 @@ $(document).ready((function () {
                 setTimeout(move, 400);
             }
         }
+
+        //      }
     });
 }));
 
 
-function sendMovingCoordinates(courierCoordinate) {
+function sendMovingCoordinates(currentCourierInfo) {
     $.ajax({
         type: "POST",
         url: "movingCourierCoordinates",
-        data: JSON.stringify(courierCoordinate),
+        data: currentCourierInfo,
         contentType: 'application/json',
         success: function (data) {
-            console.log(data);
+            if (data.status === 'OK') {
+                console.log('Courier moved!');
+            } else {
+                console.log('Courier moving failed!: ' + data.status + ', ' + data.errorMessage);
+            }
         }
     });
 }
@@ -97,7 +112,11 @@ function changeDeliveryStatus(courierCoordinate) {
         data: JSON.stringify(courierCoordinate),
         contentType: 'application/json',
         success: function (data) {
-            console.log(data);
+            if (data.status === 'OK') {
+                console.log('Delivery status changed!');
+            } else {
+                console.log('Failed to change delivery status!: ' + data.status + ', ' + data.errorMessage);
+            }
         }
     });
 }

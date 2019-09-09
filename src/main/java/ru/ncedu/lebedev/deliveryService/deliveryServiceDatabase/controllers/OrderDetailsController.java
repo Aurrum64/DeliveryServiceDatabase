@@ -138,6 +138,6 @@ public class OrderDetailsController {
     @ResponseBody
     public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CourierCoordinateAfterMove courier) {
         orderDetailsRepository.setStatusFor("Заказ доставлен", 1);
-        return new ControllerAnswerToAjax("Status changed, OK!", "");
+        return new ControllerAnswerToAjax("OK", "");
     }
 }

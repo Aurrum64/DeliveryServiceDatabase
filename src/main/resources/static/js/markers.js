@@ -1,5 +1,6 @@
 let couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let couriersMarkers = [];
+let couriersInfos = [];
 
 $(document).ready((function () {
     $("#couriersCoordinates").click(function () {
@@ -22,6 +23,7 @@ function setCouriersMarkers() {
                     if (data.result[i] !== undefined) {
                         let latitude = data.result[i].latitude;
                         let longitude = data.result[i].longitude;
+                        couriersInfos[i] = data.result[i];
                         let courierMarker = L.marker([latitude, longitude],
                             {icon: cargo}).addTo(couriersMarkersLayerGroup);
                         courierMarker.bindPopup("Курьер №" + [i + 1] + "<br>" +

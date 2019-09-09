@@ -174,8 +174,8 @@ public class CouriersController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax courierMove(@RequestBody CourierCoordinateAfterMove courier) {
-        couriersRepository.setLatitudeFor(courier.getLat(), 1);
-        couriersRepository.setLongitudeFor(courier.getLng(), 1);
-        return new ControllerAnswerToAjax("Moved, OK!", "");
+        couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
+        couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
+        return new ControllerAnswerToAjax("OK", "");
     }
 }

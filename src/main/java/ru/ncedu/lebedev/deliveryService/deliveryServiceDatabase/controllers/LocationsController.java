@@ -1,6 +1,7 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Locatio
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.LocationsRepository;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +70,35 @@ public class LocationsController {
             return "locations";
         } else {
             locationsRepository.deleteByLocationId(locationId);
+        }
+        return "redirect:/locations";
+    }
+
+    @Transactional
+    @PostMapping("/locationsUpdate")
+    public String updateCourier(@RequestParam Integer locationId,
+                                @RequestParam(required = false) String street,
+                                @RequestParam(required = false) Integer building,
+                                @RequestParam(required = false) String district,
+                                @RequestParam(required = false) String city,
+                                Map<String, Object> model) {
+        List<LocationsEntity> location = locationsRepository.findByLocationId(locationId);
+        if (location.isEmpty()) {
+            model.put("updateIdCheck", "Location with such index does not exist!");
+            return "locations";
+        } else {
+            if (!street.isEmpty()) {
+                locationsRepository.setStreetFor(street, locationId);
+            }
+            if (building != null) {
+                locationsRepository.setBuildingFor(building, locationId);
+            }
+            if (!district.isEmpty()) {
+                locationsRepository.setDistrictFor(district, locationId);
+            }
+            if (!city.isEmpty()) {
+                locationsRepository.setCityFor(city, locationId);
+            }
         }
         return "redirect:/locations";
     }

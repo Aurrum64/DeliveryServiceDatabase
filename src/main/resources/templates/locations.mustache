@@ -66,38 +66,26 @@
     {{/updateIdCheck}}
     <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
        aria-controls="collapseExample">
-        Открыть меню изменения информации о существующем в системе менеджере
+        Открыть меню изменения информации о существующей в системе локации
     </a>
     <div class="collapse" id="collapse1">
         <div class="form-group mt-3">
-            <form action="/managersUpdate" method="post">
+            <form action="/locationsUpdate" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="managerId"
-                           placeholder="Введите ID менеджера, информацию о котором нужно изменить..."/>
+                    <input type="text" class="form-control" name="locationId"
+                           placeholder="Введите ID локации, информацию о которой нужно изменить..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="firstName" placeholder="Изменить имя менеджера..."/>
+                    <input type="text" class="form-control" name="street" placeholder="Изменить улицу..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="lastName" placeholder="Изменить фамилию менеджера..."/>
+                    <input type="text" class="form-control" name="building" placeholder="Изменить номер дома..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="email" placeholder="Изменить e-mail менеджера..."/>
+                    <input type="text" class="form-control" name="district" placeholder="Изменить район..."/>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="phoneNumber"
-                           placeholder="Изменить телефон менеджера..."/>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="salary" placeholder="Изменить зарплату менеджера..."/>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="hireDate"
-                           placeholder="Изменить дату трудоустройства менеджера..."/>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="premium"
-                           placeholder="Изменить размер премии менеджера..."/>
+                    <input type="text" class="form-control" name="city" placeholder="Изменить город..."/>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group">

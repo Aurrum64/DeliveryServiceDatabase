@@ -13,8 +13,11 @@
 </div>
 <div class="container mt-5 ml-5">
     {{#filterCheck}}
-    <div class="alert alert-danger" role="alert" style="width: 736px">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
         {{filterCheck}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     {{/filterCheck}}
     <div class="form-row">
@@ -44,8 +47,11 @@
 </div>
 <div class="container mt-5 ml-5">
     {{#deleteIdCheck}}
-    <div class="alert alert-danger" role="alert" style="width: 305px">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
         {{deleteIdCheck}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     {{/deleteIdCheck}}
     <div class="form-row">
@@ -64,8 +70,11 @@
 </div>
 <div class="container mt-5 ml-5">
     {{#updateIdCheck}}
-    <div class="alert alert-danger" role="alert" style="width: 589px">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
         {{updateIdCheck}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     {{/updateIdCheck}}
     <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"

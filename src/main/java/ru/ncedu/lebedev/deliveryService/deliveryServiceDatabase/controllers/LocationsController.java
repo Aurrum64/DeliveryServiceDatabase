@@ -2,6 +2,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Locatio
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.LocationsRepository;
 
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -55,5 +57,18 @@ public class LocationsController {
             model.put("locations", locations);
         }
         return "locations";
+    }
+
+    @Transactional
+    @PostMapping("/locationsDelete")
+    public String deleteLocation(@RequestParam Integer locationId, Map<String, Object> model) {
+        List<LocationsEntity> location = locationsRepository.findByLocationId(locationId);
+        if (location.isEmpty()) {
+            model.put("deleteIdCheck", "No location with such index!");
+            return "locations";
+        } else {
+            locationsRepository.deleteByLocationId(locationId);
+        }
+        return "redirect:/locations";
     }
 }

@@ -46,10 +46,10 @@
     {{/deleteIdCheck}}
     <div class="form-row">
         <div class="form-group col-md-6">
-            <form action="/managersDelete" method="post" class="form-inline">
+            <form action="/locationsDelete" method="post" class="form-inline">
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <input type="text" name="managerId" class="form-control" placeholder="Удалить по ID..."/>
+                        <input type="text" name="locationId" class="form-control" placeholder="Удалить по ID..."/>
                     </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

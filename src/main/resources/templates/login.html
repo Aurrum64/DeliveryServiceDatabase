@@ -7,6 +7,8 @@
 </head>
 <body>
 <div th:insert="~{interfaceParts/bootstrapNavBarThymeleaf :: copy}"></div>
+<div class="container" style="height: 75px">
+</div>
 <div class="container mt-5 ml-5" style="width: 500px">
     <div class="card">
         <h3 class="card-header info-color white-text text-center py-4">
@@ -31,6 +33,7 @@
             </div>
 
             <form th:action="@{/login}" method="post">
+
                 <div class="md-form">
                     <i class="fa fa-user prefix grey-text"></i>
                     <input type="text" name="username" id="materialFormCardNameEx" class="form-control">
@@ -57,6 +60,11 @@
         </div>
     </div>
 </div>
+<div class="container" style="height: 500px">
+</div>
+<footer class="page-footer font-small indigo">
+    <div class="footer-copyright text-center py-3">© Delivery Service, 2019:</div>
+</footer>
 <div th:insert="~{interfaceParts/bootstrapFooterScriptsThymeleaf :: copy}"></div>
 </body>
 </html>

@@ -8,6 +8,8 @@
 </head>
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
+<div class="container" style="height: 100px">
+</div>
 <div class="container mt-5 ml-5">
     <h1>Couriers management page</h1>
 </div>
@@ -24,17 +26,17 @@
         <div class="form-group col-md-6">
             <form action="/couriersFilter" method="post" class="form-inline">
                 <div class="form-group row">
-                    <div>
-                        <input type="text" name="courierId" class="form-control ml-3"
-                               placeholder="Найти по ID..."/>
+                    <div class="md-form form-lg ml-4">
+                        <input type="text" name="courierId" id="inputLGE" class="form-control form-control-lg">
+                        <label for="inputLGE">Найти по ID...</label>
                     </div>
-                    <div>
-                        <input type="text" name="firstName" class="form-control ml-3"
-                               placeholder="Найти по имени..."/>
+                    <div class="md-form form-lg ml-3">
+                        <input type="text" name="firstName" id="inputLG" class="form-control form-control-lg">
+                        <label for="inputLG">Найти по имени...</label>
                     </div>
-                    <div>
-                        <input type="text" name="lastName" class="form-control ml-3"
-                               placeholder="Найти по фамилии..."/>
+                    <div class="md-form form-lg ml-3">
+                        <input type="text" name="lastName" id="inputL" class="form-control form-control-lg">
+                        <label for="inputL">Найти по фамилии...</label>
                     </div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div>
@@ -45,7 +47,7 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-5">
+<div class="container ml-5">
     {{#deleteIdCheck}}
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
         {{deleteIdCheck}}
@@ -58,17 +60,18 @@
         <div class="form-group col-md-6">
             <form action="/couriersDelete" method="post" class="form-inline">
                 <div class="form-group row">
-                    <div class="col-sm-6">
-                        <input type="text" name="courierId" class="form-control" placeholder="Удалить по ID..."/>
+                    <div class="md-form form-lg ml-4">
+                        <input type="text" name="courierId" id="input" class="form-control form-control-lg">
+                        <label for="input">Удалить по ID...</label>
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                 </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary ml-3">Удалить</button>
             </form>
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-5">
+<div class="container mt-3 ml-5">
     {{#updateIdCheck}}
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
         {{updateIdCheck}}
@@ -302,6 +305,11 @@
         </div>
     </div>
 </div>
+<div class="container" style="height: 500px">
+</div>
+<footer class="page-footer font-small indigo">
+    <div class="footer-copyright text-center py-3">© Delivery Service, 2019:</div>
+</footer>
 {{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

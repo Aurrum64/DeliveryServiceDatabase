@@ -7,6 +7,8 @@
 </head>
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
+<div class="container" style="height: 100px">
+</div>
 <div class="container mt-5 ml-5">
     <h1>Order details management page</h1>
 </div>
@@ -23,17 +25,17 @@
         <div class="form-group col-md-6">
             <form action="/orderDetailsFilter" method="post" class="form-inline">
                 <div class="form-group row">
-                    <div>
-                        <input type="text" name="orderDetailsId" class="form-control ml-3"
-                               placeholder="Найти по ID..."/>
+                    <div class="md-form form-lg ml-4">
+                        <input type="text" name="orderDetailsId" id="inputLGEx" class="form-control form-control-lg">
+                        <label for="inputLGEx">Найти по ID...</label>
                     </div>
-                    <div>
-                        <input type="text" name="orderDate" class="form-control ml-3"
-                               placeholder="Найти по дате..."/>
+                    <div class="md-form form-lg ml-3">
+                        <input type="text" name="orderDate" id="inputLGE" class="form-control form-control-lg">
+                        <label for="inputLGE">Найти по дате...</label>
                     </div>
-                    <div>
-                        <input type="text" name="orderAddress" class="form-control ml-3"
-                               placeholder="Найти по адресу..."/>
+                    <div class="md-form form-lg ml-3">
+                        <input type="text" name="orderAddress" id="inputLG" class="form-control form-control-lg">
+                        <label for="inputLG">Найти по адресу...</label>
                     </div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div>
@@ -57,12 +59,13 @@
         <div class="form-group col-md-6">
             <form action="/orderDetailsDelete" method="post" class="form-inline">
                 <div class="form-group row">
-                    <div class="col-sm-6">
-                        <input type="text" name="orderDetailsId" class="form-control" placeholder="Удалить по ID..."/>
+                    <div class="md-form form-lg ml-4">
+                        <input type="text" name="orderDetailsId" id="inputL" class="form-control form-control-lg">
+                        <label for="inputL">Удалить по ID...</label>
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                 </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary ml-3">Удалить</button>
             </form>
         </div>
     </div>
@@ -164,7 +167,11 @@
         </tbody>
     </table>
 </div>
-<p class="text-center mt-5">Delivery Service. 2019</p>
+<div class="container" style="height: 500px">
+</div>
+<footer class="page-footer font-small indigo">
+    <div class="footer-copyright text-center py-3">© Delivery Service, 2019:</div>
+</footer>
 {{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

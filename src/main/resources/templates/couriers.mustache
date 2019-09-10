@@ -9,6 +9,9 @@
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
 <div class="container mt-5 ml-5">
+    <h1>Couriers management page</h1>
+</div>
+<div class="container mt-5 ml-5">
     {{#filterCheck}}
     <div class="alert alert-danger" role="alert" style="width: 736px">
         {{filterCheck}}
@@ -154,6 +157,14 @@
                     <input type="text" class="form-control" name="departmentId"
                            placeholder="Введите департамент курьера..."/>
                 </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="latitude"
+                           placeholder="Введите широту..."/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="longitude"
+                           placeholder="Введите долготу..."/>
+                </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Добавить</button>
@@ -163,31 +174,126 @@
     </div>
 </div>
 <div class="container mt-5 ml-5">
-    <div id="map" class="map" style="width: 1200px; height: 600px"></div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Сотовый</th>
+            <th scope="col">Рейтинг</th>
+            <th scope="col">Зарплата</th>
+            <th scope="col">Трудоустроился</th>
+            <th scope="col">Премия</th>
+            <th scope="col">Департамент</th>
+            <th scope="col">X</th>
+            <th scope="col">Y</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#couriers}}
+        <tr>
+            <th scope="row">{{courierId}}</th>
+            <td>{{firstName}}</td>
+            <td>{{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{phoneNumber}}</td>
+            <td>{{rating}}</td>
+            <td>{{salary}}</td>
+            <td>{{hireDate}}</td>
+            <td>{{premium}}</td>
+            <td>{{departmentId}}</td>
+            <td>{{latitude}}</td>
+            <td>{{longitude}}</td>
+        </tr>
+        {{/couriers}}
+        {{^couriers}}
+        <tr>
+            <th scope="row">List of couriers is empty yet!</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {{/couriers}}
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5 ml-5">
+    <h2>Delivery map</h2>
+</div>
+<div class="container mt-5 ml-5" style="width: 1400px; height: 600px">
+    <div id="map" class="map" style="width: 1140px; height: 600px"></div>
     {{> mapParts/mapScriptsSources}}
 </div>
-<div class="container mt-5 ml-4">
-    <div class="card-body">
-        {{#couriers}}
-        <div class="card my-3" style="width:600px">
-            <div class="card-footer text-muted">
-                <span>ID: {{courierId}}<br/></span>
-                <span>Department ID: {{departmentId}}</span>
-            </div>
-            <div class="container ml-1">
-                <span><b>Имя: </b>{{firstName}}<br/></span>
-                <span><b>Фамилия: </b>{{lastName}}<br/></span>
-                <span><b>Электронная почта: </b>{{email}}<br/></span>
-                <span><b>Номер телефона: </b>{{phoneNumber}}<br/></span>
-                <span><b>Рейтинг: </b>{{rating}}<br/></span>
-                <span><b>Зарплата: </b>{{salary}}<br/></span>
-                <span><b>Дата трудоустройства: </b>{{hireDate}}<br/></span>
-                <span><b>Премиальные: </b>{{premium}}<br/></span>
+<div class="container mt-5 ml-5" style="width: 1200px">
+    <div class="form-group row">
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle ml-5"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Курьеры
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" id="couriersCoordinates">Показать курьеров на карте</a>
+                <a class="dropdown-item" id="hideCouriersMarkers">Скрыть курьеров</a>
             </div>
         </div>
-        {{/couriers}}
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle ml-4"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Активные заказы
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" id="deliveryCoordinates">Показать активные заказы на карте</a>
+                <a class="dropdown-item" id="hideNotDeliveredOrderPoints">Скрыть активные заказы</a>
+            </div>
+        </div>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop3" type="button" class="btn btn-secondary dropdown-toggle ml-4"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Архивные заказы
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" id="showDeliveredOrders">Показать архивные заказы на карте</a>
+                <a class="dropdown-item" id="hideDeliveredOrderPoints">Скрыть архивные заказы</a>
+            </div>
+        </div>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop4" type="button" class="btn btn-secondary dropdown-toggle ml-4"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Зоны доставки
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" id="showDeliveryZones">Показать зоны доставки на карте</a>
+                <a class="dropdown-item" id="hideDeliveryZones">Скрыть зоны доставки</a>
+            </div>
+        </div>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop5" type="button" class="btn btn-secondary dropdown-toggle ml-4"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Маршрутизация
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" id="buildRoute">Построить маршрут</a>
+                <a class="dropdown-item" id="move">В путь!</a>
+            </div>
+        </div>
     </div>
 </div>
+<p class="text-center mt-4">Delivery Service. 2019</p>
 {{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

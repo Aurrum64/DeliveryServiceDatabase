@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CouriersEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendCouriersToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class CouriersController {
@@ -40,7 +40,9 @@ public class CouriersController {
                              @RequestParam(required = false, defaultValue = "0") Integer salary,
                              @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
                              @RequestParam(required = false, defaultValue = "0") Integer premium,
-                             @RequestParam(required = false, defaultValue = "0") Integer departmentId) {
+                             @RequestParam(required = false, defaultValue = "0") Integer departmentId,
+                             @RequestParam Double latitude,
+                             @RequestParam Double longitude) {
         CouriersEntity courier = new CouriersEntity();
         courier.setFirstName(firstName);
         courier.setLastName(lastName);
@@ -51,6 +53,8 @@ public class CouriersController {
         courier.setHireDate(hireDate);
         courier.setPremium(premium);
         courier.setDepartmentId(departmentId);
+        courier.setLatitude(latitude);
+        courier.setLongitude(longitude);
         couriersRepository.save(courier);
         return "redirect:/couriers";
     }
@@ -147,5 +151,31 @@ public class CouriersController {
             }
         }
         return "redirect:/couriers";
+    }
+
+    @GetMapping(value = "/couriersCoordinates", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendCouriersCoordinates() {
+
+        SendCouriersToAjax result = new SendCouriersToAjax();
+        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
+        if (!couriers.iterator().hasNext()) {
+            result.setMsg("Couriers list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(couriers);
+        return ResponseEntity.ok(result);
+    }
+
+    @Transactional
+    @RequestMapping(value = "/movingCourierCoordinates",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax courierMove(@RequestBody CourierCoordinateAfterMove courier) {
+        couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
+        couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
+        return new ControllerAnswerToAjax("OK", "");
     }
 }

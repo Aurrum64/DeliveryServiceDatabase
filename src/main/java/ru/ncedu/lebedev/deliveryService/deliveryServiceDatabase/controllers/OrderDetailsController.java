@@ -2,13 +2,16 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.OrderDetailsEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ChangeStatusForOrderDetailsId;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -39,6 +42,7 @@ public class OrderDetailsController {
         orderDetail.setOrderDate(orderDate);
         orderDetail.setOrderAddress(orderAddress);
         orderDetail.setComment(comment);
+        orderDetail.setStatus("Заказ не доставлен");
         orderDetailsRepository.save(orderDetail);
         return "redirect:/orderDetails";
     }
@@ -111,5 +115,30 @@ public class OrderDetailsController {
             }
         }
         return "redirect:/orderDetails";
+    }
+
+    @GetMapping(value = "/deliveryCoordinates", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendDeliveryCoordinates() {
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+        if (!orderDetails.iterator().hasNext()) {
+            result.setMsg("Order details list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(orderDetails);
+        return ResponseEntity.ok(result);
+    }
+
+    @Transactional
+    @RequestMapping(value = "/changeDeliveryStatus",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {
+        orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());
+        return new ControllerAnswerToAjax("OK", "");
     }
 }

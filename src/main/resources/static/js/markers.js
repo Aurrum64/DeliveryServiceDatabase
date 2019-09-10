@@ -1,24 +1,160 @@
-var courier1 = L.marker([55.7422, 37.5719],
-    {icon: oldMan}).addTo(myDeliveryServiceMap);
-var courier2 = L.marker([55.684758, 37.738521],
-    {icon: women}).addTo(myDeliveryServiceMap);
-var courier3 = L.marker([55.833436, 37.715175],
-    {icon: businessMan}).addTo(myDeliveryServiceMap);
+let couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
+let couriersMarkers = [];
+let couriersInfos = [];
 
-var destination1 = L.marker([55.687086, 37.529789]).addTo(myDeliveryServiceMap);
-var destination2 = L.marker([55.782392, 37.614924]).addTo(myDeliveryServiceMap);
-var destination3 = L.marker([55.642063, 37.656123]).addTo(myDeliveryServiceMap);
-var destination4 = L.marker([55.826479, 37.487208]).addTo(myDeliveryServiceMap);
-var destination5 = L.marker([55.694843, 37.435023]).addTo(myDeliveryServiceMap);
-var destination6 = L.marker([55.790139, 37.814052]).addTo(myDeliveryServiceMap);
+$(document).ready((function () {
+    $("#couriersCoordinates").click(function () {
 
-courier1.bindPopup("Курьер №1");
-courier2.bindPopup("Курьер №2");
-courier3.bindPopup("Курьер №3");
+        setCouriersMarkers();
+    });
+}));
 
-destination1.bindPopup("Точка доставки №1");
-destination2.bindPopup("Точка доставки №2");
-destination3.bindPopup("Точка доставки №3");
-destination4.bindPopup("Точка доставки №4");
-destination5.bindPopup("Точка доставки №5");
-destination6.bindPopup("Точка доставки №6");
+function setCouriersMarkers() {
+    $.ajax({
+        url: "/couriersCoordinates",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            couriersMarkersLayerGroup.clearLayers();
+            if (data.result[0] === undefined) {
+                alert("Please, add courier with coordinates to the system first!");
+            } else {
+                for (let i = 0; i <= data.toString().length - 1; i++) {
+                    if (data.result[i] !== undefined) {
+                        let latitude = data.result[i].latitude;
+                        let longitude = data.result[i].longitude;
+                        couriersInfos[i] = data.result[i];
+                        let courierMarker = L.marker([latitude, longitude],
+                            {icon: cargo}).addTo(couriersMarkersLayerGroup);
+                        courierMarker.bindPopup("Курьер №" + [i + 1] + "<br>" +
+                            data.result[i].firstName + " " + data.result[i].lastName);
+                        couriersMarkers[i] = courierMarker;
+                    }
+                }
+            }
+        }
+    })
+}
+
+let notDeliveredMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
+let notDeliveredMarkers = [];
+let deliveryInfos = [];
+
+$(document).ready((function () {
+    $("#deliveryCoordinates").click(function () {
+
+        setNotDeliveredMarkers();
+    });
+}));
+
+function setNotDeliveredMarkers() {
+    $.ajax({
+        url: "/deliveryCoordinates",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            notDeliveredMarkersLayerGroup.clearLayers();
+            if (data.result[0] === undefined) {
+                alert("Please, add order details with delivery address to the system first!");
+            } else {
+                for (let i = 0; i <= data.toString().length - 1; i++) {
+                    if (data.result[i] !== undefined) {
+                        if (data.result[i].status === "Заказ не доставлен") {
+                            let address = data.result[i].orderAddress;
+                            L.esri.Geocoding.geocode()
+                                .text(address)
+                                .run((err, results) => {
+                                    let latitude = results.results[0].latlng.lat;
+                                    let longitude = results.results[0].latlng.lng;
+                                    deliveryInfos[i] = data.result[i];
+                                    let deliveryMarker = L.marker([latitude, longitude],
+                                        {icon: notDeliveredOrderPoint}).addTo(notDeliveredMarkersLayerGroup);
+                                    deliveryMarker.bindPopup("<b>Заказ по адресу:</b> " + address + "<br>" +
+                                        "<b>Комментарий заказчика:</b> " + data.result[i].comment);
+                                    notDeliveredMarkers[i] = deliveryMarker;
+                                });
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
+let deliveredMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
+let deliveredMarkers = [];
+
+$(document).ready((function () {
+    $("#showDeliveredOrders").click(function () {
+
+        setDeliveredMarkers();
+    });
+}));
+
+function setDeliveredMarkers() {
+    $.ajax({
+        url: "/deliveryCoordinates",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            deliveredMarkersLayerGroup.clearLayers();
+            if (data.result[0] === undefined) {
+                alert("List of delivered orders is empty, finish one or more orders!");
+            } else {
+                for (let i = 0; i <= data.toString().length - 1; i++) {
+                    if (data.result[i] !== undefined) {
+                        if (data.result[i].status === "Заказ доставлен") {
+                            let address = data.result[i].orderAddress;
+                            L.esri.Geocoding.geocode()
+                                .text(address)
+                                .run((err, results) => {
+                                    let latitude = results.results[0].latlng.lat;
+                                    let longitude = results.results[0].latlng.lng;
+                                    let deliveryMarker = L.marker([latitude, longitude],
+                                        {icon: deliveredOrderPoint}).addTo(deliveredMarkersLayerGroup);
+                                    deliveryMarker.bindPopup("<b>Заказ доставлен по адресу:</b> " + address + "<br>" +
+                                        "<b>Общее расстояние:</b> " + Math.round(solutionsInfos[i]._route.summary.totalDistance / 1000) + " километров<br>" +
+                                        "<b>Время в пути:</b> " + Math.round(solutionsInfos[i]._route.summary.totalTime % 3600 / 60) + " минут");
+                                    deliveredMarkers[i] = deliveryMarker;
+                                });
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
+$(document).ready((function () {
+    $("#hideCouriersMarkers").click(function () {
+
+        hideCouriersMarkers();
+    });
+}));
+
+function hideCouriersMarkers() {
+    couriersMarkersLayerGroup.clearLayers();
+}
+
+$(document).ready((function () {
+    $("#hideNotDeliveredOrderPoints").click(function () {
+
+        hideNotDeliveredOrderPoints();
+    });
+}));
+
+function hideNotDeliveredOrderPoints() {
+    notDeliveredMarkersLayerGroup.clearLayers();
+}
+
+
+$(document).ready((function () {
+    $("#hideDeliveredOrderPoints").click(function () {
+
+        hideDeliveredOrderPoints();
+    });
+}));
+
+function hideDeliveredOrderPoints() {
+    deliveredMarkersLayerGroup.clearLayers();
+}

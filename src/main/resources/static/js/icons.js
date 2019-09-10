@@ -1,14 +1,14 @@
-var oldMan = L.icon({
-    iconUrl: 'https://svgsilh.com/svg_v2/3196273.svg',
-    iconSize: [38, 95]
+var notDeliveredOrderPoint = L.icon({
+    iconUrl: 'https://cdn.pixabay.com/photo/2017/06/05/19/05/house-2374925_960_720.png',
+    iconSize: [50, 50]
 });
 
-var women = L.icon({
-    iconUrl: 'https://svgsilh.com/svg_v2/1296749.svg',
-    iconSize: [42, 99]
+var deliveredOrderPoint = L.icon({
+    iconUrl: 'https://icon-library.net/images/arrow-down-icon-png/arrow-down-icon-png-14.jpg',
+    iconSize: [50, 50]
 });
 
-var businessMan = L.icon({
-    iconUrl: 'https://svgsilh.com/svg/149724.svg',
-    iconSize: [38, 95]
+var cargo = L.icon({
+    iconUrl: 'http://tavr.pro/images/dostavka.svg',
+    iconSize: [50, 50]
 });

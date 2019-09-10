@@ -7,10 +7,15 @@
 </head>
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
-<div class="container" style="height: 100px">
+<div class="container" style="height: 70px">
 </div>
-<div class="container mt-5 ml-5">
-    <h1>Managers management page</h1>
+<div class="jumbotron card card-image"
+     style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="text-black text-center py-5 px-4">
+        <div>
+            <h1 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Managers management page</strong></h1>
+        </div>
+    </div>
 </div>
 <div class="container mt-5 ml-5">
     {{#filterCheck}}
@@ -73,7 +78,7 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-5">
+<div class="container mt-3 ml-5">
     {{#updateIdCheck}}
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
         {{updateIdCheck}}
@@ -210,7 +215,7 @@
 </div>
 <div class="container" style="height: 500px">
 </div>
-<footer class="page-footer font-small indigo">
+<footer class="page-footer font-small black">
     <div class="footer-copyright text-center py-3">© Delivery Service, 2019:</div>
 </footer>
 {{> interfaceParts/bootstrapFooterScripts}}

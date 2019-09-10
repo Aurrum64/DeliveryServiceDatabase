@@ -34,4 +34,6 @@ public interface LocationsRepository extends CrudRepository<LocationsEntity, Int
     @Modifying
     @Query("update LocationsEntity l set l.building = ?1 where l.locationId = ?2")
     void setBuildingFor(Integer building, Integer id);
+
+
 }

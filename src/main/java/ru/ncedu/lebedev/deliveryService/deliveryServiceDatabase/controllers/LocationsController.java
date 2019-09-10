@@ -102,4 +102,18 @@ public class LocationsController {
         }
         return "redirect:/locations";
     }
+
+    @PostMapping("/locations")
+    public String addLocation(@RequestParam String street,
+                              @RequestParam Integer building,
+                              @RequestParam(required = false) String district,
+                              @RequestParam(required = false, defaultValue = "Moscow") String city){
+        LocationsEntity location = new LocationsEntity();
+        location.setStreet(street);
+        location.setBuilding(building);
+        location.setDistrict(district);
+        location.setCity(city);
+        locationsRepository.save(location);
+        return "redirect:/locations";
+    }
 }

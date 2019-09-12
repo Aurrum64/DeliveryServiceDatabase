@@ -28,7 +28,7 @@ public class Clients {
     private String telephone;
 
     @Column(name = "rating")
-    private String rating;
+    private Integer rating;
 
     @Column(name = "address")
     private String address;

@@ -1,19 +1,14 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CallCentre;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.Clients;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.ClientsRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +66,7 @@ public class ClientsController {
     }
     @Transactional
     @PostMapping("/clientsDelete")
-    public String deleteCourier(@RequestParam Integer clientId, Map<String, Object> model) {
+    public String deleteClients(@RequestParam Integer clientId, Map<String, Object> model) {
         List<Clients> clients = clientsRepository.findByClientId(clientId);
         if (clients.isEmpty()) {
             model.put("deleteIdCheck", "No client with such index!");

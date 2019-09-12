@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CallCentre;
 
 
-import java.util.Date;
 import java.util.List;
 
 public interface CallCentreRepository extends CrudRepository<CallCentre, Integer> {

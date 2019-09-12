@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.CallCentre;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.entities.ManagersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CallCentreRepository;
 
 import java.util.List;
@@ -54,7 +53,7 @@ public class CallCentreController {
             callCentres = callCentreRepository.findAll();
         }
         if (!callCentres.iterator().hasNext()) {
-            model.put("filterCheck", "No manager with such index!");
+            model.put("filterCheck", "No callcentre with such index!");
             return "callcentre";
         } else {
             model.put("callcentres", callCentres);
@@ -63,7 +62,7 @@ public class CallCentreController {
     }
     @Transactional
     @PostMapping("/callcentreDelete")
-    public String deleteCourier(@RequestParam Integer departmentId, Map<String, Object> model) {
+    public String deleteCallCentre(@RequestParam Integer departmentId, Map<String, Object> model) {
         List<CallCentre> callCentre = callCentreRepository.findByDepartmentId(departmentId);
         if (callCentre.isEmpty()) {
             model.put("deleteIdCheck", "No callcentre with such index!");
@@ -84,7 +83,7 @@ public class CallCentreController {
                                 Map<String, Object> model) {
         List<CallCentre> callCentre = callCentreRepository.findByDepartmentId(departmentId);
         if (callCentre.isEmpty()) {
-            model.put("updateIdCheck", "Courier with such index does not exist!");
+            model.put("updateIdCheck", "Callcentre with such index does not exist!");
             return "callcentre";
         } else {
             if (!name.isEmpty()) {

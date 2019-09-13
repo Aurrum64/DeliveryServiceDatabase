@@ -206,6 +206,7 @@
             <th scope="col">Департамент</th>
             <th scope="col">X</th>
             <th scope="col">Y</th>
+            <th scope="col">Автор</th>
         </tr>
         </thead>
         <tbody>
@@ -223,11 +224,13 @@
             <td>{{departmentId}}</td>
             <td>{{latitude}}</td>
             <td>{{longitude}}</td>
+            <td>{{authorName}}</td>
         </tr>
         {{/couriers}}
         {{^couriers}}
         <tr>
             <th scope="row">List of couriers is empty yet!</th>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

@@ -11,14 +11,18 @@ import java.util.Date;
 @Data
 public class OrderDetailsEntity {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private OrdersEntity ordersEntity;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_details_id")
     private Integer orderDetailsId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private UsersEntity author;
+
+    public String getAuthorName() {
+        return author.getUsername();
+    }
 
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date", nullable = false)
@@ -32,6 +36,4 @@ public class OrderDetailsEntity {
 
     @Column(name = "delivery_status")
     private String status;
-
-    private UsersEntity author;
 }

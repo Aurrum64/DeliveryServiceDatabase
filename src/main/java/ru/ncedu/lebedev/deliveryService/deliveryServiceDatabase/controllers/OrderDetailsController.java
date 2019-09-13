@@ -3,12 +3,14 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -34,8 +36,8 @@ public class OrderDetailsController {
     @PostMapping(value = "/addOrderDetails",
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ControllerAnswerToAjax addOrderDetails(@RequestBody OrderDetailsMessage order) {
-
+    public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
+                                                  @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
         orderDetail.setOrderDate(order.getOrderDate());
         orderDetail.setOrderAddress(order.getOrderAddress());
@@ -45,6 +47,7 @@ public class OrderDetailsController {
             orderDetail.setComment(order.getComment());
         }
         orderDetail.setStatus("Заказ не доставлен");
+        orderDetail.setAuthor(user);
         orderDetailsRepository.save(orderDetail);
         return new ControllerAnswerToAjax("OK", "");
     }

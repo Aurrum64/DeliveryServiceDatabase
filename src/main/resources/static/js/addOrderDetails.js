@@ -69,6 +69,7 @@ function showOrderDetailsList() {
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
+                    "            <td></td>\n" +
                     "</tr>";
                 $('#orderDetailsList').html(view);
             } else {
@@ -80,6 +81,7 @@ function showOrderDetailsList() {
                         "            <td>" + data.result[i].orderAddress + "</td>\n" +
                         "            <td>" + data.result[i].comment + "</td>\n" +
                         "            <td>" + data.result[i].status + "</td>\n" +
+                        "            <td>" + data.result[i].authorName + "</td>\n" +
                         "</tr>";
                     if (view === undefined) {
                         view = "" + newLine;

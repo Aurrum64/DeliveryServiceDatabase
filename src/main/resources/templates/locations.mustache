@@ -7,10 +7,23 @@
 </head>
 <body>
 {{> interfaceParts/bootstrapNavBarWithSignBtn}}
+<div class="container" style="height: 70px">
+</div>
+<div class="jumbotron card card-image"
+     style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="text-black text-center py-5 px-4">
+        <div>
+            <h1 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Locations management page</strong></h1>
+        </div>
+    </div>
+</div>
 <div class="container mt-5 ml-5">
     {{#filterCheck}}
-        <div class="alert alert-danger" role="alert" style="width: 736px">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
             {{filterCheck}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     {{/filterCheck}}
     <div class="form-row">
@@ -123,23 +136,47 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ml-4">
-    <div class="card-body">
+<div class="container mt-5 ml-5">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Город</th>
+            <th scope="col">Район</th>
+            <th scope="col">Улица</th>
+            <th scope="col">Здание</th>
+        </tr>
+        </thead>
+        <tbody>
         {{#locations}}
-            <div class="card my-3" style="width:600px">
-                <div class="card-footer text-muted">
-                    <span>ID: {{locationId}}</span>
-                </div>
-                <div class="container ml-1">
-                    <span><b>Город:</b> {{city}}<br/></span>
-                    <span><b>Район:</b> {{district}}<br/></span>
-                    <span><b>Улица:</b> {{street}}<br/></span>
-                    <span><b>Дом:</b> {{building}}<br/></span>
-                </div>
-            </div>
+            <tr>
+                <th scope="row">{{locationId}}</th>
+                <td>{{city}}</td>
+                <td>{{district}}</td>
+                <td>{{street}}</td>
+                <td>{{building}}</td>
+            </tr>
         {{/locations}}
-    </div>
+        {{^locations}}
+            <tr>
+                <th scope="row">List of locations is empty yet!</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {{/locations}}
+        </tbody>
+    </table>
 </div>
+<div class="container" style="height: 500px">
+</div>
+<footer class="page-footer font-small black">
+    <div class="footer-copyright text-center py-3">© Delivery Service, 2019:</div>
+</footer>
 {{> interfaceParts/bootstrapFooterScripts}}
 </body>
 </html>

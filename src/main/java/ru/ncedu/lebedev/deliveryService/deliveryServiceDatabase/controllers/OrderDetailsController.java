@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ChangeStatusForOrderDetailsId;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
@@ -34,22 +31,27 @@ public class OrderDetailsController {
         return "orderDetails";
     }
 
-    @PostMapping("/orderDetails")
-    public String add(@RequestParam @DateTimeFormat(pattern = "dd-mm-yyyy") Date orderDate,
-                      @RequestParam String orderAddress,
-                      @RequestParam(required = false, defaultValue = "Доставить как можно скорее") String comment) {
+    @PostMapping(value = "/addOrderDetails",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax addOrderDetails(@RequestBody OrderDetailsMessage order) {
+
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
-        orderDetail.setOrderDate(orderDate);
-        orderDetail.setOrderAddress(orderAddress);
-        orderDetail.setComment(comment);
+        orderDetail.setOrderDate(order.getOrderDate());
+        orderDetail.setOrderAddress(order.getOrderAddress());
+        if (order.getComment().isEmpty()) {
+            orderDetail.setComment("Доставить как можно скорее");
+        } else {
+            orderDetail.setComment(order.getComment());
+        }
         orderDetail.setStatus("Заказ не доставлен");
         orderDetailsRepository.save(orderDetail);
-        return "redirect:/orderDetails";
+        return new ControllerAnswerToAjax("OK", "");
     }
 
     @PostMapping("/orderDetailsFilter")
     public String findOrderDetails(@RequestParam(required = false) Integer orderDetailsId,
-                                   @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date orderDate,
+                                   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date orderDate,
                                    @RequestParam(required = false) String orderAddress,
                                    Map<String, Object> model) {
         Iterable<OrderDetailsEntity> orderDetails;
@@ -95,7 +97,7 @@ public class OrderDetailsController {
     @Transactional
     @PostMapping("/orderDetailsUpdate")
     public String updateCourier(@RequestParam Integer orderDetailsId,
-                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date orderDate,
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date orderDate,
                                 @RequestParam(required = false) String orderAddress,
                                 @RequestParam(required = false) String comment,
                                 Map<String, Object> model) {
@@ -133,8 +135,7 @@ public class OrderDetailsController {
     }
 
     @Transactional
-    @RequestMapping(value = "/changeDeliveryStatus",
-            method = RequestMethod.POST,
+    @PostMapping(value = "/changeDeliveryStatus",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {

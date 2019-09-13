@@ -19,6 +19,8 @@ public interface LocationsRepository extends CrudRepository<LocationsEntity, Int
 
     List<LocationsEntity> findByLocationIdAndStreetAndBuilding(Integer id, String Street, Integer building);
 
+    void deleteByLocationId(Integer id);
+
     @Modifying
     @Query("update LocationsEntity l set l.city = ?1 where l.locationId = ?2")
     void setCityFor(String city, Integer id);
@@ -34,4 +36,6 @@ public interface LocationsRepository extends CrudRepository<LocationsEntity, Int
     @Modifying
     @Query("update LocationsEntity l set l.building = ?1 where l.locationId = ?2")
     void setBuildingFor(Integer building, Integer id);
+
+
 }

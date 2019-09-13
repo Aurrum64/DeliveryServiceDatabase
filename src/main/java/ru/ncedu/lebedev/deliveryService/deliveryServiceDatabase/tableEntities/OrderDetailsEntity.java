@@ -32,4 +32,6 @@ public class OrderDetailsEntity {
 
     @Column(name = "delivery_status")
     private String status;
+
+    private UsersEntity author;
 }

@@ -2,6 +2,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ManagersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.ManagersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -32,7 +34,8 @@ public class ManagersController {
     }
 
     @PostMapping("/managers")
-    public String addManager(@RequestParam String firstName,
+    public String addManager(@AuthenticationPrincipal UsersEntity user,
+                             @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam(required = false) String email,
                              @RequestParam(required = false, defaultValue = "+7(000)-000-00-00") String phoneNumber,
@@ -47,6 +50,7 @@ public class ManagersController {
         manager.setSalary(salary);
         manager.setHireDate(hireDate);
         manager.setPremium(premium);
+        manager.setAuthor(user);
         managersRepository.save(manager);
         return "redirect:/managers";
     }

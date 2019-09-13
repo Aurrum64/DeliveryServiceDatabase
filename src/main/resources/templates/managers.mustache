@@ -64,9 +64,6 @@
         <div class="form-group col-md-6">
             <form action="/managersDelete" method="post" class="form-inline">
                 <div class="form-group row">
-                    <!--<div class="col-sm-6">
-                        <input type="text" name="managerId" class="form-control" placeholder="Удалить по ID..."/>
-                    </div>-->
                     <div class="md-form form-lg ml-4">
                         <input type="text" name="managerId" id="in" class="form-control form-control-lg">
                         <label for="in">Удалить по ID...</label>
@@ -183,6 +180,7 @@
             <th scope="col">Зарплата</th>
             <th scope="col">Трудоустроился</th>
             <th scope="col">Премиальные</th>
+            <th scope="col">Автор</th>
         </tr>
         </thead>
         <tbody>
@@ -196,11 +194,13 @@
             <td>{{salary}}</td>
             <td>{{hireDate}}</td>
             <td>{{premium}}</td>
+            <td>{{authorName}}</td>
         </tr>
         {{/managers}}
         {{^managers}}
         <tr>
             <th scope="row">List of managers is empty yet!</th>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

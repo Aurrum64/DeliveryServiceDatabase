@@ -15,6 +15,14 @@ public class ManagersEntity {
     @Column(name = "manager_id")
     private Integer managerId;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private UsersEntity author;
+
+    public String getAuthorName() {
+        return author.getUsername();
+    }
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 

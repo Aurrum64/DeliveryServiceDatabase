@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <#import "interfaceParts/bootstrapHeaderLinks.ftl" as bootstrapHeaderLinks>
 <#import "interfaceParts/bootstrapNavBar.ftl" as navBar>
+<#import "interfaceParts/bootstrapNavBarWithSignBtn.ftl" as navBarWithSignBtn>
 <#import "interfaceParts/bootstrapFooterScripts.ftl" as bootstrapFooterScripts>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -9,7 +10,7 @@
     <title>Home</title>
 </head>
 <body>
-<@navBar.bootstrapNavBar/>
+<@navBarWithSignBtn.bootstrapNavbarWithSignBtn/>
 <div class="view">
     <img src="https://images.wallpaperscraft.ru/image/doroga_noch_svet_125999_1920x1080.jpg" class="img-fluid"
          alt="" style="width: 100%; height: 100%">

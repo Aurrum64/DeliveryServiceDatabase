@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <#import "interfaceParts/bootstrapHeaderLinks.ftl" as bootstrapHeaderLinks>
 <#import "interfaceParts/bootstrapNavBar.ftl" as navBar>
+<#import "interfaceParts/bootstrapNavBarWithSignBtn.ftl" as navBarWithSignBtn>
 <#import "interfaceParts/bootstrapFooterScripts.ftl" as bootstrapFooterScripts>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -9,7 +10,7 @@
     <title>Registration</title>
 </head>
 <body>
-<@navBar.bootstrapNavBar/>
+<@navBarWithSignBtn.bootstrapNavbarWithSignBtn/>
 <div class="container" style="height: 75px">
 </div>
 <div class="container mt-5 ml-5" style="width: 500px">

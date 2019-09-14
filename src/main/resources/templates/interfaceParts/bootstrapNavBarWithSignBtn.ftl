@@ -22,25 +22,35 @@
                         <a class="nav-link" href="/user">Users</a>
                     </li>
                 </#if>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Management
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/orderDetails">Order details</a>
-                        <a class="dropdown-item" href="/couriers">Couriers</a>
-                        <a class="dropdown-item" href="/managers">Managers</a>
-                    </div>
-                </li>
+                <#if isAdmin || isManager || isCourier>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Management
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/orderDetails">Order details</a>
+                            </#if>
+                            <#if isAdmin || isCourier>
+                                <a class="dropdown-item" href="/couriers">Couriers</a>
+                            </#if>
+                            <#if isAdmin || isManager>
+                                <a class="dropdown-item" href="/managers">Managers</a>
+                            </#if>
+                        </div>
+                    </li>
+                </#if>
             </ul>
-            <div class="navbar-text mr-3">${name}</div>
-            <div>
-                <form action="/logout" method="post">
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <button type="submit" class="btn btn-outline-info waves-effect">Sign Out</button>
-                </form>
-            </div>
+            <#if isAdmin || isUser || isManager || isCourier>
+                <div class="navbar-text mr-3">Hi, ${name}!</div>
+                <div>
+                    <form action="/logout" method="post">
+                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                        <button type="submit" class="btn btn-outline-info waves-effect">Sign Out</button>
+                    </form>
+                </div>
+            </#if>
         </div>
     </nav>
 </#macro>

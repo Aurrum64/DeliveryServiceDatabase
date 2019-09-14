@@ -32,6 +32,18 @@ public class UsersEntity implements UserDetails {
         return roles.contains(RolesEntity.ADMIN);
     }
 
+    public boolean isUser() {
+        return roles.contains(RolesEntity.USER);
+    }
+
+    public boolean isManager() {
+        return roles.contains(RolesEntity.MANAGER);
+    }
+
+    public boolean isCourier() {
+        return roles.contains(RolesEntity.COURIER);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();

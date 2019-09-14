@@ -7,10 +7,16 @@ known = Session.SPRING_SECURITY_CONTEXT??
     user = Session.SPRING_SECURITY_CONTEXT.authentication.principal
     name = user.getUsername()
     isAdmin = user.isAdmin()
+    isUser = user.isUser()
+    isManager = user.isManager()
+    isCourier = user.isCourier()
     >
 <#else>
     <#assign
-    name = "unknown"
+    name = "Guest"
     isAdmin = false
+    isUser = false
+    isManager = false
+    isCourier = false
     >
 </#if>

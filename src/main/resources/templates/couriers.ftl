@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+<#import "interfaceParts/bootstrapHeaderLinks.ftl" as bootstrapHeaderLinks>
+<#import "interfaceParts/bootstrapNavBarWithSignBtn.ftl" as navBarWithSignBtn>
+<#import "interfaceParts/bootstrapFooterScripts.ftl" as bootstrapFooterScripts>
+<#import "mapParts/mapHeaderLinksAndScripts.ftl" as  mapHeaderLinksAndScripts>
+<#import "mapParts/mapScriptsSources.ftl" as  mapScriptsSources>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    {{> interfaceParts/bootstrapHeaderLinks}}
-    {{> mapParts/mapHeaderLinksAndScripts}}
+    <#--{{> interfaceParts/bootstrapHeaderLinks}}-->
+    <@bootstrapHeaderLinks.bootstrapHeaderLinks/>
+    <#--{{> mapParts/mapHeaderLinksAndScripts}}-->
+    <@mapHeaderLinksAndScripts.mapHeaderLinksAndScripts/>
     <title>Couriers</title>
 </head>
 <body>
-{{> interfaceParts/bootstrapNavBarWithSignBtn}}
+<#--{{> interfaceParts/bootstrapNavBarWithSignBtn}}-->
+<@navBarWithSignBtn.bootstrapNavbarWithSignBtn/>
 <div class="container" style="height: 70px">
 </div>
 <div class="jumbotron card card-image"
@@ -19,14 +27,17 @@
     </div>
 </div>
 <div class="container mt-5 ml-5">
-    {{#filterCheck}}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
-        {{filterCheck}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {{/filterCheck}}
+    <#if filterCheck??>
+    <#--{{#filterCheck}}-->
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
+            <#--{{filterCheck}}-->
+            ${filterCheck!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <#--{{/filterCheck}}-->
+    </#if>
     <div class="form-row">
         <div class="form-group col-md-6">
             <form action="/couriersFilter" method="post" class="form-inline">
@@ -43,7 +54,7 @@
                         <input type="text" name="lastName" id="inputL" class="form-control form-control-lg">
                         <label for="inputL">Найти по фамилии...</label>
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div>
                         <button type="submit" class="btn btn-primary ml-3">Найти</button>
                     </div>
@@ -53,14 +64,17 @@
     </div>
 </div>
 <div class="container ml-5">
-    {{#deleteIdCheck}}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
-        {{deleteIdCheck}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {{/deleteIdCheck}}
+    <#if deleteIdCheck??>
+    <#--{{#deleteIdCheck}}-->
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
+            <#--{{deleteIdCheck}}-->
+            ${deleteIdCheck!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <#--{{/deleteIdCheck}}-->
+    </#if>
     <div class="form-row">
         <div class="form-group col-md-6">
             <form action="/couriersDelete" method="post" class="form-inline">
@@ -69,7 +83,7 @@
                         <input type="text" name="courierId" id="input" class="form-control form-control-lg">
                         <label for="input">Удалить по ID...</label>
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                 </div>
             </form>
@@ -77,14 +91,17 @@
     </div>
 </div>
 <div class="container mt-3 ml-5">
-    {{#updateIdCheck}}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
-        {{updateIdCheck}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {{/updateIdCheck}}
+    <#if updateIdCheck??>
+    <#--{{#updateIdCheck}}-->
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
+            ${updateIdCheck!}
+            <#--{{updateIdCheck}}-->
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <#--{{/updateIdCheck}}-->
+    </#if>
     <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
        aria-controls="collapseExample">
         Открыть меню изменения информации о существующем в системе курьере
@@ -127,7 +144,7 @@
                     <input type="text" class="form-control" name="departmentId"
                            placeholder="Изменить департамент курьера..."/>
                 </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Изменить</button>
                 </div>
@@ -182,7 +199,7 @@
                     <input type="text" class="form-control" name="longitude"
                            placeholder="Введите долготу..."/>
                 </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Добавить</button>
                 </div>
@@ -210,40 +227,43 @@
         </tr>
         </thead>
         <tbody>
-        {{#couriers}}
-        <tr>
-            <th scope="row">{{courierId}}</th>
-            <td>{{firstName}}</td>
-            <td>{{lastName}}</td>
-            <td>{{email}}</td>
-            <td>{{phoneNumber}}</td>
-            <td>{{rating}}</td>
-            <td>{{salary}}</td>
-            <td>{{hireDate}}</td>
-            <td>{{premium}}</td>
-            <td>{{departmentId}}</td>
-            <td>{{latitude}}</td>
-            <td>{{longitude}}</td>
-            <td>{{authorName}}</td>
-        </tr>
-        {{/couriers}}
-        {{^couriers}}
-        <tr>
-            <th scope="row">List of couriers is empty yet!</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        {{/couriers}}
+        <#list couriers as courier>
+        <#--{{#couriers}}-->
+            <tr>
+                <th scope="row">${courier.courierId}</th>
+                <td>${courier.firstName}</td>
+                <td>${courier.lastName}</td>
+                <td>${courier.email}</td>
+                <td>${courier.phoneNumber}</td>
+                <td>${courier.rating}</td>
+                <td>${courier.salary}</td>
+                <td>${courier.hireDate}</td>
+                <td>${courier.premium}</td>
+                <td>${courier.departmentId}</td>
+                <td>${courier.latitude}</td>
+                <td>${courier.longitude}</td>
+                <td>${courier.authorName}</td>
+            </tr>
+        <#--{{/couriers}}-->
+        <#else>
+        <#--{{^couriers}}-->
+            <tr>
+                <th scope="row">List of couriers is empty yet!</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <#--{{/couriers}}-->
+        </#list>
         </tbody>
     </table>
 </div>
@@ -255,7 +275,8 @@
     </div>
 </div>
 <div id="map" class="z-depth-1-half map-container ml-5 mt-5" style="width: 94%; height: 600px"></div>
-{{> mapParts/mapScriptsSources}}
+<#--{{> mapParts/mapScriptsSources}}-->
+<@mapScriptsSources.mapScriptsSources/>
 <div class="form-group row mt-5 ml-5">
     <div class="btn-group" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
@@ -313,6 +334,7 @@
 <footer class="page-footer font-small black">
     <div class="footer-copyright text-center py-3">© Delivery Service, 2019:</div>
 </footer>
-{{> interfaceParts/bootstrapFooterScripts}}
+<#--{{> interfaceParts/bootstrapFooterScripts}}-->
+<@bootstrapFooterScripts.bootstrapFooterScripts/>
 </body>
 </html>

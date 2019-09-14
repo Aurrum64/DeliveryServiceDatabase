@@ -3,7 +3,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum RolesEntity implements GrantedAuthority {
-    USER, ADMIN;
+    ADMIN, USER;
 
     @Override
     public String getAuthority() {

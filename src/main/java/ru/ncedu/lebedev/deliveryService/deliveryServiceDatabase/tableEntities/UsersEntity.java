@@ -28,6 +28,10 @@ public class UsersEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<RolesEntity> roles;
 
+    public boolean isAdmin() {
+        return roles.contains(RolesEntity.ADMIN);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();

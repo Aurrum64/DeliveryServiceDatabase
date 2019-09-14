@@ -1,4 +1,5 @@
 <#macro bootstrapNavbarWithSignBtn>
+    <#include "security.ftl">
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark scrolling-navbar">
         <a class="navbar-brand" href="/"><strong>Delivery Service</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -16,9 +17,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/registration">Sign Up</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user">Users</a>
-                </li>
+                <#if isAdmin>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">Users</a>
+                    </li>
+                </#if>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,6 +34,7 @@
                     </div>
                 </li>
             </ul>
+            <div class="navbar-text mr-3">${name}</div>
             <div>
                 <form action="/logout" method="post">
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->

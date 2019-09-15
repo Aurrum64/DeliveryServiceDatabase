@@ -9,7 +9,7 @@
         <title>${pageName}</title>
     </head>
     <body>
-    <#include "interface/bootstrapNavBarWithSignBtn.ftl">
+    <#include "interface/bootstrapNavBar.ftl">
     <div class="container" style="height: ${heightTop}px"></div>
     <#nested>
     <div class="container" style="height: ${heightBottom}px"></div>

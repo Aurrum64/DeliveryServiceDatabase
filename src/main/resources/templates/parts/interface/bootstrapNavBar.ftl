@@ -11,10 +11,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login">Sign In</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/registration">Sign Up</a>
+                <a class="nav-link" href="/">Overview</a>
             </li>
             <#if isAdmin>
                 <li class="nav-item">
@@ -31,24 +28,44 @@
                         <#if isAdmin>
                             <a class="dropdown-item" href="/orderDetails">Order details</a>
                         </#if>
-                        <#if isAdmin || isCourier>
+                        <#if isAdmin || isCourier || isManager>
                             <a class="dropdown-item" href="/couriers">Couriers</a>
                         </#if>
                         <#if isAdmin || isManager>
                             <a class="dropdown-item" href="/managers">Managers</a>
                         </#if>
+                        <#if isAdmin>
+                            <a class="dropdown-item" href="/orders">Orders</a>
+                        </#if>
+                        <#if isAdmin>
+                            <a class="dropdown-item" href="/callcentre">Call centre</a>
+                        </#if>
+                        <#if isAdmin>
+                            <a class="dropdown-item" href="/locations">Locations</a>
+                        </#if>
+                        <#if isAdmin>
+                            <a class="dropdown-item" href="/clients">Clients</a>
+                        </#if>
                     </div>
                 </li>
             </#if>
         </ul>
-        <#if isAdmin || isUser || isManager || isCourier>
+        <#if isEnabled>
             <div class="navbar-text mr-3">Hi, ${name}!</div>
             <div>
                 <form action="/logout" method="post">
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <button type="submit" class="btn btn-outline-info waves-effect">Sign Out</button>
+                    <button type="submit" class="btn btn-outline-info">Sign Out</button>
                 </form>
             </div>
+        <#else>
+            <div class="navbar-text mr-3">Hi, guest!</div>
+            <form>
+                <input type="button" class="btn btn-outline-info mr-3" value="Sign In" onClick='location.href="/login"'>
+            </form>
+            <form>
+                <input type="button" class="btn btn-outline-info mr-2" value="Sign Up" onClick='location.href="/registration"'>
+            </form>
         </#if>
     </div>
 </nav>

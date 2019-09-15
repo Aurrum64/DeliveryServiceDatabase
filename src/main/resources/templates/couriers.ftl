@@ -1,5 +1,6 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <@defaultPage.defaultPageTemplate pageName="Couriers" heightTop=65 heightBottom=200>
+    <#include "parts/interface/security.ftl">
     <div class="jumbotron card card-image"
          style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
         <div class="text-black text-center py-5 px-4">
@@ -128,63 +129,68 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5 ml-5">
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
-           aria-controls="collapse2">
-            Открыть меню добавления нового курьера в систему
-        </a>
-        <div class="collapse" id="collapse2">
-            <div class="form-group mt-3">
-                <form action="/couriers" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="firstName" placeholder="Введите имя курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="lastName"
-                               placeholder="Введите фамилию курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="email" placeholder="Введите e-mail курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="phoneNumber"
-                               placeholder="Введите телефон курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="rating" placeholder="Введите рейтинг курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="salary"
-                               placeholder="Введите зарплату курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="hireDate"
-                               placeholder="Введите дату трудоустройства курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="premium"
-                               placeholder="Введите размер премии курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="departmentId"
-                               placeholder="Введите департамент курьера..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="latitude"
-                               placeholder="Введите широту..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="longitude"
-                               placeholder="Введите долготу..."/>
-                    </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Добавить</button>
-                    </div>
-                </form>
+    <#if isAdmin || isCourier>
+        <div class="container mt-5 ml-5">
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+               aria-controls="collapse2">
+                Открыть меню добавления нового курьера в систему
+            </a>
+            <div class="collapse" id="collapse2">
+                <div class="form-group mt-3">
+                    <form action="/couriers" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="firstName"
+                                   placeholder="Введите имя курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="lastName"
+                                   placeholder="Введите фамилию курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="email"
+                                   placeholder="Введите e-mail курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="phoneNumber"
+                                   placeholder="Введите телефон курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="rating"
+                                   placeholder="Введите рейтинг курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="salary"
+                                   placeholder="Введите зарплату курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="hireDate"
+                                   placeholder="Введите дату трудоустройства курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="premium"
+                                   placeholder="Введите размер премии курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="departmentId"
+                                   placeholder="Введите департамент курьера..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="latitude"
+                                   placeholder="Введите широту..."/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="longitude"
+                                   placeholder="Введите долготу..."/>
+                        </div>
+                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </#if>
     <div class="container mt-5 ml-5">
         <table class="table table-striped">
             <thead>

@@ -10,6 +10,7 @@ known = Session.SPRING_SECURITY_CONTEXT??
     isUser = user.isUser()
     isManager = user.isManager()
     isCourier = user.isCourier()
+    isEnabled = user.isActive()
     >
 <#else>
     <#assign
@@ -18,5 +19,6 @@ known = Session.SPRING_SECURITY_CONTEXT??
     isUser = false
     isManager = false
     isCourier = false
+    isEnabled = false
     >
 </#if>

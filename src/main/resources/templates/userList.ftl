@@ -1,12 +1,20 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Users list" heightTop=100 heightBottom=1000>
+<@defaultPage.defaultPageTemplate pageName="Users list" heightTop=65 heightBottom=200>
+    <div class="jumbotron card card-image"
+         style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+        <div class="text-black text-center py-5 px-4">
+            <div>
+                <h1 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>User's list page</strong></h1>
+            </div>
+        </div>
+    </div>
     <div class="container mt-5 ml-5" style="width: 500px">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">Имя</th>
                 <th scope="col">Роль</th>
-                <th scope="col"></th>
+                <th scope="col">Редактировать</th>
             </tr>
             </thead>
             <tbody>

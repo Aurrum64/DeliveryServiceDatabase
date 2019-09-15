@@ -2,6 +2,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Co
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.*;
 
@@ -32,7 +34,8 @@ public class CouriersController {
     }
 
     @PostMapping("/couriers")
-    public String addCourier(@RequestParam String firstName,
+    public String addCourier(@AuthenticationPrincipal UsersEntity user,
+                             @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam(required = false) String email,
                              @RequestParam(required = false, defaultValue = "+7(000)-000-00-00") String phoneNumber,
@@ -55,6 +58,7 @@ public class CouriersController {
         courier.setDepartmentId(departmentId);
         courier.setLatitude(latitude);
         courier.setLongitude(longitude);
+        courier.setAuthor(user);
         couriersRepository.save(courier);
         return "redirect:/couriers";
     }

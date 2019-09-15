@@ -36,7 +36,12 @@ public class RegistrationController {
             model.put("successMessage", "You are successfully Sign Up!");
         }
         user.setActive(true);
-        user.setRoles(Collections.singleton(RolesEntity.USER));
+        Iterable<UsersEntity> usersList = usersRepository.findAll();
+        if (usersList.iterator().hasNext()) {
+            user.setRoles(Collections.singleton(RolesEntity.USER));
+        } else {
+            user.setRoles(Collections.singleton(RolesEntity.ADMIN));
+        }
         usersRepository.save(user);
         return "registration";
     }

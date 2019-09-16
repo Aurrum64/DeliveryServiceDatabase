@@ -17,8 +17,6 @@ function addOrderDetails() {
     orderDetailsInput["orderAddress"] = $("#addOrderAddress").val();
     orderDetailsInput["comment"] = $("#addComment").val();
 
-    console.log(orderDetailsInput);
-
     if (orderDetailsInput.orderDate === "" && orderDetailsInput.orderAddress === "") {
         alert("Please, enter order date and order address!");
     } else if (orderDetailsInput.orderDate === "") {

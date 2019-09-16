@@ -38,6 +38,8 @@ function deleteOrderDetailsInDb(orderDetailsInput) {
         success: function (data) {
             if (data.status === 'OK') {
                 console.log('Order details data delete!');
+            } else if (data.status === 'NOT EXISTS') {
+                alert("Order details with such ID does not exists!");
             } else {
                 console.log('Data not delete!: ' + data.status + ', ' + data.errorMessage);
             }

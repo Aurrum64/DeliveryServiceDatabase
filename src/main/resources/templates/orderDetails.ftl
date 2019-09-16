@@ -45,14 +45,14 @@
         </div>
     </div>
     <div class="container ml-5">
-        <#if deleteIdCheck??>
+        <#--<#if deleteIdCheck??>
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
                 ${deleteIdCheck!}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        </#if>
+        </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form id="deleteOrderDetails" class="form-inline">

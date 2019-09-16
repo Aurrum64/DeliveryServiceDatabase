@@ -8,6 +8,6 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Or
 @Setter
 public class SendOrderDetailsToAjax {
 
-    String msg;
-    Iterable<OrderDetailsEntity> result;
+    private String msg;
+    private Iterable<OrderDetailsEntity> result;
 }

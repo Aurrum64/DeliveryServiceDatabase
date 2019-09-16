@@ -45,6 +45,8 @@ function updateOrderDetailsInDb(orderDetailsInput) {
         success: function (data) {
             if (data.status === 'OK') {
                 console.log('Order details data update!');
+            } else if (data.status === 'NOT EXISTS') {
+                alert("Order details with such ID does not exists!");
             } else {
                 console.log('Data not update!: ' + data.status + ', ' + data.errorMessage);
             }

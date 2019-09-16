@@ -1,24 +1,17 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
+<#import "parts/interface/jumbotron.ftl" as jumbotron>
 <@defaultPage.defaultPageTemplate pageName="Clients" heightTop=65 heightBottom=200>
-    <div class="jumbotron card card-image"
-         style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
-        <div class="text-black text-center py-5 px-4">
-            <div>
-                <h1 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Clients management page</strong></h1>
-            </div>
-        </div>
-    </div>
+    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
+    pageName="Clients management page">
+    </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
         <#if filterCheck??>
-        <#--{{#filterCheck}}-->
             <div class="alert alert-danger" role="alert" style="width: 736px">
                 ${filterCheck!}
-                <#--{{filterCheck}}-->
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        <#--{{/filterCheck}}-->
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -39,12 +32,9 @@
     </div>
     <div class="container mt-5 ml-5">
         <#if deleteIdCheck??>
-        <#--{{#deleteIdCheck}}-->
             <div class="alert alert-danger" role="alert" style="width: 305px">
                 ${deleteIdCheck!}
-                <#--{{deleteIdCheck}}-->
             </div>
-        <#--{{/deleteIdCheck}}-->
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -62,12 +52,9 @@
     </div>
     <div class="container mt-5 ml-5">
         <#if updateIdCheck??>
-        <#--{{#updateIdCheck}}-->
             <div class="alert alert-danger" role="alert" style="width: 589px">
                 ${updateIdCheck!}
-                <#--{{updateIdCheck}}-->
             </div>
-        <#--{{/updateIdCheck}}-->
         </#if>
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
            aria-controls="collapseExample">
@@ -162,7 +149,6 @@
             </thead>
             <tbody>
             <#list clients as client>
-            <#--{{#clients}}-->
                 <tr>
                     <th scope="row">${client.clientId}</th>
                     <td>${client.name}</td>
@@ -172,9 +158,7 @@
                     <td>${client.rating}</td>
                     <td>${client.address}</td>
                 </tr>
-            <#--{{/clients}}-->
             <#else>
-            <#--{{^clients}}-->
                 <tr>
                     <th scope="row">List of clients is empty yet!</th>
                     <td></td>
@@ -185,7 +169,6 @@
                     <td></td>
                     <td></td>
                 </tr>
-            <#--{{/clients}}-->
             </#list>
             </tbody>
         </table>

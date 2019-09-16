@@ -1,13 +1,9 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
+<#import "parts/interface/jumbotron.ftl" as jumbotron>
 <@defaultPage.defaultPageTemplate pageName="User editor" heightTop=65 heightBottom=200>
-    <div class="jumbotron card card-image"
-         style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
-        <div class="text-black text-center py-5 px-4">
-            <div>
-                <h1 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>User's editor page</strong></h1>
-            </div>
-        </div>
-    </div>
+    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
+    pageName="User's editor page">
+    </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
         <form action="/user" method="post">
             <div class="md-form form-lg">

@@ -37,7 +37,7 @@ public class OrderDetailsController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
-                                                  @RequestBody OrderDetailsMessage order) {
+                                                  @RequestBody OrderDetailsMessageForAdd order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
         orderDetail.setOrderDate(order.getOrderDate());
         orderDetail.setOrderAddress(order.getOrderAddress());
@@ -98,28 +98,24 @@ public class OrderDetailsController {
     }
 
     @Transactional
-    @PostMapping("/orderDetailsUpdate")
-    public String updateCourier(@RequestParam Integer orderDetailsId,
-                                @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date orderDate,
-                                @RequestParam(required = false) String orderAddress,
-                                @RequestParam(required = false) String comment,
-                                Map<String, Object> model) {
-        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
-        if (orderDetails.isEmpty()) {
+    @PostMapping(value = "/updateOrderDetails",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax updateOrderDetails(@RequestBody OrderDetailsMessageForUpdate order, Map<String, Object> model) {
+        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
+        /*if (orderDetails.isEmpty()) {
             model.put("updateIdCheck", "Order details with such index does not exist!");
-            return "orderDetails";
-        } else {
-            if (orderDate != null) {
-                orderDetailsRepository.setOrderDateFor(orderDate, orderDetailsId);
-            }
-            if (!orderAddress.isEmpty()) {
-                orderDetailsRepository.setOrderAddressFor(orderAddress, orderDetailsId);
-            }
-            if (!comment.isEmpty()) {
-                orderDetailsRepository.setCommentFor(comment, orderDetailsId);
-            }
+            return "orderDetails";*/
+        if (order.getOrderDate() != null) {
+            orderDetailsRepository.setOrderDateFor(order.getOrderDate(), order.getOrderDetailsId());
         }
-        return "redirect:/orderDetails";
+        if (!order.getOrderAddress().isEmpty()) {
+            orderDetailsRepository.setOrderAddressFor(order.getOrderAddress(), order.getOrderDetailsId());
+        }
+        if (!order.getComment().isEmpty()) {
+            orderDetailsRepository.setCommentFor(order.getComment(), order.getOrderDetailsId());
+        }
+        return new ControllerAnswerToAjax("OK", "");
     }
 
     @GetMapping(value = "/deliveryCoordinates", produces = "application/json")

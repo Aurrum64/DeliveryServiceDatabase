@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class OrderDetailsMessage {
+public class OrderDetailsMessageForAdd {
 
     private Date orderDate;
     private String orderAddress;

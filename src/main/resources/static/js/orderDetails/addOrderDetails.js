@@ -1,3 +1,5 @@
+let addedRecords = [];
+
 showOrderDetailsList();
 
 $(document).ready(function () {
@@ -11,9 +13,11 @@ $(document).ready(function () {
 function addOrderDetails() {
 
     let orderDetailsInput = {};
-    orderDetailsInput["orderDate"] = $("#orderDate").val();
-    orderDetailsInput["orderAddress"] = $("#orderAddress").val();
-    orderDetailsInput["comment"] = $("#comment").val();
+    orderDetailsInput["orderDate"] = $("#addOrderDate").val();
+    orderDetailsInput["orderAddress"] = $("#addOrderAddress").val();
+    orderDetailsInput["comment"] = $("#addComment").val();
+
+    console.log(orderDetailsInput);
 
     if (orderDetailsInput.orderDate === "" && orderDetailsInput.orderAddress === "") {
         alert("Please, enter order date and order address!");
@@ -42,6 +46,7 @@ function saveOrderDetailsInDb(orderDetailsInput) {
         success: function (data) {
             if (data.status === 'OK') {
                 console.log('Order details data saved!');
+                addedRecords.push(orderDetailsInput);
             } else {
                 console.log('Data not saved!: ' + data.status + ', ' + data.errorMessage);
             }

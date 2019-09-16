@@ -83,25 +83,25 @@
         </a>
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
-                <form action="/orderDetailsUpdate" method="post">
+                <form id="updateOrderDetails">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="orderDetailsId"
+                        <input type="text" class="form-control" id="updateOrderDetailsId"
                                placeholder="Введите ID детальной информации о заказе, которую нужно изменить..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="orderDate"
+                        <input type="text" class="form-control" id="updateOrderDate"
                                placeholder="Изменить дату доставки..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="orderAddress"
+                        <input type="text" class="form-control" id="updateOrderAddress"
                                placeholder="Изменить адрес доставки..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="comment" placeholder="Изменить комментарий..."/>
+                        <input type="text" class="form-control" id="updateComment" placeholder="Изменить комментарий..."/>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Изменить</button>
+                        <button id="updateOrderDetailsBtn" type="submit" class="btn btn-primary">Изменить</button>
                     </div>
                 </form>
             </div>
@@ -116,15 +116,15 @@
             <div class="form-group mt-3">
                 <form id="addOrderDetails">
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="orderDate" class="form-control form-control-lg">
+                        <input type="text" id="addOrderDate" class="form-control form-control-lg">
                         <label for="orderDate">Введите дату доставки...</label>
                     </div>
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="orderAddress" class="form-control form-control-lg">
+                        <input type="text" id="addOrderAddress" class="form-control form-control-lg">
                         <label for="orderAddress">Введите адрес доставки...</label>
                     </div>
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="comment" class="form-control form-control-lg">
+                        <input type="text" id="addComment" class="form-control form-control-lg">
                         <label for="comment">Введите комментарий...</label>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
@@ -151,5 +151,6 @@
             </tbody>
         </table>
     </div>
-    <script src="/js/addOrderDetails.js" type="text/javascript"></script>
+    <script src="/js/orderDetails/updateOrderDetails.js" type="text/javascript"></script>
+    <script src="/js/orderDetails/addOrderDetails.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

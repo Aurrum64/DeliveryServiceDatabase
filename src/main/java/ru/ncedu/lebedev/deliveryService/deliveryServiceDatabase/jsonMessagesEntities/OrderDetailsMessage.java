@@ -5,10 +5,11 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
 @Setter
-public class OrderDetailsMessageForAdd {
+@Getter
+public class OrderDetailsMessage {
 
+    private Integer orderDetailsId;
     private Date orderDate;
     private String orderAddress;
     private String comment;

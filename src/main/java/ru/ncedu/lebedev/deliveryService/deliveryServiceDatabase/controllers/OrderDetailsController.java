@@ -37,7 +37,7 @@ public class OrderDetailsController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
-                                                  @RequestBody OrderDetailsMessageForAdd order) {
+                                                  @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
         orderDetail.setOrderDate(order.getOrderDate());
         orderDetail.setOrderAddress(order.getOrderAddress());
@@ -85,23 +85,23 @@ public class OrderDetailsController {
     }
 
     @Transactional
-    @PostMapping("/orderDetailsDelete")
-    public String deleteCourier(@RequestParam Integer orderDetailsId, Map<String, Object> model) {
-        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
-        if (orderDetails.isEmpty()) {
+    @PostMapping(value = "/deleteOrderDetails",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax deleteOrderDetails(@RequestBody OrderDetailsMessage order) {
+        /*List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());*/
+        /*if (orderDetails.isEmpty()) {
             model.put("deleteIdCheck", "No order details with such index!");
-            return "orderDetails";
-        } else {
-            orderDetailsRepository.deleteByOrderDetailsId(orderDetailsId);
-        }
-        return "redirect:/orderDetails";
+            return "orderDetails";*/
+        orderDetailsRepository.deleteByOrderDetailsId(order.getOrderDetailsId());
+        return new ControllerAnswerToAjax("OK", "");
     }
 
     @Transactional
     @PostMapping(value = "/updateOrderDetails",
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ControllerAnswerToAjax updateOrderDetails(@RequestBody OrderDetailsMessageForUpdate order, Map<String, Object> model) {
+    public ControllerAnswerToAjax updateOrderDetails(@RequestBody OrderDetailsMessage order) {
         List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
         /*if (orderDetails.isEmpty()) {
             model.put("updateIdCheck", "Order details with such index does not exist!");

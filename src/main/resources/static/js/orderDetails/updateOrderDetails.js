@@ -30,7 +30,7 @@ function updateOrderDetails() {
                 showOrderDetailsList();
             }, (300));
 
-            document.getElementById('addOrderDetails').reset();
+            document.getElementById('updateOrderDetails').reset();
         }
     }
 }

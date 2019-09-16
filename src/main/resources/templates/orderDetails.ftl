@@ -55,14 +55,15 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/orderDetailsDelete" method="post" class="form-inline">
+                <form id="deleteOrderDetails" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
-                            <input type="text" name="orderDetailsId" id="inputL" class="form-control form-control-lg">
-                            <label for="inputL">Удалить по ID...</label>
+                            <input type="text" id="deleteOrderDetailsId" <#--id="orderDetailsDeleteForm"-->
+                                   class="form-control form-control-lg">
+                            <label for="deleteOrderDetailsId">Удалить по ID...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                        <button type="submit" class="btn btn-primary ml-3">Удалить</button>
+                        <button id="deleteOrderDetailsBtn" type="submit" class="btn btn-primary ml-3">Удалить</button>
                     </div>
                 </form>
             </div>
@@ -97,7 +98,8 @@
                                placeholder="Изменить адрес доставки..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="updateComment" placeholder="Изменить комментарий..."/>
+                        <input type="text" class="form-control" id="updateComment"
+                               placeholder="Изменить комментарий..."/>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
@@ -151,6 +153,7 @@
             </tbody>
         </table>
     </div>
+    <script src="/js/orderDetails/deleteOrderDetails.js" type="text/javascript"></script>
     <script src="/js/orderDetails/updateOrderDetails.js" type="text/javascript"></script>
     <script src="/js/orderDetails/addOrderDetails.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

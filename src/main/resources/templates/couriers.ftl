@@ -133,49 +133,49 @@
             </a>
             <div class="collapse" id="collapse2">
                 <div class="form-group mt-3">
-                    <form action="/couriers" method="post">
+                    <form id="addCouriers">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="firstName"
+                            <input type="text" class="form-control" id="addCourierFirstName"
                                    placeholder="Введите имя курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="lastName"
+                            <input type="text" class="form-control" id="addCourierLastName"
                                    placeholder="Введите фамилию курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="email"
+                            <input type="text" class="form-control" id="addCourierEmail"
                                    placeholder="Введите e-mail курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="phoneNumber"
+                            <input type="text" class="form-control" id="addCourierPhoneNumber"
                                    placeholder="Введите телефон курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="rating"
+                            <input type="text" class="form-control" id="addCourierRating"
                                    placeholder="Введите рейтинг курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="salary"
+                            <input type="text" class="form-control" id="addCourierSalary"
                                    placeholder="Введите зарплату курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="hireDate"
+                            <input type="text" class="form-control" id="addCourierHireDate"
                                    placeholder="Введите дату трудоустройства курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="premium"
+                            <input type="text" class="form-control" id="addCourierPremium"
                                    placeholder="Введите размер премии курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="departmentId"
+                            <input type="text" class="form-control" id="addCourierDepartmentId"
                                    placeholder="Введите департамент курьера..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="latitude"
+                            <input type="text" class="form-control" id="addCourierLatitude"
                                    placeholder="Введите широту..."/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="longitude"
+                            <input type="text" class="form-control" id="addCourierLongitude"
                                    placeholder="Введите долготу..."/>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
@@ -187,7 +187,7 @@
             </div>
         </div>
     </#if>
-    <div class="container mt-5 ml-5">
+<#--    <div class="container mt-5 ml-5">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -240,6 +240,29 @@
                     <td></td>
                 </tr>
             </#list>
+            </tbody>
+        </table>
+    </div>-->
+    <div class="container mt-5 ml-5">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Почта</th>
+                <th scope="col">Сотовый</th>
+                <th scope="col">Рейтинг</th>
+                <th scope="col">Зарплата</th>
+                <th scope="col">Трудоустроился</th>
+                <th scope="col">Премия</th>
+                <th scope="col">Департамент</th>
+                <th scope="col">X</th>
+                <th scope="col">Y</th>
+                <th scope="col">Автор</th>
+            </tr>
+            </thead>
+            <tbody id="couriersList">
             </tbody>
         </table>
     </div>
@@ -304,4 +327,5 @@
         </button>
     </div>
     <#include "parts/map/mapScriptsSources.ftl">
+    <script src="/js/couriers/addCouriers.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

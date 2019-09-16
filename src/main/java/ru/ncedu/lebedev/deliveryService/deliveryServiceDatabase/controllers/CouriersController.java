@@ -7,10 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendCouriersToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CourierCoordinateAfterMove;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
@@ -34,18 +32,18 @@ public class CouriersController {
     }
 
     @PostMapping("/couriers")
-    public String addCourier(@AuthenticationPrincipal UsersEntity user,
-                             @RequestParam String firstName,
-                             @RequestParam String lastName,
-                             @RequestParam(required = false) String email,
-                             @RequestParam(required = false, defaultValue = "+7(000)-000-00-00") String phoneNumber,
-                             @RequestParam(required = false, defaultValue = "0") Integer rating,
-                             @RequestParam(required = false, defaultValue = "0") Integer salary,
-                             @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
-                             @RequestParam(required = false, defaultValue = "0") Integer premium,
-                             @RequestParam(required = false, defaultValue = "0") Integer departmentId,
-                             @RequestParam Double latitude,
-                             @RequestParam Double longitude) {
+    public String adCourier(@AuthenticationPrincipal UsersEntity user,
+                            @RequestParam String firstName,
+                            @RequestParam String lastName,
+                            @RequestParam(required = false) String email,
+                            @RequestParam(required = false, defaultValue = "+7(000)-000-00-00") String phoneNumber,
+                            @RequestParam(required = false, defaultValue = "0") Integer rating,
+                            @RequestParam(required = false, defaultValue = "0") Integer salary,
+                            @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
+                            @RequestParam(required = false, defaultValue = "0") Integer premium,
+                            @RequestParam(required = false, defaultValue = "0") Integer departmentId,
+                            @RequestParam Double latitude,
+                            @RequestParam Double longitude) {
         CouriersEntity courier = new CouriersEntity();
         courier.setFirstName(firstName);
         courier.setLastName(lastName);
@@ -61,6 +59,63 @@ public class CouriersController {
         courier.setAuthor(user);
         couriersRepository.save(courier);
         return "redirect:/couriers";
+    }
+
+    @GetMapping(value = "/couriersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendCouriersList() {
+
+        SendCouriersToAjax couriersList = new SendCouriersToAjax();
+        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
+        if (!couriers.iterator().hasNext()) {
+            couriersList.setMsg("Couriers list is empty!");
+        } else {
+            couriersList.setMsg("success");
+        }
+        couriersList.setResult(couriers);
+        return ResponseEntity.ok(couriersList);
+    }
+
+    @PostMapping(value = "/addCouriers",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax addCourier(@AuthenticationPrincipal UsersEntity user,
+                                             @RequestBody CouriersMessage courierMessage) {
+        CouriersEntity courier = new CouriersEntity();
+        courier.setFirstName(courierMessage.getFirstName());
+        courier.setLastName(courierMessage.getLastName());
+        courier.setEmail(courierMessage.getEmail());
+        if (courierMessage.getPhoneNumber().isEmpty()) {
+            courier.setPhoneNumber(courierMessage.getPhoneNumber());
+        } else {
+            courier.setPhoneNumber(courierMessage.getPhoneNumber());
+        }
+        if (courierMessage.getRating() == null) {
+            courier.setRating(0);
+        } else {
+            courier.setRating(courierMessage.getRating());
+        }
+        if (courierMessage.getSalary() == null) {
+            courier.setSalary(19_351);
+        } else {
+            courier.setSalary(courierMessage.getSalary());
+        }
+        courier.setHireDate(courierMessage.getHireDate());
+        if (courierMessage.getPremium() == null) {
+            courier.setPremium(0);
+        } else {
+            courier.setPremium(courierMessage.getPremium());
+        }
+        if (courierMessage.getDepartmentId() == null) {
+            courier.setDepartmentId(0);
+        } else {
+            courier.setDepartmentId(courierMessage.getDepartmentId());
+        }
+        courier.setLatitude(courierMessage.getLatitude());
+        courier.setLongitude(courierMessage.getLongitude());
+        courier.setAuthor(user);
+        couriersRepository.save(courier);
+        return new ControllerAnswerToAjax("OK", "");
     }
 
     @PostMapping("/couriersFilter")

@@ -1,18 +1,22 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ChangeStatusForOrderDetailsId;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.OrderDetailsMessage;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -52,36 +56,36 @@ public class OrderDetailsController {
         return new ControllerAnswerToAjax("OK", "");
     }
 
-    @PostMapping("/orderDetailsFilter")
-    public String findOrderDetails(@RequestParam(required = false) Integer orderDetailsId,
-                                   @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date orderDate,
-                                   @RequestParam(required = false) String orderAddress,
-                                   Map<String, Object> model) {
+    @PostMapping(value = "/searchOrderDetails",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity<?> findOrderDetails(@RequestBody OrderDetailsMessage order) {
         Iterable<OrderDetailsEntity> orderDetails;
-        if (orderDetailsId != null & orderDate == null & orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
-        } else if (orderDetailsId == null & orderDate != null & !orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDateAndOrderAddress(orderDate, orderAddress);
-        } else if (orderDetailsId == null & orderDate != null & orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDate(orderDate);
-        } else if (orderDetailsId != null & orderDate != null & orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDate(orderDetailsId, orderDate);
-        } else if (orderDetailsId != null & orderDate == null & !orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderAddress(orderDetailsId, orderAddress);
-        } else if (orderDetailsId == null & orderDate == null & !orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderAddress(orderAddress);
-        } else if (orderDetailsId != null & orderDate != null & !orderAddress.isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDateAndOrderAddress(orderDetailsId, orderDate, orderAddress);
+        if (order.getOrderDetailsId() != null & order.getOrderDate() == null & order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & !order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDateAndOrderAddress(order.getOrderDate(), order.getOrderAddress());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDate(order.getOrderDate());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDate(order.getOrderDetailsId(), order.getOrderDate());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() == null & !order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderAddress(order.getOrderDetailsId(), order.getOrderAddress());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() == null & !order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderAddress(order.getOrderAddress());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & !order.getOrderAddress().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDateAndOrderAddress(order.getOrderDetailsId(), order.getOrderDate(), order.getOrderAddress());
         } else {
             orderDetails = orderDetailsRepository.findAll();
         }
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         if (!orderDetails.iterator().hasNext()) {
-            model.put("filterCheck", "No order details with such index!");
-            return "orderDetails";
+            result.setMsg("Nothing found!");
         } else {
-            model.put("orderDetails", orderDetails);
+            result.setMsg("success");
         }
-        return "orderDetails";
+        result.setResult(orderDetails);
+        return ResponseEntity.ok(result);
     }
 
     @Transactional

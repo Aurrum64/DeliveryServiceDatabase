@@ -20,24 +20,24 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/orderDetailsFilter" method="post" class="form-inline">
+                <form id="searchOrderDetails" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
-                            <input type="text" name="orderDetailsId" id="inputLGEx"
+                            <input type="text" id="searchOrderDetailsId"
                                    class="form-control form-control-lg">
-                            <label for="inputLGEx">Найти по ID...</label>
+                            <label for="searchOrderDetailsId">Найти по ID...</label>
                         </div>
                         <div class="md-form form-lg ml-3">
-                            <input type="text" name="orderDate" id="inputLGE" class="form-control form-control-lg">
-                            <label for="inputLGE">Найти по дате...</label>
+                            <input type="text" id="searchOrderDate" class="form-control form-control-lg">
+                            <label for="searchOrderDate">Найти по дате...</label>
                         </div>
                         <div class="md-form form-lg ml-3">
-                            <input type="text" name="orderAddress" id="inputLG" class="form-control form-control-lg">
-                            <label for="inputLG">Найти по адресу...</label>
+                            <input type="text" id="searchOrderAddress" class="form-control form-control-lg">
+                            <label for="searchOrderAddress">Найти по адресу...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
-                            <button type="submit" class="btn btn-primary ml-3">Найти</button>
+                            <button id="searchOrderDetailsBtn" type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
                     </div>
                 </form>
@@ -45,14 +45,6 @@
         </div>
     </div>
     <div class="container ml-5">
-        <#--<#if deleteIdCheck??>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
-                ${deleteIdCheck!}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form id="deleteOrderDetails" class="form-inline">
@@ -70,14 +62,6 @@
         </div>
     </div>
     <div class="container mt-3 ml-5">
-        <#if updateIdCheck??>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 579px">
-                ${updateIdCheck!}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </#if>
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
            aria-controls="collapseExample">
             Открыть меню изменения существующей детальной информации о заказе
@@ -85,21 +69,22 @@
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
                 <form id="updateOrderDetails">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateOrderDetailsId"
-                               placeholder="Введите ID детальной информации о заказе, которую нужно изменить..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateOrderDetailsId" class="form-control form-control-lg">
+                        <label for="updateOrderDetailsId">Введите ID детальной информации о заказе, которую нужно
+                            изменить...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateOrderDate"
-                               placeholder="Изменить дату доставки..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateOrderDate" class="form-control form-control-lg">
+                        <label for="updateOrderDate">Изменить дату доставки...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateOrderAddress"
-                               placeholder="Изменить адрес доставки..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateOrderAddress" class="form-control form-control-lg">
+                        <label for="updateOrderAddress">Изменить адрес доставки...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateComment"
-                               placeholder="Изменить комментарий..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateComment" class="form-control form-control-lg">
+                        <label for="updateComment">Изменить комментарий...</label>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
@@ -153,6 +138,7 @@
             </tbody>
         </table>
     </div>
+    <script src="/js/orderDetails/searchOrderDetails.js" type="text/javascript"></script>
     <script src="/js/orderDetails/deleteOrderDetails.js" type="text/javascript"></script>
     <script src="/js/orderDetails/updateOrderDetails.js" type="text/javascript"></script>
     <script src="/js/orderDetails/addOrderDetails.js" type="text/javascript"></script>

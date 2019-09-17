@@ -6,29 +6,21 @@
     pageName="Couriers management page">
     </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
-        <#--        <#if filterCheck??>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
-                        ${filterCheck!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/couriersFilter" method="post" class="form-inline">
+                <form id="searchCouriers" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
-                            <input type="text" name="courierId" id="inputLGE" class="form-control form-control-lg">
-                            <label for="inputLGE">Найти по ID...</label>
+                            <input type="text" id="searchCourierId" class="form-control form-control-lg">
+                            <label for="searchCourierId">Найти по ID...</label>
                         </div>
                         <div class="md-form form-lg ml-3">
-                            <input type="text" name="firstName" id="inputLG" class="form-control form-control-lg">
-                            <label for="inputLG">Найти по имени...</label>
+                            <input type="text" id="searchCourierFirstName" class="form-control form-control-lg">
+                            <label for="searchCourierFirstName">Найти по имени...</label>
                         </div>
                         <div class="md-form form-lg ml-3">
-                            <input type="text" name="lastName" id="inputL" class="form-control form-control-lg">
-                            <label for="inputL">Найти по фамилии...</label>
+                            <input type="text" id="searchCourierLastName" class="form-control form-control-lg">
+                            <label for="searchCourierLastName">Найти по фамилии...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
@@ -40,14 +32,6 @@
         </div>
     </div>
     <div class="container ml-5">
-        <#--        <#if deleteIdCheck??>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
-                        ${deleteIdCheck!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form id="deleteCouriers" class="form-inline">
@@ -64,14 +48,6 @@
         </div>
     </div>
     <div class="container mt-3 ml-5">
-        <#--        <#if updateIdCheck??>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
-                        ${updateIdCheck!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </#if>-->
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
            aria-controls="collapseExample">
             Открыть меню изменения информации о существующем в системе курьере
@@ -276,4 +252,5 @@
     <script src="/js/couriers/addCouriers.js" type="text/javascript"></script>
     <script src="/js/couriers/updateCouriers.js" type="text/javascript"></script>
     <script src="/js/couriers/deleteCouriers.js" type="text/javascript"></script>
+    <script src="/js/couriers/searchCouriers.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

@@ -1,78 +1,43 @@
-let addedCouriers = [];
-
-showCouriersList();
-
 $(document).ready(function () {
-    $("#addCouriers").submit(function (event) {
+    $("#searchCouriers").submit(function (event) {
 
         event.preventDefault();
-        addCouriers();
+        searchCouriers();
     });
 });
 
-function addCouriers() {
+function searchCouriers() {
 
     let couriersInput = {};
-    couriersInput["firstName"] = $("#addCourierFirstName").val();
-    couriersInput["lastName"] = $("#addCourierLastName").val();
-    couriersInput["email"] = $("#addCourierEmail").val();
-    couriersInput["phoneNumber"] = $("#addCourierPhoneNumber").val();
-    couriersInput["rating"] = $("#addCourierRating").val();
-    couriersInput["salary"] = $("#addCourierSalary").val();
-    couriersInput["hireDate"] = $("#addCourierHireDate").val();
-    couriersInput["premium"] = $("#addCourierPremium").val();
-    couriersInput["departmentId"] = $("#addCourierDepartmentId").val();
-    couriersInput["latitude"] = $("#addCourierLatitude").val();
-    couriersInput["longitude"] = $("#addCourierLongitude").val();
+    couriersInput["courierId"] = $("#searchCourierId").val();
+    couriersInput["firstName"] = $("#searchCourierFirstName").val();
+    couriersInput["lastName"] = $("#searchCourierLastName").val();
 
-    if (couriersInput.firstName === "" && couriersInput.lastName === ""
-        && couriersInput.email === "") {
-        alert("You did not enter first name, last name or e-mail!");
+    if (couriersInput.courierId === "" & couriersInput.firstName === ""
+        & couriersInput.lastName === "") {
+        showCouriersList();
+        console.log("All couriers list shown.")
     } else {
-        saveCouriersInDb(couriersInput);
+        searchCouriersInDb(couriersInput);
 
-        setTimeout(function () {
-            showCouriersList();
-        }, (300));
-
-        document.getElementById('addCouriers').reset();
+        document.getElementById('searchCouriers').reset();
     }
 }
 
-function saveCouriersInDb(couriersInput) {
+function searchCouriersInDb(couriersInput) {
 
     $.ajax({
         type: "POST",
-        url: "addCouriers",
+        url: "searchCouriers",
         data: JSON.stringify(couriersInput),
         contentType: 'application/json',
-        success: function (data) {
-            if (data.status === 'OK') {
-                console.log('Couriers data saved!');
-                addedCouriers.push(couriersInput);
-            } else {
-                console.log('Data not saved!: ' + data.status + ', ' + data.errorMessage);
-            }
-        }
-    });
-}
-
-function showCouriersList() {
-
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/couriersList",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
         success: function (data) {
 
             let view;
             if (data.result[0] === undefined) {
                 view =
                     "<tr>" +
-                    "            <th scope=\"row\">List of couriers is empty yet!</th>\n" +
+                    "            <th scope=\"row\">Nothing was found by query result!</th>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +

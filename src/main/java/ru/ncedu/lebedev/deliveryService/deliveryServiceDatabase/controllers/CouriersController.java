@@ -118,36 +118,36 @@ public class CouriersController {
         return new ControllerAnswerToAjax("OK", "");
     }
 
-    @PostMapping("/couriersFilter")
-    public String findCourier(@RequestParam(required = false) Integer courierId,
-                              @RequestParam(required = false) String firstName,
-                              @RequestParam(required = false) String lastName,
-                              Map<String, Object> model) {
+    @PostMapping(value = "/searchCouriers",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity<?> findCouriers(@RequestBody CouriersMessage courierMessage) {
         Iterable<CouriersEntity> couriers;
-        if (courierId != null & firstName.isEmpty() & lastName.isEmpty()) {
-            couriers = couriersRepository.findByCourierId(courierId);
-        } else if (courierId == null & !firstName.isEmpty() & !lastName.isEmpty()) {
-            couriers = couriersRepository.findByFirstNameAndLastName(firstName, lastName);
-        } else if (courierId == null & !firstName.isEmpty() & lastName.isEmpty()) {
-            couriers = couriersRepository.findByFirstName(firstName);
-        } else if (courierId != null & !firstName.isEmpty() & lastName.isEmpty()) {
-            couriers = couriersRepository.findByCourierIdAndFirstName(courierId, firstName);
-        } else if (courierId != null & firstName.isEmpty() & !lastName.isEmpty()) {
-            couriers = couriersRepository.findByCourierIdAndLastName(courierId, lastName);
-        } else if (courierId == null & firstName.isEmpty() & !lastName.isEmpty()) {
-            couriers = couriersRepository.findByLastName(lastName);
-        } else if (courierId != null & !firstName.isEmpty() & !lastName.isEmpty()) {
-            couriers = couriersRepository.findByCourierIdAndFirstNameAndLastName(courierId, firstName, lastName);
+        if (courierMessage.getCourierId() != null & courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByCourierId(courierMessage.getCourierId());
+        } else if (courierMessage.getCourierId() == null & !courierMessage.getFirstName().isEmpty() & !courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByFirstNameAndLastName(courierMessage.getFirstName(), courierMessage.getLastName());
+        } else if (courierMessage.getCourierId() == null & !courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByFirstName(courierMessage.getFirstName());
+        } else if (courierMessage.getCourierId() != null & !courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByCourierIdAndFirstName(courierMessage.getCourierId(), courierMessage.getFirstName());
+        } else if (courierMessage.getCourierId() != null & courierMessage.getFirstName().isEmpty() & !courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByCourierIdAndLastName(courierMessage.getCourierId(), courierMessage.getLastName());
+        } else if (courierMessage.getCourierId() == null & courierMessage.getFirstName().isEmpty() & !courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByLastName(courierMessage.getLastName());
+        } else if (courierMessage.getCourierId() != null & !courierMessage.getFirstName().isEmpty() & !courierMessage.getLastName().isEmpty()) {
+            couriers = couriersRepository.findByCourierIdAndFirstNameAndLastName(courierMessage.getCourierId(), courierMessage.getFirstName(), courierMessage.getLastName());
         } else {
             couriers = couriersRepository.findAll();
         }
+        SendCouriersToAjax couriersSearchList = new SendCouriersToAjax();
         if (!couriers.iterator().hasNext()) {
-            model.put("filterCheck", "No courier with such index!");
-            return "couriers";
+            couriersSearchList.setMsg("Nothing found!");
         } else {
-            model.put("couriers", couriers);
+            couriersSearchList.setMsg("success");
         }
-        return "couriers";
+        couriersSearchList.setResult(couriers);
+        return ResponseEntity.ok(couriersSearchList);
     }
 
     @Transactional

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
@@ -81,8 +82,8 @@ public class CouriersController {
         } else {
             courier.setDepartmentId(courierMessage.getDepartmentId());
         }
-        courier.setLatitude(courierMessage.getLatitude());
-        courier.setLongitude(courierMessage.getLongitude());
+        courier.setLatitude(RandomCoordinates.getRandomLatitude());
+        courier.setLongitude(RandomCoordinates.getRandomLongitude());
         courier.setAuthor(user);
         couriersRepository.save(courier);
         return new ControllerAnswerToAjax("OK", "");

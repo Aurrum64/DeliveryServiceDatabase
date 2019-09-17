@@ -114,47 +114,39 @@
                     <form id="addCouriers">
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierFirstName" class="form-control form-control-lg">
-                            <label for="addCourierFirstName">Изменить департамент курьера...</label>
+                            <label for="addCourierFirstName">Добавить имя курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierLastName" class="form-control form-control-lg">
-                            <label for="addCourierLastName">Изменить департамент курьера...</label>
+                            <label for="addCourierLastName">Добавить фамилию курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierEmail" class="form-control form-control-lg">
-                            <label for="addCourierEmail">Изменить департамент курьера...</label>
+                            <label for="addCourierEmail">Добавить электронную почту курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierPhoneNumber" class="form-control form-control-lg">
-                            <label for="addCourierPhoneNumber">Изменить департамент курьера...</label>
+                            <label for="addCourierPhoneNumber">Добавить номер телефона курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierRating" class="form-control form-control-lg">
-                            <label for="addCourierRating">Изменить департамент курьера...</label>
+                            <label for="addCourierRating">Добавить рейтинг курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierSalary" class="form-control form-control-lg">
-                            <label for="addCourierSalary">Изменить департамент курьера...</label>
+                            <label for="addCourierSalary">Добавить зарплату курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierHireDate" class="form-control form-control-lg">
-                            <label for="addCourierHireDate">Изменить департамент курьера...</label>
+                            <label for="addCourierHireDate">Добавить дату трудоустройства курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierPremium" class="form-control form-control-lg">
-                            <label for="addCourierPremium">Изменить департамент курьера...</label>
+                            <label for="addCourierPremium">Добавить премиальные курьера...</label>
                         </div>
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierDepartmentId" class="form-control form-control-lg">
-                            <label for="addCourierDepartmentId">Изменить департамент курьера...</label>
-                        </div>
-                        <div class="md-form form-lg ml-2">
-                            <input type="text" id="addCourierLatitude" class="form-control form-control-lg">
-                            <label for="addCourierLatitude">Изменить департамент курьера...</label>
-                        </div>
-                        <div class="md-form form-lg ml-2">
-                            <input type="text" id="addCourierLongitude" class="form-control form-control-lg">
-                            <label for="addCourierLongitude">Изменить департамент курьера...</label>
+                            <label for="addCourierDepartmentId">Добавить департамент курьера...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">

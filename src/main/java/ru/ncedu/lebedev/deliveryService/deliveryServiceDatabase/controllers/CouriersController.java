@@ -151,16 +151,17 @@ public class CouriersController {
     }
 
     @Transactional
-    @PostMapping("/couriersDelete")
-    public String deleteCourier(@RequestParam Integer courierId, Map<String, Object> model) {
-        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierId);
+    @PostMapping(value = "/deleteCouriers",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax deleteCourier(@RequestBody CouriersMessage courierMessage) {
+        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierMessage.getCourierId());
         if (courier.isEmpty()) {
-            model.put("deleteIdCheck", "No courier with such index!");
-            return "couriers";
+            return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
-            couriersRepository.deleteByCourierId(courierId);
+            couriersRepository.deleteByCourierId(courierMessage.getCourierId());
         }
-        return "redirect:/couriers";
+        return new ControllerAnswerToAjax("OK", "");
     }
 
     @Transactional

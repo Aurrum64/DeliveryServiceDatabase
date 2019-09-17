@@ -50,11 +50,11 @@
                 </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/couriersDelete" method="post" class="form-inline">
+                <form id="deleteCouriers" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
-                            <input type="text" name="courierId" id="input" class="form-control form-control-lg">
-                            <label for="input">Удалить по ID...</label>
+                            <input type="text" id="deleteCourierId" class="form-control form-control-lg">
+                            <label for="deleteCourierId">Удалить по ID...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <button type="submit" class="btn btn-primary ml-3">Удалить</button>
@@ -84,14 +84,16 @@
                                placeholder="Введите ID курьера, информацию о котором нужно изменить..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierFirstName" placeholder="Изменить имя курьера..."/>
+                        <input type="text" class="form-control" id="updateCourierFirstName"
+                               placeholder="Изменить имя курьера..."/>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="updateCourierLastName"
                                placeholder="Изменить фамилию курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierEmail" placeholder="Изменить e-mail курьера..."/>
+                        <input type="text" class="form-control" id="updateCourierEmail"
+                               placeholder="Изменить e-mail курьера..."/>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="updateCourierPhoneNumber"
@@ -273,4 +275,5 @@
     <#include "parts/map/mapScriptsSources.ftl">
     <script src="/js/couriers/addCouriers.js" type="text/javascript"></script>
     <script src="/js/couriers/updateCouriers.js" type="text/javascript"></script>
+    <script src="/js/couriers/deleteCouriers.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

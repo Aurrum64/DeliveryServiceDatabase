@@ -37,6 +37,21 @@ public class OrderDetailsController {
         return "orderDetails";
     }
 
+    @GetMapping(value = "/orderDetailsList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendDeliveryCoordinates() {
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+        if (!orderDetails.iterator().hasNext()) {
+            result.setMsg("Order details list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(orderDetails);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping(value = "/addOrderDetails",
             headers = {"Content-type=application/json"})
     @ResponseBody
@@ -122,21 +137,6 @@ public class OrderDetailsController {
             }
             return new ControllerAnswerToAjax("OK", "");
         }
-    }
-
-    @GetMapping(value = "/deliveryCoordinates", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendDeliveryCoordinates() {
-
-        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
-        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
-        if (!orderDetails.iterator().hasNext()) {
-            result.setMsg("Order details list is empty!");
-        } else {
-            result.setMsg("success");
-        }
-        result.setResult(orderDetails);
-        return ResponseEntity.ok(result);
     }
 
     @Transactional

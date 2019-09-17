@@ -5,14 +5,6 @@
     pageName="Order details management page">
     </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
-        <#if filterCheck??>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
-                ${filterCheck!}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form id="searchOrderDetails" class="form-inline">
@@ -133,8 +125,5 @@
             </tbody>
         </table>
     </div>
-    <script src="/js/orderDetails/searchOrderDetails.js" type="text/javascript"></script>
-    <script src="/js/orderDetails/deleteOrderDetails.js" type="text/javascript"></script>
-    <script src="/js/orderDetails/updateOrderDetails.js" type="text/javascript"></script>
-    <script src="/js/orderDetails/addOrderDetails.js" type="text/javascript"></script>
+    <#include "parts/scriptsSources/orderDetailsScripts.ftl">
 </@defaultPage.defaultPageTemplate>

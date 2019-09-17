@@ -72,6 +72,7 @@ $(document).ready((function () {
                     });
                     sendMovingCoordinates(currentCourierInfo);
                     /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
+                    showCouriersList();
                     setCouriersMarkers();
                     j++;
                     if (j === polylines[i]._latlngs.length) {

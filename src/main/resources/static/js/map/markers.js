@@ -11,7 +11,7 @@ $(document).ready((function () {
 
 function setCouriersMarkers() {
     $.ajax({
-        url: "/couriersCoordinates",
+        url: "/couriersList",
         type: "GET",
         dataType: 'json',
         success: function (data) {
@@ -49,7 +49,7 @@ $(document).ready((function () {
 
 function setNotDeliveredMarkers() {
     $.ajax({
-        url: "/deliveryCoordinates",
+        url: "/orderDetailsList",
         type: "GET",
         dataType: 'json',
         success: function (data) {
@@ -93,7 +93,7 @@ $(document).ready((function () {
 
 function setDeliveredMarkers() {
     $.ajax({
-        url: "/deliveryCoordinates",
+        url: "/orderDetailsList",
         type: "GET",
         dataType: 'json',
         success: function (data) {

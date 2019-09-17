@@ -55,45 +55,45 @@
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
                 <form id="updateCouriers">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierId"
-                               placeholder="Введите ID курьера, информацию о котором нужно изменить..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierId" class="form-control form-control-lg">
+                        <label for="updateCourierId">Введите ID курьера, информацию о котором нужно изменить...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierFirstName"
-                               placeholder="Изменить имя курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierFirstName" class="form-control form-control-lg">
+                        <label for="updateCourierFirstName">Изменить имя курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierLastName"
-                               placeholder="Изменить фамилию курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierLastName" class="form-control form-control-lg">
+                        <label for="updateCourierLastName">Изменить фамилию курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierEmail"
-                               placeholder="Изменить e-mail курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierEmail" class="form-control form-control-lg">
+                        <label for="updateCourierEmail">Изменить e-mail курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierPhoneNumber"
-                               placeholder="Изменить телефон курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierPhoneNumber" class="form-control form-control-lg">
+                        <label for="updateCourierPhoneNumber">Изменить телефон курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierRating"
-                               placeholder="Изменить рейтинг курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierRating" class="form-control form-control-lg">
+                        <label for="updateCourierRating">Изменить рейтинг курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierSalary"
-                               placeholder="Изменить зарплату курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierSalary" class="form-control form-control-lg">
+                        <label for="updateCourierSalary">Изменить зарплату курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierHireDate"
-                               placeholder="Изменить дату трудоустройства курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierHireDate" class="form-control form-control-lg">
+                        <label for="updateCourierHireDate">Изменить дату трудоустройства курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierPremium"
-                               placeholder="Изменить размер премии курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierPremium" class="form-control form-control-lg">
+                        <label for="updateCourierPremium">Изменить размер премии курьера...</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="updateCourierDepartmentId"
-                               placeholder="Изменить департамент курьера..."/>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateCourierDepartmentId" class="form-control form-control-lg">
+                        <label for="updateCourierDepartmentId">Изменить департамент курьера...</label>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
@@ -112,49 +112,93 @@
             <div class="collapse" id="collapse2">
                 <div class="form-group mt-3">
                     <form id="addCouriers">
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierFirstName"
                                    placeholder="Введите имя курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierFirstName" class="form-control form-control-lg">
+                            <label for="addCourierFirstName">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierLastName"
                                    placeholder="Введите фамилию курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierLastName" class="form-control form-control-lg">
+                            <label for="addCourierLastName">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierEmail"
                                    placeholder="Введите e-mail курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierEmail" class="form-control form-control-lg">
+                            <label for="addCourierEmail">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierPhoneNumber"
                                    placeholder="Введите телефон курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierPhoneNumber" class="form-control form-control-lg">
+                            <label for="addCourierPhoneNumber">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierRating"
                                    placeholder="Введите рейтинг курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierRating" class="form-control form-control-lg">
+                            <label for="addCourierRating">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierSalary"
                                    placeholder="Введите зарплату курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierSalary" class="form-control form-control-lg">
+                            <label for="addCourierSalary">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierHireDate"
                                    placeholder="Введите дату трудоустройства курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierHireDate" class="form-control form-control-lg">
+                            <label for="addCourierHireDate">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierPremium"
                                    placeholder="Введите размер премии курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierPremium" class="form-control form-control-lg">
+                            <label for="addCourierPremium">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierDepartmentId"
                                    placeholder="Введите департамент курьера..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierDepartmentId" class="form-control form-control-lg">
+                            <label for="addCourierDepartmentId">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierLatitude"
                                    placeholder="Введите широту..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierLatitude" class="form-control form-control-lg">
+                            <label for="addCourierLatitude">Изменить департамент курьера...</label>
                         </div>
-                        <div class="form-group">
+                        <#--<div class="form-group">
                             <input type="text" class="form-control" id="addCourierLongitude"
                                    placeholder="Введите долготу..."/>
+                        </div>-->
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addCourierLongitude" class="form-control form-control-lg">
+                            <label for="addCourierLongitude">Изменить департамент курьера...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">

@@ -57,7 +57,7 @@ function showOrderDetailsList() {
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "/deliveryCoordinates",
+        url: "/orderDetailsList",
         dataType: 'json',
         cache: false,
         timeout: 600000,

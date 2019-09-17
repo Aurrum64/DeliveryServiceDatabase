@@ -31,36 +31,6 @@ public class CouriersController {
         return "couriers";
     }
 
-/*    @PostMapping("/couriers")
-    public String adCourier(@AuthenticationPrincipal UsersEntity user,
-                            @RequestParam String firstName,
-                            @RequestParam String lastName,
-                            @RequestParam(required = false) String email,
-                            @RequestParam(required = false, defaultValue = "+7(000)-000-00-00") String phoneNumber,
-                            @RequestParam(required = false, defaultValue = "0") Integer rating,
-                            @RequestParam(required = false, defaultValue = "0") Integer salary,
-                            @RequestParam(required = false, defaultValue = "01-01-2000") @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
-                            @RequestParam(required = false, defaultValue = "0") Integer premium,
-                            @RequestParam(required = false, defaultValue = "0") Integer departmentId,
-                            @RequestParam Double latitude,
-                            @RequestParam Double longitude) {
-        CouriersEntity courier = new CouriersEntity();
-        courier.setFirstName(firstName);
-        courier.setLastName(lastName);
-        courier.setEmail(email);
-        courier.setPhoneNumber(phoneNumber);
-        courier.setRating(rating);
-        courier.setSalary(salary);
-        courier.setHireDate(hireDate);
-        courier.setPremium(premium);
-        courier.setDepartmentId(departmentId);
-        courier.setLatitude(latitude);
-        courier.setLongitude(longitude);
-        courier.setAuthor(user);
-        couriersRepository.save(courier);
-        return "redirect:/couriers";
-    }*/
-
     @GetMapping(value = "/couriersList", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> sendCouriersList() {
@@ -202,21 +172,6 @@ public class CouriersController {
             }
         }
         return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @GetMapping(value = "/couriersCoordinates", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendCouriersCoordinates() {
-
-        SendCouriersToAjax result = new SendCouriersToAjax();
-        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
-        if (!couriers.iterator().hasNext()) {
-            result.setMsg("Couriers list is empty!");
-        } else {
-            result.setMsg("success");
-        }
-        result.setResult(couriers);
-        return ResponseEntity.ok(result);
     }
 
     @Transactional

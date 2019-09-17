@@ -112,90 +112,46 @@
             <div class="collapse" id="collapse2">
                 <div class="form-group mt-3">
                     <form id="addCouriers">
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierFirstName"
-                                   placeholder="Введите имя курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierFirstName" class="form-control form-control-lg">
                             <label for="addCourierFirstName">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierLastName"
-                                   placeholder="Введите фамилию курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierLastName" class="form-control form-control-lg">
                             <label for="addCourierLastName">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierEmail"
-                                   placeholder="Введите e-mail курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierEmail" class="form-control form-control-lg">
                             <label for="addCourierEmail">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierPhoneNumber"
-                                   placeholder="Введите телефон курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierPhoneNumber" class="form-control form-control-lg">
                             <label for="addCourierPhoneNumber">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierRating"
-                                   placeholder="Введите рейтинг курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierRating" class="form-control form-control-lg">
                             <label for="addCourierRating">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierSalary"
-                                   placeholder="Введите зарплату курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierSalary" class="form-control form-control-lg">
                             <label for="addCourierSalary">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierHireDate"
-                                   placeholder="Введите дату трудоустройства курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierHireDate" class="form-control form-control-lg">
                             <label for="addCourierHireDate">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierPremium"
-                                   placeholder="Введите размер премии курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierPremium" class="form-control form-control-lg">
                             <label for="addCourierPremium">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierDepartmentId"
-                                   placeholder="Введите департамент курьера..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierDepartmentId" class="form-control form-control-lg">
                             <label for="addCourierDepartmentId">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierLatitude"
-                                   placeholder="Введите широту..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierLatitude" class="form-control form-control-lg">
                             <label for="addCourierLatitude">Изменить департамент курьера...</label>
                         </div>
-                        <#--<div class="form-group">
-                            <input type="text" class="form-control" id="addCourierLongitude"
-                                   placeholder="Введите долготу..."/>
-                        </div>-->
                         <div class="md-form form-lg ml-2">
                             <input type="text" id="addCourierLongitude" class="form-control form-control-lg">
                             <label for="addCourierLongitude">Изменить департамент курьера...</label>
@@ -232,69 +188,7 @@
             </tbody>
         </table>
     </div>
-    <div class="container" style="height: 50px">
-    </div>
-    <div class="jumbotron jumbotron-fluid mt-5">
-        <div class="text-black text-center">
-            <h5 class="display-4">Delivery map</h5>
-        </div>
-    </div>
-    <div id="map" class="z-depth-1-half map-container ml-5 mt-5" style="width: 94%; height: 600px"></div>
-    <div class="form-group row mt-5 ml-5">
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                Курьеры
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" id="couriersCoordinates">Показать курьеров на карте</a>
-                <a class="dropdown-item" id="hideCouriersMarkers">Скрыть курьеров</a>
-            </div>
-        </div>
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                Активные заказы
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" id="deliveryCoordinates">Показать активные заказы на карте</a>
-                <a class="dropdown-item" id="hideNotDeliveredOrderPoints">Скрыть активные заказы</a>
-            </div>
-        </div>
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop3" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                Архивные заказы
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" id="showDeliveredOrders">Показать архивные заказы на карте</a>
-                <a class="dropdown-item" id="hideDeliveredOrderPoints">Скрыть архивные заказы</a>
-            </div>
-        </div>
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop4" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                Зоны доставки
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" id="showDeliveryZones">Показать зоны доставки на карте</a>
-                <a class="dropdown-item" id="hideDeliveryZones">Скрыть зоны доставки</a>
-            </div>
-        </div>
-        <button id="buildRoute" type="button" class="btn btn-secondary ml-5 mt-3">
-            Построить маршрут
-        </button>
-        <button id="move" type="button" class="btn btn-secondary ml-5 mt-3">
-            В путь!
-        </button>
-    </div>
-    <#include "parts/map/mapScriptsSources.ftl">
-    <script src="/js/couriers/addCouriers.js" type="text/javascript"></script>
-    <script src="/js/couriers/updateCouriers.js" type="text/javascript"></script>
-    <script src="/js/couriers/deleteCouriers.js" type="text/javascript"></script>
-    <script src="/js/couriers/searchCouriers.js" type="text/javascript"></script>
+    <#include "parts/interface/map.ftl">
+    <#include "parts/scriptsSources/mapScripts.ftl">
+    <#include "parts/scriptsSources/couriersScripts.ftl">
 </@defaultPage.defaultPageTemplate>

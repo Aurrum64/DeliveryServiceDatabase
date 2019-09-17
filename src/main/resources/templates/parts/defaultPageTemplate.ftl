@@ -3,8 +3,8 @@
     <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <#include "interface/bootstrapHeaderLinks.ftl">
-        <#include "map/mapHeaderLinksAndScripts.ftl">
+        <#include "thirdPartyLinksAndScripts/bootstrapHeaderLinks.ftl">
+        <#include "thirdPartyLinksAndScripts/mapHeaderLinksAndScripts.ftl">
         <#include "interface/security.ftl">
         <title>${pageName}</title>
     </head>
@@ -16,7 +16,7 @@
     <footer class="page-footer font-small black">
         <div class="footer-copyright text-center py-3">© Delivery Service, 2019</div>
     </footer>
-    <#include "interface/bootstrapFooterScripts.ftl">
+    <#include "thirdPartyLinksAndScripts/bootstrapFooterScripts.ftl">
     </body>
     </html>
 </#macro>

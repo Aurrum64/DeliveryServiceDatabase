@@ -31,7 +31,7 @@ public class CouriersController {
         return "couriers";
     }
 
-    @PostMapping("/couriers")
+/*    @PostMapping("/couriers")
     public String adCourier(@AuthenticationPrincipal UsersEntity user,
                             @RequestParam String firstName,
                             @RequestParam String lastName,
@@ -59,7 +59,7 @@ public class CouriersController {
         courier.setAuthor(user);
         couriersRepository.save(courier);
         return "redirect:/couriers";
-    }
+    }*/
 
     @GetMapping(value = "/couriersList", produces = "application/json")
     @ResponseBody
@@ -86,7 +86,7 @@ public class CouriersController {
         courier.setLastName(courierMessage.getLastName());
         courier.setEmail(courierMessage.getEmail());
         if (courierMessage.getPhoneNumber().isEmpty()) {
-            courier.setPhoneNumber(courierMessage.getPhoneNumber());
+            courier.setPhoneNumber("+7(916)000-00-00");
         } else {
             courier.setPhoneNumber(courierMessage.getPhoneNumber());
         }
@@ -164,52 +164,43 @@ public class CouriersController {
     }
 
     @Transactional
-    @PostMapping("/couriersUpdate")
-    public String updateCourier(@RequestParam Integer courierId,
-                                @RequestParam(required = false) String firstName,
-                                @RequestParam(required = false) String lastName,
-                                @RequestParam(required = false) String email,
-                                @RequestParam(required = false) String phoneNumber,
-                                @RequestParam(required = false) Integer rating,
-                                @RequestParam(required = false) Integer salary,
-                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd-mm-yyyy") Date hireDate,
-                                @RequestParam(required = false) Integer premium,
-                                @RequestParam(required = false) Integer departmentId,
-                                Map<String, Object> model) {
-        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierId);
-        if (courier.isEmpty()) {
-            model.put("updateIdCheck", "Courier with such index does not exist!");
-            return "couriers";
+    @PostMapping(value = "/updateCouriers",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax updateCourier(@RequestBody CouriersMessage couriersMessage) {
+        List<CouriersEntity> couriersList = couriersRepository.findByCourierId(couriersMessage.getCourierId());
+        if (couriersList.isEmpty()) {
+            return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
-            if (!firstName.isEmpty()) {
-                couriersRepository.setFirstNameFor(firstName, courierId);
+            if (!couriersMessage.getFirstName().isEmpty()) {
+                couriersRepository.setFirstNameFor(couriersMessage.getFirstName(), couriersMessage.getCourierId());
             }
-            if (!lastName.isEmpty()) {
-                couriersRepository.setLastNameFor(lastName, courierId);
+            if (!couriersMessage.getLastName().isEmpty()) {
+                couriersRepository.setLastNameFor(couriersMessage.getLastName(), couriersMessage.getCourierId());
             }
-            if (!email.isEmpty()) {
-                couriersRepository.setEmailFor(email, courierId);
+            if (!couriersMessage.getEmail().isEmpty()) {
+                couriersRepository.setEmailFor(couriersMessage.getEmail(), couriersMessage.getCourierId());
             }
-            if (!phoneNumber.isEmpty()) {
-                couriersRepository.setPhoneNumberFor(phoneNumber, courierId);
+            if (!couriersMessage.getPhoneNumber().isEmpty()) {
+                couriersRepository.setPhoneNumberFor(couriersMessage.getPhoneNumber(), couriersMessage.getCourierId());
             }
-            if (rating != null) {
-                couriersRepository.setRatingFor(rating, courierId);
+            if (couriersMessage.getRating() != null) {
+                couriersRepository.setRatingFor(couriersMessage.getRating(), couriersMessage.getCourierId());
             }
-            if (salary != null) {
-                couriersRepository.setSalaryFor(salary, courierId);
+            if (couriersMessage.getSalary() != null) {
+                couriersRepository.setSalaryFor(couriersMessage.getSalary(), couriersMessage.getCourierId());
             }
-            if (hireDate != null) {
-                couriersRepository.setHireDateFor(hireDate, courierId);
+            if (couriersMessage.getHireDate() != null) {
+                couriersRepository.setHireDateFor(couriersMessage.getHireDate(), couriersMessage.getCourierId());
             }
-            if (premium != null) {
-                couriersRepository.setPremiumFor(premium, courierId);
+            if (couriersMessage.getPremium() != null) {
+                couriersRepository.setPremiumFor(couriersMessage.getPremium(), couriersMessage.getCourierId());
             }
-            if (departmentId != null) {
-                couriersRepository.setDepartmentFor(departmentId, courierId);
+            if (couriersMessage.getDepartmentId() != null) {
+                couriersRepository.setDepartmentFor(couriersMessage.getDepartmentId(), couriersMessage.getCourierId());
             }
         }
-        return "redirect:/couriers";
+        return new ControllerAnswerToAjax("OK", "");
     }
 
     @GetMapping(value = "/couriersCoordinates", produces = "application/json")

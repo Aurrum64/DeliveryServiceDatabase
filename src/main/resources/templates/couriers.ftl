@@ -6,14 +6,14 @@
     pageName="Couriers management page">
     </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
-        <#if filterCheck??>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
-                ${filterCheck!}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </#if>
+        <#--        <#if filterCheck??>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
+                        ${filterCheck!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form action="/couriersFilter" method="post" class="form-inline">
@@ -40,14 +40,14 @@
         </div>
     </div>
     <div class="container ml-5">
-        <#if deleteIdCheck??>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
-                ${deleteIdCheck!}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </#if>
+        <#--        <#if deleteIdCheck??>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 305px">
+                        ${deleteIdCheck!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </#if>-->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form action="/couriersDelete" method="post" class="form-inline">
@@ -64,57 +64,57 @@
         </div>
     </div>
     <div class="container mt-3 ml-5">
-        <#if updateIdCheck??>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
-                ${updateIdCheck!}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </#if>
+        <#--        <#if updateIdCheck??>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 589px">
+                        ${updateIdCheck!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </#if>-->
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
            aria-controls="collapseExample">
             Открыть меню изменения информации о существующем в системе курьере
         </a>
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
-                <form action="/couriersUpdate" method="post">
+                <form id="updateCouriers">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="courierId"
+                        <input type="text" class="form-control" id="updateCourierId"
                                placeholder="Введите ID курьера, информацию о котором нужно изменить..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="firstName" placeholder="Изменить имя курьера..."/>
+                        <input type="text" class="form-control" id="updateCourierFirstName" placeholder="Изменить имя курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="lastName"
+                        <input type="text" class="form-control" id="updateCourierLastName"
                                placeholder="Изменить фамилию курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="email" placeholder="Изменить e-mail курьера..."/>
+                        <input type="text" class="form-control" id="updateCourierEmail" placeholder="Изменить e-mail курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="phoneNumber"
+                        <input type="text" class="form-control" id="updateCourierPhoneNumber"
                                placeholder="Изменить телефон курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="rating"
+                        <input type="text" class="form-control" id="updateCourierRating"
                                placeholder="Изменить рейтинг курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="salary"
+                        <input type="text" class="form-control" id="updateCourierSalary"
                                placeholder="Изменить зарплату курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="hireDate"
+                        <input type="text" class="form-control" id="updateCourierHireDate"
                                placeholder="Изменить дату трудоустройства курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="premium"
+                        <input type="text" class="form-control" id="updateCourierPremium"
                                placeholder="Изменить размер премии курьера..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="departmentId"
+                        <input type="text" class="form-control" id="updateCourierDepartmentId"
                                placeholder="Изменить департамент курьера..."/>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
@@ -187,62 +187,6 @@
             </div>
         </div>
     </#if>
-<#--    <div class="container mt-5 ml-5">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Фамилия</th>
-                <th scope="col">Почта</th>
-                <th scope="col">Сотовый</th>
-                <th scope="col">Рейтинг</th>
-                <th scope="col">Зарплата</th>
-                <th scope="col">Трудоустроился</th>
-                <th scope="col">Премия</th>
-                <th scope="col">Департамент</th>
-                <th scope="col">X</th>
-                <th scope="col">Y</th>
-                <th scope="col">Автор</th>
-            </tr>
-            </thead>
-            <tbody>
-            <#list couriers as courier>
-                <tr>
-                    <th scope="row">${courier.courierId}</th>
-                    <td>${courier.firstName}</td>
-                    <td>${courier.lastName}</td>
-                    <td>${courier.email}</td>
-                    <td>${courier.phoneNumber}</td>
-                    <td>${courier.rating}</td>
-                    <td>${courier.salary}</td>
-                    <td>${courier.hireDate}</td>
-                    <td>${courier.premium}</td>
-                    <td>${courier.departmentId}</td>
-                    <td>${courier.latitude}</td>
-                    <td>${courier.longitude}</td>
-                    <td>${courier.authorName}</td>
-                </tr>
-            <#else>
-                <tr>
-                    <th scope="row">List of couriers is empty yet!</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </#list>
-            </tbody>
-        </table>
-    </div>-->
     <div class="container mt-5 ml-5">
         <table class="table table-striped">
             <thead>
@@ -328,4 +272,5 @@
     </div>
     <#include "parts/map/mapScriptsSources.ftl">
     <script src="/js/couriers/addCouriers.js" type="text/javascript"></script>
+    <script src="/js/couriers/updateCouriers.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

@@ -7,6 +7,7 @@ import java.util.Date;
 @Getter
 public class CouriersMessage {
 
+    private Integer courierId;
     private String firstName;
     private String lastName;
     private String email;

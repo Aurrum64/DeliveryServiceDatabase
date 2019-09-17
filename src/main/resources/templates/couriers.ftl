@@ -107,7 +107,7 @@
         <div class="container mt-5 ml-5">
             <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
                aria-controls="collapse2">
-                Открыть меню добавления нового курьера в систему
+                Открыть меню подтверждения готовности к работе
             </a>
             <div class="collapse" id="collapse2">
                 <div class="form-group mt-3">
@@ -150,7 +150,7 @@
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Добавить</button>
+                            <button type="submit" class="btn btn-primary">Подтвердить готовность к работе</button>
                         </div>
                     </form>
                 </div>

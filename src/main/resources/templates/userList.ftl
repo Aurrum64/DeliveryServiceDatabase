@@ -1,6 +1,6 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Users list" heightTop=65 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Users list" heightTop=65 heightBottom=600>
     <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
     pageName="User's list page">
     </@jumbotron.jumbotron>

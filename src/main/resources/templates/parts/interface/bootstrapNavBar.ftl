@@ -25,7 +25,7 @@
                         Management
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <#if isAdmin>
+                        <#if isAdmin || isManager>
                             <a class="dropdown-item" href="/orderDetails">Order details</a>
                         </#if>
                         <#if isAdmin || isCourier || isManager>

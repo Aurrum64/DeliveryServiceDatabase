@@ -22,8 +22,6 @@ function addCouriers() {
     couriersInput["hireDate"] = $("#addCourierHireDate").val();
     couriersInput["premium"] = $("#addCourierPremium").val();
     couriersInput["departmentId"] = $("#addCourierDepartmentId").val();
-    couriersInput["latitude"] = $("#addCourierLatitude").val();
-    couriersInput["longitude"] = $("#addCourierLongitude").val();
 
     if (couriersInput.firstName === "" && couriersInput.lastName === ""
         && couriersInput.email === "") {

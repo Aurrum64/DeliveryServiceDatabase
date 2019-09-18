@@ -110,7 +110,7 @@
                         <input type="text" class="form-control" name="district" placeholder="Введите район..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="street" placeholder="Введите имя улицу..."/>
+                        <input type="text" class="form-control" name="street" placeholder="Введите название улицы..."/>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="building" placeholder="Введите номер дома..."/>

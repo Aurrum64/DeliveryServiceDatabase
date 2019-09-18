@@ -1,8 +1,8 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Locations" heightTop=65 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Products" heightTop=65 heightBottom=200>
     <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Locations management page">
+    pageName="Products management page">
     </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
         <#if filterCheck??>
@@ -15,19 +15,19 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/locationsFilter" method="post" class="form-inline">
+                <form action="/productsFilter" method="post" class="form-inline">
                     <div class="form-group row">
                         <div>
-                            <input type="text" name="locationId" class="form-control ml-3"
+                            <input type="text" name="productId" class="form-control ml-3"
                                    placeholder="Найти по ID..."/>
                         </div>
                         <div>
-                            <input type="text" name="street" class="form-control ml-3"
-                                   placeholder="Найти по улице..."/>
+                            <input type="text" name="title" class="form-control ml-3"
+                                   placeholder="Найти по названию..."/>
                         </div>
                         <div>
-                            <input type="text" name="building" class="form-control ml-3"
-                                   placeholder="Найти по номеру дома..."/>
+                            <input type="text" name="price" class="form-control ml-3"
+                                   placeholder="Найти по цене..."/>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
@@ -46,10 +46,10 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/locationsDelete" method="post" class="form-inline">
+                <form action="/productsDelete" method="post" class="form-inline">
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <input type="text" name="locationId" class="form-control" placeholder="Удалить по ID..."/>
+                            <input type="text" name="productId" class="form-control" placeholder="Удалить по ID..."/>
                         </div>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
@@ -66,26 +66,23 @@
         </#if>
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
            aria-controls="collapseExample">
-            Открыть меню изменения информации о существующей в системе локации
+            Открыть меню изменения информации о существующем в системе товаре
         </a>
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
-                <form action="/locationsUpdate" method="post">
+                <form action="/productsUpdate" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="locationId"
-                               placeholder="Введите ID локации, информацию о которой нужно изменить..."/>
+                        <input type="text" class="form-control" name="productId"
+                               placeholder="Введите ID товара, информацию о которой нужно изменить..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="city" placeholder="Изменить город..."/>
+                        <input type="text" class="form-control" name="title" placeholder="Изменить название..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="district" placeholder="Изменить район..."/>
+                        <input type="text" class="form-control" name="price" placeholder="Изменить цену..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="street" placeholder="Изменить улицу..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="building" placeholder="Изменить номер дома..."/>
+                        <input type="text" class="form-control" name="amount" placeholder="Изменить количество доступных..."/>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
@@ -98,22 +95,19 @@
     <div class="container mt-5 ml-5">
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
            aria-controls="collapse2">
-            Открыть меню добавления новой локации в систему
+            Открыть меню добавления нового товара в систему
         </a>
         <div class="collapse" id="collapse2">
             <div class="form-group mt-3">
-                <form action="/locations" method="post">
+                <form action="/products" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="city" placeholder="Введите город..."/>
+                        <input type="text" class="form-control" name="title" placeholder="Введите название..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="district" placeholder="Введите район..."/>
+                        <input type="text" class="form-control" name="price" placeholder="Введите цену..."/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="street" placeholder="Введите название улицы..."/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="building" placeholder="Введите номер дома..."/>
+                        <input type="text" class="form-control" name="amount" placeholder="Введите количество доступных..."/>
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
@@ -128,24 +122,22 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Город</th>
-                <th scope="col">Район</th>
-                <th scope="col">Улица</th>
-                <th scope="col">Здание</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Кол-во</th>
             </tr>
             </thead>
             <tbody>
-            <#list locations as location>
+            <#list products as product>
                 <tr>
-                    <th scope="row">${location.locationId}</th>
-                    <td>${location.city}</td>
-                    <td>${location.district}</td>
-                    <td>${location.street}</td>
-                    <td>${location.building}</td>
+                    <th scope="row">${product.productId}</th>
+                    <td>${product.title}</td>
+                    <td>${product.price}</td>
+                    <td>${product.amount}</td>
                 </tr>
             <#else>
                 <tr>
-                    <th scope="row">List of locations is empty yet!</th>
+                    <th scope="row">List of products is empty yet!</th>
                     <td></td>
                     <td></td>
                     <td></td>

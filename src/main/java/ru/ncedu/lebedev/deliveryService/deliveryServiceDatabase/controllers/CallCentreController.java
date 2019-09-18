@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CallCentre;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CallCentreEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CallCentreRepository;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class CallCentreController {
 
     @GetMapping("/callcentre")
     public String CallCentreView(Map<String, Object> model) {
-        Iterable<CallCentre> callCentres = callCentreRepository.findAll();
+        Iterable<CallCentreEntity> callCentres = callCentreRepository.findAll();
         model.put("callcentres", callCentres);
         return "callcentre";
     }
@@ -34,7 +34,7 @@ public class CallCentreController {
                       @RequestParam String name,
                       @RequestParam String deliveryRegion,
                       @RequestParam (required = false, defaultValue = "0")Integer locationId) {
-        CallCentre callCentre = new CallCentre();
+        CallCentreEntity callCentre = new CallCentreEntity();
         callCentre.setManagerId(managerId);
         callCentre.setName(name);
         callCentre.setDeliveryRegion(deliveryRegion);
@@ -45,7 +45,7 @@ public class CallCentreController {
 
     @PostMapping("/callcentreFilter")
     public String findByName(@RequestParam String name, Map<String, Object> model)  {
-        Iterable<CallCentre> callCentres;
+        Iterable<CallCentreEntity> callCentres;
         if (!name.isEmpty()) {
             callCentres = callCentreRepository.findByName(name);
         }
@@ -63,7 +63,7 @@ public class CallCentreController {
     @Transactional
     @PostMapping("/callcentreDelete")
     public String deleteCallCentre(@RequestParam Integer departmentId, Map<String, Object> model) {
-        List<CallCentre> callCentre = callCentreRepository.findByDepartmentId(departmentId);
+        List<CallCentreEntity> callCentre = callCentreRepository.findByDepartmentId(departmentId);
         if (callCentre.isEmpty()) {
             model.put("deleteIdCheck", "No callcentre with such index!");
             return "callcentre";
@@ -81,7 +81,7 @@ public class CallCentreController {
                                    @RequestParam (required = false) String deliveryRegion,
                                    @RequestParam (required = false) Integer locationId,
                                 Map<String, Object> model) {
-        List<CallCentre> callCentre = callCentreRepository.findByDepartmentId(departmentId);
+        List<CallCentreEntity> callCentre = callCentreRepository.findByDepartmentId(departmentId);
         if (callCentre.isEmpty()) {
             model.put("updateIdCheck", "Callcentre with such index does not exist!");
             return "callcentre";

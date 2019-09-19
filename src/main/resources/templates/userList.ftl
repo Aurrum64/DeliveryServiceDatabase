@@ -10,6 +10,7 @@
             <tr>
                 <th scope="col">Имя</th>
                 <th scope="col">Почтовый адрес</th>
+                <th scope="col">Предварительная роль</th>
                 <th scope="col">Роль</th>
                 <th scope="col">Редактировать</th>
             </tr>
@@ -19,12 +20,14 @@
                 <tr>
                     <th scope="row">${user.username}</th>
                     <th scope="row">${user.email}</th>
+                    <th scope="row">${user.registrationRole}</th>
                     <td><#list user.roles as role>${role}<#sep>, </#list></td>
                     <td><a href="/user/${user.id}">Edit</a></td>
                 </tr>
             <#else>
                 <tr>
                     <th scope="row">User's list is empty!</th>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

@@ -77,7 +77,6 @@ $(document).ready((function () {
                     j++;
                     if (j === polylines[i]._latlngs.length) {
                         let currentOrderInfo = JSON.stringify({orderDetailsId: deliveryInfos[i].orderDetailsId});
-                        console.log(deliveryInfos[i]);
                         changeDeliveryStatus(currentOrderInfo);
                         hideCouriersMarkers();
                         setDeliveredMarkers();

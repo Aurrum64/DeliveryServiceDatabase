@@ -18,6 +18,9 @@
                     <a class="nav-link" href="/user">Users</a>
                 </li>
             </#if>
+            <li class="nav-item">
+                <a class="nav-link" href="/reviews">Reviews</a>
+            </li>
             <#if isAdmin || isManager || isCourier>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -64,7 +67,8 @@
                 <input type="button" class="btn btn-outline-info mr-3" value="Sign In" onClick='location.href="/login"'>
             </form>
             <form>
-                <input type="button" class="btn btn-outline-info mr-2" value="Sign Up" onClick='location.href="/registration"'>
+                <input type="button" class="btn btn-outline-info mr-2" value="Sign Up"
+                       onClick='location.href="/registration"'>
             </form>
         </#if>
     </div>

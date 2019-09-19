@@ -49,6 +49,9 @@
                         <#if isAdmin>
                             <a class="dropdown-item" href="/clients">Clients</a>
                         </#if>
+                        <#if isAdmin>
+                            <a class="dropdown-item" href="/products">Products</a>
+                        </#if>
                     </div>
                 </li>
             </#if>

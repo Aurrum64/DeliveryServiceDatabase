@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Clients;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ClientsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.ClientsRepository;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ClientsController {
 
     @GetMapping("/clients")
     public String ClientsView(Map<String, Object> model) {
-        Iterable<Clients> clients = clientsRepository.findAll();
+        Iterable<ClientsEntity> clients = clientsRepository.findAll();
         model.put("clients", clients);
         return "clients";
     }
@@ -36,20 +36,20 @@ public class ClientsController {
                       @RequestParam String telephone,
                       @RequestParam(required = false) Integer rating,
                       @RequestParam String address) {
-        Clients clients = new Clients();
-        clients.setName(name);
-        clients.setSurname(surname);
-        clients.setEmail(email);
-        clients.setTelephone(telephone);
-        clients.setRating(rating);
-        clients.setAddress(address);
-        clientsRepository.save(clients);
+        ClientsEntity clientsEntity = new ClientsEntity();
+        clientsEntity.setName(name);
+        clientsEntity.setSurname(surname);
+        clientsEntity.setEmail(email);
+        clientsEntity.setTelephone(telephone);
+        clientsEntity.setRating(rating);
+        clientsEntity.setAddress(address);
+        clientsRepository.save(clientsEntity);
         return "redirect:/clients";
     }
 
     @PostMapping("/clientsFilter")
     public String findBySurname(@RequestParam String surname, Map<String, Object> model) {
-        Iterable<Clients> clients;
+        Iterable<ClientsEntity> clients;
         if (!surname.isEmpty()) {
             clients = clientsRepository.findBySurname(surname);
         }
@@ -67,7 +67,7 @@ public class ClientsController {
     @Transactional
     @PostMapping("/clientsDelete")
     public String deleteClients(@RequestParam Integer clientId, Map<String, Object> model) {
-        List<Clients> clients = clientsRepository.findByClientId(clientId);
+        List<ClientsEntity> clients = clientsRepository.findByClientId(clientId);
         if (clients.isEmpty()) {
             model.put("deleteIdCheck", "No client with such index!");
             return "clients";
@@ -86,7 +86,7 @@ public class ClientsController {
                                 @RequestParam (required = false) Integer rating,
                                 @RequestParam (required = false) String address,
                                    Map<String, Object> model) {
-        List<Clients> clients = clientsRepository.findByClientId(clientId);
+        List<ClientsEntity> clients = clientsRepository.findByClientId(clientId);
         if (clients.isEmpty()) {
             model.put("updateIdCheck", "Client with such index does not exist!");
             return "clients";

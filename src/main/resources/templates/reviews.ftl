@@ -83,7 +83,8 @@
     <div class="container mt-5 ml-5">
         <div class="row">
             <div class="col">
-                <div id="reviewsList"></div>
+                <div id="reviewsList">
+                </div>
             </div>
         </div>
     </div>

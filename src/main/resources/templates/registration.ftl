@@ -39,6 +39,12 @@
                         </div>
 
                         <div class="md-form">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <input type="email" name="email" id="materialFormCardEmailEx" class="form-control">
+                            <label for="materialFormCardEmailEx" class="font-weight-light">Your email...</label>
+                        </div>
+
+                        <div class="md-form">
                             <i class="fa fa-lock prefix grey-text"></i>
                             <input type="password" name="password" id="materialFormCardPasswordEx" class="form-control">
                             <label for="materialFormCardPasswordEx" class="font-weight-light">Your password...</label>

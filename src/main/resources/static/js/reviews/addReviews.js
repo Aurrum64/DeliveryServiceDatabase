@@ -13,11 +13,13 @@ function addReviews() {
     let reviewsInput = {};
     reviewsInput["orderId"] = $("#addOrderId").val();
     reviewsInput["clientName"] = $("#addClientName").val();
+    reviewsInput["rating"] = $("#addRatingFromClient").val();
     reviewsInput["reviewSubject"] = $("#addReviewSubject").val();
     reviewsInput["review"] = $("#addReview").val();
 
     if (reviewsInput.orderId === "" && reviewsInput.clientName === ""
-        && reviewsInput.reviewSubject === "" && reviewsInput.review === "") {
+        && reviewsInput.reviewSubject === "" && reviewsInput.review === ""
+        && reviewsInput.rating === "") {
         alert("Please, fill in all fields of the add review form!");
     } else {
         saveReviewInDb(reviewsInput);
@@ -66,6 +68,7 @@ function showReviewsList() {
                 $('#reviewsList').html(view);
             } else {
                 for (let i = 0; i < data.result.length; i++) {
+                    let ratingStars = starsOfRating(data.result[i].rating);
                     let newLine =
                         "<div class=\"media mt-5\">\n" +
                         "            <img class=\"d-flex rounded-circle avatar z-depth-1-half mr-3\"\n" +
@@ -73,11 +76,7 @@ function showReviewsList() {
                         "                 alt=\"Avatar\">\n" +
                         "            <div class=\"media-body\">\n" +
                         "                <h5 class=\"mt-0 font-weight-bold blue-text\">" + data.result[i].clientName + "</h5>\n" +
-                        "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-                        "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-                        "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-                        "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-                        "      <i class=\"fas fa-star blue-text\"> </i><br><br>" +
+                        ratingStars +
                         "<b>Отзыв: </b>" + data.result[i].review + "\n" +
                         "            </div>\n" +
                         "        </div>";
@@ -91,4 +90,34 @@ function showReviewsList() {
             }
         }
     });
+}
+
+function starsOfRating(rating) {
+    let ratingStars;
+    if (rating === 1) {
+        return ratingStars =
+            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
+    } else if (rating === 2) {
+        return ratingStars =
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
+    } else if (rating === 3) {
+        return ratingStars =
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
+    } else if (rating === 4) {
+        return ratingStars =
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
+    } else {
+        return ratingStars =
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
+            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
+    }
 }

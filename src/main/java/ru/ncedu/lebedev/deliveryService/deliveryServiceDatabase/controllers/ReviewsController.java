@@ -50,6 +50,7 @@ public class ReviewsController {
         ReviewsEntity review = new ReviewsEntity();
         review.setOrderId(reviewMessage.getOrderId());
         review.setClientName(reviewMessage.getClientName());
+        review.setRating(reviewMessage.getRating());
         review.setReviewSubject(reviewMessage.getReviewSubject());
         review.setReview(reviewMessage.getReview());
         reviewsRepository.save(review);

@@ -7,6 +7,7 @@ public class ReviewMessage {
 
     private Integer orderId;
     private String clientName;
+    private Integer rating;
     private String reviewSubject;
     private String review;
 }

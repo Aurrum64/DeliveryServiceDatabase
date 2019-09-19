@@ -26,6 +26,12 @@
                                     <label for="addOrderId" class="">Номер вашего заказа</label>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="addRatingFromClient" class="form-control">
+                                    <label for="addRatingFromClient" class="">Оценка</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">

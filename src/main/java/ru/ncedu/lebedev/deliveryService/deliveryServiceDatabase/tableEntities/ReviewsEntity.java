@@ -20,6 +20,9 @@ public class ReviewsEntity {
     @Column(name = "client_name")
     private String clientName;
 
+    @Column(name = "rating")
+    private Integer rating;
+
     @Column(name = "review_subject")
     private String reviewSubject;
 

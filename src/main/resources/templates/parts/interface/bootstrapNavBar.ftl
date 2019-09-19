@@ -21,6 +21,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/reviews">Reviews</a>
             </li>
+            <#--<li class="nav-item">
+                <a class="nav-link" href="/notifications">Notifications</a>
+            </li>-->
             <#if isAdmin || isManager || isCourier>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"

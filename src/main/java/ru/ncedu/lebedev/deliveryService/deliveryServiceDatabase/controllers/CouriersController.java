@@ -26,9 +26,9 @@ public class CouriersController {
     }
 
     @GetMapping("/couriers")
-    public String couriersView(Map<String, Object> model) {
-        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
-        model.put("couriers", couriers);
+    public String couriersView() {
+        /*Iterable<CouriersEntity> couriers = couriersRepository.findAll();
+        model.put("couriers", couriers);*/
         return "couriers";
     }
 

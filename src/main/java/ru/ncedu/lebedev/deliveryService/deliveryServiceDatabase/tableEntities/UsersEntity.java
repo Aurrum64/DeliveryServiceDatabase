@@ -18,9 +18,9 @@ public class UsersEntity implements UserDetails {
     private Integer id;
 
     private String username;
-
+    private String email;
+    private String registrationRole;
     private String password;
-
     private boolean active;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)

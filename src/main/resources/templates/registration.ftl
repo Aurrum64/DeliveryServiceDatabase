@@ -1,7 +1,8 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <@defaultPage.defaultPageTemplate pageName="Registration" heightTop=0 heightBottom=0>
     <div class="view">
-        <img src="https://images.wallpaperscraft.ru/image/megapolis_noch_gorodskoj_pejzazh_139112_1920x1080.jpg" class="img-fluid"
+        <img src="https://images.wallpaperscraft.ru/image/megapolis_noch_gorodskoj_pejzazh_139112_1920x1080.jpg"
+             class="img-fluid"
              alt="" style="width: 100%; height: 100%">
         <div class="mask pattern-1 flex-center waves-effect waves-light">
             <div class="card" style="width: 420px">
@@ -35,14 +36,27 @@
                         <div class="md-form">
                             <i class="fa fa-user prefix grey-text"></i>
                             <input type="text" name="username" id="materialFormCardNameEx" class="form-control">
-                            <label for="materialFormCardNameEx" class="font-weight-light">Your name...</label>
+                            <label for="materialFormCardNameEx" class="font-weight-light">Ваше имя...</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <input type="email" name="email" id="materialFormCardEmailEx" class="form-control">
+                            <label for="materialFormCardEmailEx" class="font-weight-light">Ваша почта...</label>
                         </div>
 
                         <div class="md-form">
                             <i class="fa fa-lock prefix grey-text"></i>
                             <input type="password" name="password" id="materialFormCardPasswordEx" class="form-control">
-                            <label for="materialFormCardPasswordEx" class="font-weight-light">Your password...</label>
+                            <label for="materialFormCardPasswordEx" class="font-weight-light">Ваш пароль...</label>
                         </div>
+
+                        <select name="registrationRole" class="browser-default custom-select mb-0 mt-4">
+                            <option selected>Ваша роль в системе:</option>
+                            <option value="USER">Пользователь</option>
+                            <option value="COURIER">Курьер</option>
+                            <option value="MANAGER">Менеджер</option>
+                        </select>
 
                         <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
                         <div class="text-center py-4 mt-3">

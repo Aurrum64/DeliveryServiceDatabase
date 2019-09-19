@@ -31,9 +31,9 @@ public class OrderDetailsController {
     }
 
     @GetMapping("/orderDetails")
-    public String orderDetailsView(Map<String, Object> model) {
-        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
-        model.put("orderDetails", orderDetails);
+    public String orderDetailsView() {
+        /*Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+        model.put("orderDetails", orderDetails);*/
         return "orderDetails";
     }
 

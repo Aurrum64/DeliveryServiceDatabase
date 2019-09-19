@@ -1,10 +1,14 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendUsersToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RolesEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
@@ -15,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
+/*@PreAuthorize("hasAuthority('ADMIN')")*/
 public class UsersController {
 
     private UsersRepository usersRepository;
@@ -57,5 +61,20 @@ public class UsersController {
         }
         usersRepository.save(user);
         return "redirect:/user";
+    }
+
+    @GetMapping(value = "/usersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendUsersList() {
+
+        SendUsersToAjax usersList = new SendUsersToAjax();
+        Iterable<UsersEntity> users = usersRepository.findAll();
+        if (!users.iterator().hasNext()) {
+            usersList.setMessage("Users list is empty!");
+        } else {
+            usersList.setMessage("success");
+        }
+        usersList.setResult(users);
+        return ResponseEntity.ok(usersList);
     }
 }

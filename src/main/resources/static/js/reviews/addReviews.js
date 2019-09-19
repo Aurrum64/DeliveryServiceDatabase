@@ -69,6 +69,7 @@ function showReviewsList() {
             } else {
                 for (let i = 0; i < data.result.length; i++) {
                     let ratingStars = starsOfRating(data.result[i].rating);
+
                     let newLine =
                         "<div class=\"media mt-5\">\n" +
                         "            <img class=\"d-flex rounded-circle avatar z-depth-1-half mr-3\"\n" +
@@ -90,34 +91,4 @@ function showReviewsList() {
             }
         }
     });
-}
-
-function starsOfRating(rating) {
-    let ratingStars;
-    if (rating === 1) {
-        return ratingStars =
-            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
-    } else if (rating === 2) {
-        return ratingStars =
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
-    } else if (rating === 3) {
-        return ratingStars =
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
-    } else if (rating === 4) {
-        return ratingStars =
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
-    } else {
-        return ratingStars =
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i>\n" +
-            "      <i class=\"fas fa-star blue-text\"> </i><br><br>";
-    }
 }

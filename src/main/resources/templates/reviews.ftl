@@ -14,23 +14,27 @@
                 <div class="col-md-9 mb-md-0 mb-5">
                     <form id="addReviews">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="md-form mb-0">
                                     <input type="text" id="addClientName" class="form-control">
                                     <label for="addClientName" class="">Ваше имя</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="md-form mb-0">
                                     <input type="text" id="addOrderId" class="form-control">
                                     <label for="addOrderId" class="">Номер вашего заказа</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="md-form mb-0">
-                                    <input type="text" id="addRatingFromClient" class="form-control">
-                                    <label for="addRatingFromClient" class="">Оценка</label>
-                                </div>
+                            <div class="col-md-4">
+                                <select id="addRatingFromClient" class="browser-default custom-select mb-0 mt-4">
+                                    <option selected>Оценка</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
@@ -76,8 +80,13 @@
             <h5 class="display-4">Отзывы о нашем сервисе</h5>
         </div>
     </div>
-    <div class="container mt-5 ml-5" style="width: 800px">
-        <div id="reviewsList"></div>
+    <div class="container mt-5 ml-5">
+        <div class="row">
+            <div class="col">
+                <div id="reviewsList"></div>
+            </div>
+        </div>
     </div>
     <script src="/js/reviews/addReviews.js" type="text/javascript"></script>
+    <script src="/js/reviews/ratingStars.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

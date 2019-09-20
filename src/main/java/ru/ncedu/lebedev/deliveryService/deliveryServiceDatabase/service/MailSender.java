@@ -16,14 +16,14 @@ public class MailSender {
         this.mailSender = mailSender;
     }
 
-    @Value("${spring.mail.username}")
-    private String username;
+    /*@Value("${spring.mail.username}")
+    private String username;*/
 
     public void send(String emailTo, String subject, String message) {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        mailMessage.setFrom(username);
+        mailMessage.setFrom("Aurrumm@yandex.ru");
         mailMessage.setTo(emailTo);
         mailMessage.setSubject(subject);
         mailMessage.setText(message);

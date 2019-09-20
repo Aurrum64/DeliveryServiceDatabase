@@ -6,4 +6,6 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Us
 public interface UsersRepository extends JpaRepository<UsersEntity, Integer> {
 
     UsersEntity findByUsername(String username);
+
+    UsersEntity findByActivationCode(String code);
 }

@@ -20,6 +20,7 @@ public class UsersEntity implements UserDetails {
     private String username;
     private String email;
     private String password;
+    private String activationCode;
     private boolean active;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)

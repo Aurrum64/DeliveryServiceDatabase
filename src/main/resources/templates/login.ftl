@@ -1,7 +1,8 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <@defaultPage.defaultPageTemplate pageName="Authorization" heightTop=0 heightBottom=0>
     <div class="view" onClick=false>
-        <img src="https://images.wallpaperscraft.ru/image/nochnoj_gorod_vid_sverkhu_zdaniya_zheleznaya_doroga_118814_1920x1080.jpg" class="img-fluid"
+        <img src="https://images.wallpaperscraft.ru/image/nochnoj_gorod_vid_sverkhu_zdaniya_zheleznaya_doroga_118814_1920x1080.jpg"
+             class="img-fluid"
              alt="" style="width: 100%; height: 100%">
         <div class="mask pattern-1 flex-center waves-effect waves-light">
             <div class="card" style="width: 420px">
@@ -9,6 +10,7 @@
                     <strong>Authorization</strong>
                 </h3>
                 <div class="card-body">
+                    ${message!}
                     <#if error??>
                         <div class="alert alert-danger alert-dismissible fade show mt-3 ml-2" role="alert"
                              style="width: 363px">

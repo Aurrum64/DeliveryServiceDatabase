@@ -7,7 +7,7 @@
         <div class="mask pattern-1 flex-center waves-effect waves-light">
             <div class="card" style="width: 420px">
                 <h3 class="card-header info-color white-text text-center py-4">
-                    <strong>Registration</strong>
+                    <strong>Регистрация</strong>
                 </h3>
                 <div class="card-body">
 
@@ -24,8 +24,8 @@
                     <#if successMessage??>
                         <div class="alert alert-success alert-dismissible fade show mt-3 ml-2" role="alert"
                              style="width: 363px">
-                        <span>${successMessage!}<br> Follow on <a href="/login"
-                                                                  class="alert-link"> authorization page</a> to log in.</span>
+                            <span><b>${successMessage!}</b><br>
+                        На указанную вами почту отправлено письмо для активации учетной записи.</span>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -53,7 +53,7 @@
 
                         <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
                         <div class="text-center py-4 mt-3">
-                            <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                            <button class="btn btn-outline-info" type="submit">Зарегистрироваться</button>
                         </div>
                     </form>
                 </div>

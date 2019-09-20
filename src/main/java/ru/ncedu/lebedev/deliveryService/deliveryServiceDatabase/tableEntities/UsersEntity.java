@@ -19,6 +19,7 @@ public class UsersEntity implements UserDetails {
 
     private String username;
     private String email;
+    private String emailVerification;
     private String password;
     private String activationCode;
     private boolean active;
@@ -27,6 +28,10 @@ public class UsersEntity implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<RolesEntity> roles;
+
+    public boolean isAccountActivated() {
+        return emailVerification.equals("Подтверждена");
+    }
 
     public boolean isAdmin() {
         return roles.contains(RolesEntity.ADMIN);

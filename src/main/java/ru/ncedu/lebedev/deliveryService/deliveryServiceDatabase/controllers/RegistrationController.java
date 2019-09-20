@@ -28,10 +28,10 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(UsersEntity user, Map<String, Object> model) {
         if (!userService.addUser(user)) {
-            model.put("errorMessage", "User already exists!");
+            model.put("errorMessage", "Имя пользователя уже занято!");
             return "registration";
         } else {
-            model.put("successMessage", "You are successfully Sign Up!");
+            model.put("successMessage", "Вы успешно зарегистрировались!");
         }
         return "registration";
     }
@@ -42,9 +42,9 @@ public class RegistrationController {
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {
-            model.put("message", "User successfully activated!");
+            model.put("message", "Почтовый адрес подтверждён!");
         } else {
-            model.put("message", "Activation code is not found!");
+            model.put("message", "Ссылка подтверждения почты не действительна!");
         }
         return "login";
     }

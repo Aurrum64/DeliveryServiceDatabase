@@ -6,6 +6,7 @@ known = Session.SPRING_SECURITY_CONTEXT??
     <#assign
     user = Session.SPRING_SECURITY_CONTEXT.authentication.principal
     name = user.getUsername()
+    isAccountActivated = user.isAccountActivated()
     isAdmin = user.isAdmin()
     isUser = user.isUser()
     isManager = user.isManager()
@@ -15,6 +16,7 @@ known = Session.SPRING_SECURITY_CONTEXT??
 <#else>
     <#assign
     name = "Guest"
+    isAccountActivated = true
     isAdmin = false
     isUser = false
     isManager = false

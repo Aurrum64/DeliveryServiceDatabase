@@ -33,7 +33,6 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(UsersEntity user) {
         UsersEntity userFromDb = usersRepository.findByUsername(user.getUsername());
-
         if (userFromDb != null) {
             return false;
         }
@@ -45,21 +44,20 @@ public class UserService implements UserDetailsService {
         } else {
             user.setRoles(Collections.singleton(RolesEntity.ADMIN));
         }
+        user.setEmailVerification("Не подтверждена");
         user.setActivationCode(UUID.randomUUID().toString());
         usersRepository.save(user);
 
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to delivery service! Please, visit next link: " +
-                            "http://localhost:8080/activate/%s",
+                            "Welcome to our delivery service! Please, visit next link: " +
+                            "http://localhost:8080/activate/%s to activate your account!",
                     user.getUsername(),
                     user.getActivationCode()
             );
-
             mailSender.send(user.getEmail(), "Activation code", message);
         }
-
         return true;
     }
 
@@ -69,9 +67,9 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             return false;
         }
+        user.setEmailVerification("Подтверждена");
         user.setActivationCode(null);
         usersRepository.save(user);
-
         return true;
     }
 }

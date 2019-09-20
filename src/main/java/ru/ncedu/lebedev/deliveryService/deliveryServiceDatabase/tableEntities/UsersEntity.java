@@ -19,7 +19,6 @@ public class UsersEntity implements UserDetails {
 
     private String username;
     private String email;
-    private String registrationRole;
     private String password;
     private boolean active;
 

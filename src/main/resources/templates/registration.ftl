@@ -51,13 +51,6 @@
                             <label for="materialFormCardPasswordEx" class="font-weight-light">Ваш пароль...</label>
                         </div>
 
-                        <select name="registrationRole" class="browser-default custom-select mb-0 mt-4">
-                            <option selected>Ваша роль в системе:</option>
-                            <option value="USER">Пользователь</option>
-                            <option value="COURIER">Курьер</option>
-                            <option value="MANAGER">Менеджер</option>
-                        </select>
-
                         <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
                         <div class="text-center py-4 mt-3">
                             <button class="btn btn-outline-info" type="submit">Sign Up</button>

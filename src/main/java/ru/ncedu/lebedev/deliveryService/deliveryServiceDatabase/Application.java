@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootApplication
-@PropertySource(value = "templates/application.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "templates/application.properties")
 public class Application {
 
     public static void main(String[] args) {

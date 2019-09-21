@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootApplication
+@TestPropertySource(value = "templates/application.properties")
 @PropertySource(value = "templates/application.properties")
 public class Application {
 

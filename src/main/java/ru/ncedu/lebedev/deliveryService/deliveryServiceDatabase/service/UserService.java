@@ -5,20 +5,74 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RolesEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
+
+import java.util.Collections;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private UsersRepository usersRepository;
+    private MailSender mailSender;
 
     @Autowired
-    public UserService(UsersRepository usersRepository) {
+    public UserService(UsersRepository usersRepository,
+                       MailSender mailSender) {
         this.usersRepository = usersRepository;
+        this.mailSender = mailSender;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usersRepository.findByUsername(username);
+    }
+
+    public boolean addUser(UsersEntity user) {
+        UsersEntity userFromDb = usersRepository.findByUsername(user.getUsername());
+        if (userFromDb != null) {
+            return false;
+        }
+
+        user.setActive(true);
+        user.setVerified(false);
+        Iterable<UsersEntity> usersList = usersRepository.findAll();
+        if (usersList.iterator().hasNext()) {
+            user.setRoles(Collections.singleton(RolesEntity.USER));
+        } else {
+            user.setRoles(Collections.singleton(RolesEntity.ADMIN));
+        }
+        user.setEmailVerification("Не подтверждена");
+        user.setActivationCode(UUID.randomUUID().toString());
+        usersRepository.save(user);
+
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Welcome to our delivery service! Please, visit next link: \n " +
+                            "http://localhost:8080/activate/%s \n " +
+                            "to activate your account!",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+            mailSender.send(user.getEmail(), "Activation code", message);
+        }
+        return true;
+    }
+
+    public boolean activateUser(String code) {
+
+        UsersEntity user = usersRepository.findByActivationCode(code);
+        if (user == null) {
+            return false;
+        }
+        user.setVerified(true);
+        user.setEmailVerification("Подтверждена");
+        user.setActivationCode(null);
+        usersRepository.save(user);
+        return true;
     }
 }

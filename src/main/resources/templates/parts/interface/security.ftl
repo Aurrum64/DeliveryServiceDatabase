@@ -11,6 +11,7 @@ known = Session.SPRING_SECURITY_CONTEXT??
     isManager = user.isManager()
     isCourier = user.isCourier()
     isEnabled = user.isActive()
+    isAccountActivated = user.isVerified()
     >
 <#else>
     <#assign
@@ -20,5 +21,6 @@ known = Session.SPRING_SECURITY_CONTEXT??
     isManager = false
     isCourier = false
     isEnabled = false
+    isAccountActivated = false
     >
 </#if>

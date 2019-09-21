@@ -19,8 +19,11 @@ public class UsersEntity implements UserDetails {
 
     private String username;
     private String email;
+    private String emailVerification;
     private String password;
+    private String activationCode;
     private boolean active;
+    private boolean verified;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -61,6 +64,10 @@ public class UsersEntity implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public boolean isAccountActivated() {
+        return isVerified();
     }
 
     @Override

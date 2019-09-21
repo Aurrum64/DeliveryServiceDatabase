@@ -38,6 +38,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
+        user.setVerified(false);
         Iterable<UsersEntity> usersList = usersRepository.findAll();
         if (usersList.iterator().hasNext()) {
             user.setRoles(Collections.singleton(RolesEntity.USER));
@@ -51,8 +52,9 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to our delivery service! Please, visit next link: " +
-                            "http://localhost:8080/activate/%s to activate your account!",
+                            "Welcome to our delivery service! Please, visit next link: \n " +
+                            "http://localhost:8080/activate/%s \n " +
+                            "to activate your account!",
                     user.getUsername(),
                     user.getActivationCode()
             );
@@ -67,6 +69,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             return false;
         }
+        user.setVerified(true);
         user.setEmailVerification("Подтверждена");
         user.setActivationCode(null);
         usersRepository.save(user);

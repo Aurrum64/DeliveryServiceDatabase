@@ -5,10 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendUsersToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RolesEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-/*@PreAuthorize("hasAuthority('ADMIN')")*/
+@PreAuthorize("hasAuthority('ADMIN')")
 public class UsersController {
 
     private UsersRepository usersRepository;

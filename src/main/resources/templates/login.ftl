@@ -10,7 +10,26 @@
                     <strong>Authorization</strong>
                 </h3>
                 <div class="card-body">
-                    ${message!}
+                    <#if successMessage??>
+                        <div class="alert alert-success alert-dismissible fade show mt-3 ml-2" role="alert"
+                             style="width: 363px">
+                            <span><b>${successMessage!}</b><br>
+                        Для окончательной активации необходимо перезайти в учётную запись,
+                                если вы уже авторизованы.</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </#if>
+                    <#if errorMessage??>
+                        <div class="alert alert-danger alert-dismissible fade show mt-3 ml-2" role="alert"
+                             style="width: 363px">
+                            ${errorMessage!}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </#if>
                     <#if error??>
                         <div class="alert alert-danger alert-dismissible fade show mt-3 ml-2" role="alert"
                              style="width: 363px">

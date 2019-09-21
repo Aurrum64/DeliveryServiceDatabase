@@ -23,15 +23,12 @@ public class UsersEntity implements UserDetails {
     private String password;
     private String activationCode;
     private boolean active;
+    private boolean verified;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<RolesEntity> roles;
-
-    public boolean isAccountActivated() {
-        return emailVerification.equals("Подтверждена");
-    }
 
     public boolean isAdmin() {
         return roles.contains(RolesEntity.ADMIN);
@@ -67,6 +64,10 @@ public class UsersEntity implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public boolean isAccountActivated() {
+        return isVerified();
     }
 
     @Override

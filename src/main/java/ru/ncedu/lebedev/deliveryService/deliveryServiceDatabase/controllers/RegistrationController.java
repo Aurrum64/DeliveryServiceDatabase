@@ -42,9 +42,9 @@ public class RegistrationController {
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {
-            model.put("message", "Почтовый адрес подтверждён!");
+            model.put("successMessage", "Почтовый адрес подтверждён!");
         } else {
-            model.put("message", "Ссылка подтверждения почты не действительна!");
+            model.put("errorMessage", "Ссылка подтверждения почты не действительна!");
         }
         return "login";
     }

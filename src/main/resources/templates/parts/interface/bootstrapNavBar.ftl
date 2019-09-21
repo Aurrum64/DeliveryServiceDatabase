@@ -24,39 +24,41 @@
             <#--<li class="nav-item">
                 <a class="nav-link" href="/notifications">Notifications</a>
             </li>-->
-            <#if isAdmin || isManager || isCourier>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Management
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <#if isAdmin || isManager>
-                            <a class="dropdown-item" href="/orderDetails">Order details</a>
-                        </#if>
-                        <#if isAdmin || isCourier || isManager>
-                            <a class="dropdown-item" href="/couriers">Couriers</a>
-                        </#if>
-                        <#if isAdmin || isManager>
-                            <a class="dropdown-item" href="/managers">Managers</a>
-                        </#if>
-                        <#if isAdmin>
-                            <a class="dropdown-item" href="/orders">Orders</a>
-                        </#if>
-                        <#if isAdmin>
-                            <a class="dropdown-item" href="/callcentre">Call centre</a>
-                        </#if>
-                        <#if isAdmin>
-                            <a class="dropdown-item" href="/locations">Locations</a>
-                        </#if>
-                        <#if isAdmin>
-                            <a class="dropdown-item" href="/clients">Clients</a>
-                        </#if>
-                        <#if isAdmin>
-                            <a class="dropdown-item" href="/products">Products</a>
-                        </#if>
-                    </div>
-                </li>
+            <#if isAccountActivated>
+                <#if isAdmin || isManager || isCourier>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Management
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <#if isAdmin || isManager>
+                                <a class="dropdown-item" href="/orderDetails">Order details</a>
+                            </#if>
+                            <#if isAdmin || isCourier || isManager>
+                                <a class="dropdown-item" href="/couriers">Couriers</a>
+                            </#if>
+                            <#if isAdmin || isManager>
+                                <a class="dropdown-item" href="/managers">Managers</a>
+                            </#if>
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/orders">Orders</a>
+                            </#if>
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/callcentre">Call centre</a>
+                            </#if>
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/locations">Locations</a>
+                            </#if>
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/clients">Clients</a>
+                            </#if>
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/products">Products</a>
+                            </#if>
+                        </div>
+                    </li>
+                </#if>
             </#if>
         </ul>
         <#if isEnabled>

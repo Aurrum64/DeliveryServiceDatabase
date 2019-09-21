@@ -3,8 +3,10 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootApplication
+@TestPropertySource()
 @PropertySource(value = "templates/application.properties")
 public class Application {
 

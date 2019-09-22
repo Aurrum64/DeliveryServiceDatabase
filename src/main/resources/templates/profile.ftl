@@ -6,7 +6,15 @@
     </@jumbotron.jumbotron>
     <div class="container ml-5 mt-5" style="width: 600px">
         <h3>Личный кабинет пользователя:${username!}</h3>
-        <form method="post">
+
+        <#if avatar??>
+            <h5>Ваш аватар:</h5>
+            <img src="/img/${avatar}" alt="">
+        </#if>
+
+        <form method="post" enctype="multipart/form-data">
+
+            <input type="file" name="file">
 
             <div class="md-form">
                 <i class="fa fa-envelope prefix grey-text"></i>

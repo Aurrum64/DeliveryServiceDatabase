@@ -24,6 +24,7 @@ public class UsersEntity implements UserDetails {
     private String activationCode;
     private boolean active;
     private boolean verified;
+    private String filename;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

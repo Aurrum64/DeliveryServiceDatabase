@@ -1,15 +1,19 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RolesEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,6 +29,9 @@ public class UserService implements UserDetailsService {
         this.usersRepository = usersRepository;
         this.mailSender = mailSender;
     }
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -100,7 +107,8 @@ public class UserService implements UserDetailsService {
         usersRepository.save(user);
     }
 
-    public void updateProfile(UsersEntity user, String password, String email) {
+    public void updateProfile(UsersEntity user, String password,
+                              String email, MultipartFile avatar) throws IOException {
         String userEmail = user.getEmail();
 
         boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
@@ -115,6 +123,19 @@ public class UserService implements UserDetailsService {
         }
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(password);
+        }
+
+        if (avatar != null) {
+            File uploadDirectory = new File(uploadPath);
+
+            if (!uploadDirectory.exists()) {
+                uploadDirectory.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + avatar.getOriginalFilename();
+
+            avatar.transferTo(new File(uploadPath + "/" + resultFilename));
+            user.setFilename(resultFilename);
         }
         usersRepository.save(user);
 

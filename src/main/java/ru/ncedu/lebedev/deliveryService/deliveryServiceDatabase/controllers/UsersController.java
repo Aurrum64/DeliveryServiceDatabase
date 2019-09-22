@@ -6,33 +6,31 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendUsersToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RolesEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class UsersController {
 
-    private UsersRepository usersRepository;
+    private UserService userService;
 
     @Autowired
-    public UsersController(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+    public UsersController(UserService userService) {
+        this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public String userList(Map<String, Object> userList) {
-        userList.put("users", usersRepository.findAll());
+        userList.put("users", userService.findAll());
         return "userList";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable UsersEntity user,
                                Map<String, Object> model) {
@@ -41,23 +39,12 @@ public class UsersController {
         return "userEditor";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public String saveUser(@RequestParam String username,
                            @RequestParam Map<String, String> form,
                            @RequestParam("userId") UsersEntity user) {
-        user.setUsername(username);
-        Set<String> roles = Arrays.stream(RolesEntity.values())
-                .map(RolesEntity::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(RolesEntity.valueOf(key));
-            }
-        }
-        usersRepository.save(user);
+        userService.saveUser(user, username, form);
         return "redirect:/user";
     }
 
@@ -66,7 +53,7 @@ public class UsersController {
     public ResponseEntity<?> sendUsersList() {
 
         SendUsersToAjax usersList = new SendUsersToAjax();
-        Iterable<UsersEntity> users = usersRepository.findAll();
+        Iterable<UsersEntity> users = userService.findAll();
         if (!users.iterator().hasNext()) {
             usersList.setMessage("Users list is empty!");
         } else {
@@ -75,4 +62,6 @@ public class UsersController {
         usersList.setResult(users);
         return ResponseEntity.ok(usersList);
     }
+
+
 }

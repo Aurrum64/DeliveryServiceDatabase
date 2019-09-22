@@ -21,6 +21,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/reviews">Reviews</a>
             </li>
+            <#if user??>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+            </#if>
             <#--<li class="nav-item">
                 <a class="nav-link" href="/notifications">Notifications</a>
             </li>-->

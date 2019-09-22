@@ -23,10 +23,10 @@ function starsOfRating(rating) {
             "      <i class=\"fas fa-star black-text\"> </i><br><br>";
     } else if (rating === 4) {
         return ratingStars =
-            "      <i class=\"fas fa-star green-text\"> </i>\n" +
-            "      <i class=\"fas fa-star green-text\"> </i>\n" +
-            "      <i class=\"fas fa-star green-text\"> </i>\n" +
-            "      <i class=\"fas fa-star green-text\"> </i>\n" +
+            "      <i class=\"fas fa-star cyan-text\"> </i>\n" +
+            "      <i class=\"fas fa-star cyan-text\"> </i>\n" +
+            "      <i class=\"fas fa-star cyan-text\"> </i>\n" +
+            "      <i class=\"fas fa-star cyan-text\"> </i>\n" +
             "      <i class=\"fas fa-star black-text\"> </i><br><br>";
     } else if (rating === 5) {
         return ratingStars =

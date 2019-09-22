@@ -8,28 +8,41 @@
         <h3>Личный кабинет пользователя:${username!}</h3>
 
         <#if avatar??>
-            <h5>Ваш аватар:</h5>
+            <div class="text mt-5">
+                <h5>Ваш аватар:</h5>
+            </div>
             <img src="/img/${avatar}" alt="">
         </#if>
 
         <form method="post" enctype="multipart/form-data">
 
-            <input type="file" name="file">
-
-            <div class="md-form">
-                <i class="fa fa-envelope prefix grey-text"></i>
-                <input type="email" name="email" value="${email!''}" id="materialFormCardEmailEx" class="form-control">
-                <label for="materialFormCardEmailEx" class="font-weight-light">Изменить почтовый адрес...</label>
+            <div class="input-group mt-5">
+                <#--<div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Загрузить</span>
+                </div>-->
+                <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Установить аватарку...</label>
+                </div>
             </div>
 
-            <div class="md-form">
+            <div class="md-form mt-5">
+                <i class="fa fa-envelope prefix grey-text"></i>
+                <input type="email" name="email" value="${email!''}" id="materialFormCardEmailEx"
+                       class="form-control">
+                <label for="materialFormCardEmailEx" class="font-weight-light">Изменить почтовый
+                    адрес...</label>
+            </div>
+
+            <div class="md-form mt-4">
                 <i class="fa fa-lock prefix grey-text"></i>
                 <input type="password" name="password" id="materialFormCardPasswordEx" class="form-control">
                 <label for="materialFormCardPasswordEx" class="font-weight-light">Изменить пароль...</label>
             </div>
 
             <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
-            <div class="text-center py-4 mt-3">
+            <div class="text-center py-4 mt-4">
                 <button class="btn btn-outline-info" type="submit">Сохранить</button>
             </div>
         </form>

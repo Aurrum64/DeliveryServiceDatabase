@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="container mt-5 ml-5">
-        <h4>Ваши активные заказы</h4>
+        <h4>Ваши активные заказы:</h4>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -51,6 +51,24 @@
             </tr>
             </thead>
             <tbody id="activeOrdersListForUser">
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-5 ml-5">
+        <h4>История ваших заказов:</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Дата доставки</th>
+                <th scope="col">Откуда</th>
+                <th scope="col">Куда</th>
+                <th scope="col">Комментарий</th>
+                <th scope="col">Статус доставки</th>
+                <th scope="col">Автор</th>
+            </tr>
+            </thead>
+            <tbody id="archiveOrdersListForUser">
             </tbody>
         </table>
     </div>

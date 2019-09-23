@@ -94,8 +94,12 @@
                         <label for="orderDate">Введите дату доставки...</label>
                     </div>
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="addOrderAddress" class="form-control form-control-lg">
-                        <label for="orderAddress">Введите адрес доставки...</label>
+                        <input type="text" id="addFirstOrderAddressPoint" class="form-control form-control-lg">
+                        <label for="addFirstOrderAddressPoint">Откуда забрать заказ?</label>
+                    </div>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="addSecondOrderAddressPoint" class="form-control form-control-lg">
+                        <label for="addSecondOrderAddressPoint">Куда доставить заказ?</label>
                     </div>
                     <div class="md-form form-lg ml-2">
                         <input type="text" id="addComment" class="form-control form-control-lg">
@@ -115,7 +119,8 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Дата доставки</th>
-                <th scope="col">Адрес доставки</th>
+                <th scope="col">Откуда</th>
+                <th scope="col">Куда</th>
                 <th scope="col">Комментарий</th>
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>

@@ -18,7 +18,6 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Or
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class OrderDetailsController {
@@ -32,8 +31,6 @@ public class OrderDetailsController {
 
     @GetMapping("/orderDetails")
     public String orderDetailsView() {
-        /*Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
-        model.put("orderDetails", orderDetails);*/
         return "orderDetails";
     }
 
@@ -59,7 +56,8 @@ public class OrderDetailsController {
                                                   @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
         orderDetail.setOrderDate(order.getOrderDate());
-        orderDetail.setOrderAddress(order.getOrderAddress());
+        orderDetail.setFirstOrderAddressPoint(order.getFirstOrderAddressPoint());
+        orderDetail.setSecondOrderAddressPoint(order.getSecondOrderAddressPoint());
         if (order.getComment().isEmpty()) {
             orderDetail.setComment("Доставить как можно скорее");
         } else {
@@ -76,20 +74,20 @@ public class OrderDetailsController {
     @ResponseBody
     public ResponseEntity<?> findOrderDetails(@RequestBody OrderDetailsMessage order) {
         Iterable<OrderDetailsEntity> orderDetails;
-        if (order.getOrderDetailsId() != null & order.getOrderDate() == null & order.getOrderAddress().isEmpty()) {
+        if (order.getOrderDetailsId() != null & order.getOrderDate() == null & order.getSecondOrderAddressPoint().isEmpty()) {
             orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
-        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDateAndOrderAddress(order.getOrderDate(), order.getOrderAddress());
-        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & order.getOrderAddress().isEmpty()) {
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDateAndSecondOrderAddressPoint(order.getOrderDate(), order.getSecondOrderAddressPoint());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & order.getSecondOrderAddressPoint().isEmpty()) {
             orderDetails = orderDetailsRepository.findByOrderDate(order.getOrderDate());
-        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & order.getOrderAddress().isEmpty()) {
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & order.getSecondOrderAddressPoint().isEmpty()) {
             orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDate(order.getOrderDetailsId(), order.getOrderDate());
-        } else if (order.getOrderDetailsId() != null & order.getOrderDate() == null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderAddress(order.getOrderDetailsId(), order.getOrderAddress());
-        } else if (order.getOrderDetailsId() == null & order.getOrderDate() == null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderAddress(order.getOrderAddress());
-        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDateAndOrderAddress(order.getOrderDetailsId(), order.getOrderDate(), order.getOrderAddress());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() == null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndSecondOrderAddressPoint(order.getOrderDetailsId(), order.getSecondOrderAddressPoint());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() == null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findBySecondOrderAddressPoint(order.getSecondOrderAddressPoint());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDateAndSecondOrderAddressPoint(order.getOrderDetailsId(), order.getOrderDate(), order.getSecondOrderAddressPoint());
         } else {
             orderDetails = orderDetailsRepository.findAll();
         }
@@ -129,8 +127,11 @@ public class OrderDetailsController {
             if (order.getOrderDate() != null) {
                 orderDetailsRepository.setOrderDateFor(order.getOrderDate(), order.getOrderDetailsId());
             }
-            if (!order.getOrderAddress().isEmpty()) {
-                orderDetailsRepository.setOrderAddressFor(order.getOrderAddress(), order.getOrderDetailsId());
+            if (!order.getFirstOrderAddressPoint().isEmpty()) {
+                orderDetailsRepository.setFirstOrderAddressPointFor(order.getFirstOrderAddressPoint(), order.getOrderDetailsId());
+            }
+            if (!order.getSecondOrderAddressPoint().isEmpty()) {
+                orderDetailsRepository.setSecondOrderAddressPointFor(order.getSecondOrderAddressPoint(), order.getOrderDetailsId());
             }
             if (!order.getComment().isEmpty()) {
                 orderDetailsRepository.setCommentFor(order.getComment(), order.getOrderDetailsId());

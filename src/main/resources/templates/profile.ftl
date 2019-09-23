@@ -48,5 +48,13 @@
                 <button class="btn btn-outline-info" type="submit">Сохранить</button>
             </div>
         </form>
+        <form>
+            <input type="button" class="btn btn-outline-info mr-3" value="Заказать доставку"
+                   onClick='location.href="/orderDelivery"'>
+        </form>
+        <form>
+            <input type="button" class="btn btn-outline-info mr-3" value="Я хочу у вас работать!"
+                   onClick='location.href="/"'>
+        </form>
     </div>
 </@defaultPage.defaultPageTemplate>

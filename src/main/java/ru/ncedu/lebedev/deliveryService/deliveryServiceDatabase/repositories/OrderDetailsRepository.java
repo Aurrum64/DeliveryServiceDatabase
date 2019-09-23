@@ -14,15 +14,15 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     List<OrderDetailsEntity> findByOrderDetailsIdAndOrderDate(Integer id, Date orderDate);
 
-    List<OrderDetailsEntity> findByOrderDetailsIdAndOrderAddress(Integer id, String orderAddress);
+    List<OrderDetailsEntity> findByOrderDetailsIdAndSecondOrderAddressPoint(Integer id, String secondOrderAddressPoint);
 
     List<OrderDetailsEntity> findByOrderDate(Date orderDate);
 
-    List<OrderDetailsEntity> findByOrderAddress(String orderAddress);
+    List<OrderDetailsEntity> findBySecondOrderAddressPoint(String secondOrderAddressPoint);
 
-    List<OrderDetailsEntity> findByOrderDateAndOrderAddress(Date orderDate, String orderAddress);
+    List<OrderDetailsEntity> findByOrderDateAndSecondOrderAddressPoint(Date orderDate, String secondOrderAddressPoint);
 
-    List<OrderDetailsEntity> findByOrderDetailsIdAndOrderDateAndOrderAddress(Integer id, Date orderDate, String orderAddress);
+    List<OrderDetailsEntity> findByOrderDetailsIdAndOrderDateAndSecondOrderAddressPoint(Integer id, Date orderDate, String secondOrderAddressPoint);
 
     void deleteByOrderDetailsId(Integer id);
 
@@ -31,8 +31,12 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
     void setOrderDateFor(Date orderDate, Integer id);
 
     @Modifying
-    @Query("update OrderDetailsEntity o set o.orderAddress = ?1 where o.orderDetailsId = ?2")
-    void setOrderAddressFor(String orderAddress, Integer id);
+    @Query("update OrderDetailsEntity o set o.firstOrderAddressPoint = ?1 where o.orderDetailsId = ?2")
+    void setFirstOrderAddressPointFor(String firstOrderAddressPoint, Integer id);
+
+    @Modifying
+    @Query("update OrderDetailsEntity o set o.secondOrderAddressPoint = ?1 where o.orderDetailsId = ?2")
+    void setSecondOrderAddressPointFor(String secondOrderAddressPoint, Integer id);
 
     @Modifying
     @Query("update OrderDetailsEntity o set o.comment = ?1 where o.orderDetailsId = ?2")

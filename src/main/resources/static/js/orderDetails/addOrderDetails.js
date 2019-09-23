@@ -14,15 +14,13 @@ function addOrderDetails() {
 
     let orderDetailsInput = {};
     orderDetailsInput["orderDate"] = $("#addOrderDate").val();
-    orderDetailsInput["orderAddress"] = $("#addOrderAddress").val();
+    orderDetailsInput["firstOrderAddressPoint"] = $("#addFirstOrderAddressPoint").val();
+    orderDetailsInput["secondOrderAddressPoint"] = $("#addSecondOrderAddressPoint").val();
     orderDetailsInput["comment"] = $("#addComment").val();
 
-    if (orderDetailsInput.orderDate === "" && orderDetailsInput.orderAddress === "") {
-        alert("Please, enter order date and order address!");
-    } else if (orderDetailsInput.orderDate === "") {
-        alert("Please, enter order date!");
-    } else if (orderDetailsInput.orderAddress === "") {
-        alert("Please, enter order address!");
+    if (orderDetailsInput.orderDate === "" && orderDetailsInput.firstOrderAddressPoint === ""
+        && orderDetailsInput.secondOrderAddressPoint === "" && orderDetailsInput.comment === "") {
+        alert("Please, fill in all the fields or form!");
     } else {
         saveOrderDetailsInDb(orderDetailsInput);
 
@@ -73,6 +71,7 @@ function showOrderDetailsList() {
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
+                    "            <td></td>\n" +
                     "</tr>";
                 $('#orderDetailsList').html(view);
             } else {
@@ -81,7 +80,8 @@ function showOrderDetailsList() {
                         "<tr>" +
                         "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
                         "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].orderAddress + "</td>\n" +
+                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
+                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
                         "            <td>" + data.result[i].comment + "</td>\n" +
                         "            <td>" + data.result[i].status + "</td>\n" +
                         "            <td>" + data.result[i].authorName + "</td>\n" +

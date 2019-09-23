@@ -5,22 +5,22 @@
     pageName="Profile">
     </@jumbotron.jumbotron>
     <div class="container ml-5 mt-5" style="width: 600px">
-        <h3>Личный кабинет пользователя:${username!}</h3>
+        <h2>Личный кабинет пользователя:${username!}</h2>
 
         <#if avatar??>
             <div class="text mt-5 mb-3">
-                <h5>Ваш аватар:</h5>
+                <h4>Ваш аватар:</h4>
             </div>
             <img src="/img/${avatar}" alt="">
         <#else>
             <div class="text mt-5 mb-3">
-                <h5>Базовый аватар:</h5>
+                <h4>Базовый аватар:</h4>
             </div>
             <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" alt="">
         </#if>
 
         <div class="text mt-5">
-            <h5>Информация о пользователе:</h5>
+            <h4>Информация о пользователе:</h4>
         </div>
         <table class="table table-striped">
             <thead>
@@ -42,7 +42,7 @@
         </table>
 
         <div class="text mt-5">
-            <h5>Редактирование:</h5>
+            <h4>Редактирование:</h4>
         </div>
         <form method="post" enctype="multipart/form-data">
 

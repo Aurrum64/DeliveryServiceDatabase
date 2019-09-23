@@ -50,10 +50,10 @@ function buildRoute() {
     }
 }
 
-
 $(document).ready((function () {
     $("#move").click(function () {
-        if (couriersMarkers[0] === undefined || notDeliveredMarkers[0] === undefined) {
+        if (couriersMarkers[0] === undefined || firstOrderPointMarkers[0] === undefined ||
+            secondOrderPointMarkers[0] === undefined) {
             alert("Please, build a route!");
         } else {
             for (let i = 0; i < polylines.length; i++) {
@@ -90,7 +90,6 @@ $(document).ready((function () {
         }
     });
 }));
-
 
 function sendMovingCoordinates(currentCourierInfo) {
     $.ajax({

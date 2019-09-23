@@ -36,7 +36,7 @@ public class OrderDetailsController {
 
     @GetMapping(value = "/orderDetailsList", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendDeliveryCoordinates() {
+    public ResponseEntity<?> sendOrderDetailsList() {
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();

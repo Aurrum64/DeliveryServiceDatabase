@@ -18,13 +18,13 @@
                             <input type="text" id="searchOrderDate" class="form-control form-control-lg">
                             <label for="searchOrderDate">Найти по дате...</label>
                         </div>
-                        <div class="md-form form-lg ml-3">
-                            <input type="text" id="searchOrderAddress" class="form-control form-control-lg">
-                            <label for="searchOrderAddress">Найти по адресу...</label>
+                        <div class="md-form form-lg ml-3" style="width: 300px">
+                            <input type="text" id="searchSecondOrderAddressPoint" class="form-control form-control-lg" style="width: 300px">
+                            <label for="searchSecondOrderAddressPoint">Найти по адресу доставки...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
-                            <button id="searchOrderDetailsBtn" type="submit" class="btn btn-primary ml-3">Найти</button>
+                            <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
                     </div>
                 </form>
@@ -37,12 +37,12 @@
                 <form id="deleteOrderDetails" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
-                            <input type="text" id="deleteOrderDetailsId" <#--id="orderDetailsDeleteForm"-->
+                            <input type="text" id="deleteOrderDetailsId"
                                    class="form-control form-control-lg">
                             <label for="deleteOrderDetailsId">Удалить по ID...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                        <button id="deleteOrderDetailsBtn" type="submit" class="btn btn-primary ml-3">Удалить</button>
+                        <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                     </div>
                 </form>
             </div>
@@ -66,8 +66,12 @@
                         <label for="updateOrderDate">Изменить дату доставки...</label>
                     </div>
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="updateOrderAddress" class="form-control form-control-lg">
-                        <label for="updateOrderAddress">Изменить адрес доставки...</label>
+                        <input type="text" id="updateFirstOrderAddressPoint" class="form-control form-control-lg">
+                        <label for="updateFirstOrderAddressPoint">Изменить адрес получения заказа...</label>
+                    </div>
+                    <div class="md-form form-lg ml-2">
+                        <input type="text" id="updateSecondOrderAddressPoint" class="form-control form-control-lg">
+                        <label for="updateSecondOrderAddressPoint">Изменить адрес доставки заказа...</label>
                     </div>
                     <div class="md-form form-lg ml-2">
                         <input type="text" id="updateComment" class="form-control form-control-lg">
@@ -75,7 +79,7 @@
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
-                        <button id="updateOrderDetailsBtn" type="submit" class="btn btn-primary">Изменить</button>
+                        <button type="submit" class="btn btn-primary">Изменить</button>
                     </div>
                 </form>
             </div>
@@ -107,7 +111,7 @@
                     </div>
                     <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
-                        <button id="addOrderDetailsBtn" type="submit" class="btn btn-primary">Добавить</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
                 </form>
             </div>

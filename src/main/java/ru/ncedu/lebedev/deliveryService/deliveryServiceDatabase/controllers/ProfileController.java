@@ -11,6 +11,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserServ
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,6 +27,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal UsersEntity user,
                           Map<String, Object> model) {
+        model.put("user", user);
         model.put("avatar", user.getFilename());
         model.put("username", " " + user.getUsername());
         model.put("email", user.getEmail());

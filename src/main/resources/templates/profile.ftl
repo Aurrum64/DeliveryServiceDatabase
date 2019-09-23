@@ -8,17 +8,42 @@
         <h3>Личный кабинет пользователя:${username!}</h3>
 
         <#if avatar??>
-            <div class="text mt-5">
+            <div class="text mt-5 mb-3">
                 <h5>Ваш аватар:</h5>
             </div>
             <img src="/img/${avatar}" alt="">
         <#else>
-            <div class="text mt-5">
+            <div class="text mt-5 mb-3">
                 <h5>Базовый аватар:</h5>
             </div>
             <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" alt="">
         </#if>
 
+        <div class="text mt-5">
+            <h5>Информация о пользователе:</h5>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Идентификатор пользователя</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Статус почты</th>
+                <th scope="col">Роль</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">${user.id}</th>
+                <th scope="row">${user.username}</th>
+                <th scope="row">${user.emailVerification}</th>
+                <td><#list user.roles as role>${role}<#sep>, </#list></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text mt-5">
+            <h5>Редактирование:</h5>
+        </div>
         <form method="post" enctype="multipart/form-data">
 
             <div class="input-group mt-5">

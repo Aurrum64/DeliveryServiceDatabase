@@ -11,7 +11,7 @@ $(document).ready((function () {
 }));
 
 function buildRoute() {
-    if (couriersMarkers[0] === undefined && notDeliveredMarkers[0] === undefined) {
+    if (couriersMarkers[0] === undefined) {
         alert("Please, add courier with coordinates to the system first " +
             "and add courier's markers to the map!\n" +
             "Please, add order details with address to the system first " +
@@ -19,7 +19,7 @@ function buildRoute() {
     } else if (couriersMarkers[0] === undefined) {
         alert("Please, add courier with coordinates to the system first " +
             "and add courier marker to the map!");
-    } else if (notDeliveredMarkers[0] === undefined) {
+    } else if (firstOrderPointMarkers[0] === undefined || secondOrderPointMarkers[0] === undefined) {
         alert("Please, add order details with address to the system first " +
             "and add delivery marker to the map!");
     } else {
@@ -28,7 +28,8 @@ function buildRoute() {
                 {
                     waypoints: [
                         L.latLng(couriersMarkers[i]._latlng),
-                        L.latLng(notDeliveredMarkers[i]._latlng)
+                        L.latLng(firstOrderPointMarkers[i]._latlng),
+                        L.latLng(secondOrderPointMarkers[i]._latlng)
                     ],
                     lineOptions: {
                         styles: [{color: 'green', opacity: 5, weight: 0}]

@@ -4,8 +4,21 @@
     <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
     pageName="Profile">
     </@jumbotron.jumbotron>
+    <#include "parts/interface/security.ftl">
     <div class="container ml-5 mt-5" style="width: 600px">
         <h2>Личный кабинет пользователя:${username!}</h2>
+
+        <#if !isAccountActivated>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert"
+                 style="width: 460px">
+                <b>Ваша учётная запись не активна,</b><br> так как вы не подтвердили, указанный вами при
+                регистрации, адрес электронной почты.<br>
+                <b>Многие функции сервиса для вас недоступны.</b>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </#if>
 
         <#if avatar??>
             <div class="text mt-5 mb-3">
@@ -81,5 +94,16 @@
             <input type="button" class="btn btn-outline-info mr-3" value="Я хочу у вас работать!"
                    onClick='location.href="/"'>
         </form>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-outline-info lighten-2 dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"
+                   aria-hidden="true"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Dropdown link</a>
+                <a class="dropdown-item" href="#">Dropdown link</a>
+            </div>
+        </div>
     </div>
 </@defaultPage.defaultPageTemplate>

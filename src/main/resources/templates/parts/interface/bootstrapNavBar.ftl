@@ -74,6 +74,20 @@
                     <button type="submit" class="btn btn-outline-info">Sign Out</button>
                 </form>
             </div>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-outline-info lighten-2 dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"
+                       aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <form action="/logout" method="post">
+                        <button type="submit" class="btn btn-outline-info">Выход</button>
+                    </form>
+                    <a class="dropdown-item" href="#">Dropdown link</a>
+                </div>
+            </div>
         <#else>
             <div class="navbar-text mr-3">Hi, guest!</div>
             <form>

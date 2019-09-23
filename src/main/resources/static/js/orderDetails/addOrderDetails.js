@@ -29,6 +29,7 @@ function addOrderDetails() {
         setTimeout(function () {
             showOrderDetailsListForManager();
             showActiveOrdersListForUser();
+            showArchiveOrdersListForUser();
         }, (300));
 
         document.getElementById('addOrderDetails').reset();
@@ -116,7 +117,7 @@ function showActiveOrdersListForUser() {
             if (data.result[0] === undefined) {
                 view =
                     "<tr>" +
-                    "            <th scope=\"row\">List of detailed order information is empty yet!</th>\n" +
+                    "            <th scope=\"row\">У вас пока нет ни одного активного заказа</th>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
@@ -164,7 +165,7 @@ function showArchiveOrdersListForUser() {
             if (data.result[0] === undefined) {
                 view =
                     "<tr>" +
-                    "            <th scope=\"row\">List of detailed order information is empty yet!</th>\n" +
+                    "            <th scope=\"row\">В вашей истории заказов пока нет ни одного заказа</th>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +

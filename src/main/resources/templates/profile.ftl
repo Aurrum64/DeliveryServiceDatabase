@@ -12,18 +12,20 @@
                 <h5>Ваш аватар:</h5>
             </div>
             <img src="/img/${avatar}" alt="">
+        <#else>
+            <div class="text mt-5">
+                <h5>Базовый аватар:</h5>
+            </div>
+            <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" alt="">
         </#if>
 
         <form method="post" enctype="multipart/form-data">
 
             <div class="input-group mt-5">
-                <#--<div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Загрузить</span>
-                </div>-->
                 <div class="custom-file">
                     <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
                            aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="inputGroupFile01">Установить аватарку...</label>
+                    <label class="custom-file-label" for="inputGroupFile01">Установить свой аватар...</label>
                 </div>
             </div>
 

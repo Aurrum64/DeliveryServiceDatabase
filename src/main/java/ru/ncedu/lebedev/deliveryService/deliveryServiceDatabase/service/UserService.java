@@ -63,9 +63,10 @@ public class UserService implements UserDetailsService {
     private void sendEmail(UsersEntity user) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
-                    "Hello, %s! \n" +
-                            "Welcome to our delivery service! Please, visit next link: \n " +
-                            "http://localhost:8080/activate/%s \n " +
+                    "Hello, %s!\n" +
+                            "Welcome to our delivery service!\n" +
+                            "Please, visit next link:\n" +
+                            "http://localhost:8080/activate/%s\n" +
                             "to activate your account!",
                     user.getUsername(),
                     user.getActivationCode()

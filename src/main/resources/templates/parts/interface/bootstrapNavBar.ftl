@@ -21,14 +21,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/reviews">Reviews</a>
             </li>
-            <#if user??>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
-                </li>
-            </#if>
-            <#--<li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="/notifications">Notifications</a>
-            </li>-->
+            </li>
             <#if isAccountActivated>
                 <#if isAdmin || isManager || isCourier>
                     <li class="nav-item dropdown">
@@ -68,24 +63,20 @@
         </ul>
         <#if isEnabled>
             <div class="navbar-text mr-3">Hi, ${name}!</div>
-            <div>
-                <form action="/logout" method="post">
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <button type="submit" class="btn btn-outline-info">Sign Out</button>
-                </form>
-            </div>
             <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-outline-info lighten-2 dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-user"
                        aria-hidden="true"></i>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuOffset">
+                    <a class="dropdown-item" href="/profile">Профиль</a>
+                    <a class="dropdown-item" href="/orderDelivery">Заказать доставку</a>
+                    <a class="dropdown-item" href="/">Хочу работать у вас курьером</a>
+                    <div class="dropdown-divider"></div>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-outline-info">Выход</button>
                     </form>
-                    <a class="dropdown-item" href="#">Dropdown link</a>
                 </div>
             </div>
         <#else>

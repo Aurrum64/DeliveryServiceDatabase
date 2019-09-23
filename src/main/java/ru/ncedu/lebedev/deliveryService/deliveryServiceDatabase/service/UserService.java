@@ -126,7 +126,7 @@ public class UserService implements UserDetailsService {
             user.setPassword(password);
         }
 
-        if (avatar != null) {
+        if (avatar != null && !avatar.getOriginalFilename().isEmpty()) {
             File uploadDirectory = new File(uploadPath);
 
             if (!uploadDirectory.exists()) {

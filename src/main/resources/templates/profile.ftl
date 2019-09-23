@@ -86,24 +86,5 @@
                 <button class="btn btn-outline-info" type="submit">Сохранить</button>
             </div>
         </form>
-        <form>
-            <input type="button" class="btn btn-outline-info mr-3" value="Заказать доставку"
-                   onClick='location.href="/orderDelivery"'>
-        </form>
-        <form>
-            <input type="button" class="btn btn-outline-info mr-3" value="Я хочу у вас работать!"
-                   onClick='location.href="/"'>
-        </form>
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-outline-info lighten-2 dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user"
-                   aria-hidden="true"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#">Dropdown link</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
-            </div>
-        </div>
     </div>
 </@defaultPage.defaultPageTemplate>

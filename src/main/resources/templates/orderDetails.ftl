@@ -19,7 +19,8 @@
                             <label for="searchOrderDate">Найти по дате...</label>
                         </div>
                         <div class="md-form form-lg ml-3" style="width: 300px">
-                            <input type="text" id="searchSecondOrderAddressPoint" class="form-control form-control-lg" style="width: 300px">
+                            <input type="text" id="searchSecondOrderAddressPoint" class="form-control form-control-lg"
+                                   style="width: 300px">
                             <label for="searchSecondOrderAddressPoint">Найти по адресу доставки...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
@@ -135,4 +136,5 @@
         </table>
     </div>
     <#include "parts/scriptsSources/orderDetailsScripts.ftl">
+    <script src="/js/notifications/sendNotifications.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

@@ -4,35 +4,23 @@
     <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
     pageName="Notifications">
     </@jumbotron.jumbotron>
-    <div class="container ml-5 mt-5">
-        <form id="updateNotificationsList">
-            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Обновить входящие уведомления</button>
-            </div>
-        </form>
+    <div class="container mt-5 ml-5">
+        <h4>Последние заказы:</h4>
     </div>
-    <div class="container ml-5 mt-5" style="height: 200px; width: 415px;">
-        <div class="card">
-            <img class="card-img-top" src="https://i.pinimg.com/originals/43/c5/2c/43c52c8ab8227fb42bdfcbec089e5c60.png"
-                 alt="Card image cap">
-            <div class="card-body">
-                <h4 class="card-title ml-2"><a>У вас новое уведомление!</a></h4>
-                <p class="card-text ml-2">Новый пользователь хочет зарегистрироваться в системе.</p>
-                <#--<a href="#" class="btn btn-primary">Подтвердить</a>
-                <a href="#" class="btn btn-primary">Отказать</a>-->
-                <div class="form-group row">
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <div>
-                        <button type="submit" class="btn btn-primary ml-4">Подтвердить</button>
-                    </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <div>
-                        <button type="submit" class="btn btn-primary ml-4">Отказать</button>
+    <div class="container mt-5 ml-5">
+        <div class="card-columns">
+            <#list recentOrders as order>
+                <div class="card">
+                    <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Поступил новый заказ от ${order.authorName}</h5>
+                        <p class="card-text">Забрать посылку по адресу: ${order.firstOrderAddressPoint}
+                            и доставить по адресу: ${order.secondOrderAddressPoint}<br></p>
                     </div>
                 </div>
-            </div>
+            </#list>
         </div>
     </div>
+    <h4>Последние запросы от пользователей</h4>
     <script src="/js/notifications/updateNotifications.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

@@ -3,19 +3,18 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRequestsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RequestsStatutesEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersRequestsEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -78,8 +77,16 @@ public class NotificationsController {
             userRequest.setCourierRequest(false);
             userRequest.setManagerRequest(true);
         }
+        userRequest.setRequestStatuses(Collections.singleton(RequestsStatutesEntity.CONSIDERATION));
         userRequest.setAuthor(user);
         usersRequestsRepository.save(userRequest);
         return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/approveRequest")
+    public String addUsersRequests(@RequestParam String requestId,
+                                   @RequestParam String authorName) {
+        System.out.println(requestId + " " + authorName);
+        return "redirect:/notifications";
     }
 }

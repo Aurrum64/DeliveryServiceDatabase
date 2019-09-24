@@ -56,11 +56,11 @@ public class UserService implements UserDetailsService {
         user.setActivationCode(UUID.randomUUID().toString());
         usersRepository.save(user);
 
-        sendEmail(user);
+        sendEmailForActivation(user);
         return true;
     }
 
-    private void sendEmail(UsersEntity user) {
+    private void sendEmailForActivation(UsersEntity user) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s!\n" +
@@ -141,7 +141,7 @@ public class UserService implements UserDetailsService {
         usersRepository.save(user);
 
         if (isEmailChanged) {
-            sendEmail(user);
+            sendEmailForActivation(user);
         }
     }
 }

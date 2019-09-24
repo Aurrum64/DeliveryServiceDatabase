@@ -24,7 +24,7 @@
     <div class="container mt-5 ml-5">
         <div class="card-columns">
             <#list recentOrders as order>
-                <div class="card">
+                <div class="card mt-2">
                     <div class="card-body">
                         <h5 class="card-title">Поступил новый заказ от <b>${order.authorName}</b>!</h5>
                         <p class="card-text">Забрать посылку по адресу: ${order.firstOrderAddressPoint}
@@ -43,7 +43,7 @@
     <div class="container mt-5 ml-5">
         <div class="card-columns">
             <#list recentRequests as request>
-                <div class="card">
+                <div class="card mt-2">
                     <div class="card-body">
                         <h5 class="card-title">Поступила новая заявка от <b>${request.authorName}</b>!</h5>
                         <p class="card-text">Данный пользователь хочет устроиться на работу
@@ -55,7 +55,25 @@
                                 <b>менеджера</b>.
                             </#if>
                             <br></p>
-                        <a href="/user" class="btn btn-info">Перейти к управлению пользователями</a>
+                        <#if request.isConsidering()>
+                            <div class="form-group row">
+                                <form action="/approveRequest" method="post">
+                                    <input type="hidden" name="requestId" value="${request.requestId}">
+                                  <#--  <input type="hidden" name="courierRequest" value="${request.courierRequest}">
+                                    <input type="hidden" name="managerRequest" value="${request.managerRequest}">-->
+                                    <input type="hidden" name="authorName" value="${request.authorName}">
+                                    <button type="submit" class="btn btn-info ml-3">Одобрить</button>
+                                </form>
+                                <form action="/rejectRequest" method="post">
+                                    <button type="submit" class="btn btn-info ml-3">Отклонить</button>
+                                </form>
+                            </div>
+                        <#else>
+                            <div class="form-group row">
+                                <button type="submit" class="btn btn-blue-grey ml-3" disabled>Одобрить</button>
+                                <button type="submit" class="btn btn-blue-grey ml-3" disabled>Отклонить</button>
+                            </div>
+                        </#if>
                     </div>
                 </div>
             <#else>

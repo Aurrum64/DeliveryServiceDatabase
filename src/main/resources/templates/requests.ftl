@@ -7,6 +7,7 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Заявка на должность</th>
+                <th scope="col">Статус</th>
                 <th scope="col">Заявитель</th>
             </tr>
             </thead>
@@ -18,6 +19,15 @@
                         <td>Курьер</td>
                     <#elseif request.managerRequest>
                         <td>Менеджер</td>
+                    </#if>
+                    <#if request.isConsidering()>
+                        <td>В рассмотрении</td>
+                    </#if>
+                    <#if request.isApproved()>
+                        <td>Одобрена</td>
+                    </#if>
+                    <#if request.isRejected()>
+                        <td>Отклонена</td>
                     </#if>
                     <td>${request.authorName}</td>
                 </tr>

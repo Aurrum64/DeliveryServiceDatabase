@@ -12,7 +12,7 @@
                     <form>
                         <input type="button" class="btn btn-info ml-5"
                                value="Открыть полный список заявок от пользователей"
-                               onClick='location.href="/notifications"'>
+                               onClick='location.href="/requests"'>
                     </form>
                 </div>
             </div>
@@ -63,5 +63,4 @@
             </#list>
         </div>
     </div>
-    <script src="/js/notifications/updateNotifications.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

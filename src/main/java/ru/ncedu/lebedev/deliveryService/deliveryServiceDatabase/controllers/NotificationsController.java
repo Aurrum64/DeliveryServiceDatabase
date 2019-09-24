@@ -57,11 +57,18 @@ public class NotificationsController {
         return "notifications";
     }
 
+    @GetMapping("/requests")
+    public String usersRequestsList(Map<String, Object> model) {
+        Iterable<UsersRequestsEntity> usersRequests = usersRequestsRepository.findAll();
+        model.put("usersRequests", usersRequests);
+        return "requests";
+    }
+
     @PostMapping(value = "/addUsersRequests",
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
-                                                  @RequestBody UsersRequestsMessage userMessage) {
+    public ControllerAnswerToAjax addUsersRequests(@AuthenticationPrincipal UsersEntity user,
+                                                   @RequestBody UsersRequestsMessage userMessage) {
         UsersRequestsEntity userRequest = new UsersRequestsEntity();
         if (userMessage.getUserChoice().equals("courierRequest")) {
             userRequest.setCourierRequest(true);

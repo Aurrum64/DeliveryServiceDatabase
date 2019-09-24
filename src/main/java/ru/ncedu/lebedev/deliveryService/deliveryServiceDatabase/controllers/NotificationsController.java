@@ -39,20 +39,28 @@ public class NotificationsController {
 
         Iterable<OrderDetailsEntity> orders = orderDetailsRepository.findAll();
         List<OrderDetailsEntity> recentOrderDetails = new ArrayList<>();
-        for (OrderDetailsEntity element : orders) {
-            if (element.getOrderDetailsId() > orderDetailsRepository.count() - RECENT_ORDERS_LIST_SIZE) {
-                recentOrderDetails.add(element);
+        if (orderDetailsRepository.count() > 3) {
+            for (OrderDetailsEntity element : orders) {
+                if (element.getOrderDetailsId() > orderDetailsRepository.count() - RECENT_ORDERS_LIST_SIZE) {
+                    recentOrderDetails.add(element);
+                }
             }
+            model.put("recentOrders", recentOrderDetails);
+        } else {
+            model.put("recentOrders", orders);
         }
         Iterable<UsersRequestsEntity> usersRequests = usersRequestsRepository.findAll();
         List<UsersRequestsEntity> recentUsersRequests = new ArrayList<>();
-        for (UsersRequestsEntity element : usersRequests) {
-            if (element.getRequestId() > orderDetailsRepository.count() - RECENT_REQUESTS_LIST_SIZE) {
-                recentUsersRequests.add(element);
+        if (usersRequestsRepository.count() > 3) {
+            for (UsersRequestsEntity element : usersRequests) {
+                if (element.getRequestId() > orderDetailsRepository.count() - RECENT_REQUESTS_LIST_SIZE) {
+                    recentUsersRequests.add(element);
+                }
             }
+            model.put("recentRequests", recentUsersRequests);
+        } else {
+            model.put("recentRequests", usersRequests);
         }
-        model.put("recentOrders", recentOrderDetails);
-        model.put("recentRequests", recentUsersRequests);
         return "notifications";
     }
 

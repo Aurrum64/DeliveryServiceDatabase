@@ -86,5 +86,31 @@
                 <button class="btn btn-outline-info" type="submit">Сохранить</button>
             </div>
         </form>
+        <div class="text mt-5">
+            <h4>Пользователям:</h4>
+        </div>
+        <div class="text mt-5">
+            <h4>Будущим сотрудникам:</h4>
+        </div>
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+           aria-controls="collapse2">
+            Я хочу у вас работать!
+        </a>
+        <div class="collapse" id="collapse2">
+            <div class="form-group mt-3">
+                <form id="chooseProfession">
+                    <select id="professionChoice" class="browser-default custom-select">
+                        <option selected>Кем вы хотите работать в нашей компании?</option>
+                        <option value="courierRequest">Курьером</option>
+                        <option value="managerRequest">Менеджером</option>
+                    </select>
+                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+    <script src="/js/notifications/usersRequests.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

@@ -34,9 +34,6 @@
                             Управление
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
-                            </#if>
                             <#if isAdmin || isCourier || isManager>
                                 <a class="dropdown-item" href="/couriers">Курьеры</a>
                             </#if>
@@ -46,17 +43,20 @@
                             <#if isAdmin>
                                 <a class="dropdown-item" href="/orders">Заказы</a>
                             </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/callcentre">Кол-центр</a>
+                            <#if isAdmin || isManager>
+                                <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
                             </#if>
                             <#if isAdmin>
-                                <a class="dropdown-item" href="/locations">Локации</a>
+                                <a class="dropdown-item" href="/callcentre">Кол-центр</a>
                             </#if>
                             <#if isAdmin>
                                 <a class="dropdown-item" href="/clients">Клиенты</a>
                             </#if>
                             <#if isAdmin>
                                 <a class="dropdown-item" href="/products">Продукты</a>
+                            </#if>
+                            <#if isAdmin>
+                                <a class="dropdown-item" href="/locations">Локации</a>
                             </#if>
                         </div>
                     </li>
@@ -74,6 +74,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuOffset"
                      style="width: 100px">
                     <a class="dropdown-item" href="/profile">Профиль</a>
+                    <a class="dropdown-item" href="/orderDelivery">Сделать заказ</a>
                     <div class="dropdown-divider"></div>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-outline-info ml-2" style="width: 140px">Выход</button>

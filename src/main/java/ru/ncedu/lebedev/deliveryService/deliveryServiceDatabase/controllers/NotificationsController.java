@@ -100,7 +100,6 @@ public class NotificationsController {
                                  @RequestParam String professionChoice,
                                  @RequestParam String authorName) {
         UsersEntity user = usersRepository.findByUsername(authorName);
-        user.getRoles().clear();
 
         Set<String> roles = Arrays.stream(RolesEntity.values())
                 .map(RolesEntity::name)

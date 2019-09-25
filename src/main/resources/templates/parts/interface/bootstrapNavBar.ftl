@@ -8,53 +8,55 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/">Overview</a>
+                <a class="nav-link" href="/">На главную</a>
             </li>
             <#if isAdmin>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user">Users</a>
+                    <a class="nav-link" href="/user">Пользователи</a>
                 </li>
             </#if>
             <li class="nav-item">
-                <a class="nav-link" href="/reviews">Reviews</a>
+                <a class="nav-link" href="/reviews">Отзывы</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/notifications">Notifications</a>
-            </li>
+            <#if isAdmin || isManager>
+                <li class="nav-item">
+                    <a class="nav-link" href="/requests">Заявки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/notifications">Уведомления</a>
+                </li>
+            </#if>
             <#if isAccountActivated>
                 <#if isAdmin || isManager || isCourier>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Management
+                            Управление
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/orderDetails">Order details</a>
+                                <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
                             </#if>
                             <#if isAdmin || isCourier || isManager>
-                                <a class="dropdown-item" href="/couriers">Couriers</a>
+                                <a class="dropdown-item" href="/couriers">Курьеры</a>
                             </#if>
                             <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/managers">Managers</a>
+                                <a class="dropdown-item" href="/managers">Менеджеры</a>
                             </#if>
                             <#if isAdmin>
-                                <a class="dropdown-item" href="/orders">Orders</a>
+                                <a class="dropdown-item" href="/orders">Заказы</a>
                             </#if>
                             <#if isAdmin>
-                                <a class="dropdown-item" href="/callcentre">Call centre</a>
+                                <a class="dropdown-item" href="/callcentre">Кол-центр</a>
                             </#if>
                             <#if isAdmin>
-                                <a class="dropdown-item" href="/locations">Locations</a>
+                                <a class="dropdown-item" href="/locations">Локации</a>
                             </#if>
                             <#if isAdmin>
-                                <a class="dropdown-item" href="/clients">Clients</a>
+                                <a class="dropdown-item" href="/clients">Клиенты</a>
                             </#if>
                             <#if isAdmin>
-                                <a class="dropdown-item" href="/products">Products</a>
+                                <a class="dropdown-item" href="/products">Продукты</a>
                             </#if>
                         </div>
                     </li>
@@ -62,20 +64,19 @@
             </#if>
         </ul>
         <#if isEnabled>
-            <div class="navbar-text mr-3">Hi, ${name}!</div>
+            <div class="navbar-text mr-3">Привет, ${name}!</div>
             <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-outline-info lighten-2 dropdown-toggle"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-user"
                        aria-hidden="true"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuOffset">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuOffset"
+                     style="width: 100px">
                     <a class="dropdown-item" href="/profile">Профиль</a>
-                    <a class="dropdown-item" href="/orderDelivery">Заказать доставку</a>
-                    <a class="dropdown-item" href="/">Хочу работать у вас курьером</a>
                     <div class="dropdown-divider"></div>
                     <form action="/logout" method="post">
-                        <button type="submit" class="btn btn-outline-info">Выход</button>
+                        <button type="submit" class="btn btn-outline-info ml-2" style="width: 140px">Выход</button>
                     </form>
                 </div>
             </div>

@@ -2,23 +2,6 @@
 <#import "parts/interface/jumbotron.ftl" as jumbotron>
 <@defaultPage.defaultPageTemplate pageName="Notifications" heightTop=70 heightBottom=500>
     <div class="container mt-5 ml-5">
-        <div class="form-row">
-            <div class="form-group col">
-                <div class="form-group row">
-                    <form>
-                        <input type="button" class="btn btn-info ml-3" value="Обновить входящие уведомления"
-                               onClick='location.href="/notifications"'>
-                    </form>
-                    <form>
-                        <input type="button" class="btn btn-info ml-5"
-                               value="Открыть полный список заявок от пользователей"
-                               onClick='location.href="/requests"'>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-5 ml-5">
         <h3>Последние заказы:</h3>
     </div>
     <div class="container mt-5 ml-5">

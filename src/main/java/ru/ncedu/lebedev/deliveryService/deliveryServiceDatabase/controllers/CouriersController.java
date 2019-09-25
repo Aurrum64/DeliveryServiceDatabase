@@ -83,6 +83,7 @@ public class CouriersController {
         courier.setLatitude(RandomCoordinates.getRandomLatitude());
         courier.setLongitude(RandomCoordinates.getRandomLongitude());
         courier.setAuthor(user);
+        courier.setReadiness(false);
         couriersRepository.save(courier);
         return new ControllerAnswerToAjax("OK", "");
     }

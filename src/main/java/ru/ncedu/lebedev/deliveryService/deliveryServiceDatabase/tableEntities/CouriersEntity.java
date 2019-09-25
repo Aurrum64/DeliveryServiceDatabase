@@ -56,4 +56,7 @@ public class CouriersEntity {
 
     @Column(name = "longitude")
     private Double longitude;
+
+    @Column(name = "readiness")
+    private boolean readiness;
 }

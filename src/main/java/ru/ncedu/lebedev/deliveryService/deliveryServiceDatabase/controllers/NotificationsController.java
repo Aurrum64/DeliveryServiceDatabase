@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -104,7 +107,7 @@ public class NotificationsController {
                                  @RequestParam Integer requestId,
                                  @RequestParam String professionChoice,
                                  @RequestParam String source,
-                                 @RequestParam String authorName) {
+                                 @RequestParam String authorName) throws ParseException {
         UsersEntity user = usersRepository.findByUsername(authorName);
 
         Set<String> roles = Arrays.stream(RolesEntity.values())
@@ -156,15 +159,26 @@ public class NotificationsController {
         usersRequestsRepository.save(userRequest);
 
         /*userService.sendHiredEmail(user, professionChoice);*/
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        Date currentDate = format.parse(currentDateString);
 
         if (professionChoice.equals("courier")) {
             CouriersEntity courier = new CouriersEntity();
             courier.setFirstName(user.getUsername());
             courier.setLastName("");
             courier.setEmail(user.getEmail());
-            /*courier.setHireDate(currentDate);*/
+            courier.setHireDate(currentDate);
             courier.setAuthor(whoApprovedRequest);
+            courier.setReadiness(false);
+            courier.setPhoneNumber("");
+            courier.setPremium(0);
+            courier.setSalary(19_351);
+            courier.setDepartmentId(1);
+            courier.setRating(10);
+            courier.setLatitude(RandomCoordinates.getRandomLatitude());
+            courier.setLongitude(RandomCoordinates.getRandomLongitude());
             couriersRepository.save(courier);
         } else {
             ManagersEntity manager = new ManagersEntity();

@@ -83,6 +83,7 @@ function showCouriersList() {
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
+                    "            <td></td>\n" +
                     "</tr>";
                 $('#couriersList').html(view);
             } else {
@@ -102,6 +103,7 @@ function showCouriersList() {
                         "            <td>" + data.result[i].latitude + "</td>\n" +
                         "            <td>" + data.result[i].longitude + "</td>\n" +
                         "            <td>" + data.result[i].authorName + "</td>\n" +
+                        "            <td>" + data.result[i].readiness + "</td>\n" +
                         "</tr>";
                     if (view === undefined) {
                         view = "" + newLine;

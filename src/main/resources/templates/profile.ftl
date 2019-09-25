@@ -54,6 +54,60 @@
             </tbody>
         </table>
 
+        <#if isCourier>
+            <div class="text mt-5">
+                <h4>Вы находитесь на должности курьера:</h4>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Почта</th>
+                    <th scope="col">Сотовый</th>
+                    <th scope="col">Рейтинг</th>
+                    <th scope="col">Зарплата</th>
+                    <th scope="col">Трудоустроился</th>
+                    <th scope="col">Премия</th>
+                    <th scope="col">Департамент</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Готовность</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="col">${courier.courierId}</th>
+                    <th scope="col">${courier.firstName}</th>
+                    <th scope="col">${courier.lastName}</th>
+                    <th scope="col">${courier.email}</th>
+                    <th scope="col">${courier.phoneNumber}</th>
+                    <th scope="col">${courier.rating}</th>
+                    <th scope="col">${courier.salary}</th>
+                    <th scope="col">${courier.hireDate}</th>
+                    <th scope="col">${courier.premium}</th>
+                    <th scope="col">${courier.departmentId}</th>
+                    <th scope="col">${courier.authorName}</th>
+                    <#if courier.readiness>
+                        <th scope="col">Готов</th>
+                    <#else>
+                        <th scope="col">Не готов</th>
+                    </#if>
+                </tr>
+                </tbody>
+            </table>
+        </#if>
+
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-primary form-check-label active">
+                <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off" checked>
+                Не готов
+            </label>
+            <label class="btn btn-primary form-check-label">
+                <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off"> Готов
+            </label>
+        </div>
+
         <div class="text mt-5">
             <h4>Редактирование:</h4>
         </div>

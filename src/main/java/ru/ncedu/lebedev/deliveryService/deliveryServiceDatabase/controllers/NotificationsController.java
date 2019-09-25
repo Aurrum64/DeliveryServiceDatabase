@@ -97,6 +97,7 @@ public class NotificationsController {
     @PostMapping(value = "/approveRequest")
     public String approveRequest(@RequestParam Integer requestId,
                                  @RequestParam String professionChoice,
+                                 @RequestParam String source,
                                  @RequestParam String authorName) {
         UsersEntity user = usersRepository.findByUsername(authorName);
 
@@ -148,15 +149,20 @@ public class NotificationsController {
         }
         usersRequestsRepository.save(userRequest);
 
-        userService.sendHiredEmail(user, professionChoice);
+        /*userService.sendHiredEmail(user, professionChoice);*/
 
-        return "redirect:/notifications";
+        if (source.equals("notifications")) {
+            return "redirect:/notifications";
+        } else {
+            return "redirect:/requests";
+        }
     }
 
     @PostMapping(value = "/rejectRequest")
     public String rejectRequest(@RequestParam Integer requestId,
                                 @RequestParam String professionChoice,
-                                @RequestParam String author) {
+                                @RequestParam String source,
+                                @RequestParam String authorName) {
         UsersRequestsEntity userRequest = usersRequestsRepository.findByRequestId(requestId);
         userRequest.getRequestStatuses().clear();
 
@@ -174,10 +180,14 @@ public class NotificationsController {
         }
         usersRequestsRepository.save(userRequest);
 
-        UsersEntity user = usersRepository.findByUsername(author);
+        UsersEntity user = usersRepository.findByUsername(authorName);
 
-        userService.sendRejectedEmail(user, professionChoice);
+        /*userService.sendRejectedEmail(user, professionChoice);*/
 
-        return "redirect:/notifications";
+        if (source.equals("notifications")) {
+            return "redirect:/notifications";
+        } else {
+            return "redirect:/requests";
+        }
     }
 }

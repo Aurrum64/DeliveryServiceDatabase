@@ -28,8 +28,9 @@
                                     <#elseif request.managerRequest>
                                         <input type="hidden" name="professionChoice" value="manager">
                                     </#if>
+                                    <input type="hidden" name="source" value="notifications">
                                     <input type="hidden" name="authorName" value="${request.authorName}">
-                                    <button type="submit" class="btn btn-info ml-3">Одобрить</button>
+                                    <button type="submit" class="btn btn-light-green ml-3">Одобрить</button>
                                 </form>
                                 <form action="/rejectRequest" method="post">
                                     <input type="hidden" name="requestId" value="${request.requestId}">
@@ -38,8 +39,9 @@
                                     <#elseif request.managerRequest>
                                         <input type="hidden" name="professionChoice" value="manager">
                                     </#if>
+                                    <input type="hidden" name="source" value="notifications">
                                     <input type="hidden" name="authorName" value="${request.authorName}">
-                                    <button type="submit" class="btn btn-info ml-3">Отклонить</button>
+                                    <button type="submit" class="btn btn-deep-orange ml-3">Отклонить</button>
                                 </form>
                             </div>
                         </div>

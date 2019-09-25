@@ -63,15 +63,15 @@ public class UserService implements UserDetailsService {
     private void sendEmailForActivation(UsersEntity user) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
-                    "Hello, %s!\n" +
-                            "Welcome to our delivery service!\n" +
-                            "Please, visit next link:\n" +
-                            "http://localhost:8080/activate/%s\n" +
-                            "to activate your account!",
+                    "Привет, %s!\n" +
+                            "Добро пожаловать в нашу службу доставки Delivery Service!\n" +
+                            "Пожалуйста, перейдите по следующей ссылке:\n" +
+                            "http://localhost:8080/activate/%s,\n" +
+                            "чтобы активировать вашу учётную запись!",
                     user.getUsername(),
                     user.getActivationCode()
             );
-            mailSender.send(user.getEmail(), "Activation code", message);
+            mailSender.send(user.getEmail(), "Активация учётной записи Delivery Service!", message);
         }
     }
 
@@ -85,11 +85,13 @@ public class UserService implements UserDetailsService {
             }
             String message = String.format(
                     "Привет, %s!\n" +
-                            "Наши поздравления! Мы принимаем вас на должность %s в нашу службу доставки.",
+                            "Наши поздравления! Мы принимаем вас на должность %s в нашу службу доставки.\n" +
+                            "Мы добавили вас в нашу базу курьеров, теперь вы можете приступать к работе\n" +
+                            "в любое удобное для вас время.",
                     user.getUsername(),
                     job
             );
-            mailSender.send(user.getEmail(), "About hiring!", message);
+            mailSender.send(user.getEmail(), "О принятии на работу в Delivery Service!", message);
         }
     }
 
@@ -107,7 +109,7 @@ public class UserService implements UserDetailsService {
                     user.getUsername(),
                     job
             );
-            mailSender.send(user.getEmail(), "About hiring :(", message);
+            mailSender.send(user.getEmail(), "О принятии на работу в Delivery Service :(", message);
         }
     }
 

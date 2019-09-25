@@ -3,32 +3,36 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRequestsRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RequestsStatutesEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersRequestsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class NotificationsController {
 
     private OrderDetailsRepository orderDetailsRepository;
     private UsersRequestsRepository usersRequestsRepository;
+    private UserService userService;
+    private UsersRepository usersRepository;
 
     @Autowired
     public NotificationsController(OrderDetailsRepository orderDetailsRepository,
-                                   UsersRequestsRepository usersRequestsRepository) {
+                                   UsersRequestsRepository usersRequestsRepository,
+                                   UserService userService,
+                                   UsersRepository usersRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.usersRequestsRepository = usersRequestsRepository;
+        this.userService = userService;
+        this.usersRepository = usersRepository;
     }
 
     @GetMapping("/notifications")
@@ -92,9 +96,80 @@ public class NotificationsController {
     }
 
     @PostMapping(value = "/approveRequest")
-    public String addUsersRequests(@RequestParam String requestId,
-                                   @RequestParam String authorName) {
-        System.out.println(requestId + " " + authorName);
+    public String approveRequest(@RequestParam Integer requestId,
+                                 @RequestParam String professionChoice,
+                                 @RequestParam String authorName) {
+        UsersEntity user = usersRepository.findByUsername(authorName);
+        user.getRoles().clear();
+
+        Set<String> roles = Arrays.stream(RolesEntity.values())
+                .map(RolesEntity::name)
+                .collect(Collectors.toSet());
+
+        Map<String, String> newRoles = new HashMap<>();
+
+        if (user.getRoles().contains(RolesEntity.ADMIN)) {
+            newRoles.put("ADMIN", "");
+        } else if (user.getRoles().contains(RolesEntity.USER)) {
+            newRoles.put("USER", "");
+        } else if (user.getRoles().contains(RolesEntity.COURIER)) {
+            newRoles.put("COURIER", "");
+        } else if (user.getRoles().contains(RolesEntity.MANAGER)) {
+            newRoles.put("MANAGER", "");
+        }
+
+        if (professionChoice.equals("courier") &&
+                !user.getRoles().contains(RolesEntity.COURIER)) {
+            newRoles.put("COURIER", "");
+        } else if (professionChoice.equals("manager") &&
+                !user.getRoles().contains(RolesEntity.MANAGER)) {
+            newRoles.put("MANAGER", "");
+        }
+
+        for (String key : newRoles.keySet()) {
+            if (roles.contains(key)) {
+                user.getRoles().add(RolesEntity.valueOf(key));
+            }
+        }
+        usersRepository.save(user);
+
+        UsersRequestsEntity userRequest = usersRequestsRepository.findByRequestId(requestId);
+        userRequest.getRequestStatuses().clear();
+
+        Set<String> requestStatuses = Arrays.stream(RequestsStatutesEntity.values())
+                .map(RequestsStatutesEntity::name)
+                .collect(Collectors.toSet());
+
+        Map<String, String> newRequestStatus = new HashMap<>();
+        newRequestStatus.put("APPROVED", "");
+
+        for (String key : newRequestStatus.keySet()) {
+            if (requestStatuses.contains(key)) {
+                userRequest.getRequestStatuses().add(RequestsStatutesEntity.valueOf(key));
+            }
+        }
+        usersRequestsRepository.save(userRequest);
+        return "redirect:/notifications";
+    }
+
+    @PostMapping(value = "/rejectRequest")
+    public String rejectRequest(@RequestParam Integer requestId) {
+        UsersRequestsEntity userRequest = usersRequestsRepository.findByRequestId(requestId);
+        userRequest.getRequestStatuses().clear();
+
+        Set<String> requestStatuses = Arrays.stream(RequestsStatutesEntity.values())
+                .map(RequestsStatutesEntity::name)
+                .collect(Collectors.toSet());
+
+        Map<String, String> newRequestStatus = new HashMap<>();
+        newRequestStatus.put("REJECTED", "");
+
+        for (String key : newRequestStatus.keySet()) {
+            if (requestStatuses.contains(key)) {
+                userRequest.getRequestStatuses().add(RequestsStatutesEntity.valueOf(key));
+            }
+        }
+        usersRequestsRepository.save(userRequest);
         return "redirect:/notifications";
     }
 }

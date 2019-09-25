@@ -7,19 +7,19 @@
     <div class="container mt-5 ml-5">
         <div class="card-columns">
             <#list recentRequests as request>
-                <#if request.isConsidering()>
-                    <div class="card mt-2">
-                        <div class="card-body">
-                            <h5 class="card-title">Поступила новая заявка от <b>${request.authorName}</b>!</h5>
-                            <p class="card-text">Данный пользователь хочет устроиться на работу
-                                в ваш сервис на должность
-                                <#if request.courierRequest>
-                                    <b>курьера</b>.
-                                </#if>
-                                <#if request.managerRequest>
-                                    <b>менеджера</b>.
-                                </#if>
-                                <br></p>
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Поступила новая заявка от <b>${request.authorName}</b>!</h5>
+                        <p class="card-text">Данный пользователь хочет устроиться на работу
+                            в ваш сервис на должность
+                            <#if request.courierRequest>
+                                <b>курьера</b>.
+                            </#if>
+                            <#if request.managerRequest>
+                                <b>менеджера</b>.
+                            </#if>
+                            <br></p>
+                        <#if request.isConsidering()>
                             <div class="form-group row">
                                 <form action="/approveRequest" method="post">
                                     <input type="hidden" name="requestId" value="${request.requestId}">
@@ -44,9 +44,9 @@
                                     <button type="submit" class="btn btn-deep-orange ml-3">Отклонить</button>
                                 </form>
                             </div>
-                        </div>
+                        </#if>
                     </div>
-                </#if>
+                </div>
             <#else>
                 <h5>Заявок пока нет :(</h5>
             </#list>

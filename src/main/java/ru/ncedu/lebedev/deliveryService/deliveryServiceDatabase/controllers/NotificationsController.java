@@ -6,12 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRequestsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,16 +21,22 @@ public class NotificationsController {
     private UsersRequestsRepository usersRequestsRepository;
     private UserService userService;
     private UsersRepository usersRepository;
+    private CouriersRepository couriersRepository;
+    private ManagersRepository managersRepository;
 
     @Autowired
     public NotificationsController(OrderDetailsRepository orderDetailsRepository,
                                    UsersRequestsRepository usersRequestsRepository,
                                    UserService userService,
-                                   UsersRepository usersRepository) {
+                                   UsersRepository usersRepository,
+                                   CouriersRepository couriersRepository,
+                                   ManagersRepository managersRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.usersRequestsRepository = usersRequestsRepository;
         this.userService = userService;
         this.usersRepository = usersRepository;
+        this.couriersRepository = couriersRepository;
+        this.managersRepository = managersRepository;
     }
 
     @GetMapping("/notifications")
@@ -95,7 +100,8 @@ public class NotificationsController {
     }
 
     @PostMapping(value = "/approveRequest")
-    public String approveRequest(@RequestParam Integer requestId,
+    public String approveRequest(@AuthenticationPrincipal UsersEntity whoApprovedRequest,
+                                 @RequestParam Integer requestId,
                                  @RequestParam String professionChoice,
                                  @RequestParam String source,
                                  @RequestParam String authorName) {
@@ -150,6 +156,25 @@ public class NotificationsController {
         usersRequestsRepository.save(userRequest);
 
         /*userService.sendHiredEmail(user, professionChoice);*/
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+
+        if (professionChoice.equals("courier")) {
+            CouriersEntity courier = new CouriersEntity();
+            courier.setFirstName(user.getUsername());
+            courier.setLastName("");
+            courier.setEmail(user.getEmail());
+            /*courier.setHireDate(currentDate);*/
+            courier.setAuthor(whoApprovedRequest);
+            couriersRepository.save(courier);
+        } else {
+            ManagersEntity manager = new ManagersEntity();
+            manager.setFirstName(user.getUsername());
+            manager.setLastName("");
+            manager.setEmail(user.getEmail());
+            /*manager.setHireDate(currentDate);*/
+            manager.setAuthor(whoApprovedRequest);
+            managersRepository.save(manager);
+        }
 
         if (source.equals("notifications")) {
             return "redirect:/notifications";

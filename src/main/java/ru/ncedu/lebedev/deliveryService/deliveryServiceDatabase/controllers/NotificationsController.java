@@ -3,7 +3,6 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
@@ -148,11 +147,16 @@ public class NotificationsController {
             }
         }
         usersRequestsRepository.save(userRequest);
+
+        userService.sendHiredEmail(user, professionChoice);
+
         return "redirect:/notifications";
     }
 
     @PostMapping(value = "/rejectRequest")
-    public String rejectRequest(@RequestParam Integer requestId) {
+    public String rejectRequest(@RequestParam Integer requestId,
+                                @RequestParam String professionChoice,
+                                @RequestParam String author) {
         UsersRequestsEntity userRequest = usersRequestsRepository.findByRequestId(requestId);
         userRequest.getRequestStatuses().clear();
 
@@ -169,6 +173,11 @@ public class NotificationsController {
             }
         }
         usersRequestsRepository.save(userRequest);
+
+        UsersEntity user = usersRepository.findByUsername(author);
+
+        userService.sendRejectedEmail(user, professionChoice);
+
         return "redirect:/notifications";
     }
 }

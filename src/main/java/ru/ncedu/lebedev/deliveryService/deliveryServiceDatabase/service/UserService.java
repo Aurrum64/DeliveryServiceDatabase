@@ -75,6 +75,42 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void sendHiredEmail(UsersEntity user, String professionChoice) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String job;
+            if (professionChoice.equals("courier")) {
+                job = "курьера";
+            } else {
+                job = "менеджера";
+            }
+            String message = String.format(
+                    "Привет, %s!\n" +
+                            "Наши поздравления! Мы принимаем вас на должность %s в нашу службу доставки.",
+                    user.getUsername(),
+                    job
+            );
+            mailSender.send(user.getEmail(), "About hiring!", message);
+        }
+    }
+
+    public void sendRejectedEmail(UsersEntity user, String professionChoice) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String job;
+            if (professionChoice.equals("courier")) {
+                job = "курьера";
+            } else {
+                job = "менеджера";
+            }
+            String message = String.format(
+                    "Привет, %s :(\n" +
+                            "Мы вынуждены отказать вам в принятии на должность %s.",
+                    user.getUsername(),
+                    job
+            );
+            mailSender.send(user.getEmail(), "About hiring :(", message);
+        }
+    }
+
     public boolean activateUser(String code) {
 
         UsersEntity user = usersRepository.findByActivationCode(code);

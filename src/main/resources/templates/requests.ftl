@@ -1,5 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Registration" heightTop=70 heightBottom=500>
+<@defaultPage.defaultPageTemplate pageName="Requests" heightTop=70 heightBottom=500>
     <div class="container mt-5 ml-5">
         <h4>Заявки пользователей:</h4>
         <table class="table table-striped" style="width: 500px">

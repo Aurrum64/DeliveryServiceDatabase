@@ -33,6 +33,12 @@
                                 </form>
                                 <form action="/rejectRequest" method="post">
                                     <input type="hidden" name="requestId" value="${request.requestId}">
+                                    <#if request.courierRequest>
+                                        <input type="hidden" name="professionChoice" value="courier">
+                                    <#elseif request.managerRequest>
+                                        <input type="hidden" name="professionChoice" value="manager">
+                                    </#if>
+                                    <input type="hidden" name="authorName" value="${request.authorName}">
                                     <button type="submit" class="btn btn-info ml-3">Отклонить</button>
                                 </form>
                             </div>

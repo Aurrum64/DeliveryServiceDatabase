@@ -184,4 +184,30 @@ public class CouriersController {
         couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
         return new ControllerAnswerToAjax("OK", "");
     }
+
+    @Transactional
+    @PostMapping(value = "/changeCourierReadiness",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CouriersMessage couriersMessage) {
+        boolean readiness = couriersMessage.getReadiness().equals("true");
+        couriersRepository.setReadinessFor(readiness, couriersMessage.getCourierId());
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "findCourierProfileOwner",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity<?> findCourierProfileOwner(@RequestBody CouriersMessage couriersMessage) {
+
+        SendCouriersToAjax couriersSearchList = new SendCouriersToAjax();
+        List<CouriersEntity> courier = couriersRepository.findByCourierId(couriersMessage.getCourierId());
+        if (courier.isEmpty()) {
+            couriersSearchList.setMsg("Nothing found!");
+        } else {
+            couriersSearchList.setMsg("success");
+        }
+        couriersSearchList.setResult(courier);
+        return ResponseEntity.ok(couriersSearchList);
+    }
 }

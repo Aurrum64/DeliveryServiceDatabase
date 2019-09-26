@@ -19,4 +19,5 @@ public class CouriersMessage {
     private Integer departmentId;
     private Double latitude;
     private Double longitude;
+    private String readiness;
 }

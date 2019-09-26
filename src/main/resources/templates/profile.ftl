@@ -67,12 +67,6 @@
                     <th scope="col">Почта</th>
                     <th scope="col">Сотовый</th>
                     <th scope="col">Рейтинг</th>
-                    <th scope="col">Зарплата</th>
-                    <th scope="col">Трудоустроился</th>
-                    <th scope="col">Премия</th>
-                    <th scope="col">Департамент</th>
-                    <th scope="col">Автор</th>
-                    <th scope="col">Готовность</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,30 +77,76 @@
                     <th scope="col">${courier.email}</th>
                     <th scope="col">${courier.phoneNumber}</th>
                     <th scope="col">${courier.rating}</th>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Зарплата</th>
+                    <th scope="col">Трудоустроился</th>
+                    <th scope="col">Премия</th>
+                    <th scope="col">Департамент</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Готовность</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
                     <th scope="col">${courier.salary}</th>
                     <th scope="col">${courier.hireDate}</th>
                     <th scope="col">${courier.premium}</th>
                     <th scope="col">${courier.departmentId}</th>
                     <th scope="col">${courier.authorName}</th>
-                    <#if courier.readiness>
+                    <#--<#if courier.readiness>
                         <th scope="col">Готов</th>
                     <#else>
                         <th scope="col">Не готов</th>
-                    </#if>
+                    </#if>-->
+                    <th scope="col">
+                        <div id="readinessStatus"></div>
+                    </th>
                 </tr>
                 </tbody>
             </table>
+            <#if courier.readiness>
+                <div class="text-center py-4 mt-4">
+                    <form id="changeReadiness">
+                        <input type="hidden" id="courierId" value="${courier.courierId}">
+                        <div class="btn-group btn-group-toggle" id="readiness" data-toggle="buttons">
+                            <label class="btn btn-primary form-check-label active">
+                                <input class="form-check-input" type="radio" name="options" id="option1" value="false"
+                                       autocomplete="off">
+                                Не готов
+                            </label>
+                            <label class="btn btn-primary form-check-label">
+                                <input class="form-check-input" type="radio" name="options" id="option2" value="true"
+                                       autocomplete="off" checked>
+                                Готов
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            <#else>
+                <div class="text-center py-4 mt-4">
+                    <form id="changeReadiness">
+                        <input type="hidden" id="courierId" value="${courier.courierId}">
+                        <div class="btn-group btn-group-toggle" id="readiness" data-toggle="buttons">
+                            <label class="btn btn-primary form-check-label active">
+                                <input class="form-check-input" type="radio" name="options" id="option1" value="false"
+                                       autocomplete="off" checked>
+                                Не готов
+                            </label>
+                            <label class="btn btn-primary form-check-label">
+                                <input class="form-check-input" type="radio" name="options" id="option2" value="true"
+                                       autocomplete="off">
+                                Готов
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </#if>
         </#if>
-
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-primary form-check-label active">
-                <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off" checked>
-                Не готов
-            </label>
-            <label class="btn btn-primary form-check-label">
-                <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off"> Готов
-            </label>
-        </div>
 
         <div class="text mt-5">
             <h4>Редактирование:</h4>
@@ -167,4 +207,5 @@
         </div>
     </div>
     <script src="/js/notifications/usersRequests.js" type="text/javascript"></script>
+    <script src="/js/profile/changeReadiness.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

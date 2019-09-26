@@ -69,4 +69,8 @@ public interface CouriersRepository extends CrudRepository<CouriersEntity, Integ
     @Modifying
     @Query("update CouriersEntity c set c.longitude = ?1 where c.courierId = ?2")
     void setLongitudeFor(Double longitude, Integer id);
+
+    @Modifying
+    @Query("update CouriersEntity c set c.readiness = ?1 where c.courierId = ?2")
+    void setReadinessFor(Boolean readiness, Integer id);
 }

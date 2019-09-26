@@ -1,12 +1,11 @@
 <div class="container" style="height: 50px">
 </div>
-<div class="jumbotron jumbotron-fluid mt-5">
-    <div class="text-black text-center">
-        <h5 class="display-4">Delivery map</h5>
+<div class="container mt-2 ml-5">
+    <div class="text mb-3">
+        <h3>Логистическая карта:</h3>
     </div>
 </div>
-<div id="map" class="z-depth-1-half map-container ml-5 mt-5" style="width: 94%; height: 600px"></div>
-<div class="form-group row mt-5 ml-5">
+<div class="form-group row mt-4 ml-3">
     <div class="btn-group" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
                 data-toggle="dropdown"
@@ -57,4 +56,7 @@
     <button id="move" type="button" class="btn btn-secondary ml-5 mt-3">
         В путь!
     </button>
+</div>
+<div class="container mt-5 ml-5" style="width: 1450px; height: 600px">
+    <div id="map" style="width: 1450px; height: 600px"></div>
 </div>

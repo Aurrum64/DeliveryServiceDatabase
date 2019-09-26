@@ -25,6 +25,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/notifications">Уведомления</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logistics">Логистика</a>
+                </li>
             </#if>
             <#if isAccountActivated>
                 <#if isAdmin || isManager || isCourier>

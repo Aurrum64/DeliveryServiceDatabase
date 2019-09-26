@@ -63,7 +63,7 @@
                         <h5 class="card-title">Поступил новый заказ от <b>${order.authorName}</b>!</h5>
                         <p class="card-text">Забрать посылку по адресу: ${order.firstOrderAddressPoint}
                             и доставить по адресу: ${order.secondOrderAddressPoint}<br></p>
-                        <a href="/orderDetails" class="btn btn-info">Перейти в заказы</a>
+                        <a href="/logistics" class="btn btn-info">Перейти в логистику</a>
                     </div>
                 </div>
             <#else>

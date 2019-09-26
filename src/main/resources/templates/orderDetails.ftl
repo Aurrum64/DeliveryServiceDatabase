@@ -1,6 +1,7 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <#import "parts/interface/jumbotron.ftl" as jumbotron>
 <@defaultPage.defaultPageTemplate pageName="Order details" heightTop=65 heightBottom=200>
+    <#include "parts/interface/security.ftl">
     <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
     pageName="Order details management page">
     </@jumbotron.jumbotron>
@@ -32,93 +33,102 @@
             </div>
         </div>
     </div>
-    <div class="container ml-5">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <form id="deleteOrderDetails" class="form-inline">
-                    <div class="form-group row">
-                        <div class="md-form form-lg ml-4">
-                            <input type="text" id="deleteOrderDetailsId"
-                                   class="form-control form-control-lg">
-                            <label for="deleteOrderDetailsId">Удалить по ID...</label>
+    <#if isAdmin>
+        <div class="container ml-5">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <form id="deleteOrderDetails" class="form-inline">
+                        <div class="form-group row">
+                            <div class="md-form form-lg ml-4">
+                                <input type="text" id="deleteOrderDetailsId"
+                                       class="form-control form-control-lg">
+                                <label for="deleteOrderDetailsId">Удалить по ID...</label>
+                            </div>
+                            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                            <button type="submit" class="btn btn-primary ml-3">Удалить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </#if>
+    <#if isAdmin>
+        <div class="container mt-3 ml-5">
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
+               aria-controls="collapseExample">
+                Открыть меню изменения существующей детальной информации о заказе
+            </a>
+            <div class="collapse" id="collapse1">
+                <div class="form-group mt-3">
+                    <form id="updateOrderDetails">
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="updateOrderDetailsId" class="form-control form-control-lg">
+                            <label for="updateOrderDetailsId">Введите ID детальной информации о заказе, которую нужно
+                                изменить...</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="updateOrderDate" class="form-control form-control-lg">
+                            <label for="updateOrderDate">Изменить дату доставки...</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="updateFirstOrderAddressPoint" class="form-control form-control-lg">
+                            <label for="updateFirstOrderAddressPoint">Изменить адрес получения заказа...</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="updateSecondOrderAddressPoint" class="form-control form-control-lg">
+                            <label for="updateSecondOrderAddressPoint">Изменить адрес доставки заказа...</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="updateComment" class="form-control form-control-lg">
+                            <label for="updateComment">Изменить комментарий...</label>
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                        <button type="submit" class="btn btn-primary ml-3">Удалить</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Изменить</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container mt-3 ml-5">
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
-           aria-controls="collapseExample">
-            Открыть меню изменения существующей детальной информации о заказе
-        </a>
-        <div class="collapse" id="collapse1">
-            <div class="form-group mt-3">
-                <form id="updateOrderDetails">
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="updateOrderDetailsId" class="form-control form-control-lg">
-                        <label for="updateOrderDetailsId">Введите ID детальной информации о заказе, которую нужно
-                            изменить...</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="updateOrderDate" class="form-control form-control-lg">
-                        <label for="updateOrderDate">Изменить дату доставки...</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="updateFirstOrderAddressPoint" class="form-control form-control-lg">
-                        <label for="updateFirstOrderAddressPoint">Изменить адрес получения заказа...</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="updateSecondOrderAddressPoint" class="form-control form-control-lg">
-                        <label for="updateSecondOrderAddressPoint">Изменить адрес доставки заказа...</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="updateComment" class="form-control form-control-lg">
-                        <label for="updateComment">Изменить комментарий...</label>
-                    </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Изменить</button>
-                    </div>
-                </form>
+    </#if>
+    <#if isAdmin>
+        <div class="container mt-5 ml-5">
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+               aria-controls="collapseExample">
+                Добавить детальную информацию о заказе
+            </a>
+            <div class="collapse" id="collapse2">
+                <div class="form-group mt-3">
+                    <form id="addOrderDetails">
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addOrderDate" class="form-control form-control-lg">
+                            <label for="orderDate">Введите дату доставки...</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addFirstOrderAddressPoint" class="form-control form-control-lg">
+                            <label for="addFirstOrderAddressPoint">Откуда забрать заказ?</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addSecondOrderAddressPoint" class="form-control form-control-lg">
+                            <label for="addSecondOrderAddressPoint">Куда доставить заказ?</label>
+                        </div>
+                        <div class="md-form form-lg ml-2">
+                            <input type="text" id="addComment" class="form-control form-control-lg">
+                            <label for="comment">Введите комментарий...</label>
+                        </div>
+                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </#if>
     <div class="container mt-5 ml-5">
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
-           aria-controls="collapseExample">
-            Добавить детальную информацию о заказе
-        </a>
-        <div class="collapse" id="collapse2">
-            <div class="form-group mt-3">
-                <form id="addOrderDetails">
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="addOrderDate" class="form-control form-control-lg">
-                        <label for="orderDate">Введите дату доставки...</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="addFirstOrderAddressPoint" class="form-control form-control-lg">
-                        <label for="addFirstOrderAddressPoint">Откуда забрать заказ?</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="addSecondOrderAddressPoint" class="form-control form-control-lg">
-                        <label for="addSecondOrderAddressPoint">Куда доставить заказ?</label>
-                    </div>
-                    <div class="md-form form-lg ml-2">
-                        <input type="text" id="addComment" class="form-control form-control-lg">
-                        <label for="comment">Введите комментарий...</label>
-                    </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Добавить</button>
-                    </div>
-                </form>
-            </div>
+        <div class="text mt-5 mb-3">
+            <h4>Активные заказы:</h4>
         </div>
-    </div>
-    <div class="container mt-5 ml-5">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -135,6 +145,11 @@
             </tbody>
         </table>
     </div>
+    <div class="container mt-5 ml-5">
+        <form>
+            <input type="button" class="btn btn-outline-info mr-3" value="История заказов"
+                   onClick='location.href="/orderDetailsHistory"'>
+        </form>
+    </div>
     <#include "parts/scriptsSources/orderDetailsScripts.ftl">
-    <script src="/js/notifications/sendNotifications.js" type="text/javascript"></script>
 </@defaultPage.defaultPageTemplate>

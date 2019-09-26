@@ -34,6 +34,11 @@ public class OrderDetailsController {
         return "orderDetails";
     }
 
+    @GetMapping("/orderDetailsHistory")
+    public String orderDetailsHistoryView() {
+        return "orderDetailsHistory";
+    }
+
     @GetMapping(value = "/orderDetailsList", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> sendOrderDetailsList() {

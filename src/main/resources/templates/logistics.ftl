@@ -43,7 +43,7 @@
                 <th scope="col">Автор</th>
             </tr>
             </thead>
-            <tbody id="orderDetailsList">
+            <tbody id="activeOrdersListForLogisticPage">
             </tbody>
         </table>
         <div class="text mt-5 mb-3">
@@ -92,7 +92,7 @@
                 <th scope="col">Готовность</th>
             </tr>
             </thead>
-            <tbody id="couriersList">
+            <tbody id="activeCouriersList">
             </tbody>
         </table>
     </div>

@@ -73,4 +73,31 @@ public class OrderDeliveryController {
         result.setResult(activeOrdersListForCurrentUser);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping(value = "/activeOrdersListForLogisticPage", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendActiveOrdersListForManager() {
+
+        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 3;
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ не доставлен");
+        if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
+            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE);
+            if (firstActiveOrders.isEmpty()) {
+                result.setMsg("Active orders list is empty!");
+            } else {
+                result.setMsg("success");
+            }
+            result.setResult(firstActiveOrders);
+        } else {
+            if (activeOrders.isEmpty()) {
+                result.setMsg("Active orders list is empty!");
+            } else {
+                result.setMsg("success");
+            }
+            result.setResult(activeOrders);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

@@ -210,4 +210,31 @@ public class CouriersController {
         couriersSearchList.setResult(courier);
         return ResponseEntity.ok(couriersSearchList);
     }
+
+    @GetMapping(value = "/activeCouriersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendActiveCouriersList() {
+
+        final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
+
+        SendCouriersToAjax couriersList = new SendCouriersToAjax();
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(true);
+        if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
+            List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
+            if (firstActiveCouriers.isEmpty()) {
+                couriersList.setMsg("Couriers list is empty!");
+            } else {
+                couriersList.setMsg("success");
+            }
+            couriersList.setResult(firstActiveCouriers);
+        } else {
+            if (activeCouriers.isEmpty()) {
+                couriersList.setMsg("Couriers list is empty!");
+            } else {
+                couriersList.setMsg("success");
+            }
+            couriersList.setResult(activeCouriers);
+        }
+        return ResponseEntity.ok(couriersList);
+    }
 }

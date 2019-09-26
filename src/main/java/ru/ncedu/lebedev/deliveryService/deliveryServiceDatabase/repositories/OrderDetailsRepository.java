@@ -24,6 +24,8 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     List<OrderDetailsEntity> findByOrderDetailsIdAndOrderDateAndSecondOrderAddressPoint(Integer id, Date orderDate, String secondOrderAddressPoint);
 
+    List<OrderDetailsEntity> findAll();
+
     void deleteByOrderDetailsId(Integer id);
 
     @Modifying

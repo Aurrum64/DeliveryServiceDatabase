@@ -6,30 +6,14 @@
             <h3>Активные заказы:</h3>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <form id="searchOrderDetails" class="form-inline">
-                    <div class="form-group row">
-                        <div class="md-form form-lg ml-3">
-                            <input type="text" id="searchOrderDetailsId"
-                                   class="form-control form-control-lg">
-                            <label for="searchOrderDetailsId">Найти по ID...</label>
-                        </div>
-                        <div class="md-form form-lg ml-3">
-                            <input type="text" id="searchOrderDate" class="form-control form-control-lg">
-                            <label for="searchOrderDate">Найти по дате...</label>
-                        </div>
-                        <div class="md-form form-lg ml-3" style="width: 300px">
-                            <input type="text" id="searchSecondOrderAddressPoint" class="form-control form-control-lg"
-                                   style="width: 300px">
-                            <label for="searchSecondOrderAddressPoint">Найти по адресу доставки...</label>
-                        </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                        <div>
-                            <button type="submit" class="btn btn-primary ml-3">Найти</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <form>
+                <input type="button" class="btn btn-blue-grey mr-3" value="История заказов"
+                       onClick='location.href="/orderDetailsHistory"'>
+            </form>
+            <form>
+                <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных заказов"
+                       onClick='location.href="/activeOrderDetails"'>
+            </form>
         </div>
         <table class="table table-striped">
             <thead>
@@ -51,28 +35,14 @@
             <h3>Курьеры, готовые принять заказ:</h3>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <form id="searchCouriers" class="form-inline">
-                    <div class="form-group row">
-                        <div class="md-form form-lg ml-3">
-                            <input type="text" id="searchCourierId" class="form-control form-control-lg">
-                            <label for="searchCourierId">Найти по ID...</label>
-                        </div>
-                        <div class="md-form form-lg ml-3">
-                            <input type="text" id="searchCourierFirstName" class="form-control form-control-lg">
-                            <label for="searchCourierFirstName">Найти по имени...</label>
-                        </div>
-                        <div class="md-form form-lg ml-3">
-                            <input type="text" id="searchCourierLastName" class="form-control form-control-lg">
-                            <label for="searchCourierLastName">Найти по фамилии...</label>
-                        </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                        <div>
-                            <button type="submit" class="btn btn-primary ml-3">Найти</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <form>
+                <input type="button" class="btn btn-blue-grey mr-3" value="Список выходных курьеров"
+                       onClick='location.href="/orderDetailsHistory"'>
+            </form>
+            <form>
+                <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных курьеров"
+                       onClick='location.href="/activeOrderDetails"'>
+            </form>
         </div>
         <table class="table table-striped">
             <thead>

@@ -128,4 +128,32 @@ public class OrderDeliveryController {
         }
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping(value = "/allArchiveOrdersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendAllArchiveOrdersList() {
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        List<OrderDetailsEntity> archiveOrders = orderDetailsRepository.findAllByStatus("Заказ доставлен");
+        if (archiveOrders.isEmpty()) {
+            result.setMsg("Archive orders list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(archiveOrders);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/allActiveOrdersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendAllActiveOrdersList() {
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        List<OrderDetailsEntity> archiveOrders = orderDetailsRepository.findAllByStatus("Заказ не доставлен");
+        if (archiveOrders.isEmpty()) {
+            result.setMsg("Archive orders list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(archiveOrders);
+        return ResponseEntity.ok(result);
+    }
 }

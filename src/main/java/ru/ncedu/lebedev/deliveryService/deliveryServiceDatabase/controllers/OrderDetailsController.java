@@ -39,9 +39,19 @@ public class OrderDetailsController {
         return "orderDetails";
     }
 
-    @GetMapping("/orderDetailsHistory")
+    @GetMapping("/userOrderDetailsHistory")
     public String orderDetailsHistoryView() {
+        return "userOrderDetailsHistory";
+    }
+
+    @GetMapping("/orderDetailsHistory")
+    public String orderDetailsHistory() {
         return "orderDetailsHistory";
+    }
+
+    @GetMapping("/activeOrderDetails")
+    public String activeOrderDetails() {
+        return "activeOrderDetails";
     }
 
     @GetMapping(value = "/orderDetailsList", produces = "application/json")

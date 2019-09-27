@@ -4,6 +4,9 @@ showOrderDetailsListForManager();
 showActiveOrdersListForUser();
 showArchiveOrdersListForUser();
 showActiveOrdersListForLogisticPage();
+showAllArchiveOrdersList();
+showAllActiveOrdersList();
+
 
 $(document).ready(function () {
     $("#addOrderDetails").submit(function (event) {
@@ -277,6 +280,120 @@ function showActiveOrdersListForLogisticPage() {
                     }
                 }
                 $('#activeOrdersListForLogisticPage').html(view);
+            }
+        }
+    });
+}
+
+function showAllArchiveOrdersList() {
+
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "/allArchiveOrdersList",
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            let view;
+            if (data.result[0] === undefined) {
+                view =
+                    "<tr>" +
+                    "            <th scope=\"row\">В истории заказов пока нет ни одного заказа</th>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "</tr>";
+                $('#allArchiveOrdersList').html(view);
+            } else {
+                for (let i = 0; i < data.result.length; i++) {
+                    let courier;
+                    if (data.result[i].courier === undefined ||
+                        data.result[i].courier === null) {
+                        courier = "Не назначен";
+                    } else {
+                        courier = data.result[i].courier.firstName;
+                    }
+                    let newLine =
+                        "<tr>" +
+                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
+                        "            <td>" + data.result[i].orderDate + "</td>\n" +
+                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
+                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
+                        "            <td>" + data.result[i].comment + "</td>\n" +
+                        "            <td>" + data.result[i].status + "</td>\n" +
+                        "            <td>" + data.result[i].authorName + "</td>\n" +
+                        "            <td>" + courier + "</td>\n" +
+                        "</tr>";
+                    if (view === undefined) {
+                        view = "" + newLine;
+                    } else {
+                        view = view + newLine;
+                    }
+                }
+                $('#allArchiveOrdersList').html(view);
+            }
+        }
+    });
+}
+
+function showAllActiveOrdersList() {
+
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "/allActiveOrdersList",
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            let view;
+            if (data.result[0] === undefined) {
+                view =
+                    "<tr>" +
+                    "            <th scope=\"row\">У вас пока нет ни одного активного заказа</th>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "</tr>";
+                $('#allActiveOrdersList').html(view);
+            } else {
+                for (let i = 0; i < data.result.length; i++) {
+                    let courier;
+                    if (data.result[i].courier === undefined ||
+                        data.result[i].courier === null) {
+                        courier = "Не назначен";
+                    } else {
+                        courier = data.result[i].courier.firstName;
+                    }
+                    let newLine =
+                        "<tr>" +
+                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
+                        "            <td>" + data.result[i].orderDate + "</td>\n" +
+                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
+                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
+                        "            <td>" + data.result[i].comment + "</td>\n" +
+                        "            <td>" + data.result[i].status + "</td>\n" +
+                        "            <td>" + data.result[i].authorName + "</td>\n" +
+                        "            <td>" + courier + "</td>\n" +
+                        "</tr>";
+                    if (view === undefined) {
+                        view = "" + newLine;
+                    } else {
+                        view = view + newLine;
+                    }
+                }
+                $('#allActiveOrdersList').html(view);
             }
         }
     });

@@ -77,7 +77,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuOffset"
                      style="width: 100px">
                     <a class="dropdown-item" href="/profile">Профиль</a>
-                    <a class="dropdown-item" href="/orderDelivery">Сделать заказ</a>
+                    <a class="dropdown-item" href="/orderDelivery">Заказы</a>
                     <div class="dropdown-divider"></div>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-outline-info ml-2" style="width: 140px">Выход</button>

@@ -4,13 +4,13 @@ var notDeliveredOrderPoint = L.icon({
 });
 
 var notDeliveredFirstOrderPoint = L.icon({
-    iconUrl: 'https://img.icons8.com/ios-filled/452/marker-a.png',
-    iconSize: [67, 60]
+    iconUrl: 'https://i.ibb.co/zQcbV7C/pointA.png',
+    iconSize: [50, 50]
 });
 
 var notDeliveredSecondOrderPoint = L.icon({
-    iconUrl: 'https://img.icons8.com/ios-filled/452/marker-b.png',
-    iconSize: [67, 60]
+    iconUrl: 'https://i.ibb.co/Rhk93Wc/pointB.png',
+    iconSize: [50, 50]
 });
 
 var deliveredOrderPoint = L.icon({

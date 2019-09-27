@@ -133,7 +133,7 @@ function showActiveCouriersList() {
             if (data.result[0] === undefined) {
                 view =
                     "<tr>" +
-                    "            <th scope=\"row\">List of couriers is empty yet!</th>\n" +
+                    "            <th scope=\"row\">Нет курьеров, готовых принять заказ :(</th>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +

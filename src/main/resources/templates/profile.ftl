@@ -32,6 +32,28 @@
             <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" alt="">
         </#if>
 
+        <div class="container">
+            <a class="btn btn-primary mt-4 ml-4" data-toggle="collapse" href="#collapse2" role="button"
+               aria-expanded="false"
+               aria-controls="collapse2">
+                Я хочу у вас работать!
+            </a>
+            <div class="collapse ml-4" id="collapse2">
+                <div class="form-group mt-4">
+                    <form id="chooseProfession">
+                        <select id="professionChoice" class="browser-default custom-select">
+                            <option selected>Кем вы хотите работать в нашей компании?</option>
+                            <option value="courierRequest">Курьером</option>
+                            <option value="managerRequest">Менеджером</option>
+                        </select>
+                        <div class="text-center mt-4">
+                            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="text mt-5">
             <h4>Информация о пользователе:</h4>
         </div>
@@ -98,11 +120,6 @@
                     <th scope="col">${courier.premium}</th>
                     <th scope="col">${courier.departmentId}</th>
                     <th scope="col">${courier.authorName}</th>
-                    <#--<#if courier.readiness>
-                        <th scope="col">Готов</th>
-                    <#else>
-                        <th scope="col">Не готов</th>
-                    </#if>-->
                     <th scope="col">
                         <div id="readinessStatus"></div>
                     </th>
@@ -114,15 +131,15 @@
                     <form id="changeReadiness">
                         <input type="hidden" id="courierId" value="${courier.courierId}">
                         <div class="btn-group btn-group-toggle" id="readiness" data-toggle="buttons">
-                            <label class="btn btn-primary form-check-label active">
+                            <label class="btn btn-blue-grey form-check-label">
                                 <input class="form-check-input" type="radio" name="options" id="option1" value="false"
                                        autocomplete="off">
                                 Не готов
                             </label>
-                            <label class="btn btn-primary form-check-label">
+                            <label class="btn btn-light-green form-check-label active">
                                 <input class="form-check-input" type="radio" name="options" id="option2" value="true"
                                        autocomplete="off" checked>
-                                Готов
+                                Жду заказов
                             </label>
                         </div>
                     </form>
@@ -132,15 +149,15 @@
                     <form id="changeReadiness">
                         <input type="hidden" id="courierId" value="${courier.courierId}">
                         <div class="btn-group btn-group-toggle" id="readiness" data-toggle="buttons">
-                            <label class="btn btn-primary form-check-label active">
+                            <label class="btn btn-blue-grey form-check-label active">
                                 <input class="form-check-input" type="radio" name="options" id="option1" value="false"
                                        autocomplete="off" checked>
                                 Не готов
                             </label>
-                            <label class="btn btn-primary form-check-label">
+                            <label class="btn btn-light-green form-check-label">
                                 <input class="form-check-input" type="radio" name="options" id="option2" value="true"
                                        autocomplete="off">
-                                Готов
+                                Жду заказов
                             </label>
                         </div>
                     </form>
@@ -180,31 +197,6 @@
                 <button class="btn btn-outline-info" type="submit">Сохранить</button>
             </div>
         </form>
-        <div class="text mt-5">
-            <h4>Пользователям:</h4>
-        </div>
-        <div class="text mt-5">
-            <h4>Будущим сотрудникам:</h4>
-        </div>
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
-           aria-controls="collapse2">
-            Я хочу у вас работать!
-        </a>
-        <div class="collapse" id="collapse2">
-            <div class="form-group mt-3">
-                <form id="chooseProfession">
-                    <select id="professionChoice" class="browser-default custom-select">
-                        <option selected>Кем вы хотите работать в нашей компании?</option>
-                        <option value="courierRequest">Курьером</option>
-                        <option value="managerRequest">Менеджером</option>
-                    </select>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Отправить заявку</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
     <script src="/js/notifications/usersRequests.js" type="text/javascript"></script>
     <script src="/js/profile/changeReadiness.js" type="text/javascript"></script>

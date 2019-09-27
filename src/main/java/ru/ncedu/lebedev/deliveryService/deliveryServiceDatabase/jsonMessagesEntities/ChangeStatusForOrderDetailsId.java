@@ -6,4 +6,5 @@ import lombok.Getter;
 public class ChangeStatusForOrderDetailsId {
 
     private Integer orderDetailsId;
+    private Integer courierId;
 }

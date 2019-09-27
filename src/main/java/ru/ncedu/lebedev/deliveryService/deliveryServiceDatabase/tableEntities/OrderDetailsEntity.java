@@ -25,6 +25,10 @@ public class OrderDetailsEntity {
         return author.getUsername();
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "courier_id")
+    private CouriersEntity courier;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date", nullable = false)
     private Date orderDate;

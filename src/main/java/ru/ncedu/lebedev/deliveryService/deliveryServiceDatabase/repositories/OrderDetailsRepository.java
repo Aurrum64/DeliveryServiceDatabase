@@ -5,12 +5,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 
 public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntity, Integer> {
 
-    List<OrderDetailsEntity> findByOrderDetailsId(Integer id);
+    OrderDetailsEntity findByOrderDetailsId(Integer id);
+
+    List<OrderDetailsEntity> findAllByOrderDetailsId(Integer id);
 
     List<OrderDetailsEntity> findByOrderDetailsIdAndOrderDate(Integer id, Date orderDate);
 

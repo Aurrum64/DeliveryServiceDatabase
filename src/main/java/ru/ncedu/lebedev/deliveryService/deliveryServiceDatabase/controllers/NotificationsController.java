@@ -49,13 +49,21 @@ public class NotificationsController {
         final int RECENT_REQUESTS_LIST_SIZE = 3;
 
         List<OrderDetailsEntity> orders = orderDetailsRepository.findAll();
-        List<OrderDetailsEntity> recentOrders = orders.subList(orders.size() -
-                RECENT_ORDERS_LIST_SIZE, orders.size());
-        model.put("recentOrders", recentOrders);
+        if (orderDetailsRepository.count() > RECENT_ORDERS_LIST_SIZE) {
+            List<OrderDetailsEntity> recentOrders = orders.subList(orders.size() -
+                    RECENT_ORDERS_LIST_SIZE, orders.size());
+            model.put("recentOrders", recentOrders);
+        } else {
+            model.put("recentOrders", orders);
+        }
         List<UsersRequestsEntity> usersRequests = usersRequestsRepository.findAll();
-        List<UsersRequestsEntity> recentUsersRequests = usersRequests.subList(usersRequests.size() -
-                RECENT_REQUESTS_LIST_SIZE, usersRequests.size());
-        model.put("recentRequests", recentUsersRequests);
+        if (usersRequestsRepository.count() > RECENT_REQUESTS_LIST_SIZE) {
+            List<UsersRequestsEntity> recentUsersRequests = usersRequests.subList(usersRequests.size() -
+                    RECENT_REQUESTS_LIST_SIZE, usersRequests.size());
+            model.put("recentRequests", recentUsersRequests);
+        } else {
+            model.put("recentRequests", usersRequests);
+        }
         return "notifications";
     }
 

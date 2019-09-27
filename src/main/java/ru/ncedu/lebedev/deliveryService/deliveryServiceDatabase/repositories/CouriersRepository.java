@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface CouriersRepository extends CrudRepository<CouriersEntity, Integer> {
 
-    List<CouriersEntity> findByCourierId(Integer id);
+    CouriersEntity findByCourierId(Integer id);
+
+    List<CouriersEntity> findAllByCourierId(Integer id);
 
     List<CouriersEntity> findByCourierIdAndFirstName(Integer id, String firstName);
 

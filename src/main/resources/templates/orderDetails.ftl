@@ -127,7 +127,7 @@
     </#if>
     <div class="container mt-5 ml-5">
         <div class="text mt-5 mb-3">
-            <h4>Активные заказы:</h4>
+            <h4>Заказы:</h4>
         </div>
         <table class="table table-striped">
             <thead>
@@ -139,6 +139,7 @@
                 <th scope="col">Комментарий</th>
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
+                <th scope="col">Курьер</th>
             </tr>
             </thead>
             <tbody id="orderDetailsList">

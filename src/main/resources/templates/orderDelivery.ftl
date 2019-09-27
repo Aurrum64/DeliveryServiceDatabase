@@ -48,6 +48,7 @@
                 <th scope="col">Комментарий</th>
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
+                <th scope="col">Курьер</th>
             </tr>
             </thead>
             <tbody id="activeOrdersListForUser">
@@ -66,6 +67,7 @@
                 <th scope="col">Комментарий</th>
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
+                <th scope="col">Курьер</th>
             </tr>
             </thead>
             <tbody id="archiveOrdersListForUser">

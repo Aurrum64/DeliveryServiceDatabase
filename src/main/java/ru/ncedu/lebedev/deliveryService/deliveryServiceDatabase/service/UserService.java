@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
-        user.setVerified(true);
+        user.setVerified(false);
         Iterable<UsersEntity> usersList = usersRepository.findAll();
         if (usersList.iterator().hasNext()) {
             user.setRoles(Collections.singleton(RolesEntity.USER));
@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
                     user.getUsername(),
                     user.getActivationCode()
             );
-            /*mailSender.send(user.getEmail(), "Активация учётной записи Delivery Service!", message);*/
+            mailSender.send(user.getEmail(), "Активация учётной записи Delivery Service!", message);
         }
     }
 

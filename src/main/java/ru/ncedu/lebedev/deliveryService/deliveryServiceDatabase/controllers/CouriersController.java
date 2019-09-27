@@ -94,7 +94,7 @@ public class CouriersController {
     public ResponseEntity<?> findCouriers(@RequestBody CouriersMessage courierMessage) {
         Iterable<CouriersEntity> couriers;
         if (courierMessage.getCourierId() != null & courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
-            couriers = couriersRepository.findByCourierId(courierMessage.getCourierId());
+            couriers = couriersRepository.findAllByCourierId(courierMessage.getCourierId());
         } else if (courierMessage.getCourierId() == null & !courierMessage.getFirstName().isEmpty() & !courierMessage.getLastName().isEmpty()) {
             couriers = couriersRepository.findByFirstNameAndLastName(courierMessage.getFirstName(), courierMessage.getLastName());
         } else if (courierMessage.getCourierId() == null & !courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
@@ -125,7 +125,7 @@ public class CouriersController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax deleteCourier(@RequestBody CouriersMessage courierMessage) {
-        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierMessage.getCourierId());
+        List<CouriersEntity> courier = couriersRepository.findAllByCourierId(courierMessage.getCourierId());
         if (courier.isEmpty()) {
             return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
@@ -139,7 +139,7 @@ public class CouriersController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax updateCourier(@RequestBody CouriersMessage couriersMessage) {
-        List<CouriersEntity> couriersList = couriersRepository.findByCourierId(couriersMessage.getCourierId());
+        List<CouriersEntity> couriersList = couriersRepository.findAllByCourierId(couriersMessage.getCourierId());
         if (couriersList.isEmpty()) {
             return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
@@ -201,7 +201,7 @@ public class CouriersController {
     public ResponseEntity<?> findCourierProfileOwner(@RequestBody CouriersMessage couriersMessage) {
 
         SendCouriersToAjax couriersSearchList = new SendCouriersToAjax();
-        List<CouriersEntity> courier = couriersRepository.findByCourierId(couriersMessage.getCourierId());
+        List<CouriersEntity> courier = couriersRepository.findAllByCourierId(couriersMessage.getCourierId());
         if (courier.isEmpty()) {
             couriersSearchList.setMsg("Nothing found!");
         } else {

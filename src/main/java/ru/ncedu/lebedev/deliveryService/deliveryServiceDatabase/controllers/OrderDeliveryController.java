@@ -100,4 +100,32 @@ public class OrderDeliveryController {
         }
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping(value = "/archiveOrdersListForLogisticPage", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendArchiveOrdersListForManager() {
+
+        final int RECENT_ARCHIVE_ORDERS_LIST_SIZE = 10;
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        List<OrderDetailsEntity> archiveOrders = orderDetailsRepository.findAllByStatus("Заказ доставлен");
+        if (orderDetailsRepository.count() > 10) {
+            List<OrderDetailsEntity> recentArchiveOrders = archiveOrders.subList(archiveOrders.size() - RECENT_ARCHIVE_ORDERS_LIST_SIZE,
+                    archiveOrders.size());
+            if (recentArchiveOrders.isEmpty()) {
+                result.setMsg("Archive orders list is empty!");
+            } else {
+                result.setMsg("success");
+            }
+            result.setResult(recentArchiveOrders);
+        } else {
+            if (archiveOrders.isEmpty()) {
+                result.setMsg("Archive orders list is empty!");
+            } else {
+                result.setMsg("success");
+            }
+            result.setResult(archiveOrders);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

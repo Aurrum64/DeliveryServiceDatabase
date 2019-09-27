@@ -11,7 +11,8 @@ function updateOrderDetails() {
     let orderDetailsInput = {};
     orderDetailsInput["orderDetailsId"] = $("#updateOrderDetailsId").val();
     orderDetailsInput["orderDate"] = $("#updateOrderDate").val();
-    orderDetailsInput["orderAddress"] = $("#updateOrderAddress").val();
+    orderDetailsInput["firstOrderAddressPoint"] = $("#updateFirstOrderAddressPoint").val();
+    orderDetailsInput["secondOrderAddressPoint"] = $("#updateSecondOrderAddressPoint").val();
     orderDetailsInput["comment"] = $("#updateComment").val();
 
     if (addedRecords[0] === undefined) {
@@ -20,7 +21,8 @@ function updateOrderDetails() {
         if (orderDetailsInput.orderDetailsId === "") {
             alert("Please, enter order details ID, which need to be update!");
         } else if (orderDetailsInput.orderAddress === ""
-            & orderDetailsInput.orderDate === ""
+            & orderDetailsInput.firstOrderAddressPoint === ""
+            & orderDetailsInput.secondOrderAddressPoint === ""
             & orderDetailsInput.comment === "") {
             alert("Fill in at least one field!");
         } else {

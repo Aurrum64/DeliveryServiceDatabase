@@ -174,6 +174,7 @@
                 <th scope="col">X</th>
                 <th scope="col">Y</th>
                 <th scope="col">Автор</th>
+                <th scope="col">Готовность</th>
             </tr>
             </thead>
             <tbody id="couriersList">

@@ -3,8 +3,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnt
 import lombok.Getter;
 
 @Getter
-public class ChangeStatusForOrderDetailsId {
+public class UsersRequestsMessage {
 
-    private Integer orderDetailsId;
-    private Integer courierId;
+    private String userChoice;
 }

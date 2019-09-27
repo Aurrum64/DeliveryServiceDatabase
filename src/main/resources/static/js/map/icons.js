@@ -3,6 +3,16 @@ var notDeliveredOrderPoint = L.icon({
     iconSize: [50, 50]
 });
 
+var notDeliveredFirstOrderPoint = L.icon({
+    iconUrl: 'https://i.ibb.co/zQcbV7C/pointA.png',
+    iconSize: [50, 50]
+});
+
+var notDeliveredSecondOrderPoint = L.icon({
+    iconUrl: 'https://i.ibb.co/Rhk93Wc/pointB.png',
+    iconSize: [50, 50]
+});
+
 var deliveredOrderPoint = L.icon({
     iconUrl: 'https://icon-library.net/images/arrow-down-icon-png/arrow-down-icon-png-14.jpg',
     iconSize: [50, 50]

@@ -11,10 +11,10 @@ function searchOrderDetails() {
     let orderDetailsInput = {};
     orderDetailsInput["orderDetailsId"] = $("#searchOrderDetailsId").val();
     orderDetailsInput["orderDate"] = $("#searchOrderDate").val();
-    orderDetailsInput["orderAddress"] = $("#searchOrderAddress").val();
+    orderDetailsInput["secondOrderAddressPoint"] = $("#searchSecondOrderAddressPoint").val();
 
     if (orderDetailsInput.orderDetailsId === "" & orderDetailsInput.orderDate === ""
-        & orderDetailsInput.orderAddress === "") {
+        & orderDetailsInput.secondOrderAddressPoint === "") {
         showOrderDetailsList();
         console.log("All order details list shown.")
     } else {
@@ -43,6 +43,7 @@ function searchOrderDetailsInDb(orderDetailsInput) {
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
+                    "            <td></td>\n" +
                     "</tr>";
                 $('#orderDetailsList').html(view);
             } else {
@@ -51,7 +52,8 @@ function searchOrderDetailsInDb(orderDetailsInput) {
                         "<tr>" +
                         "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
                         "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].orderAddress + "</td>\n" +
+                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
+                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
                         "            <td>" + data.result[i].comment + "</td>\n" +
                         "            <td>" + data.result[i].status + "</td>\n" +
                         "            <td>" + data.result[i].authorName + "</td>\n" +

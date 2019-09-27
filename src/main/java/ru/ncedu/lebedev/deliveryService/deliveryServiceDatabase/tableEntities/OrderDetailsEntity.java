@@ -1,6 +1,7 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities;
 
 import lombok.Data;
+import org.springframework.stereotype.Controller;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrdersEntity;
 
 import javax.persistence.*;
@@ -24,12 +25,19 @@ public class OrderDetailsEntity {
         return author.getUsername();
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "courier_id")
+    private CouriersEntity courier;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date", nullable = false)
     private Date orderDate;
 
-    @Column(name = "order_address", nullable = false)
-    private String orderAddress;
+    @Column(name = "fist_order_address_point", nullable = false)
+    private String firstOrderAddressPoint;
+
+    @Column(name = "second_order_address_point", nullable = false)
+    private String secondOrderAddressPoint;
 
     @Column(name = "comment")
     private String comment;

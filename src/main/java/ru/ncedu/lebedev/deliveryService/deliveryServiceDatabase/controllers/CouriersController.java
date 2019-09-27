@@ -27,8 +27,6 @@ public class CouriersController {
 
     @GetMapping("/couriers")
     public String couriersView() {
-        /*Iterable<CouriersEntity> couriers = couriersRepository.findAll();
-        model.put("couriers", couriers);*/
         return "couriers";
     }
 
@@ -85,6 +83,7 @@ public class CouriersController {
         courier.setLatitude(RandomCoordinates.getRandomLatitude());
         courier.setLongitude(RandomCoordinates.getRandomLongitude());
         courier.setAuthor(user);
+        courier.setReadiness(false);
         couriersRepository.save(courier);
         return new ControllerAnswerToAjax("OK", "");
     }
@@ -95,7 +94,7 @@ public class CouriersController {
     public ResponseEntity<?> findCouriers(@RequestBody CouriersMessage courierMessage) {
         Iterable<CouriersEntity> couriers;
         if (courierMessage.getCourierId() != null & courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
-            couriers = couriersRepository.findByCourierId(courierMessage.getCourierId());
+            couriers = couriersRepository.findAllByCourierId(courierMessage.getCourierId());
         } else if (courierMessage.getCourierId() == null & !courierMessage.getFirstName().isEmpty() & !courierMessage.getLastName().isEmpty()) {
             couriers = couriersRepository.findByFirstNameAndLastName(courierMessage.getFirstName(), courierMessage.getLastName());
         } else if (courierMessage.getCourierId() == null & !courierMessage.getFirstName().isEmpty() & courierMessage.getLastName().isEmpty()) {
@@ -126,7 +125,7 @@ public class CouriersController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax deleteCourier(@RequestBody CouriersMessage courierMessage) {
-        List<CouriersEntity> courier = couriersRepository.findByCourierId(courierMessage.getCourierId());
+        List<CouriersEntity> courier = couriersRepository.findAllByCourierId(courierMessage.getCourierId());
         if (courier.isEmpty()) {
             return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
@@ -140,7 +139,7 @@ public class CouriersController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax updateCourier(@RequestBody CouriersMessage couriersMessage) {
-        List<CouriersEntity> couriersList = couriersRepository.findByCourierId(couriersMessage.getCourierId());
+        List<CouriersEntity> couriersList = couriersRepository.findAllByCourierId(couriersMessage.getCourierId());
         if (couriersList.isEmpty()) {
             return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
@@ -184,5 +183,58 @@ public class CouriersController {
         couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
         couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
         return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @Transactional
+    @PostMapping(value = "/changeCourierReadiness",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CouriersMessage couriersMessage) {
+        boolean readiness = couriersMessage.getReadiness().equals("true");
+        couriersRepository.setReadinessFor(readiness, couriersMessage.getCourierId());
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "findCourierProfileOwner",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity<?> findCourierProfileOwner(@RequestBody CouriersMessage couriersMessage) {
+
+        SendCouriersToAjax couriersSearchList = new SendCouriersToAjax();
+        List<CouriersEntity> courier = couriersRepository.findAllByCourierId(couriersMessage.getCourierId());
+        if (courier.isEmpty()) {
+            couriersSearchList.setMsg("Nothing found!");
+        } else {
+            couriersSearchList.setMsg("success");
+        }
+        couriersSearchList.setResult(courier);
+        return ResponseEntity.ok(couriersSearchList);
+    }
+
+    @GetMapping(value = "/activeCouriersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendActiveCouriersList() {
+
+        final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
+
+        SendCouriersToAjax couriersList = new SendCouriersToAjax();
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(true);
+        if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
+            List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
+            if (firstActiveCouriers.isEmpty()) {
+                couriersList.setMsg("Couriers list is empty!");
+            } else {
+                couriersList.setMsg("success");
+            }
+            couriersList.setResult(firstActiveCouriers);
+        } else {
+            if (activeCouriers.isEmpty()) {
+                couriersList.setMsg("Couriers list is empty!");
+            } else {
+                couriersList.setMsg("success");
+            }
+            couriersList.setResult(activeCouriers);
+        }
+        return ResponseEntity.ok(couriersList);
     }
 }

@@ -13,33 +13,50 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnti
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.OrderDetailsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class OrderDetailsController {
 
     private OrderDetailsRepository orderDetailsRepository;
+    private CouriersRepository couriersRepository;
 
     @Autowired
-    public OrderDetailsController(OrderDetailsRepository orderDetailsRepository) {
+    public OrderDetailsController(OrderDetailsRepository orderDetailsRepository,
+                                  CouriersRepository couriersRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
+        this.couriersRepository = couriersRepository;
     }
 
     @GetMapping("/orderDetails")
     public String orderDetailsView() {
-        /*Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
-        model.put("orderDetails", orderDetails);*/
         return "orderDetails";
+    }
+
+    @GetMapping("/userOrderDetailsHistory")
+    public String orderDetailsHistoryView() {
+        return "userOrderDetailsHistory";
+    }
+
+    @GetMapping("/orderDetailsHistory")
+    public String orderDetailsHistory() {
+        return "orderDetailsHistory";
+    }
+
+    @GetMapping("/activeOrderDetails")
+    public String activeOrderDetails() {
+        return "activeOrderDetails";
     }
 
     @GetMapping(value = "/orderDetailsList", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendDeliveryCoordinates() {
+    public ResponseEntity<?> sendOrderDetailsList() {
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
@@ -59,7 +76,8 @@ public class OrderDetailsController {
                                                   @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
         orderDetail.setOrderDate(order.getOrderDate());
-        orderDetail.setOrderAddress(order.getOrderAddress());
+        orderDetail.setFirstOrderAddressPoint(order.getFirstOrderAddressPoint());
+        orderDetail.setSecondOrderAddressPoint(order.getSecondOrderAddressPoint());
         if (order.getComment().isEmpty()) {
             orderDetail.setComment("Доставить как можно скорее");
         } else {
@@ -76,20 +94,20 @@ public class OrderDetailsController {
     @ResponseBody
     public ResponseEntity<?> findOrderDetails(@RequestBody OrderDetailsMessage order) {
         Iterable<OrderDetailsEntity> orderDetails;
-        if (order.getOrderDetailsId() != null & order.getOrderDate() == null & order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
-        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDateAndOrderAddress(order.getOrderDate(), order.getOrderAddress());
-        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & order.getOrderAddress().isEmpty()) {
+        if (order.getOrderDetailsId() != null & order.getOrderDate() == null & order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findAllByOrderDetailsId(order.getOrderDetailsId());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDateAndSecondOrderAddressPoint(order.getOrderDate(), order.getSecondOrderAddressPoint());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() != null & order.getSecondOrderAddressPoint().isEmpty()) {
             orderDetails = orderDetailsRepository.findByOrderDate(order.getOrderDate());
-        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & order.getOrderAddress().isEmpty()) {
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & order.getSecondOrderAddressPoint().isEmpty()) {
             orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDate(order.getOrderDetailsId(), order.getOrderDate());
-        } else if (order.getOrderDetailsId() != null & order.getOrderDate() == null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderAddress(order.getOrderDetailsId(), order.getOrderAddress());
-        } else if (order.getOrderDetailsId() == null & order.getOrderDate() == null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderAddress(order.getOrderAddress());
-        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & !order.getOrderAddress().isEmpty()) {
-            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDateAndOrderAddress(order.getOrderDetailsId(), order.getOrderDate(), order.getOrderAddress());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() == null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndSecondOrderAddressPoint(order.getOrderDetailsId(), order.getSecondOrderAddressPoint());
+        } else if (order.getOrderDetailsId() == null & order.getOrderDate() == null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findBySecondOrderAddressPoint(order.getSecondOrderAddressPoint());
+        } else if (order.getOrderDetailsId() != null & order.getOrderDate() != null & !order.getSecondOrderAddressPoint().isEmpty()) {
+            orderDetails = orderDetailsRepository.findByOrderDetailsIdAndOrderDateAndSecondOrderAddressPoint(order.getOrderDetailsId(), order.getOrderDate(), order.getSecondOrderAddressPoint());
         } else {
             orderDetails = orderDetailsRepository.findAll();
         }
@@ -108,7 +126,7 @@ public class OrderDetailsController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax deleteOrderDetails(@RequestBody OrderDetailsMessage order) {
-        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
+        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAllByOrderDetailsId(order.getOrderDetailsId());
         if (orderDetails.isEmpty()) {
             return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
@@ -122,15 +140,18 @@ public class OrderDetailsController {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax updateOrderDetails(@RequestBody OrderDetailsMessage order) {
-        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findByOrderDetailsId(order.getOrderDetailsId());
+        List<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAllByOrderDetailsId(order.getOrderDetailsId());
         if (orderDetails.isEmpty()) {
             return new ControllerAnswerToAjax("NOT EXISTS", "");
         } else {
             if (order.getOrderDate() != null) {
                 orderDetailsRepository.setOrderDateFor(order.getOrderDate(), order.getOrderDetailsId());
             }
-            if (!order.getOrderAddress().isEmpty()) {
-                orderDetailsRepository.setOrderAddressFor(order.getOrderAddress(), order.getOrderDetailsId());
+            if (!order.getFirstOrderAddressPoint().isEmpty()) {
+                orderDetailsRepository.setFirstOrderAddressPointFor(order.getFirstOrderAddressPoint(), order.getOrderDetailsId());
+            }
+            if (!order.getSecondOrderAddressPoint().isEmpty()) {
+                orderDetailsRepository.setSecondOrderAddressPointFor(order.getSecondOrderAddressPoint(), order.getOrderDetailsId());
             }
             if (!order.getComment().isEmpty()) {
                 orderDetailsRepository.setCommentFor(order.getComment(), order.getOrderDetailsId());
@@ -145,6 +166,17 @@ public class OrderDetailsController {
     @ResponseBody
     public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {
         orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/assignCourierToOrder",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax assignCourierToOrder(@RequestBody ChangeStatusForOrderDetailsId message) {
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+        CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
+        order.setCourier(courier);
+        orderDetailsRepository.save(order);
         return new ControllerAnswerToAjax("OK", "");
     }
 }

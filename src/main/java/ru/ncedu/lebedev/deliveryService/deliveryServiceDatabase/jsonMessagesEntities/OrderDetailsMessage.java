@@ -10,6 +10,7 @@ public class OrderDetailsMessage {
 
     private Integer orderDetailsId;
     private Date orderDate;
-    private String orderAddress;
+    private String firstOrderAddressPoint;
+    private String secondOrderAddressPoint;
     private String comment;
 }

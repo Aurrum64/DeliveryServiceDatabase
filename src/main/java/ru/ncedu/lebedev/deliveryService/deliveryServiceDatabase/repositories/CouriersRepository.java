@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface CouriersRepository extends CrudRepository<CouriersEntity, Integer> {
 
-    List<CouriersEntity> findByCourierId(Integer id);
+    CouriersEntity findByCourierId(Integer id);
+
+    List<CouriersEntity> findAllByCourierId(Integer id);
 
     List<CouriersEntity> findByCourierIdAndFirstName(Integer id, String firstName);
 
@@ -23,6 +25,8 @@ public interface CouriersRepository extends CrudRepository<CouriersEntity, Integ
     List<CouriersEntity> findByFirstNameAndLastName(String firstName, String lastName);
 
     List<CouriersEntity> findByCourierIdAndFirstNameAndLastName(Integer id, String firstName, String lastName);
+
+    List<CouriersEntity> findAllByReadiness(boolean readiness);
 
     void deleteByCourierId(Integer id);
 
@@ -69,4 +73,8 @@ public interface CouriersRepository extends CrudRepository<CouriersEntity, Integ
     @Modifying
     @Query("update CouriersEntity c set c.longitude = ?1 where c.courierId = ?2")
     void setLongitudeFor(Double longitude, Integer id);
+
+    @Modifying
+    @Query("update CouriersEntity c set c.readiness = ?1 where c.courierId = ?2")
+    void setReadinessFor(Boolean readiness, Integer id);
 }

@@ -2,6 +2,7 @@ let routesLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let routes = [];
 let solutionsInfos = [];
 let polylines = [];
+let orderDeliveredByCourier;
 
 $(document).ready((function () {
     $("#buildRoute").click(function () {
@@ -11,24 +12,17 @@ $(document).ready((function () {
 }));
 
 function buildRoute() {
-    if (couriersMarkers[0] === undefined && notDeliveredMarkers[0] === undefined) {
-        alert("Please, add courier with coordinates to the system first " +
-            "and add courier's markers to the map!\n" +
-            "Please, add order details with address to the system first " +
-            "and add delivery markers to the map!");
-    } else if (couriersMarkers[0] === undefined) {
-        alert("Please, add courier with coordinates to the system first " +
-            "and add courier marker to the map!");
-    } else if (notDeliveredMarkers[0] === undefined) {
-        alert("Please, add order details with address to the system first " +
-            "and add delivery marker to the map!");
+    if (couriersMarkers[0] === undefined || firstOrderPointMarkers[0] === undefined ||
+        secondOrderPointMarkers[0] === undefined) {
+        alert("Нет курьеров, готовых принять заказ или отсутствуют активные заказы!");
     } else {
-        for (let i = 0; i < couriersMarkers.length; i++) {
+        for (let i = 0; i < secondOrderPointMarkers.length; i++) {
             routes[i] = L.Routing.control(
                 {
                     waypoints: [
-                        L.latLng(couriersMarkers[i]._latlng),
-                        L.latLng(notDeliveredMarkers[i]._latlng)
+                        L.latLng(couriersMarkers[0]._latlng),
+                        L.latLng(firstOrderPointMarkers[i]._latlng),
+                        L.latLng(secondOrderPointMarkers[i]._latlng)
                     ],
                     lineOptions: {
                         styles: [{color: 'green', opacity: 5, weight: 0}]
@@ -42,6 +36,19 @@ function buildRoute() {
                 });
             routes[i].addTo(myDeliveryServiceMap);
             routes[i].on('routesfound', function (e) {
+
+                console.log(couriersInfos[0].courierId);
+                console.log(deliveryInfos[i].orderDetailsId);
+
+                orderDeliveredByCourier = JSON.stringify(
+                    {
+                        courierId: couriersInfos[0].courierId,
+                        orderDetailsId: deliveryInfos[i].orderDetailsId
+                    });
+                assignCourierToOrder(orderDeliveredByCourier);
+                setTimeout(function () {
+                    showActiveOrdersListForLogisticPage();
+                }, (300));
                 solutionsInfos[i] = L.Routing.line(e.routes[0]);
                 polylines[i] = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
             });
@@ -49,10 +56,10 @@ function buildRoute() {
     }
 }
 
-
 $(document).ready((function () {
     $("#move").click(function () {
-        if (couriersMarkers[0] === undefined || notDeliveredMarkers[0] === undefined) {
+        if (couriersMarkers[0] === undefined || firstOrderPointMarkers[0] === undefined ||
+            secondOrderPointMarkers[0] === undefined) {
             alert("Please, build a route!");
         } else {
             for (let i = 0; i < polylines.length; i++) {
@@ -80,6 +87,7 @@ $(document).ready((function () {
                         changeDeliveryStatus(currentOrderInfo);
                         hideCouriersMarkers();
                         setDeliveredMarkers();
+                        showActiveOrdersListForLogisticPage();
                     }
                     if (j < howManyTimes) {
                         setTimeout(move, 400);
@@ -89,7 +97,6 @@ $(document).ready((function () {
         }
     });
 }));
-
 
 function sendMovingCoordinates(currentCourierInfo) {
     $.ajax({
@@ -118,6 +125,22 @@ function changeDeliveryStatus(currentOrderInfo) {
                 console.log('Delivery status changed!');
             } else {
                 console.log('Failed to change delivery status!: ' + data.status + ', ' + data.errorMessage);
+            }
+        }
+    });
+}
+
+function assignCourierToOrder(orderDeliveredByCourier) {
+    $.ajax({
+        type: "POST",
+        url: "assignCourierToOrder",
+        data: orderDeliveredByCourier,
+        contentType: 'application/json',
+        success: function (data) {
+            if (data.status === 'OK') {
+                console.log('Courier assigned to order!');
+            } else {
+                console.log('Failed to assign courier to order!: ' + data.status + ', ' + data.errorMessage);
             }
         }
     });

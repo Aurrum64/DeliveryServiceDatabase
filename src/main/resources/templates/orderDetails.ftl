@@ -146,11 +146,5 @@
             </tbody>
         </table>
     </div>
-    <div class="container mt-5 ml-5">
-        <form>
-            <input type="button" class="btn btn-outline-info mr-3" value="История заказов"
-                   onClick='location.href="/orderDetailsHistory"'>
-        </form>
-    </div>
     <#include "parts/scriptsSources/orderDetailsScripts.ftl">
 </@defaultPage.defaultPageTemplate>

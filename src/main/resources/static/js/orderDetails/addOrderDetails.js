@@ -1,12 +1,25 @@
-let addedRecords = [];
+let isOrderDetailsPage = document.getElementById("orderDetailsList");
+let isOrderDeliveryPage = document.getElementById("activeOrdersListForUser");
+let isLogisticsPage = document.getElementById("activeOrdersListForLogisticPage");
+let isOrderDetailsHistoryPage = document.getElementById("allArchiveOrdersList");
+let isActiveOrderDetailsPage = document.getElementById("allActiveOrdersList");
 
-showOrderDetailsListForManager();
-showActiveOrdersListForUser();
-showArchiveOrdersListForUser();
-showActiveOrdersListForLogisticPage();
-showAllArchiveOrdersList();
-showAllActiveOrdersList();
-
+if (isOrderDetailsPage !== null) {
+    showOrderDetailsList();
+}
+if (isOrderDeliveryPage !== null) {
+    showActiveOrdersListForUser();
+    showArchiveOrdersListForUser();
+}
+if (isLogisticsPage !== null) {
+    showActiveOrdersListForLogisticPage();
+}
+if (isOrderDetailsHistoryPage !== null) {
+    showAllArchiveOrdersList();
+}
+if (isActiveOrderDetailsPage !== null) {
+    showAllActiveOrdersList();
+}
 
 $(document).ready(function () {
     $("#addOrderDetails").submit(function (event) {
@@ -26,19 +39,20 @@ function addOrderDetails() {
 
     if (orderDetailsInput.orderDate === "" && orderDetailsInput.firstOrderAddressPoint === ""
         && orderDetailsInput.secondOrderAddressPoint === "" && orderDetailsInput.comment === "") {
-        alert("Please, fill in all the fields or form!");
+        alert("Должны быть заполнены все поля формы!");
     } else {
         saveOrderDetailsInDb(orderDetailsInput);
 
         setTimeout(function () {
-            showOrderDetailsListForManager();
+            showOrderDetailsList();
             showActiveOrdersListForUser();
-            showArchiveOrdersListForUser();
         }, (300));
 
         document.getElementById('addOrderDetails').reset();
     }
 }
+
+let addedRecords = [];
 
 function saveOrderDetailsInDb(orderDetailsInput) {
 
@@ -58,7 +72,7 @@ function saveOrderDetailsInDb(orderDetailsInput) {
     });
 }
 
-function showOrderDetailsListForManager() {
+function showOrderDetailsList() {
 
     let url = "/orderDetailsList";
     let htmlId = '#orderDetailsList';

@@ -39,11 +39,6 @@ public class OrderDetailsController {
         return "orderDetails";
     }
 
-    @GetMapping("/userOrderDetailsHistory")
-    public String orderDetailsHistoryView() {
-        return "userOrderDetailsHistory";
-    }
-
     @GetMapping("/orderDetailsHistory")
     public String orderDetailsHistory() {
         return "orderDetailsHistory";

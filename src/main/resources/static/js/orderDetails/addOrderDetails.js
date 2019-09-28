@@ -60,341 +60,116 @@ function saveOrderDetailsInDb(orderDetailsInput) {
 
 function showOrderDetailsListForManager() {
 
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/orderDetailsList",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+    let url = "/orderDetailsList";
+    let htmlId = '#orderDetailsList';
+    let emptyTableExpression = "Список заказов пока пуст!";
 
-            let view;
-            if (data.result[0] === undefined) {
-                view =
-                    "<tr>" +
-                    "            <th scope=\"row\">Список заказов пока пуст!</th>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "</tr>";
-                $('#orderDetailsList').html(view);
-            } else {
-                for (let i = 0; i < data.result.length; i++) {
-                    let courier;
-                    if (data.result[i].courier === undefined ||
-                        data.result[i].courier === null) {
-                        courier = "Не назначен";
-                    } else {
-                        courier = data.result[i].courier.firstName;
-                    }
-                    let newLine =
-                        "<tr>" +
-                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                        "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].comment + "</td>\n" +
-                        "            <td>" + data.result[i].status + "</td>\n" +
-                        "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + courier + "</td>\n" +
-                        "</tr>";
-                    if (view === undefined) {
-                        view = "" + newLine;
-                    } else {
-                        view = view + newLine;
-                    }
-                }
-                $('#orderDetailsList').html(view);
-            }
-        }
-    });
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
 function showActiveOrdersListForUser() {
 
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/activeOrdersListForUser",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+    let url = "/activeOrdersListForUser";
+    let htmlId = '#activeOrdersListForUser';
+    let emptyTableExpression = "У вас пока нет ни одного активного заказа";
 
-            let view;
-            if (data.result[0] === undefined) {
-                view =
-                    "<tr>" +
-                    "            <th scope=\"row\">У вас пока нет ни одного активного заказа</th>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "</tr>";
-                $('#activeOrdersListForUser').html(view);
-            } else {
-                for (let i = 0; i < data.result.length; i++) {
-                    let courier;
-                    if (data.result[i].courier === undefined ||
-                        data.result[i].courier === null) {
-                        courier = "Не назначен";
-                    } else {
-                        courier = data.result[i].courier.firstName;
-                    }
-                    let newLine =
-                        "<tr>" +
-                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                        "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].comment + "</td>\n" +
-                        "            <td>" + data.result[i].status + "</td>\n" +
-                        "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + courier + "</td>\n" +
-                        "</tr>";
-                    if (view === undefined) {
-                        view = "" + newLine;
-                    } else {
-                        view = view + newLine;
-                    }
-                }
-                $('#activeOrdersListForUser').html(view);
-            }
-        }
-    });
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
 function showArchiveOrdersListForUser() {
 
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/archiveOrdersListForUser",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+    let url = "/archiveOrdersListForUser";
+    let htmlId = '#archiveOrdersListForUser';
+    let emptyTableExpression = "В вашей истории заказов пока нет ни одного заказа";
 
-            let view;
-            if (data.result[0] === undefined) {
-                view =
-                    "<tr>" +
-                    "            <th scope=\"row\">В вашей истории заказов пока нет ни одного заказа</th>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "</tr>";
-                $('#archiveOrdersListForUser').html(view);
-            } else {
-                for (let i = 0; i < data.result.length; i++) {
-                    let courier;
-                    if (data.result[i].courier === undefined ||
-                        data.result[i].courier === null) {
-                        courier = "Не назначен";
-                    } else {
-                        courier = data.result[i].courier.firstName;
-                    }
-                    let newLine =
-                        "<tr>" +
-                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                        "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].comment + "</td>\n" +
-                        "            <td>" + data.result[i].status + "</td>\n" +
-                        "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + courier + "</td>\n" +
-                        "</tr>";
-                    if (view === undefined) {
-                        view = "" + newLine;
-                    } else {
-                        view = view + newLine;
-                    }
-                }
-                $('#archiveOrdersListForUser').html(view);
-            }
-        }
-    });
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
 function showActiveOrdersListForLogisticPage() {
 
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/activeOrdersListForLogisticPage",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+    let url = "/activeOrdersListForLogisticPage";
+    let htmlId = '#activeOrdersListForLogisticPage';
+    let emptyTableExpression = "У вас пока нет ни одного активного заказа";
 
-            let view;
-            if (data.result[0] === undefined) {
-                view =
-                    "<tr>" +
-                    "            <th scope=\"row\">У вас пока нет ни одного активного заказа</th>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "</tr>";
-                $('#activeOrdersListForLogisticPage').html(view);
-            } else {
-                for (let i = 0; i < data.result.length; i++) {
-                    let courier;
-                    if (data.result[i].courier === undefined ||
-                        data.result[i].courier === null) {
-                        courier = "Не назначен";
-                    } else {
-                        courier = data.result[i].courier.firstName;
-                    }
-                    let newLine =
-                        "<tr>" +
-                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                        "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].comment + "</td>\n" +
-                        "            <td>" + data.result[i].status + "</td>\n" +
-                        "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + courier + "</td>\n" +
-                        "</tr>";
-                    if (view === undefined) {
-                        view = "" + newLine;
-                    } else {
-                        view = view + newLine;
-                    }
-                }
-                $('#activeOrdersListForLogisticPage').html(view);
-            }
-        }
-    });
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
 function showAllArchiveOrdersList() {
 
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/allArchiveOrdersList",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+    let url = "/allArchiveOrdersList";
+    let htmlId = '#allArchiveOrdersList';
+    let emptyTableExpression = "В истории заказов пока нет ни одного заказа";
 
-            let view;
-            if (data.result[0] === undefined) {
-                view =
-                    "<tr>" +
-                    "            <th scope=\"row\">В истории заказов пока нет ни одного заказа</th>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "</tr>";
-                $('#allArchiveOrdersList').html(view);
-            } else {
-                for (let i = 0; i < data.result.length; i++) {
-                    let courier;
-                    if (data.result[i].courier === undefined ||
-                        data.result[i].courier === null) {
-                        courier = "Не назначен";
-                    } else {
-                        courier = data.result[i].courier.firstName;
-                    }
-                    let newLine =
-                        "<tr>" +
-                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                        "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].comment + "</td>\n" +
-                        "            <td>" + data.result[i].status + "</td>\n" +
-                        "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + courier + "</td>\n" +
-                        "</tr>";
-                    if (view === undefined) {
-                        view = "" + newLine;
-                    } else {
-                        view = view + newLine;
-                    }
-                }
-                $('#allArchiveOrdersList').html(view);
-            }
-        }
-    });
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
 function showAllActiveOrdersList() {
 
+    let url = "/allActiveOrdersList";
+    let htmlId = '#allActiveOrdersList';
+    let emptyTableExpression = "У вас пока нет ни одного активного заказа";
+
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
+}
+
+function takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression) {
+
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "/allActiveOrdersList",
+        url: url,
         dataType: 'json',
         cache: false,
         timeout: 600000,
         success: function (data) {
 
-            let view;
-            if (data.result[0] === undefined) {
-                view =
-                    "<tr>" +
-                    "            <th scope=\"row\">У вас пока нет ни одного активного заказа</th>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "            <td></td>\n" +
-                    "</tr>";
-                $('#allActiveOrdersList').html(view);
-            } else {
-                for (let i = 0; i < data.result.length; i++) {
-                    let courier;
-                    if (data.result[i].courier === undefined ||
-                        data.result[i].courier === null) {
-                        courier = "Не назначен";
-                    } else {
-                        courier = data.result[i].courier.firstName;
-                    }
-                    let newLine =
-                        "<tr>" +
-                        "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                        "            <td>" + data.result[i].orderDate + "</td>\n" +
-                        "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
-                        "            <td>" + data.result[i].comment + "</td>\n" +
-                        "            <td>" + data.result[i].status + "</td>\n" +
-                        "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + courier + "</td>\n" +
-                        "</tr>";
-                    if (view === undefined) {
-                        view = "" + newLine;
-                    } else {
-                        view = view + newLine;
-                    }
-                }
-                $('#allActiveOrdersList').html(view);
-            }
+            orderDetailsTableView(data, htmlId, emptyTableExpression);
         }
     });
+}
+
+function orderDetailsTableView(data, htmlId, emptyTableExpression) {
+
+    let view;
+    if (data.result[0] === undefined) {
+        view =
+            "<tr>" +
+            "            <th scope=\"row\">" + emptyTableExpression + "</th>\n" +
+            "            <td></td>\n" +
+            "            <td></td>\n" +
+            "            <td></td>\n" +
+            "            <td></td>\n" +
+            "            <td></td>\n" +
+            "            <td></td>\n" +
+            "            <td></td>\n" +
+            "</tr>";
+        $(htmlId).html(view);
+    } else {
+        for (let i = 0; i < data.result.length; i++) {
+            let courier;
+            if (data.result[i].courier === undefined ||
+                data.result[i].courier === null) {
+                courier = "Не назначен";
+            } else {
+                courier = data.result[i].courier.firstName;
+            }
+            let newLine =
+                "<tr>" +
+                "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
+                "            <td>" + data.result[i].orderDate + "</td>\n" +
+                "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
+                "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
+                "            <td>" + data.result[i].comment + "</td>\n" +
+                "            <td>" + data.result[i].status + "</td>\n" +
+                "            <td>" + data.result[i].authorName + "</td>\n" +
+                "            <td>" + courier + "</td>\n" +
+                "</tr>";
+            if (view === undefined) {
+                view = "" + newLine;
+            } else {
+                view = view + newLine;
+            }
+        }
+        $(htmlId).html(view);
+    }
 }

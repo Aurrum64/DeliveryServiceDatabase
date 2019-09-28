@@ -2,6 +2,8 @@ let addedCouriers = [];
 
 showCouriersList();
 showActiveCouriersList();
+showActiveCouriersListForLogisticsPage();
+showRestCouriersList();
 
 $(document).ready(function () {
     $("#addCouriers").submit(function (event) {
@@ -118,6 +120,68 @@ function showCouriersList() {
     });
 }
 
+function showActiveCouriersListForLogisticsPage() {
+
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "/activeCouriersListForLogisticsPage",
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            let view;
+            if (data.result[0] === undefined) {
+                view =
+                    "<tr>" +
+                    "            <th scope=\"row\">Нет курьеров, готовых принять заказ :(</th>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "</tr>";
+                $('#activeCouriersListForLogisticsPage').html(view);
+            } else {
+                for (let i = 0; i < data.result.length; i++) {
+                    let newLine =
+                        "<tr>" +
+                        "            <th scope=\"row\">" + data.result[i].courierId + "</th>\n" +
+                        "            <td>" + data.result[i].firstName + "</td>\n" +
+                        "            <td>" + data.result[i].lastName + "</td>\n" +
+                        "            <td>" + data.result[i].email + "</td>\n" +
+                        "            <td>" + data.result[i].phoneNumber + "</td>\n" +
+                        "            <td>" + data.result[i].rating + "</td>\n" +
+                        "            <td>" + data.result[i].salary + "</td>\n" +
+                        "            <td>" + data.result[i].hireDate + "</td>\n" +
+                        "            <td>" + data.result[i].premium + "</td>\n" +
+                        "            <td>" + data.result[i].departmentId + "</td>\n" +
+                        "            <td>" + data.result[i].latitude + "</td>\n" +
+                        "            <td>" + data.result[i].longitude + "</td>\n" +
+                        "            <td>" + data.result[i].authorName + "</td>\n" +
+                        "            <td>" + data.result[i].readiness + "</td>\n" +
+                        "</tr>";
+                    if (view === undefined) {
+                        view = "" + newLine;
+                    } else {
+                        view = view + newLine;
+                    }
+                }
+                $('#activeCouriersListForLogisticsPage').html(view);
+            }
+        }
+    });
+}
+
 function showActiveCouriersList() {
 
     $.ajax({
@@ -175,6 +239,68 @@ function showActiveCouriersList() {
                     }
                 }
                 $('#activeCouriersList').html(view);
+            }
+        }
+    });
+}
+
+function showRestCouriersList() {
+
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "/restCouriersList",
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            let view;
+            if (data.result[0] === undefined) {
+                view =
+                    "<tr>" +
+                    "            <th scope=\"row\">Все курьеры задействованы в доставке заказов!</th>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "            <td></td>\n" +
+                    "</tr>";
+                $('#restCouriersList').html(view);
+            } else {
+                for (let i = 0; i < data.result.length; i++) {
+                    let newLine =
+                        "<tr>" +
+                        "            <th scope=\"row\">" + data.result[i].courierId + "</th>\n" +
+                        "            <td>" + data.result[i].firstName + "</td>\n" +
+                        "            <td>" + data.result[i].lastName + "</td>\n" +
+                        "            <td>" + data.result[i].email + "</td>\n" +
+                        "            <td>" + data.result[i].phoneNumber + "</td>\n" +
+                        "            <td>" + data.result[i].rating + "</td>\n" +
+                        "            <td>" + data.result[i].salary + "</td>\n" +
+                        "            <td>" + data.result[i].hireDate + "</td>\n" +
+                        "            <td>" + data.result[i].premium + "</td>\n" +
+                        "            <td>" + data.result[i].departmentId + "</td>\n" +
+                        "            <td>" + data.result[i].latitude + "</td>\n" +
+                        "            <td>" + data.result[i].longitude + "</td>\n" +
+                        "            <td>" + data.result[i].authorName + "</td>\n" +
+                        "            <td>" + data.result[i].readiness + "</td>\n" +
+                        "</tr>";
+                    if (view === undefined) {
+                        view = "" + newLine;
+                    } else {
+                        view = view + newLine;
+                    }
+                }
+                $('#restCouriersList').html(view);
             }
         }
     });

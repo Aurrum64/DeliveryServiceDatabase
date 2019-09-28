@@ -30,6 +30,16 @@ public class CouriersController {
         return "couriers";
     }
 
+    @GetMapping("/activeCouriers")
+    public String activeCouriers() {
+        return "activeCouriers";
+    }
+
+    @GetMapping("/restCouriers")
+    public String restCouriers() {
+        return "restCouriers";
+    }
+
     @GetMapping(value = "/couriersList", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> sendCouriersList() {
@@ -211,9 +221,9 @@ public class CouriersController {
         return ResponseEntity.ok(couriersSearchList);
     }
 
-    @GetMapping(value = "/activeCouriersList", produces = "application/json")
+    @GetMapping(value = "/activeCouriersListForLogisticsPage", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendActiveCouriersList() {
+    public ResponseEntity<?> sendActiveCouriersListForLogisticsPage() {
 
         final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
 
@@ -222,19 +232,49 @@ public class CouriersController {
         if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
             List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
             if (firstActiveCouriers.isEmpty()) {
-                couriersList.setMsg("Couriers list is empty!");
+                couriersList.setMsg("Active couriers list for logistics page is empty!");
             } else {
                 couriersList.setMsg("success");
             }
             couriersList.setResult(firstActiveCouriers);
         } else {
             if (activeCouriers.isEmpty()) {
-                couriersList.setMsg("Couriers list is empty!");
+                couriersList.setMsg("Active couriers list for logistics page is empty!");
             } else {
                 couriersList.setMsg("success");
             }
             couriersList.setResult(activeCouriers);
         }
+        return ResponseEntity.ok(couriersList);
+    }
+
+    @GetMapping(value = "/restCouriersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendRestCouriersList() {
+
+        SendCouriersToAjax couriersList = new SendCouriersToAjax();
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(false);
+        if (activeCouriers.isEmpty()) {
+            couriersList.setMsg("Rest couriers list is empty!");
+        } else {
+            couriersList.setMsg("success");
+        }
+        couriersList.setResult(activeCouriers);
+        return ResponseEntity.ok(couriersList);
+    }
+
+    @GetMapping(value = "/activeCouriersList", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendActiveCouriersList() {
+
+        SendCouriersToAjax couriersList = new SendCouriersToAjax();
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(true);
+        if (activeCouriers.isEmpty()) {
+            couriersList.setMsg("Active couriers list is empty!");
+        } else {
+            couriersList.setMsg("success");
+        }
+        couriersList.setResult(activeCouriers);
         return ResponseEntity.ok(couriersList);
     }
 }

@@ -37,11 +37,11 @@
         <div class="form-row">
             <form>
                 <input type="button" class="btn btn-blue-grey mr-3" value="Список выходных курьеров"
-                       onClick='location.href="/orderDetailsHistory"'>
+                       onClick='location.href="/activeCouriers"'>
             </form>
             <form>
                 <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных курьеров"
-                       onClick='location.href="/activeOrderDetails"'>
+                       onClick='location.href="/restCouriers"'>
             </form>
         </div>
         <table class="table table-striped">
@@ -63,7 +63,7 @@
                 <th scope="col">Готовность</th>
             </tr>
             </thead>
-            <tbody id="activeCouriersList">
+            <tbody id="activeCouriersListForLogisticsPage">
             </tbody>
         </table>
     </div>

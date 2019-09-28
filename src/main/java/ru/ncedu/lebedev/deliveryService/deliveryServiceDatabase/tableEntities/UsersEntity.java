@@ -19,12 +19,21 @@ public class UsersEntity implements UserDetails {
 
     private String username;
     private String email;
+
+    @Column(name = "email_verification")
     private String emailVerification;
+
     private String password;
+
+    @Column(name = "activation_code")
     private String activationCode;
+
     private boolean active;
     private boolean verified;
     private String filename;
+
+    @Column(name = "was_fired")
+    private boolean wasFired;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

@@ -26,7 +26,7 @@ public interface CouriersRepository extends CrudRepository<CouriersEntity, Integ
 
     List<CouriersEntity> findByCourierIdAndFirstNameAndLastName(Integer id, String firstName, String lastName);
 
-    List<CouriersEntity> findAllByReadiness(boolean readiness);
+    List<CouriersEntity> findAllByReadinessAndFired(boolean readiness, Boolean fired);
 
     void deleteByCourierId(Integer id);
 

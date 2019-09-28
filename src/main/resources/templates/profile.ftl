@@ -47,8 +47,12 @@
                             <option value="managerRequest">Менеджером</option>
                         </select>
                         <div class="text-center mt-4">
+                            <#if !user.wasFired>
                             <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                                <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                            <#else>
+                                <button type="submit" class="btn btn-primary" disabled>Отправить заявку</button>
+                            </#if>
                         </div>
                     </form>
                 </div>

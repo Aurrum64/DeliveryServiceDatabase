@@ -59,4 +59,7 @@ public class CouriersEntity {
 
     @Column(name = "readiness")
     private boolean readiness;
+
+    @Column(name = "fired")
+    private boolean fired;
 }

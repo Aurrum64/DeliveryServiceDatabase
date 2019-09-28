@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService {
 
         user.setActive(true);
         user.setVerified(false);
+        user.setWasFired(false);
         Iterable<UsersEntity> usersList = usersRepository.findAll();
         if (usersList.iterator().hasNext()) {
             user.setRoles(Collections.singleton(RolesEntity.USER));

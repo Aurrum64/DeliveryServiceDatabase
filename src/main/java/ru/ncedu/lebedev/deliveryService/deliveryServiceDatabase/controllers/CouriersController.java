@@ -94,6 +94,7 @@ public class CouriersController {
         courier.setLongitude(RandomCoordinates.getRandomLongitude());
         courier.setAuthor(user);
         courier.setReadiness(false);
+        courier.setFired(false);
         couriersRepository.save(courier);
         return new ControllerAnswerToAjax("OK", "");
     }
@@ -228,7 +229,7 @@ public class CouriersController {
         final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
 
         SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(true);
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
         if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
             List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
             if (firstActiveCouriers.isEmpty()) {
@@ -253,7 +254,7 @@ public class CouriersController {
     public ResponseEntity<?> sendRestCouriersList() {
 
         SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(false);
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(false, false);
         if (activeCouriers.isEmpty()) {
             couriersList.setMsg("Rest couriers list is empty!");
         } else {
@@ -268,7 +269,7 @@ public class CouriersController {
     public ResponseEntity<?> sendActiveCouriersList() {
 
         SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadiness(true);
+        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
         if (activeCouriers.isEmpty()) {
             couriersList.setMsg("Active couriers list is empty!");
         } else {

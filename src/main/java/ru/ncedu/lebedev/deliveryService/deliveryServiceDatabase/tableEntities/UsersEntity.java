@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 
@@ -25,6 +26,10 @@ public class UsersEntity implements UserDetails {
     private boolean active;
     private boolean verified;
     private String filename;
+    private String userpic;
+    private String gender;
+    private String locale;
+    private LocalDateTime lastVisit;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))

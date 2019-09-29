@@ -2,6 +2,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.Couriers
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ReviewsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 @Controller
 public class ReviewsController {
@@ -60,7 +62,8 @@ public class ReviewsController {
     @PostMapping(value = "/addReviews",
             headers = {"Content-type=application/json"})
     @ResponseBody
-    public ControllerAnswerToAjax addReviews(@RequestBody ReviewMessage reviewMessage) {
+    public ControllerAnswerToAjax addReviews(@AuthenticationPrincipal UsersEntity user,
+                                             @RequestBody ReviewMessage reviewMessage) {
 
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(reviewMessage.getOrderId());
 
@@ -74,6 +77,7 @@ public class ReviewsController {
         review.setRating(reviewMessage.getRating());
         review.setReviewSubject(reviewMessage.getReviewSubject());
         review.setReview(reviewMessage.getReview());
+        review.setAuthor(user);
         reviewsRepository.save(review);
         return new ControllerAnswerToAjax("OK", "");
     }

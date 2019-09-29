@@ -60,7 +60,9 @@ public class CouriersRatingSystem {
         if (!StringUtils.isEmpty(courier.getEmail())) {
             String message = String.format(
                     "Привет, %s!\n" +
-                            "Твой рейтинг опустился ниже плинтуса и ты позоришь нашу компанию, нахер тебя!",
+                            "Твой рейтинг опустился ниже плинтуса и ты позоришь нашу компанию, нахер тебя!\n" +
+                            "Можешь оставить плаксивый отзыв о нашей компании на:\n" +
+                            "http://localhost:8080/reviews.",
                     courier.getFirstName()
             );
             mailSender.send(courier.getEmail(), "Уведомление об увольнении из Delivery Service!", message);

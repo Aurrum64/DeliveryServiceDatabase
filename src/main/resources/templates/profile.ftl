@@ -29,7 +29,7 @@
             <div class="text mt-5 mb-3">
                 <h4>Базовый аватар:</h4>
             </div>
-            <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" alt="">
+            <img src="https://i.ibb.co/Xk93fQh/avatar1.png" alt="">
         </#if>
 
         <div class="container">

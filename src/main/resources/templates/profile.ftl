@@ -29,7 +29,7 @@
             <div class="text mt-5 mb-3">
                 <h4>Базовый аватар:</h4>
             </div>
-            <img src="https://i.ibb.co/ZXGmczB/w450h4001385925286-User.png" alt="">
+            <img src="https://i.ibb.co/Xk93fQh/avatar1.png" alt="">
         </#if>
 
         <div class="container">
@@ -47,8 +47,12 @@
                             <option value="managerRequest">Менеджером</option>
                         </select>
                         <div class="text-center mt-4">
+                            <#if !user.wasFired>
                             <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                                <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                            <#else>
+                                <button type="submit" class="btn btn-primary" disabled>Отправить заявку</button>
+                            </#if>
                         </div>
                     </form>
                 </div>

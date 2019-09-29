@@ -62,6 +62,4 @@ public class UsersController {
         usersList.setResult(users);
         return ResponseEntity.ok(usersList);
     }
-
-
 }

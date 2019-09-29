@@ -164,6 +164,7 @@ public class NotificationsController {
             courier.setHireDate(currentDate);
             courier.setAuthor(whoApprovedRequest);
             courier.setReadiness(false);
+            courier.setFired(false);
             courier.setPhoneNumber("");
             courier.setPremium(0);
             courier.setSalary(19_351);
@@ -177,7 +178,7 @@ public class NotificationsController {
             manager.setFirstName(user.getUsername());
             manager.setLastName("");
             manager.setEmail(user.getEmail());
-            /*manager.setHireDate(currentDate);*/
+            manager.setHireDate(currentDate);
             manager.setAuthor(whoApprovedRequest);
             managersRepository.save(manager);
         }

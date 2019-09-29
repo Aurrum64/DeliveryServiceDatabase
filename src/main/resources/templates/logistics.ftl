@@ -37,11 +37,11 @@
         <div class="form-row">
             <form>
                 <input type="button" class="btn btn-blue-grey mr-3" value="Список выходных курьеров"
-                       onClick='location.href="/activeCouriers"'>
+                       onClick='location.href="/restCouriers"'>
             </form>
             <form>
                 <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных курьеров"
-                       onClick='location.href="/restCouriers"'>
+                       onClick='location.href="/activeCouriers"'>
             </form>
         </div>
         <table class="table table-striped">

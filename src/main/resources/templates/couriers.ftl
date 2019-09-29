@@ -158,6 +158,9 @@
         </div>
     </#if>
     <div class="container mt-5 ml-5">
+        <div class="text mt-5 mb-3">
+            <h3>Курьеры:</h3>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -175,13 +178,12 @@
                 <th scope="col">Y</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Готовность</th>
+                <th scope="col">Работает</th>
             </tr>
             </thead>
             <tbody id="couriersList">
             </tbody>
         </table>
     </div>
-    <#include "parts/interface/map.ftl">
-    <#include "parts/scriptsSources/mapScripts.ftl">
     <#include "parts/scriptsSources/couriersScripts.ftl">
 </@defaultPage.defaultPageTemplate>

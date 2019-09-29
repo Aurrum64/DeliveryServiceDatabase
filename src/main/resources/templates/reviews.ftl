@@ -1,9 +1,6 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <#import "parts/interface/jumbotron.ftl" as jumbotron>
 <@defaultPage.defaultPageTemplate pageName="Reviews" heightTop=65 heightBottom=200>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Reviews">
-    </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5" style="width: 1000px">
         <section class="mb-4">
             <h2 class="h1-responsive font-weight-bold text-center my-4">Оставьте отзыв о нашем сервисе!</h2>
@@ -68,7 +65,7 @@
                             <p>+ 01 234 567 89</p>
                         </li>
                         <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                            <p>delivery@service.com</p>
+                            <p>DeliveryServiceLebedev@yandex.ru</p>
                         </li>
                     </ul>
                 </div>

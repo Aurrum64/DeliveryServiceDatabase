@@ -14,6 +14,14 @@ public class ReviewsEntity {
     @Column(name = "review_id")
     private Integer reviewId;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private UsersEntity author;
+
+    public String getAuthorName() {
+        return author.getUsername();
+    }
+
     @Column(name = "order_id")
     private Integer orderId;
 

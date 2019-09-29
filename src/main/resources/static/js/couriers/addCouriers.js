@@ -87,10 +87,17 @@ function showCouriersList() {
                     "            <td></td>\n" +
                     "            <td></td>\n" +
                     "            <td></td>\n" +
+                    "            <td></td>\n" +
                     "</tr>";
                 $('#couriersList').html(view);
             } else {
                 for (let i = 0; i < data.result.length; i++) {
+                    let fired;
+                    if (data.result[i].fired === true) {
+                        fired = "Уволен";
+                    } else {
+                        fired = "Да";
+                    }
                     let newLine =
                         "<tr>" +
                         "            <th scope=\"row\">" + data.result[i].courierId + "</th>\n" +
@@ -107,6 +114,7 @@ function showCouriersList() {
                         "            <td>" + data.result[i].longitude + "</td>\n" +
                         "            <td>" + data.result[i].authorName + "</td>\n" +
                         "            <td>" + data.result[i].readiness + "</td>\n" +
+                        "            <td>" + fired + "</td>\n" +
                         "</tr>";
                     if (view === undefined) {
                         view = "" + newLine;

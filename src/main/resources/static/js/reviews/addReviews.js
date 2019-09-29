@@ -70,10 +70,16 @@ function showReviewsList() {
                 for (let i = 0; i < data.result.length; i++) {
                     let ratingStars = starsOfRating(data.result[i].rating);
 
+                    let avatar;
+                    if (data.result[i].author.filename === null) {
+                        avatar = "src=\"https://i.ibb.co/Xk93fQh/avatar1.png\"\n\"";
+                    } else {
+                        avatar = "src=\"/img/" + data.result[i].author.filename + "\"\n\"";
+                    }
                     let newLine =
                         "<div class=\"media mt-5\">\n" +
                         "            <img class=\"d-flex rounded-circle avatar z-depth-1-half mr-3\"\n" +
-                        "                 src=\"https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg\"\n" +
+                        avatar +
                         "                 alt=\"Avatar\">\n" +
                         "            <div class=\"media-body\">\n" +
                         "                <h5 class=\"mt-0 font-weight-bold blue-text\">" + data.result[i].clientName + "</h5>\n" +

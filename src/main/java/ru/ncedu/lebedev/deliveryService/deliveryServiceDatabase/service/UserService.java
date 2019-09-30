@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
-        user.setVerified(false);
+        user.setVerified(true);
         user.setWasFired(false);
         Iterable<UsersEntity> usersList = usersRepository.findAll();
         if (usersList.iterator().hasNext()) {
@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService {
         user.setActivationCode(UUID.randomUUID().toString());
         usersRepository.save(user);
 
-        sendEmailForActivation(user);
+        /*sendEmailForActivation(user);*/
         return true;
     }
 

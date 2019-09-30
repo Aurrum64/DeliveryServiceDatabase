@@ -16,7 +16,8 @@ function buildRoute() {
         secondOrderPointMarkers[0] === undefined) {
         alert("Нет курьеров, готовых принять заказ или отсутствуют активные заказы!");
     } else {
-        for (let i = 0; i < secondOrderPointMarkers.length; i++) {
+        optimizeRoutes();
+        /*for (let i = 0; i < secondOrderPointMarkers.length; i++) {
             routes[i] = L.Routing.control(
                 {
                     waypoints: [
@@ -52,7 +53,7 @@ function buildRoute() {
                 solutionsInfos[i] = L.Routing.line(e.routes[0]);
                 polylines[i] = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
             });
-        }
+        }*/
     }
 }
 

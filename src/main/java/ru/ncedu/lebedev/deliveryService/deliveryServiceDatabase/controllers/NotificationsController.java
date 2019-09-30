@@ -150,7 +150,7 @@ public class NotificationsController {
         }
         usersRequestsRepository.save(userRequest);
 
-        /*userService.sendHiredEmail(user, professionChoice);*/
+        userService.sendHiredEmail(user, professionChoice);
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -214,7 +214,7 @@ public class NotificationsController {
 
         UsersEntity user = usersRepository.findByUsername(authorName);
 
-        /*userService.sendRejectedEmail(user, professionChoice);*/
+        userService.sendRejectedEmail(user, professionChoice);
 
         if (source.equals("notifications")) {
             return "redirect:/notifications";

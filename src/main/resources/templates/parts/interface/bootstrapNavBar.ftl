@@ -10,14 +10,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">На главную</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Расположение</a>
+            </li>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/user">Пользователи</a>
                 </li>
             </#if>
-            <li class="nav-item">
-                <a class="nav-link" href="/reviews">Отзывы</a>
-            </li>
+            <#if isAdmin || isManager>
+                <li class="nav-item">
+                    <a class="nav-link" href="/reviews">Отзывы</a>
+                </li>
+            </#if>
             <#if isAdmin || isManager>
                 <li class="nav-item">
                     <a class="nav-link" href="/requests">Заявки</a>
@@ -85,12 +90,12 @@
                 </div>
             </div>
         <#else>
-            <div class="navbar-text mr-3">Hi, guest!</div>
+            <div class="navbar-text mr-3">Привет, гость!</div>
             <form>
-                <input type="button" class="btn btn-outline-info mr-3" value="Sign In" onClick='location.href="/login"'>
+                <input type="button" class="btn btn-outline-info mr-3" value="Вход" onClick='location.href="/login"'>
             </form>
             <form>
-                <input type="button" class="btn btn-outline-info mr-2" value="Sign Up"
+                <input type="button" class="btn btn-outline-info mr-2" value="Регистрация"
                        onClick='location.href="/registration"'>
             </form>
         </#if>

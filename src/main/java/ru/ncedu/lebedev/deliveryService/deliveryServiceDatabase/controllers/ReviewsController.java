@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ReviewMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendReviewsToAjax;
@@ -19,6 +16,8 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Co
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ReviewsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
+
+import java.util.Map;
 
 @Controller
 public class ReviewsController {
@@ -40,7 +39,16 @@ public class ReviewsController {
     }
 
     @GetMapping("/reviews")
-    public String orderDetailsView() {
+    public String reviewsView() {
+        return "reviews";
+    }
+
+    @PostMapping("/reviews")
+    public String reviewsView(@RequestParam Integer orderDetailsId,
+                              @RequestParam String authorName,
+                              Map<String, Object> model) {
+        model.put("orderDetailsId", orderDetailsId);
+        model.put("authorName", authorName);
         return "reviews";
     }
 
@@ -67,6 +75,9 @@ public class ReviewsController {
 
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(reviewMessage.getOrderId());
 
+        order.setReviewWritten(true);
+        orderDetailsRepository.save(order);
+
         CouriersEntity courier = couriersRepository.findByCourierId(order.getCourier().getCourierId());
 
         couriersRating.setCourierRating(courier, reviewMessage.getRating());
@@ -75,7 +86,6 @@ public class ReviewsController {
         review.setOrderId(reviewMessage.getOrderId());
         review.setClientName(reviewMessage.getClientName());
         review.setRating(reviewMessage.getRating());
-        review.setReviewSubject(reviewMessage.getReviewSubject());
         review.setReview(reviewMessage.getReview());
         review.setAuthor(user);
         reviewsRepository.save(review);

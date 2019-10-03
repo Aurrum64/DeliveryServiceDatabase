@@ -57,7 +57,7 @@
     </div>
     <div class="container mt-5 ml-5">
         <h4>История ваших заказов:</h4>
-        <table class="table table-striped">
+        <table class="table table-striped" style="width: 1200px">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -70,7 +70,40 @@
                 <th scope="col">Курьер</th>
             </tr>
             </thead>
-            <tbody id="archiveOrdersListForUser">
+            <tbody>
+            <#list archiveOrdersListForCurrentUser as archiveOrder>
+                <tr>
+                    <th scope="row">${archiveOrder.orderDetailsId}</th>
+                    <td>${archiveOrder.orderDate}</td>
+                    <td>${archiveOrder.firstOrderAddressPoint}</td>
+                    <td>${archiveOrder.secondOrderAddressPoint}</td>
+                    <td>${archiveOrder.comment}</td>
+                    <td>${archiveOrder.status}</td>
+                    <td>${archiveOrder.authorName}</td>
+                    <td>${archiveOrder.courier.firstName}</td>
+                    <#if !archiveOrder.isReviewWritten()>
+                        <td>
+                            <form action="/reviews" method="post">
+                                <input type="hidden" name="orderDetailsId" value="${archiveOrder.orderDetailsId}">
+                                <input type="hidden" name="authorName" value="${archiveOrder.authorName}">
+                                <button type="submit" class="btn btn-info ml-3">Оставить отзыв</button>
+                            </form>
+                        </td>
+                    </#if>
+                </tr>
+            <#else>
+                <tr>
+                    <th scope="row">В вашей истории заказов пока нет ни одного заказа :(</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </#list>
             </tbody>
         </table>
     </div>

@@ -80,6 +80,7 @@ public class OrderDetailsController {
         }
         orderDetail.setStatus("Заказ не доставлен");
         orderDetail.setAuthor(user);
+        orderDetail.setReviewWritten(false);
         orderDetailsRepository.save(orderDetail);
         return new ControllerAnswerToAjax("OK", "");
     }

@@ -14,6 +14,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Us
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class OrderDeliveryController {
@@ -26,7 +27,18 @@ public class OrderDeliveryController {
     }
 
     @GetMapping("/orderDelivery")
-    public String orderDelivery() {
+    public String orderDelivery(@AuthenticationPrincipal UsersEntity user,
+                                Map<String, Object> model) {
+        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+
+        List<OrderDetailsEntity> archiveOrdersListForCurrentUser = new ArrayList<>();
+        for (OrderDetailsEntity element : orderDetails) {
+            if (user.getUsername().equals(element.getAuthorName()) &&
+                    element.getStatus().equals("Заказ доставлен")) {
+                archiveOrdersListForCurrentUser.add(element);
+            }
+        }
+        model.put("archiveOrdersListForCurrentUser", archiveOrdersListForCurrentUser);
         return "orderDelivery";
     }
 
@@ -44,7 +56,7 @@ public class OrderDeliveryController {
             }
         }
         if (activeOrdersListForCurrentUser.isEmpty()) {
-            result.setMsg("Active orders list for this user is empty!");
+            result.setMsg("Active orders list is empty!");
         } else {
             result.setMsg("success");
         }
@@ -52,27 +64,21 @@ public class OrderDeliveryController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/archiveOrdersListForUser", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendArchiveOrdersListForUser(@AuthenticationPrincipal UsersEntity user) {
+/*    @GetMapping(value = "/orderDelivery", produces = "application/json")
+    public String sendArchiveOrdersListForUser(@AuthenticationPrincipal UsersEntity user,
+                                               Map<String, Object> model) {
 
-        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
-        List<OrderDetailsEntity> activeOrdersListForCurrentUser = new ArrayList<>();
+        List<OrderDetailsEntity> archiveOrdersListForCurrentUser = new ArrayList<>();
         for (OrderDetailsEntity element : orderDetails) {
             if (user.getUsername().equals(element.getAuthorName()) &&
                     element.getStatus().equals("Заказ доставлен")) {
-                activeOrdersListForCurrentUser.add(element);
+                archiveOrdersListForCurrentUser.add(element);
             }
         }
-        if (activeOrdersListForCurrentUser.isEmpty()) {
-            result.setMsg("Active orders list for this user is empty!");
-        } else {
-            result.setMsg("success");
-        }
-        result.setResult(activeOrdersListForCurrentUser);
-        return ResponseEntity.ok(result);
-    }
+        model.put("archiveOrdersListForCurrentUser", archiveOrdersListForCurrentUser);
+        return "redirect:/orderDelivery";
+    }*/
 
     @GetMapping(value = "/activeOrdersListForLogisticPage", produces = "application/json")
     @ResponseBody

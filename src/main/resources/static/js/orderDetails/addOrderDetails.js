@@ -9,7 +9,7 @@ if (isOrderDetailsPage !== null) {
 }
 if (isOrderDeliveryPage !== null) {
     showActiveOrdersListForUser();
-    showArchiveOrdersListForUser();
+    /*showArchiveOrdersListForUser();*/
 }
 if (isLogisticsPage !== null) {
     showActiveOrdersListForLogisticPage();
@@ -90,14 +90,14 @@ function showActiveOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
-function showArchiveOrdersListForUser() {
+/*function showArchiveOrdersListForUser() {
 
     let url = "/archiveOrdersListForUser";
     let htmlId = '#archiveOrdersListForUser';
     let emptyTableExpression = "В вашей истории заказов пока нет ни одного заказа";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
-}
+}*/
 
 function showActiveOrdersListForLogisticPage() {
 

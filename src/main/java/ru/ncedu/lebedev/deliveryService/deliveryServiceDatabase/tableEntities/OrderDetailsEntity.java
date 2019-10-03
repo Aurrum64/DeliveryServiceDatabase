@@ -44,4 +44,11 @@ public class OrderDetailsEntity {
 
     @Column(name = "delivery_status")
     private String status;
+
+    @Column(name = "review_written")
+    private Boolean reviewWritten;
+
+    public boolean isReviewWritten() {
+        return reviewWritten;
+    }
 }

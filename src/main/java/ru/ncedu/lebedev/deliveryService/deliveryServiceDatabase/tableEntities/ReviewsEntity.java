@@ -31,9 +31,6 @@ public class ReviewsEntity {
     @Column(name = "rating")
     private Integer rating;
 
-    @Column(name = "review_subject")
-    private String reviewSubject;
-
     @Column(name = "review")
     private String review;
 }

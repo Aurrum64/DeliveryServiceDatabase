@@ -14,21 +14,22 @@ function addReviews() {
     reviewsInput["orderId"] = $("#addOrderId").val();
     reviewsInput["clientName"] = $("#addClientName").val();
     reviewsInput["rating"] = $("#addRatingFromClient").val();
-    reviewsInput["reviewSubject"] = $("#addReviewSubject").val();
+    /*reviewsInput["reviewSubject"] = $("#addReviewSubject").val();*/
     reviewsInput["review"] = $("#addReview").val();
 
+    console.log(reviewsInput);
+
     if (reviewsInput.orderId === "" && reviewsInput.clientName === ""
-        && reviewsInput.reviewSubject === "" && reviewsInput.review === ""
-        && reviewsInput.rating === "") {
+        && reviewsInput.review === "" && reviewsInput.rating === "") {
         alert("Please, fill in all fields of the add review form!");
     } else {
         saveReviewInDb(reviewsInput);
 
-        setTimeout(function () {
+        /*setTimeout(function () {
             showReviewsList();
-        }, (300));
+        }, (300));*/
 
-        document.getElementById('addReviews').reset();
+       /* document.getElementById('addReviews').reset();*/
     }
 }
 

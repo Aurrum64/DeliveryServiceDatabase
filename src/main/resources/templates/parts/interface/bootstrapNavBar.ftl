@@ -7,20 +7,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">На главную</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/ourLocation">Расположение</a>
-            </li>
+            <#if !isEnabled>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">На главную</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ourLocation">Расположение</a>
+                </li>
+            </#if>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/user">Пользователи</a>
-                </li>
-            </#if>
-            <#if isAdmin || isManager>
-                <li class="nav-item">
-                    <a class="nav-link" href="/reviews">Отзывы</a>
                 </li>
             </#if>
             <#if isAdmin || isManager>

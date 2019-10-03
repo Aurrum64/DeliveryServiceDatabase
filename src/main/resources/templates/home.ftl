@@ -14,7 +14,7 @@
     <div class="container" style="height: 50px"></div>
     <div class="text-grey text-center py-5 px-4">
         <div>
-            <h1 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Начните пользоваться лучшим курьерским
+            <h1 class="card-title h1-responsive py-5 mb-5 font-bold"><strong>Начните пользоваться лучшим курьерским
                     сервисом уже сегодня!</strong></h1>
         </div>
         <div>
@@ -65,7 +65,8 @@
                     <div class="container" style="height: 340px"></div>
                 </div>
                 <div class="card-body">
-                    <a class="btn btn-pink"><i class="fas fa-clone left"></i>Показать нас на карте</a>
+                    <a class="btn btn-pink" href="/ourLocation"><i class="fas fa-clone left"></i>Показать нас на
+                        карте</a>
                 </div>
             </div>
         </div>

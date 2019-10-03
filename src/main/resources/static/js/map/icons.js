@@ -22,3 +22,13 @@ var cargo = L.icon({
     iconUrl: 'http://tavr.pro/images/dostavka.svg',
     iconSize: [50, 50]
 });
+
+var netCrackerLogo = L.icon({
+    iconUrl: 'https://pbs.twimg.com/profile_images/1078750034039062528/5M6qSRoK_400x400.jpg',
+    iconSize: [50, 50]
+});
+
+var metro = L.icon({
+    iconUrl: 'https://trashbox.ru/apk_icons/801426_192.png',
+    iconSize: [80, 80]
+});

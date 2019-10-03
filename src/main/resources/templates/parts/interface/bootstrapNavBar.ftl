@@ -11,7 +11,7 @@
                 <a class="nav-link" href="/">На главную</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">Расположение</a>
+                <a class="nav-link" href="/ourLocation">Расположение</a>
             </li>
             <#if isAdmin>
                 <li class="nav-item">
@@ -90,7 +90,7 @@
                 </div>
             </div>
         <#else>
-            <div class="navbar-text mr-3">Привет, гость!</div>
+            <div class="navbar-text mr-3">Привет!</div>
             <form>
                 <input type="button" class="btn btn-outline-info mr-3" value="Вход" onClick='location.href="/login"'>
             </form>

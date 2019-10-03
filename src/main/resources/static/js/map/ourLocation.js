@@ -1,5 +1,5 @@
 let deliveryServiceLocation = L.marker([55.7299, 37.6457],
-    {icon: netCrackerLogo}).addTo(myDeliveryServiceMap);
+    {icon: deliveryService}).addTo(myDeliveryServiceMap);
 deliveryServiceLocation.bindPopup("<b>Головной офис Delivery Service</b><br>" +
     "<b>По адресу:</b> Кожевническая ул., 7, Москва").openPopup();
 
@@ -43,12 +43,12 @@ $(document).ready((function () {
         wayFromCircleLineUnderGround.addTo(myDeliveryServiceMap);
 
         let greenLineUnderground = L.marker([55.7300, 37.6394],
-            {icon: metro}).addTo(myDeliveryServiceMap);
+            {icon: underground}).addTo(myDeliveryServiceMap);
         greenLineUnderground.bindPopup("<b>Станция метро:</b> Павелецкая<br>" +
             "Зеленая линия метро");
 
         let circleLineUnderground = L.marker([55.7311, 37.6363],
-            {icon: metro}).addTo(myDeliveryServiceMap);
+            {icon: underground}).addTo(myDeliveryServiceMap);
         circleLineUnderground.bindPopup("<b>Станция метро:</b> Павелецкая<br>" +
             "Кольцевая линия метро");
     });

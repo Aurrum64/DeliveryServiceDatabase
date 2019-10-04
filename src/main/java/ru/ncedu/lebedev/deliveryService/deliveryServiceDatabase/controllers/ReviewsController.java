@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ReviewMessage;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendReviewsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
@@ -43,6 +44,11 @@ public class ReviewsController {
         return "reviews";
     }
 
+    @GetMapping("/reviewsList")
+    public String reviewsList() {
+        return "reviewsList";
+    }
+
     @PostMapping("/reviews")
     public String reviewsView(@RequestParam Integer orderDetailsId,
                               @RequestParam String authorName,
@@ -52,7 +58,7 @@ public class ReviewsController {
         return "reviews";
     }
 
-/*    @GetMapping(value = "/reviewsList", produces = "application/json")
+    @GetMapping(value = "/reviewsList", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> sendReviewsList() {
 
@@ -65,32 +71,7 @@ public class ReviewsController {
         }
         reviewsList.setResult(reviews);
         return ResponseEntity.ok(reviewsList);
-    }*/
-
-/*    @PostMapping(value = "/addReviews",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax addReviews(@AuthenticationPrincipal UsersEntity user,
-                                             @RequestBody ReviewMessage reviewMessage) {
-
-        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(reviewMessage.getOrderId());
-
-        order.setReviewWritten(true);
-        orderDetailsRepository.save(order);
-
-        CouriersEntity courier = couriersRepository.findByCourierId(order.getCourier().getCourierId());
-
-        couriersRating.setCourierRating(courier, reviewMessage.getRating());
-
-        ReviewsEntity review = new ReviewsEntity();
-        review.setOrderId(reviewMessage.getOrderId());
-        review.setClientName(reviewMessage.getClientName());
-        review.setRating(reviewMessage.getRating());
-        review.setReview(reviewMessage.getReview());
-        review.setAuthor(user);
-        reviewsRepository.save(review);
-        return new ControllerAnswerToAjax("OK", "");
-    }*/
+    }
 
     @PostMapping(value = "/addReviews")
     public String addReviews(@AuthenticationPrincipal UsersEntity user,

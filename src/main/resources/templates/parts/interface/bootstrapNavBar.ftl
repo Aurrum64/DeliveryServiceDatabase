@@ -32,37 +32,22 @@
                 </li>
             </#if>
             <#if isAccountActivated>
-                <#if isAdmin || isManager || isCourier>
+                <#if isAdmin>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Управление
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <#if isAdmin || isCourier || isManager>
-                                <a class="dropdown-item" href="/couriers">Курьеры</a>
-                            </#if>
-                            <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/managers">Менеджеры</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/orders">Заказы</a>
-                            </#if>
-                            <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/callcentre">Кол-центр</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/clients">Клиенты</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/products">Продукты</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/locations">Локации</a>
-                            </#if>
+                            <a class="dropdown-item" href="/couriers">Курьеры</a>
+                            <a class="dropdown-item" href="/managers">Менеджеры</a>
+                            <a class="dropdown-item" href="/orders">Заказы</a>
+                            <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
+                            <a class="dropdown-item" href="/callcentre">Кол-центр</a>
+                            <a class="dropdown-item" href="/clients">Клиенты</a>
+                            <a class="dropdown-item" href="/products">Продукты</a>
+                            <a class="dropdown-item" href="/locations">Локации</a>
+                            <a class="dropdown-item" href="/reviewsList">Отзывы</a>
                         </div>
                     </li>
                 </#if>

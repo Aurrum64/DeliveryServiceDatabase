@@ -52,7 +52,7 @@ public class ReviewsController {
         return "reviews";
     }
 
-    @GetMapping(value = "/reviewsList", produces = "application/json")
+/*    @GetMapping(value = "/reviewsList", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> sendReviewsList() {
 
@@ -65,9 +65,9 @@ public class ReviewsController {
         }
         reviewsList.setResult(reviews);
         return ResponseEntity.ok(reviewsList);
-    }
+    }*/
 
-    @PostMapping(value = "/addReviews",
+/*    @PostMapping(value = "/addReviews",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax addReviews(@AuthenticationPrincipal UsersEntity user,
@@ -90,5 +90,32 @@ public class ReviewsController {
         review.setAuthor(user);
         reviewsRepository.save(review);
         return new ControllerAnswerToAjax("OK", "");
+    }*/
+
+    @PostMapping(value = "/addReviews")
+    public String addReviews(@AuthenticationPrincipal UsersEntity user,
+                             @RequestParam Integer orderDetailsId,
+                             @RequestParam String authorName,
+                             @RequestParam Integer ratingFromClient,
+                             @RequestParam String reviewFromClient) {
+
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
+
+        order.setReviewWritten(true);
+        orderDetailsRepository.save(order);
+
+        CouriersEntity courier = couriersRepository.findByCourierId(order.getCourier().getCourierId());
+
+        couriersRating.setCourierRating(courier, ratingFromClient);
+
+        ReviewsEntity review = new ReviewsEntity();
+        review.setOrderId(orderDetailsId);
+        review.setClientName(authorName);
+        review.setRating(ratingFromClient);
+        review.setReview(reviewFromClient);
+        review.setAuthor(user);
+        reviewsRepository.save(review);
+
+        return "redirect:/orderDelivery";
     }
 }

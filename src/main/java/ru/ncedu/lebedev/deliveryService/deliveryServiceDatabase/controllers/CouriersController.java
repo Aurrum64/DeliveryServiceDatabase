@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.*;
@@ -19,10 +21,13 @@ import java.util.*;
 public class CouriersController {
 
     private CouriersRepository couriersRepository;
+    private OrderSpecificationsRepository orderSpecificationsRepository;
 
     @Autowired
-    public CouriersController(CouriersRepository couriersRepository) {
+    public CouriersController(CouriersRepository couriersRepository,
+                              OrderSpecificationsRepository orderSpecificationsRepository) {
         this.couriersRepository = couriersRepository;
+        this.orderSpecificationsRepository = orderSpecificationsRepository;
     }
 
     @GetMapping("/couriers")
@@ -186,11 +191,27 @@ public class CouriersController {
     }
 
     @Transactional
-    @RequestMapping(value = "/movingCourierCoordinates",
-            method = RequestMethod.POST,
+    @PostMapping(value = "/movingCourierCoordinates",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax courierMove(@RequestBody CourierCoordinateAfterMove courier) {
+
+        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(courier.getOrderId());
+        if (!specification.getCourierWent()) {
+            specification.setCourierWent(true);
+        }
+        if (!specification.getOrderPickedUp()) {
+            if (courier.getLat().equals(courier.getFirstOrderPointLat()) &&
+                    courier.getLng().equals(courier.getFirstOrderPointLng())) {
+                specification.setOrderPickedUp(true);
+            }
+        }
+/*        if (!specification.getOrderDelivered()) {
+            if (courier.getLat().equals(courier.getSecondOrderPointLat()) &&
+                    courier.getLng().equals(courier.getSecondOrderPointLng())) {
+                specification.setOrderDelivered(true);
+            }
+        }*/
         couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
         couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
         return new ControllerAnswerToAjax("OK", "");

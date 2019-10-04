@@ -37,9 +37,6 @@ function buildRoute() {
             routes[i].addTo(myDeliveryServiceMap);
             routes[i].on('routesfound', function (e) {
 
-                console.log(couriersInfos[0].courierId);
-                console.log(deliveryInfos[i].orderDetailsId);
-
                 orderDeliveredByCourier = JSON.stringify(
                     {
                         courierId: couriersInfos[0].courierId,
@@ -50,6 +47,7 @@ function buildRoute() {
                     showActiveOrdersListForLogisticPage();
                 }, (300));
                 solutionsInfos[i] = L.Routing.line(e.routes[0]);
+                console.log(solutionsInfos[i]);
                 polylines[i] = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
             });
         }
@@ -75,8 +73,14 @@ $(document).ready((function () {
                     let currentCourierInfo = JSON.stringify({
                         lat: polylines[i]._latlngs[j].lat,
                         lng: polylines[i]._latlngs[j].lng,
-                        courierId: couriersInfos[i].courierId
+                        courierId: couriersInfos[i].courierId,
+                        orderId: deliveryInfos[i].orderDetailsId,
+                        firstOrderPointLat: firstOrderPointMarkers[i]._latlng.lat,
+                        firstOrderPointLng: firstOrderPointMarkers[i]._latlng.lng,
+                        secondOrderPointLat: secondOrderPointMarkers[i]._latlng.lat,
+                        secondOrderPointLng: secondOrderPointMarkers[i]._latlng.lat
                     });
+                    console.log(currentCourierInfo);
                     sendMovingCoordinates(currentCourierInfo);
                     /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
                     showCouriersList();

@@ -15,8 +15,10 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnti
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.List;
@@ -26,12 +28,15 @@ public class OrderDetailsController {
 
     private OrderDetailsRepository orderDetailsRepository;
     private CouriersRepository couriersRepository;
+    private OrderSpecificationsRepository orderSpecificationsRepository;
 
     @Autowired
     public OrderDetailsController(OrderDetailsRepository orderDetailsRepository,
-                                  CouriersRepository couriersRepository) {
+                                  CouriersRepository couriersRepository,
+                                  OrderSpecificationsRepository orderSpecificationsRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.couriersRepository = couriersRepository;
+        this.orderSpecificationsRepository = orderSpecificationsRepository;
     }
 
     @GetMapping("/orderDetails")
@@ -81,7 +86,18 @@ public class OrderDetailsController {
         orderDetail.setStatus("Заказ не доставлен");
         orderDetail.setAuthor(user);
         orderDetail.setReviewWritten(false);
+
+        OrderSpecificationEntity specification = new OrderSpecificationEntity();
+        specification.setCourierFound(false);
+        specification.setCourierWent(false);
+        specification.setOrderPickedUp(false);
+        specification.setOrderDelivered(false);
+        specification.setOrderConfirmed(false);
+        orderSpecificationsRepository.save(specification);
+
+        orderDetail.setOrderSpecification(specification);
         orderDetailsRepository.save(orderDetail);
+
         return new ControllerAnswerToAjax("OK", "");
     }
 
@@ -156,12 +172,14 @@ public class OrderDetailsController {
         }
     }
 
-    @Transactional
     @PostMapping(value = "/changeDeliveryStatus",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {
-        orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());
+        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(order.getOrderDetailsId());
+        specification.setOrderDelivered(true);
+        orderSpecificationsRepository.save(specification);
+        /*orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());*/
         return new ControllerAnswerToAjax("OK", "");
     }
 
@@ -170,6 +188,11 @@ public class OrderDetailsController {
     @ResponseBody
     public ControllerAnswerToAjax assignCourierToOrder(@RequestBody ChangeStatusForOrderDetailsId message) {
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+
+        OrderSpecificationEntity specification = order.getOrderSpecification();
+        specification.setCourierFound(true);
+        orderSpecificationsRepository.save(specification);
+
         CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
         order.setCourier(courier);
         orderDetailsRepository.save(order);

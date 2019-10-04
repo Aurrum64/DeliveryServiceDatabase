@@ -38,7 +38,7 @@
     </div>
     <div class="container mt-5 ml-5">
         <h4>Ваши активные заказы:</h4>
-        <table class="table table-striped">
+        <table class="table table-striped" style="width: 1250px">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -49,6 +49,7 @@
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Курьер</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody id="activeOrdersListForUser">
@@ -68,6 +69,7 @@
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Курьер</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -81,6 +83,7 @@
                     <td>${archiveOrder.status}</td>
                     <td>${archiveOrder.authorName}</td>
                     <td>${archiveOrder.courier.firstName}</td>
+                    <td><a href="/order/${archiveOrder.orderDetailsId}">Подробнее</a></td>
                     <#if !archiveOrder.isReviewWritten()>
                         <td>
                             <form action="/reviews" method="post">
@@ -104,6 +107,7 @@
             <#else>
                 <tr>
                     <th scope="row">В вашей истории заказов пока нет ни одного заказа :(</th>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

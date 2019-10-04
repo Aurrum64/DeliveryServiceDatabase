@@ -29,6 +29,10 @@ public class OrderDetailsEntity {
     @JoinColumn(name = "courier_id")
     private CouriersEntity courier;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "specification_id")
+    private OrderSpecificationEntity orderSpecification;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date", nullable = false)
     private Date orderDate;

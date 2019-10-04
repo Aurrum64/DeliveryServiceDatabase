@@ -156,6 +156,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             "            <td></td>\n" +
             "            <td></td>\n" +
             "            <td></td>\n" +
+            "            <td></td>\n" +
             "</tr>";
         $(htmlId).html(view);
     } else {
@@ -177,6 +178,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
                 "            <td>" + data.result[i].status + "</td>\n" +
                 "            <td>" + data.result[i].authorName + "</td>\n" +
                 "            <td>" + courier + "</td>\n" +
+                "<td><a href=\"/order/" + data.result[i].orderDetailsId + "\">Подробнее</a></td>" +
                 "</tr>";
             if (view === undefined) {
                 view = "" + newLine;

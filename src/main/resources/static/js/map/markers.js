@@ -63,8 +63,8 @@ function setNotDeliveredMarkers() {
                     L.esri.Geocoding.geocode()
                         .text(firstOrderAddressPoint)
                         .run((err, results) => {
-                            let latitude = results.results[0].latlng.lat;
-                            let longitude = results.results[0].latlng.lng;
+                            let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
+                            let longitude = parseFloat(results.results[0].latlng.lng.toFixed(4));
                             deliveryInfos[i] = data.result[i];
                             let deliveryMarker = L.marker([latitude, longitude],
                                 {icon: notDeliveredFirstOrderPoint}).addTo(firstOrderPointMarkersLayerGroup);
@@ -76,8 +76,8 @@ function setNotDeliveredMarkers() {
                     L.esri.Geocoding.geocode()
                         .text(secondOrderAddressPoint)
                         .run((err, results) => {
-                            let latitude = results.results[0].latlng.lat;
-                            let longitude = results.results[0].latlng.lng;
+                            let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
+                            let longitude = parseFloat(results.results[0].latlng.lng.toFixed(4));
                             deliveryInfos[i] = data.result[i];
                             let deliveryMarker = L.marker([latitude, longitude],
                                 {icon: notDeliveredSecondOrderPoint}).addTo(secondOrderPointMarkersLayerGroup);

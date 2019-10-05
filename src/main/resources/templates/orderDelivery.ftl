@@ -92,16 +92,6 @@
                                 <button type="submit" class="btn btn-info ml-3">Оставить отзыв</button>
                             </form>
                         </td>
-                    <#else>
-                        <#if thanks??>
-                            <div class="alert alert-success alert-dismissible fade show mt-3 ml-2" role="alert"
-                                 style="width: 100px">
-                                ${thanks!}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </#if>
                     </#if>
                 </tr>
             <#else>

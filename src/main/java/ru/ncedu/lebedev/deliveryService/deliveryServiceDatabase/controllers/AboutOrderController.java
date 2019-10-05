@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ChangeStatusForOrderDetailsId;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
@@ -37,13 +36,13 @@ public class AboutOrderController {
     }
 
     @Transactional
-    @PostMapping(value = "/orderConfirmation")
-    public String orderConfirmation(@RequestParam Integer orderId) {
-        orderDetailsRepository.setStatusFor("Заказ доставлен", orderId);
-
-        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(orderId);
+    @PostMapping(value = "orderConfirmation")
+    public String orderConfirmation(@RequestParam Integer orderDetailsId) {
+        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(orderDetailsId);
         specification.setOrderConfirmed(true);
         orderSpecificationsRepository.save(specification);
-        return "redirect:/aboutOrder";
+
+        orderDetailsRepository.setStatusFor("Заказ доставлен", orderDetailsId);
+        return "redirect:/order/" + orderDetailsId;
     }
 }

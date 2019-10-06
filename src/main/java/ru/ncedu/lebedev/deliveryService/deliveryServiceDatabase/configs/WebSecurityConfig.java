@@ -13,9 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RolesEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -55,7 +57,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PrincipalExtractor principalExtractor(UsersRepository usersRepository) {
         return map -> {
-                return new UsersEntity();
+            String id=(String) map.get("sub");
+            UsersEntity user=usersRepository.findByGoogleId(id);
+            if (user == null){
+                UsersEntity newUser= new UsersEntity();
+                newUser.setGoogleId(id);
+                newUser.setUsername((String)map.get("name"));
+                newUser.setEmail((String)map.get("email"));
+                newUser.setGender((String)map.get("gender"));
+                newUser.setActive(true);
+                Iterable<UsersEntity> usersList = usersRepository.findAll();
+                if (usersList.iterator().hasNext()) {
+                    newUser.setRoles(Collections.singleton(RolesEntity.USER));
+                } else {
+                    newUser.setRoles(Collections.singleton(RolesEntity.ADMIN));
+                }
+                user=newUser;
+            }
+            user.setLastVisit(LocalDateTime.now());
+            return usersRepository.save(user);
             };
     }
 }

@@ -70,7 +70,9 @@
                         <div class="text-center py-4 mt-3">
                             <button class="btn btn-outline-info" type="submit">Sign In</button>
                         </div>
-
+                        <div align="center">
+                            <a href="/login">Войти через Google</a>
+                        </div>
                         <div class="text-center">
                             <p>Not a member?
                                 <a href="/registration">Register</a>

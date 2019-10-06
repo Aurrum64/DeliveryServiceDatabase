@@ -10,6 +10,6 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Integer> {
 
 
     UsersEntity findByUsername(String username);
-
+    UsersEntity findByGoogleId(String googleId);
     UsersEntity findByActivationCode(String code);
 }

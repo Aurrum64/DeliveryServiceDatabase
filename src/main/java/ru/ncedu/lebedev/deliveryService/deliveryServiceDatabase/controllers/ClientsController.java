@@ -85,7 +85,7 @@ public class ClientsController {
                                 @RequestParam (required = false) String telephone,
                                 @RequestParam (required = false) Integer rating,
                                 @RequestParam (required = false) String address,
-                                   Map<String, Object> model) {
+                                Map<String, Object> model) {
         List<ClientsEntity> clients = clientsRepository.findByClientId(clientId);
         if (clients.isEmpty()) {
             model.put("updateIdCheck", "Client with such index does not exist!");
@@ -98,7 +98,7 @@ public class ClientsController {
                 clientsRepository.setSurnameFor(surname,clientId);
             }
             if (!email.isEmpty()) {
-               clientsRepository.setEmailFor(email,clientId);
+                clientsRepository.setEmailFor(email,clientId);
             }
             if (!telephone.isEmpty()) {
                 clientsRepository.setTelephoneFor(telephone,clientId);

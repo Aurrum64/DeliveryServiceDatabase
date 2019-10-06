@@ -17,7 +17,7 @@ public class UsersEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    private String googleId;
     private String username;
     private String email;
     private String emailVerification;
@@ -26,9 +26,7 @@ public class UsersEntity implements UserDetails {
     private boolean active;
     private boolean verified;
     private String filename;
-    private String userpic;
     private String gender;
-    private String locale;
     private LocalDateTime lastVisit;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)

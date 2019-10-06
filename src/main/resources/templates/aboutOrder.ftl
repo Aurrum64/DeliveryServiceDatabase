@@ -1,5 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Детализация" heightTop=100 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Детализация" heightTop=100 heightBottom=600>
     <div class="text-center mt-5">
         <h3>Детализация заказа с идентификатором: ${order.orderDetailsId}</h3>
     </div>
@@ -101,8 +101,10 @@
                     <b>${order.firstOrderAddressPoint}</b>
                 </p>
                 <#if !specification.isOrderDelivered()>
-                    <form action="/" method="post">
-                        <button type="submit" class="btn btn-primary">Показать курьера на карте</button>
+                    <form action="/order/orderTracking/${order.orderDetailsId}" method="post">
+                        <input type="hidden" name="orderDetailsId" value="${order.orderDetailsId}">
+                        <input type="hidden" name="courierId" value="${order.courier.courierId}">
+                        <button type="submit" class="btn btn-primary">Отслеживание курьера на карте</button>
                     </form>
                 </#if>
             </div>

@@ -1,16 +1,20 @@
-showCourierOnMap();
-setNotDeliveredMarkers();
-
 let couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let couriersMarkers = [];
 let couriersInfos = [];
 
-$(document).ready((function () {
+showCourierOnMap();
+
+(function () {
+    setNotDeliveredMarkers();
+    setTimeout(arguments.callee, 4000);
+})();
+
+/*$(document).ready((function () {
     $("#couriersCoordinates").click(function () {
 
         showCourierOnMap();
     });
-}));
+}));*/
 
 function showCourierOnMap() {
     $.ajax({
@@ -41,12 +45,12 @@ let firstOrderPointMarkers = [];
 let secondOrderPointMarkers = [];
 let deliveryInfos = [];
 
-$(document).ready((function () {
+/*$(document).ready((function () {
     $("#deliveryCoordinates").click(function () {
 
         setNotDeliveredMarkers();
     });
-}));
+}));*/
 
 function setNotDeliveredMarkers() {
     $.ajax({
@@ -54,13 +58,14 @@ function setNotDeliveredMarkers() {
         type: "GET",
         dataType: 'json',
         success: function (data) {
+
             firstOrderPointMarkersLayerGroup.clearLayers();
             secondOrderPointMarkersLayerGroup.clearLayers();
             if (data.result[0] !== undefined) {
                 for (let i = 0; i < data.result.length; i++) {
                     let firstOrderAddressPoint = data.result[i].firstOrderAddressPoint;
                     let secondOrderAddressPoint = data.result[i].secondOrderAddressPoint;
-                    L.esri.Geocoding.geocode()
+/*                    L.esri.Geocoding.geocode()
                         .text(firstOrderAddressPoint)
                         .run((err, results) => {
                             let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
@@ -72,7 +77,7 @@ function setNotDeliveredMarkers() {
                                 "<b>Забрать заказ по адресу:</b> " + firstOrderAddressPoint + "<br>" +
                                 "<b>Комментарий заказчика:</b> " + data.result[i].comment);
                             firstOrderPointMarkers[i] = deliveryMarker;
-                        });
+                        });*/
                     L.esri.Geocoding.geocode()
                         .text(secondOrderAddressPoint)
                         .run((err, results) => {
@@ -95,12 +100,12 @@ function setNotDeliveredMarkers() {
 let deliveredMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let deliveredMarkers = [];
 
-$(document).ready((function () {
+/*$(document).ready((function () {
     $("#showDeliveredOrders").click(function () {
 
         setDeliveredMarkers();
     });
-}));
+}));*/
 
 function setDeliveredMarkers() {
     $.ajax({

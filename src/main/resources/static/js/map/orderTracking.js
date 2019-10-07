@@ -12,7 +12,7 @@ function courierTracking() {
     showOrderPoints(orderTrackingInput);
 
     (function () {
-        updateTrackedCourierCoordinates(orderTrackingInput)
+        updateTrackedCourierCoordinates(orderTrackingInput);
         setTimeout(arguments.callee, 1000);
     })();
 }

@@ -95,7 +95,9 @@ public class OrderDeliveryController {
 
         List<CouriersEntity> thisCourier = couriersRepository.findByFirstName(user.getUsername());
         OrderDetailsEntity orderOfThisCourier = orderDetailsRepository.findByCourierFirstNameAndStatus(thisCourier.get(0).getFirstName(), "Заказ не доставлен");
-        activeOrders.add(orderOfThisCourier);
+        if (orderOfThisCourier != null) {
+            activeOrders.add(orderOfThisCourier);
+        }
 
         if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
             List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE);

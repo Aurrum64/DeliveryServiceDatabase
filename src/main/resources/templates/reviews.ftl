@@ -1,5 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Reviews" heightTop=140 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Оставить отзыв" heightTop=140 heightBottom=400>
     <section class="mb-4">
         <h2 class="h1-responsive font-weight-bold text-center my-4">Оставьте отзыв о нашем сервисе!</h2>
         <p class="text-center w-responsive mx-auto mb-5">Если у вас есть какие-либо пожелания по улучшению

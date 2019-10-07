@@ -1,10 +1,9 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="User editor" heightTop=65 heightBottom=200>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="User's editor page">
-    </@jumbotron.jumbotron>
+<@defaultPage.defaultPageTemplate pageName="Редактировать" heightTop=65 heightBottom=600>
     <div class="container mt-5 ml-5">
+        <div class="text py-4">
+            <h3>Пользователь: ${user.username}</h3>
+        </div>
         <form action="/user" method="post">
             <div class="md-form form-lg">
                 <input type="text" name="username" id="inputLGEx"
@@ -21,7 +20,7 @@
             </div>
             </#list>
             <input type="hidden" value="${user.id}" name="userId">
-            <button class="btn btn-outline-primary mt-5" type="submit">Save</button>
+            <button class="btn btn-outline-primary mt-5" type="submit">Сохранить</button>
         </form>
     </div>
 </@defaultPage.defaultPageTemplate>

@@ -1,10 +1,9 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Users list" heightTop=65 heightBottom=600>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="User's list page">
-    </@jumbotron.jumbotron>
+<@defaultPage.defaultPageTemplate pageName="Пользователи" heightTop=65 heightBottom=600>
     <div class="container mt-5 ml-5" style="width: 700px">
+        <div class="text py-4">
+            <h3>Пользователи:</h3>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>

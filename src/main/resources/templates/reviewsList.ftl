@@ -1,9 +1,9 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Order details" heightTop=80 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Отзывы" heightTop=80 heightBottom=600>
     <#include "parts/interface/security.ftl">
     <div class="container mt-5 ml-5">
         <div class="text mt-5 mb-3">
-            <h4>Отзывы:</h4>
+            <h3>Отзывы:</h3>
         </div>
         <table class="table table-striped" style="width: 600px">
             <thead>

@@ -30,14 +30,14 @@
                     <a class="nav-link" href="/notifications">Уведомления</a>
                 </li>
             </#if>
-            <#if isAdmin || isManager || isCourier>
+            <#if isAdmin || isManager>
                 <li class="nav-item">
-                    <#if isAdmin || isManager>
-                        <a class="nav-link" href="/logistics">Логистика</a>
-                    </#if>
-                    <#if isCourier>
-                        <a class="nav-link" href="/logistics">Карта заказов</a>
-                    </#if>
+                    <a class="nav-link" href="/logistics">Делопроизводство</a>
+                </li>
+            </#if>
+            <#if isCourier>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logistics">Карта заказов</a>
                 </li>
             </#if>
             <#if isAccountActivated>
@@ -50,12 +50,12 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="/couriers">Курьеры</a>
                             <a class="dropdown-item" href="/managers">Менеджеры</a>
-                            <a class="dropdown-item" href="/orders">Заказы</a>
+                            <#--<a class="dropdown-item" href="/orders">Заказы</a>-->
                             <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
-                            <a class="dropdown-item" href="/callcentre">Кол-центр</a>
+                            <#--<a class="dropdown-item" href="/callcentre">Департаменты</a>
                             <a class="dropdown-item" href="/clients">Клиенты</a>
                             <a class="dropdown-item" href="/products">Продукты</a>
-                            <a class="dropdown-item" href="/locations">Локации</a>
+                            <a class="dropdown-item" href="/locations">Локации</a>-->
                             <a class="dropdown-item" href="/reviewsList">Отзывы</a>
                         </div>
                     </li>

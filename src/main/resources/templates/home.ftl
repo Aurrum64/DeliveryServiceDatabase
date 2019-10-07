@@ -1,5 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Home" heightTop=50 heightBottom=0>
+<@defaultPage.defaultPageTemplate pageName="Главная" heightTop=50 heightBottom=0>
     <div class="jumbotron card card-image"
          style="background-image: url(https://images.wallpaperscraft.ru/image/doroga_noch_svet_125999_1920x1080.jpg); height: 100%">
         <div class="text-white text-center py-5 px-4">

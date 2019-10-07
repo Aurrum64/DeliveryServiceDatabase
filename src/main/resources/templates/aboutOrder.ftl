@@ -1,7 +1,7 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <@defaultPage.defaultPageTemplate pageName="Детализация" heightTop=100 heightBottom=600>
     <div class="text-center mt-5">
-        <h3>Детализация заказа с идентификатором: ${order.orderDetailsId}</h3>
+        <h3>Детализация заказа: ${order.orderDetailsId}</h3>
     </div>
     <div class="row mt-2 ml-2" style="width: 92%">
         <div class="col-md-12">

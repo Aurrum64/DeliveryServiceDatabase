@@ -1,9 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Заказ доставки" heightTop=65 heightBottom=200>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Заказ доставки">
-    </@jumbotron.jumbotron>
+<@defaultPage.defaultPageTemplate pageName="Сделать заказ" heightTop=85 heightBottom=600>
     <div class="container mt-5 ml-5">
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
            aria-controls="collapseExample">

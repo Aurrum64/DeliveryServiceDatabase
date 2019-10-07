@@ -1,12 +1,11 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Notifications" heightTop=70 heightBottom=400>
+<@defaultPage.defaultPageTemplate pageName="Уведомления" heightTop=65 heightBottom=600>
     <#include "parts/interface/security.ftl">
     <#if isAdmin || isManager>
         <div class="container mt-5 ml-5">
-            <h3>Последние заявки от пользователей:</h3>
-        </div>
-        <div class="container mt-5 ml-5">
+            <div class="text py-4">
+                <h3>Последние заявки от пользователей:</h3>
+            </div>
             <div class="card-columns">
                 <#list recentRequests as request>
                     <div class="card mt-2">
@@ -56,6 +55,7 @@
         </div>
     </#if>
     <#if isCourier>
+        <div class="container" style="height: 20px"></div>
         <div class="container mt-5 ml-5">
             <h3>Последние заказы:</h3>
         </div>

@@ -1,10 +1,9 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
 <@defaultPage.defaultPageTemplate pageName="Делопроизводство" heightTop=70 heightBottom=400>
     <#include "parts/interface/security.ftl">
     <#if isAdmin || isManager>
-        <div class="container mt-5 ml-5">
-            <div class="text mt-5 mb-3">
+        <div class="container mt-4 ml-5">
+            <div class="text py-4">
                 <h3>Активные заказы:</h3>
             </div>
             <div class="form-row">
@@ -17,7 +16,7 @@
                            onClick='location.href="/activeOrderDetails"'>
                 </form>
             </div>
-            <table class="table table-striped" style="width: 1200px">
+            <table class="table table-striped mt-3" style="width: 1200px">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -34,7 +33,7 @@
                 <tbody id="activeOrdersListForLogisticPage">
                 </tbody>
             </table>
-            <div class="text mt-5 mb-3">
+            <div class="text py-4">
                 <h3>Курьеры, готовые принять заказ:</h3>
             </div>
             <div class="form-row">
@@ -47,7 +46,7 @@
                            onClick='location.href="/activeCouriers"'>
                 </form>
             </div>
-            <table class="table table-striped">
+            <table class="table table-striped mt-3">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -73,7 +72,19 @@
         <#include "parts/scriptsSources/orderDetailsScripts.ftl">
         <#include "parts/scriptsSources/couriersScripts.ftl">
     <#else>
-        <#include "parts/interface/map.ftl">
+        <div class="container py-3 ml-4">
+            <div class="text mt-5 ml-2">
+                <h3>Логистическая карта</h3>
+            </div>
+        </div>
+        <button id="buildRoute" type="button" class="btn btn-secondary ml-5 mt-3">
+            Найти ближайший заказ и проложить маршрут
+        </button>
+        <button id="move" type="button" class="btn btn-secondary ml-5 mt-3">
+            Берусь доставить предложенный системой заказ
+        </button>
+        <div id="map" class="z-depth-1-half map-container mt-5 ml-5" style="width: 95%; height: 600px">
+        </div>
         <#include "parts/scriptsSources/mapScripts.ftl">
         <#include "parts/scriptsSources/orderDetailsScripts.ftl">
         <#include "parts/scriptsSources/couriersScripts.ftl">

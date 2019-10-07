@@ -10,7 +10,7 @@
 </#if>
 <#if isEnabled>
     <div class="form-group row mt-4 ml-3">
-        <div class="btn-group" role="group">
+        <#--<div class="btn-group" role="group">
             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -20,8 +20,8 @@
                 <a class="dropdown-item" id="couriersCoordinates">Показать курьеров на карте</a>
                 <a class="dropdown-item" id="hideCouriersMarkers">Скрыть курьеров</a>
             </div>
-        </div>
-        <div class="btn-group" role="group">
+        </div>-->
+        <#--<div class="btn-group" role="group">
             <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -31,8 +31,8 @@
                 <a class="dropdown-item" id="deliveryCoordinates">Показать активные заказы на карте</a>
                 <a class="dropdown-item" id="hideNotDeliveredOrderPoints">Скрыть активные заказы</a>
             </div>
-        </div>
-        <div class="btn-group" role="group">
+        </div>-->
+        <#--<div class="btn-group" role="group">
             <button id="btnGroupDrop3" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -42,8 +42,8 @@
                 <a class="dropdown-item" id="showDeliveredOrders">Показать архивные заказы на карте</a>
                 <a class="dropdown-item" id="hideDeliveredOrderPoints">Скрыть архивные заказы</a>
             </div>
-        </div>
-        <div class="btn-group" role="group">
+        </div>-->
+        <#--<div class="btn-group" role="group">
             <button id="btnGroupDrop4" type="button" class="btn btn-secondary dropdown-toggle ml-5 mt-3"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -53,12 +53,12 @@
                 <a class="dropdown-item" id="showDeliveryZones">Показать зоны доставки на карте</a>
                 <a class="dropdown-item" id="hideDeliveryZones">Скрыть зоны доставки</a>
             </div>
-        </div>
+        </div>-->
         <button id="buildRoute" type="button" class="btn btn-secondary ml-5 mt-3">
-            Построить маршрут
+            Найти ближайший заказ и проложить маршрут
         </button>
         <button id="move" type="button" class="btn btn-secondary ml-5 mt-3">
-            В путь!
+            Берусь доставить предложенный системой заказ
         </button>
     </div>
 </#if>

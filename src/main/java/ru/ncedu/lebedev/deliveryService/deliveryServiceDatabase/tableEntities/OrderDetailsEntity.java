@@ -55,4 +55,11 @@ public class OrderDetailsEntity {
     public boolean isReviewWritten() {
         return reviewWritten;
     }
+
+    @Column(name = "already_in_progress")
+    private Boolean alreadyInProgress;
+
+    public boolean isAlreadyInProgress() {
+        return alreadyInProgress;
+    }
 }

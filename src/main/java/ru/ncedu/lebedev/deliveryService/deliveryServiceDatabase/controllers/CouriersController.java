@@ -285,18 +285,18 @@ public class CouriersController {
         return ResponseEntity.ok(couriersList);
     }
 
-    @GetMapping(value = "/activeCouriersList", produces = "application/json")
+    @GetMapping(value = "/currentCourier", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendActiveCouriersList() {
+    public ResponseEntity<?> sendActiveCouriersList(@AuthenticationPrincipal UsersEntity user) {
 
-        SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
-        if (activeCouriers.isEmpty()) {
-            couriersList.setMsg("Active couriers list is empty!");
+        SendCouriersToAjax listWithCurrentCourier = new SendCouriersToAjax();
+        List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
+        if (currentCourier.isEmpty() || !currentCourier.get(0).isReadiness() || currentCourier.get(0).isFired()) {
+            listWithCurrentCourier.setMsg("Current courier don't ready to take orders!");
         } else {
-            couriersList.setMsg("success");
+            listWithCurrentCourier.setMsg("success");
+            listWithCurrentCourier.setResult(currentCourier);
         }
-        couriersList.setResult(activeCouriers);
-        return ResponseEntity.ok(couriersList);
+        return ResponseEntity.ok(listWithCurrentCourier);
     }
 }

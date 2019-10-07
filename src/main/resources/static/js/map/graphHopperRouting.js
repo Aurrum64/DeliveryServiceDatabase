@@ -21,8 +21,8 @@ function buildRoute() {
                 {
                     waypoints: [
                         L.latLng(couriersMarkers[0]._latlng),
-                        L.latLng(firstOrderPointMarkers[i]._latlng),
-                        L.latLng(secondOrderPointMarkers[i]._latlng)
+                        L.latLng(firstOrderPointMarkers[0]._latlng),
+                        L.latLng(secondOrderPointMarkers[0]._latlng)
                     ],
                     lineOptions: {
                         styles: [{color: 'green', opacity: 5, weight: 0}]
@@ -37,15 +37,6 @@ function buildRoute() {
             routes[i].addTo(myDeliveryServiceMap);
             routes[i].on('routesfound', function (e) {
 
-                orderDeliveredByCourier = JSON.stringify(
-                    {
-                        courierId: couriersInfos[0].courierId,
-                        orderDetailsId: deliveryInfos[i].orderDetailsId
-                    });
-                assignCourierToOrder(orderDeliveredByCourier);
-                setTimeout(function () {
-                    showActiveOrdersListForLogisticPage();
-                }, (300));
                 solutionsInfos[i] = L.Routing.line(e.routes[0]);
                 console.log(solutionsInfos[i]);
                 polylines[i] = L.polyline(e.routes[0].coordinates, {color: 'red', weight: 3}).addTo(routesLayerGroup);
@@ -56,50 +47,60 @@ function buildRoute() {
 
 $(document).ready((function () {
     $("#move").click(function () {
-        if (couriersMarkers[0] === undefined || firstOrderPointMarkers[0] === undefined ||
-            secondOrderPointMarkers[0] === undefined) {
-            alert("Please, build a route!");
-        } else {
-            for (let i = 0; i < polylines.length; i++) {
-                let j = 0;
-                let howManyTimes = polylines[i]._latlngs.length;
-
-                move();
-
-                function move() {
-                    routesLayerGroup.clearLayers();
-                    let moveRoute = polylines[i]._latlngs.slice(j, polylines[i]._latlngs.length);
-                    let courierCoordinates = polylines[i]._latlngs[j];
-                    let currentCourierInfo = JSON.stringify({
-                        lat: polylines[i]._latlngs[j].lat,
-                        lng: polylines[i]._latlngs[j].lng,
-                        courierId: couriersInfos[i].courierId,
-                        orderId: deliveryInfos[i].orderDetailsId,
-                        firstOrderPointLat: firstOrderPointMarkers[i]._latlng.lat,
-                        firstOrderPointLng: firstOrderPointMarkers[i]._latlng.lng,
-                        secondOrderPointLat: secondOrderPointMarkers[i]._latlng.lat,
-                        secondOrderPointLng: secondOrderPointMarkers[i]._latlng.lat
+            if (couriersMarkers[0] === undefined || firstOrderPointMarkers[0] === undefined ||
+                secondOrderPointMarkers[0] === undefined) {
+                alert("Please, build a route!");
+            } else {
+                orderDeliveredByCourier = JSON.stringify(
+                    {
+                        courierId: couriersInfos[0].courierId,
+                        orderDetailsId: deliveryInfos[0].orderDetailsId
                     });
-                    console.log(currentCourierInfo);
-                    sendMovingCoordinates(currentCourierInfo);
-                    /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
-                    showCouriersList();
-                    setCouriersMarkers();
-                    j++;
-                    if (j === polylines[i]._latlngs.length) {
-                        let currentOrderInfo = JSON.stringify({orderDetailsId: deliveryInfos[i].orderDetailsId});
-                        changeDeliveryStatus(currentOrderInfo);
-                        hideCouriersMarkers();
-                        setDeliveredMarkers();
-                        showActiveOrdersListForLogisticPage();
-                    }
-                    if (j < howManyTimes) {
-                        setTimeout(move, 400);
+                assignCourierToOrder(orderDeliveredByCourier);
+
+                for (let i = 0; i < polylines.length; i++) {
+
+                    let j = 0;
+                    let howManyTimes = polylines[i]._latlngs.length;
+
+                    move();
+
+                    function move() {
+
+                        routesLayerGroup.clearLayers();
+                        let moveRoute = polylines[i]._latlngs.slice(j, polylines[i]._latlngs.length);
+                        let courierCoordinates = polylines[i]._latlngs[j];
+                        let currentCourierInfo = JSON.stringify({
+                            lat: polylines[i]._latlngs[j].lat,
+                            lng: polylines[i]._latlngs[j].lng,
+                            courierId: couriersInfos[i].courierId,
+                            orderId: deliveryInfos[i].orderDetailsId,
+                            firstOrderPointLat: firstOrderPointMarkers[i]._latlng.lat,
+                            firstOrderPointLng: firstOrderPointMarkers[i]._latlng.lng,
+                            secondOrderPointLat: secondOrderPointMarkers[i]._latlng.lat,
+                            secondOrderPointLng: secondOrderPointMarkers[i]._latlng.lat
+                        });
+                        console.log(currentCourierInfo);
+                        sendMovingCoordinates(currentCourierInfo);
+                        /*polyline = L.polyline(moveRoute, {color: 'green', weight: 3}).addTo(routesLayerGroup);*/
+                        showCouriersList();
+                        showCourierOnMap();
+                        j++;
+                        if (j === polylines[i]._latlngs.length) {
+                            let currentOrderInfo = JSON.stringify({orderDetailsId: deliveryInfos[i].orderDetailsId});
+                            changeDeliveryStatus(currentOrderInfo);
+                            hideCouriersMarkers();
+                            setDeliveredMarkers();
+                            showActiveOrdersListForLogisticsPage();
+                        }
+                        if (j < howManyTimes) {
+                            setTimeout(move, 400);
+                        }
                     }
                 }
             }
         }
-    });
+    );
 }));
 
 function sendMovingCoordinates(currentCourierInfo) {
@@ -149,5 +150,6 @@ function assignCourierToOrder(orderDeliveredByCourier) {
         }
     });
 }
+
 
 

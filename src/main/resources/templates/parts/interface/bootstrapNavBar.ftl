@@ -24,11 +24,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/requests">Заявки</a>
                 </li>
+            </#if>
+            <#if isAdmin || isManager || isCourier>
                 <li class="nav-item">
                     <a class="nav-link" href="/notifications">Уведомления</a>
                 </li>
+            </#if>
+            <#if isAdmin || isManager || isCourier>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logistics">Логистика</a>
+                    <#if isAdmin || isManager>
+                        <a class="nav-link" href="/logistics">Логистика</a>
+                    </#if>
+                    <#if isCourier>
+                        <a class="nav-link" href="/logistics">Карта заказов</a>
+                    </#if>
                 </li>
             </#if>
             <#if isAccountActivated>

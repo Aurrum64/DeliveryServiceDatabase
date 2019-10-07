@@ -173,6 +173,9 @@ public class NotificationsController {
             courier.setLatitude(RandomCoordinates.getRandomLatitude());
             courier.setLongitude(RandomCoordinates.getRandomLongitude());
             couriersRepository.save(courier);
+
+            user.setCourier(courier);
+            usersRepository.save(user);
         } else {
             ManagersEntity manager = new ManagersEntity();
             manager.setFirstName(user.getUsername());

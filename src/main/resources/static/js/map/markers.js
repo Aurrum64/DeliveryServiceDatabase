@@ -1,4 +1,4 @@
-setCouriersMarkers();
+showCourierOnMap();
 setNotDeliveredMarkers();
 
 let couriersMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
@@ -8,26 +8,26 @@ let couriersInfos = [];
 $(document).ready((function () {
     $("#couriersCoordinates").click(function () {
 
-        setCouriersMarkers();
+        showCourierOnMap();
     });
 }));
 
-function setCouriersMarkers() {
+function showCourierOnMap() {
     $.ajax({
-        url: "/activeCouriersList",
+        url: "/currentCourier",
         type: "GET",
         dataType: 'json',
         success: function (data) {
+            console.log(data);
             couriersMarkersLayerGroup.clearLayers();
-            if (data.result[0] !== undefined) {
+            if (data.result !== null) {
                 for (let i = 0; i < data.result.length; i++) {
                     let latitude = data.result[i].latitude;
                     let longitude = data.result[i].longitude;
                     couriersInfos[i] = data.result[i];
                     let courierMarker = L.marker([latitude, longitude],
                         {icon: cargo}).addTo(couriersMarkersLayerGroup);
-                    courierMarker.bindPopup("Курьер №" + [i + 1] + "<br>" +
-                        data.result[i].firstName + " " + data.result[i].lastName);
+                    courierMarker.bindPopup("Вы находитесь здесь");
                     couriersMarkers[i] = courierMarker;
                 }
             }
@@ -50,7 +50,7 @@ $(document).ready((function () {
 
 function setNotDeliveredMarkers() {
     $.ajax({
-        url: "/activeOrdersListForLogisticPage",
+        url: "/activeOrdersListForMap",
         type: "GET",
         dataType: 'json',
         success: function (data) {

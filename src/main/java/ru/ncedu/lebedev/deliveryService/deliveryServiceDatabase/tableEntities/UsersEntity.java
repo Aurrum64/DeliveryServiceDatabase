@@ -35,6 +35,10 @@ public class UsersEntity implements UserDetails {
     @Column(name = "was_fired")
     private boolean wasFired;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "courier_id")
+    private CouriersEntity courier;
+
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

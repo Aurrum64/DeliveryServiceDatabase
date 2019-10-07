@@ -12,7 +12,7 @@ if (isOrderDeliveryPage !== null) {
     /*showArchiveOrdersListForUser();*/
 }
 if (isLogisticsPage !== null) {
-    showActiveOrdersListForLogisticPage();
+    showActiveOrdersListForLogisticsPage();
 }
 if (isOrderDetailsHistoryPage !== null) {
     showAllArchiveOrdersList();
@@ -99,9 +99,9 @@ function showActiveOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }*/
 
-function showActiveOrdersListForLogisticPage() {
+function showActiveOrdersListForLogisticsPage() {
 
-    let url = "/activeOrdersListForLogisticPage";
+    let url = "/activeOrdersListForLogisticsPage";
     let htmlId = '#activeOrdersListForLogisticPage';
     let emptyTableExpression = "У вас пока нет ни одного активного заказа";
 

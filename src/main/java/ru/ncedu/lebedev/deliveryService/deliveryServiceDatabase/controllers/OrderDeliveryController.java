@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
@@ -19,10 +21,13 @@ import java.util.Map;
 public class OrderDeliveryController {
 
     private OrderDetailsRepository orderDetailsRepository;
+    private CouriersRepository couriersRepository;
 
     @Autowired
-    public OrderDeliveryController(OrderDetailsRepository orderDetailsRepository) {
+    public OrderDeliveryController(OrderDetailsRepository orderDetailsRepository,
+                                   CouriersRepository couriersRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
+        this.couriersRepository = couriersRepository;
     }
 
     @GetMapping("/orderDelivery")
@@ -79,9 +84,41 @@ public class OrderDeliveryController {
         return "redirect:/orderDelivery";
     }*/
 
-    @GetMapping(value = "/activeOrdersListForLogisticPage", produces = "application/json")
+    @GetMapping(value = "/activeOrdersListForMap", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendActiveOrdersListForManager() {
+    public ResponseEntity<?> sendActiveOrdersListForCurrentCourier(@AuthenticationPrincipal UsersEntity user) {
+
+        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 3;
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatusAndAlreadyInProgress("Заказ не доставлен", false);
+
+        List<CouriersEntity> thisCourier = couriersRepository.findByFirstName(user.getUsername());
+        OrderDetailsEntity orderOfThisCourier = orderDetailsRepository.findByCourierFirstNameAndStatus(thisCourier.get(0).getFirstName(), "Заказ не доставлен");
+        activeOrders.add(orderOfThisCourier);
+
+        if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
+            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE);
+            if (firstActiveOrders.isEmpty()) {
+                result.setMsg("Active orders list is empty!");
+            } else {
+                result.setMsg("success");
+            }
+            result.setResult(firstActiveOrders);
+        } else {
+            if (activeOrders.isEmpty()) {
+                result.setMsg("Active orders list is empty!");
+            } else {
+                result.setMsg("success");
+            }
+            result.setResult(activeOrders);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/activeOrdersListForLogisticsPage", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendActiveOrdersListForLogisticsPage() {
 
         final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 3;
 

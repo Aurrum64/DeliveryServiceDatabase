@@ -31,6 +31,10 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     List<OrderDetailsEntity> findAllByStatus(String status);
 
+    List<OrderDetailsEntity> findAllByStatusAndAlreadyInProgress(String status, Boolean alreadyInProgress);
+
+    OrderDetailsEntity findByCourierFirstNameAndStatus(String firstName, String status);
+
     void deleteByOrderDetailsId(Integer id);
 
     @Modifying

@@ -86,6 +86,7 @@ public class OrderDetailsController {
         orderDetail.setStatus("Заказ не доставлен");
         orderDetail.setAuthor(user);
         orderDetail.setReviewWritten(false);
+        orderDetail.setAlreadyInProgress(false);
 
         OrderSpecificationEntity specification = new OrderSpecificationEntity();
         specification.setCourierFound(false);
@@ -179,7 +180,6 @@ public class OrderDetailsController {
         OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(order.getOrderDetailsId());
         specification.setOrderDelivered(true);
         orderSpecificationsRepository.save(specification);
-        /*orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());*/
         return new ControllerAnswerToAjax("OK", "");
     }
 
@@ -195,6 +195,7 @@ public class OrderDetailsController {
 
         CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
         order.setCourier(courier);
+        order.setAlreadyInProgress(true);
         orderDetailsRepository.save(order);
         return new ControllerAnswerToAjax("OK", "");
     }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CouriersMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendCouriersToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.TrackedCourierMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-/*@RequestMapping("order")*/
+@RequestMapping("order")
 public class AboutOrderController {
 
     private OrderSpecificationsRepository orderSpecificationsRepository;
@@ -36,7 +37,7 @@ public class AboutOrderController {
         this.couriersRepository = couriersRepository;
     }
 
-    @GetMapping("order/{orderDetailsId}")
+    @GetMapping("{orderDetailsId}")
     public String aboutOrderView(@PathVariable Integer orderDetailsId,
                                  Map<String, Object> model) {
         OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(orderDetailsId);
@@ -47,7 +48,7 @@ public class AboutOrderController {
     }
 
     @Transactional
-    @PostMapping(value = "order/orderConfirmation")
+    @PostMapping(value = "orderConfirmation")
     public String orderConfirmation(@RequestParam Integer orderDetailsId) {
         OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(orderDetailsId);
         specification.setOrderConfirmed(true);
@@ -57,7 +58,7 @@ public class AboutOrderController {
         return "redirect:/order/" + orderDetailsId;
     }
 
-    @PostMapping("order/orderTracking/{orderDetailsId}")
+    @PostMapping("orderTracking/{orderDetailsId}")
     public String orderTracking(@RequestParam Integer orderDetailsId,
                                 Map<String, Object> model) {
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
@@ -67,11 +68,10 @@ public class AboutOrderController {
         return "orderTracking";
     }
 
-    @PostMapping(value = "/order/orderTracking/7/courierTracking",
+    @PostMapping(value = "orderTracking/{orderDetailsId}/courierTracking",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ResponseEntity<?> courierTracking(@RequestBody TrackedCourierMessage couriersMessage) {
-        System.out.println(couriersMessage.getCourierId());
         SendCouriersToAjax courier = new SendCouriersToAjax();
         CouriersEntity trackedCourier = couriersRepository.findByCourierId(couriersMessage.getCourierId());
         List<CouriersEntity> listWithTrackedCourier = new ArrayList<>();
@@ -79,5 +79,18 @@ public class AboutOrderController {
         courier.setMsg("success");
         courier.setResult(listWithTrackedCourier);
         return ResponseEntity.ok(courier);
+    }
+
+    @PostMapping(value = "orderTracking/{orderDetailsId}/trackedOrder",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity<?> trackedOrder(@RequestBody TrackedCourierMessage couriersMessage) {
+        SendOrderDetailsToAjax order = new SendOrderDetailsToAjax();
+        OrderDetailsEntity trackedOrder = orderDetailsRepository.findByOrderDetailsId(couriersMessage.getOrderDetailsId());
+        List<OrderDetailsEntity> listWithTrackedOrder = new ArrayList<>();
+        listWithTrackedOrder.add(trackedOrder);
+        order.setMsg("success");
+        order.setResult(listWithTrackedOrder);
+        return ResponseEntity.ok(order);
     }
 }

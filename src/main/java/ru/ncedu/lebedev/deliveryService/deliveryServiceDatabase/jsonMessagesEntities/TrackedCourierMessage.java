@@ -6,4 +6,5 @@ import lombok.Getter;
 public class TrackedCourierMessage {
 
     private Integer courierId;
+    private Integer orderDetailsId;
 }

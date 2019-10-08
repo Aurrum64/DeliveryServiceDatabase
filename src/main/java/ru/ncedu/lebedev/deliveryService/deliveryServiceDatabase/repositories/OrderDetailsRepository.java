@@ -33,7 +33,7 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     List<OrderDetailsEntity> findAllByStatusAndAlreadyInProgress(String status, Boolean alreadyInProgress);
 
-    OrderDetailsEntity findByCourierFirstNameAndStatus(String firstName, String status);
+    List<OrderDetailsEntity> findAllByCourierFirstNameAndStatus(String firstName, String status);
 
     void deleteByOrderDetailsId(Integer id);
 

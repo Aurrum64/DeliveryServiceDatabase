@@ -200,18 +200,6 @@ public class CouriersController {
         if (!specification.getCourierWent()) {
             specification.setCourierWent(true);
         }
-        if (!specification.getOrderPickedUp()) {
-            if (courier.getLat().equals(courier.getFirstOrderPointLat()) &&
-                    courier.getLng().equals(courier.getFirstOrderPointLng())) {
-                specification.setOrderPickedUp(true);
-            }
-        }
-/*        if (!specification.getOrderDelivered()) {
-            if (courier.getLat().equals(courier.getSecondOrderPointLat()) &&
-                    courier.getLng().equals(courier.getSecondOrderPointLng())) {
-                specification.setOrderDelivered(true);
-            }
-        }*/
         couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
         couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
         return new ControllerAnswerToAjax("OK", "");

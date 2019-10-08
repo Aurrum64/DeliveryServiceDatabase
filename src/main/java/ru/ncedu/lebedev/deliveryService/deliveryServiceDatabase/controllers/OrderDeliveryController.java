@@ -94,11 +94,10 @@ public class OrderDeliveryController {
         List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatusAndAlreadyInProgress("Заказ не доставлен", false);
 
         List<CouriersEntity> thisCourier = couriersRepository.findByFirstName(user.getUsername());
-        OrderDetailsEntity orderOfThisCourier = orderDetailsRepository.findByCourierFirstNameAndStatus(thisCourier.get(0).getFirstName(), "Заказ не доставлен");
-        if (orderOfThisCourier != null) {
-            activeOrders.add(orderOfThisCourier);
+        List<OrderDetailsEntity> ordersOfThisCourier = orderDetailsRepository.findAllByCourierFirstNameAndStatus(thisCourier.get(0).getFirstName(), "Заказ не доставлен");
+        if (!ordersOfThisCourier.isEmpty()) {
+            activeOrders.addAll(ordersOfThisCourier);
         }
-
         if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
             List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE);
             if (firstActiveOrders.isEmpty()) {

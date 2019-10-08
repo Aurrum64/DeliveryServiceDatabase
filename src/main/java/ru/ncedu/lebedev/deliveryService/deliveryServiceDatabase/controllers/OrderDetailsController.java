@@ -199,4 +199,17 @@ public class OrderDetailsController {
         orderDetailsRepository.save(order);
         return new ControllerAnswerToAjax("OK", "");
     }
+
+    @PostMapping(value = "/changeOrderPickedUpStatus",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax changeOrderPickedUpStatus(@RequestBody ChangeStatusForOrderDetailsId message) {
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+
+        OrderSpecificationEntity specification = order.getOrderSpecification();
+        specification.setOrderPickedUp(true);
+        orderSpecificationsRepository.save(specification);
+
+        return new ControllerAnswerToAjax("OK", "");
+    }
 }

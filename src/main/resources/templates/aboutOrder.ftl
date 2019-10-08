@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <ul class="stepper stepper-horizontal">
                 <#if !specification.isCourierFound()>
-                    <li>
+                    <li class="completed">
                         <a>
                             <span class="circle">1</span>
                             <span class="label">Поиск курьера</span>

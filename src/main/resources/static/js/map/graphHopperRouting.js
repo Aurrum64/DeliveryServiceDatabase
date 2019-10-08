@@ -154,11 +154,11 @@ function moveToSecondAddress() {
         sendMovingCoordinates(currentCourierInfo);
         showCourierOnMap();
         j++;
-        if (j === firstAddressPolyline.polyline._latlngs.length) {
+        if (j === secondAddressPolyline.polyline._latlngs.length) {
             let currentOrderInfo = JSON.stringify({orderDetailsId: secondAddressPolyline.order.order.orderDetailsId});
             changeDeliveryStatus(currentOrderInfo);
             hideCouriersMarkers();
-            setDeliveredMarkers();
+            /*setDeliveredMarkers();*/
         }
         if (j < howManyTimesSecondAddress) {
             setTimeout(secondAddressMovement, 400);

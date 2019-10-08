@@ -88,7 +88,7 @@ public class OrderDeliveryController {
     @ResponseBody
     public ResponseEntity<?> sendActiveOrdersListForCurrentCourier(@AuthenticationPrincipal UsersEntity user) {
 
-        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 3;
+        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 5;
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatusAndAlreadyInProgress("Заказ не доставлен", false);
@@ -99,7 +99,7 @@ public class OrderDeliveryController {
             activeOrders.addAll(ordersOfThisCourier);
         }
         if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
-            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE);
+            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE - 1);
             if (firstActiveOrders.isEmpty()) {
                 result.setMsg("Active orders list is empty!");
             } else {
@@ -126,7 +126,7 @@ public class OrderDeliveryController {
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ не доставлен");
         if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
-            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE);
+            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE - 1);
             if (firstActiveOrders.isEmpty()) {
                 result.setMsg("Active orders list is empty!");
             } else {

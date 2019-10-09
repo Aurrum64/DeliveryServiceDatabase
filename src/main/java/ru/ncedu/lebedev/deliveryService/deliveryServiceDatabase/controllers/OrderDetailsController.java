@@ -1,6 +1,7 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Or
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -75,15 +77,22 @@ public class OrderDetailsController {
     public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
                                                   @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
+        System.out.println(order.getOrderDate());
         orderDetail.setOrderDate(order.getOrderDate());
         orderDetail.setFirstOrderAddressPoint(order.getFirstOrderAddressPoint());
         orderDetail.setSecondOrderAddressPoint(order.getSecondOrderAddressPoint());
         if (order.getComment().isEmpty()) {
-            orderDetail.setComment("Доставить как можно скорее");
-        } else {
-            orderDetail.setComment(order.getComment());
+            if (order.getOrderDate() == null) {
+                orderDetail.setComment("Доставить как можно скорее");
+            } else {
+                orderDetail.setComment("Доставить в указанное время");
+            }
         }
-        orderDetail.setStatus("Заказ не доставлен");
+        if (order.getOrderDate() == null) {
+            orderDetail.setStatus("Заказ доставляется");
+        } else {
+            orderDetail.setStatus("Заказ в ожидании");
+        }
         orderDetail.setAuthor(user);
         orderDetail.setReviewWritten(false);
         orderDetail.setAlreadyInProgress(false);

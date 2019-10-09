@@ -9,7 +9,16 @@ if (isOrderDetailsPage !== null) {
 }
 if (isOrderDeliveryPage !== null) {
     showActiveOrdersListForUser();
+    showWaitingOrdersListForUser();
     /*showArchiveOrdersListForUser();*/
+    (function () {
+        showActiveOrdersListForUser();
+        setTimeout(arguments.callee, 5000);
+    })();
+    (function () {
+        showWaitingOrdersListForUser();
+        setTimeout(arguments.callee, 5000);
+    })();
 }
 if (isLogisticsPage !== null) {
     showActiveOrdersListForLogisticsPage();
@@ -41,9 +50,14 @@ function addOrderDetails() {
     orderDetailsInput["secondOrderAddressPoint"] = $("#addSecondOrderAddressPoint").val();
     orderDetailsInput["comment"] = $("#addComment").val();
 
+    let inputDate = new Date(orderDetailsInput.orderDate.toLocaleString());
+    let now = new Date();
+
     if (orderDetailsInput.orderDate === "" && orderDetailsInput.firstOrderAddressPoint === ""
         && orderDetailsInput.secondOrderAddressPoint === "" && orderDetailsInput.comment === "") {
         alert("Должны быть заполнены все поля формы!");
+    } else if (inputDate < now) {
+        alert("Указанное вами время выезда курьера уже прошло!");
     } else {
         saveOrderDetailsInDb(orderDetailsInput);
 
@@ -94,6 +108,15 @@ function showActiveOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
+function showWaitingOrdersListForUser() {
+
+    let url = "/waitingOrdersListForUser";
+    let htmlId = '#waitingOrdersListForUser';
+    let emptyTableExpression = "У вас пока нет ни одного заказа на определенное время";
+
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
+}
+
 /*function showArchiveOrdersListForUser() {
 
     let url = "/archiveOrdersListForUser";
@@ -120,6 +143,7 @@ function showAllArchiveOrdersList() {
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
+
 
 function showAllActiveOrdersList() {
 
@@ -165,6 +189,23 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
         $(htmlId).html(view);
     } else {
         for (let i = 0; i < data.result.length; i++) {
+            let simplifiedOrderDate;
+            let orderDate = new Date(data.result[i].orderDate);
+            if (orderDate.toLocaleDateString() === "01.01.1970") {
+                simplifiedOrderDate = "Без указания даты";
+            } else {
+                let utcOrderDate = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes());
+                let options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'long',
+                    timezone: 'UTC',
+                    hour: 'numeric',
+                    minute: 'numeric'
+                };
+                simplifiedOrderDate = utcOrderDate.toLocaleString("ru", options);
+            }
             let courier;
             if (data.result[i].courier === undefined ||
                 data.result[i].courier === null) {
@@ -175,7 +216,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             let newLine =
                 "<tr>" +
                 "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                "            <td>" + data.result[i].orderDate + "</td>\n" +
+                "            <td>" + simplifiedOrderDate + "</td>\n" +
                 "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
                 "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
                 "            <td>" + data.result[i].comment + "</td>\n" +

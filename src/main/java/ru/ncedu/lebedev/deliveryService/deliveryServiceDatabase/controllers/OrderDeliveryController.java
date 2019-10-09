@@ -13,9 +13,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Co
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class OrderDeliveryController {
@@ -55,7 +53,7 @@ public class OrderDeliveryController {
         List<OrderDetailsEntity> activeOrdersListForCurrentUser = new ArrayList<>();
         for (OrderDetailsEntity element : orderDetails) {
             if (user.getUsername().equals(element.getAuthorName()) &&
-                    element.getStatus().equals("Заказ не доставлен")) {
+                    element.getStatus().equals("Заказ доставляется")) {
                 activeOrdersListForCurrentUser.add(element);
             }
         }
@@ -65,6 +63,38 @@ public class OrderDeliveryController {
             result.setMsg("success");
         }
         result.setResult(activeOrdersListForCurrentUser);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/waitingOrdersListForUser", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendWaitingOrdersListForUser(@AuthenticationPrincipal UsersEntity user) {
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+        List<OrderDetailsEntity> waitingOrdersListForCurrentUser = new ArrayList<>();
+        for (OrderDetailsEntity element : orderDetails) {
+            if (user.getUsername().equals(element.getAuthorName()) &&
+                    element.getStatus().equals("Заказ в ожидании")) {
+                Calendar orderDate = Calendar.getInstance();
+                orderDate.setTime(element.getOrderDate());
+                orderDate.add(Calendar.HOUR, -3);
+                Calendar currentDate = Calendar.getInstance();
+                currentDate.setTime(new Date());
+                if (orderDate.before(currentDate)) {
+                    element.setStatus("Заказ доставляется");
+                    orderDetailsRepository.save(element);
+                } else {
+                    waitingOrdersListForCurrentUser.add(element);
+                }
+            }
+        }
+        if (waitingOrdersListForCurrentUser.isEmpty()) {
+            result.setMsg("Active orders list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(waitingOrdersListForCurrentUser);
         return ResponseEntity.ok(result);
     }
 
@@ -91,7 +121,7 @@ public class OrderDeliveryController {
         final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 5;
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
-        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatusAndAlreadyInProgress("Заказ не доставлен", false);
+        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatusAndAlreadyInProgress("Заказ доставляется", false);
 
         List<CouriersEntity> thisCourier = couriersRepository.findByFirstName(user.getUsername());
         List<OrderDetailsEntity> ordersOfThisCourier = orderDetailsRepository.findAllByCourierFirstNameAndStatus(thisCourier.get(0).getFirstName(), "Заказ не доставлен");
@@ -124,7 +154,7 @@ public class OrderDeliveryController {
         final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 10;
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
-        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ не доставлен");
+        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ доставляется");
         if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
             List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE - 1);
             if (firstActiveOrders.isEmpty()) {
@@ -190,7 +220,7 @@ public class OrderDeliveryController {
     @ResponseBody
     public ResponseEntity<?> sendAllActiveOrdersList() {
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
-        List<OrderDetailsEntity> archiveOrders = orderDetailsRepository.findAllByStatus("Заказ не доставлен");
+        List<OrderDetailsEntity> archiveOrders = orderDetailsRepository.findAllByStatus("Заказ доставляется");
         if (archiveOrders.isEmpty()) {
             result.setMsg("Archive orders list is empty!");
         } else {

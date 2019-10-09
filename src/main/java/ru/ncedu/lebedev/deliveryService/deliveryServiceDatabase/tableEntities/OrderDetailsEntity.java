@@ -33,8 +33,8 @@ public class OrderDetailsEntity {
     @JoinColumn(name = "specification_id")
     private OrderSpecificationEntity orderSpecification;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "order_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "order_date")
     private Date orderDate;
 
     @Column(name = "fist_order_address_point", nullable = false)

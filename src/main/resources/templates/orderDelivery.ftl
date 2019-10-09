@@ -9,8 +9,8 @@
             <div class="form-group mt-3">
                 <form id="addOrderDetails">
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="addOrderDate" class="form-control form-control-lg">
-                        <label for="orderDate">Введите дату доставки...</label>
+                        <input type="datetime-local" id="addOrderDate" class="form-control form-control-lg">
+                        <label for="orderDate"></label>
                     </div>
                     <div class="md-form form-lg ml-2">
                         <input type="text" id="addFirstOrderAddressPoint" class="form-control form-control-lg">
@@ -49,6 +49,26 @@
             </tr>
             </thead>
             <tbody id="activeOrdersListForUser">
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-5 ml-5">
+        <h4>Заказы на определенное время:</h4>
+        <table class="table table-striped" style="width: 1250px">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Дата доставки</th>
+                <th scope="col">Откуда</th>
+                <th scope="col">Куда</th>
+                <th scope="col">Комментарий</th>
+                <th scope="col">Статус доставки</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Курьер</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="waitingOrdersListForUser">
             </tbody>
         </table>
     </div>

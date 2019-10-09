@@ -45,8 +45,8 @@ public class NotificationsController {
     @GetMapping("/notifications")
     public String notifications(Map<String, Object> model) {
 
-        final int RECENT_ORDERS_LIST_SIZE = 3;
-        final int RECENT_REQUESTS_LIST_SIZE = 3;
+        final int RECENT_ORDERS_LIST_SIZE = 6;
+        final int RECENT_REQUESTS_LIST_SIZE = 6;
 
         List<OrderDetailsEntity> orders = orderDetailsRepository.findAll();
         if (orderDetailsRepository.count() > RECENT_ORDERS_LIST_SIZE) {

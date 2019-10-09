@@ -121,7 +121,7 @@ public class OrderDeliveryController {
     @ResponseBody
     public ResponseEntity<?> sendActiveOrdersListForLogisticsPage() {
 
-        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 3;
+        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 10;
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ не доставлен");

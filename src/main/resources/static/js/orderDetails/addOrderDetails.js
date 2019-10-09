@@ -13,6 +13,10 @@ if (isOrderDeliveryPage !== null) {
 }
 if (isLogisticsPage !== null) {
     showActiveOrdersListForLogisticsPage();
+    (function () {
+        showActiveOrdersListForLogisticsPage();
+        setTimeout(arguments.callee, 5000);
+    })();
 }
 if (isOrderDetailsHistoryPage !== null) {
     showAllArchiveOrdersList();

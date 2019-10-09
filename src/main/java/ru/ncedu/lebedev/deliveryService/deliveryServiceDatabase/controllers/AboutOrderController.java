@@ -2,6 +2,7 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.Ord
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +40,12 @@ public class AboutOrderController {
     }
 
     @GetMapping("{orderDetailsId}")
-    public String aboutOrderView(@PathVariable Integer orderDetailsId,
+    public String aboutOrderView(@AuthenticationPrincipal UsersEntity user,
+                                 @PathVariable Integer orderDetailsId,
                                  Map<String, Object> model) {
         OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(orderDetailsId);
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
+        model.put("username", user.getUsername());
         model.put("specification", specification);
         model.put("order", order);
         return "aboutOrder";

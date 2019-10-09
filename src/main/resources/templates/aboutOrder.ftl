@@ -6,7 +6,7 @@
     <div class="row mt-2 ml-2" style="width: 92%">
         <div class="col-md-12">
             <ul class="stepper stepper-horizontal">
-                <#if !specification.isCourierFound()>
+                <#if !specification.isCourierWent()>
                     <li class="completed">
                         <a>
                             <span class="circle">1</span>
@@ -84,7 +84,7 @@
             </ul>
         </div>
     </div>
-    <#if specification.isCourierFound()>
+    <#if specification.isCourierWent()>
         <div class="card mt-3 ml-5" style="width: 87%">
             <div class="card-body">
                 <h5 class="card-title ml-2">На ваш заказ найден курьер: <b>${order.courier.firstName}</b>!</h5>
@@ -125,7 +125,7 @@
             <div class="card-body">
                 <h5 class="card-title ml-2">Заказ доставлен!</h5>
                 <p class="card-text ml-2">Остался последний шаг, вам необходимо подтвердить, что вы получили заказ.</p>
-                <#if order.status == "Заказ не доставлен">
+                <#if order.status == "Заказ не доставлен" && order.authorName == username>
                     <form action="/order/orderConfirmation" method="post">
                         <input type="hidden" name="orderDetailsId" value="${order.orderDetailsId}">
                         <button type="submit" class="btn btn-primary">Подтверждаю, что получил(а) заказ</button>
@@ -139,7 +139,7 @@
             <div class="card-body">
                 <h5 class="card-title ml-2">Спасибо за то, что выбрали наш сервис!</h5>
                 <p class="card-text ml-2">Пожалуйста оставьте комментарий о работе нашего сервиса.</p>
-                <#if !order.reviewWritten>
+                <#if !order.reviewWritten && order.authorName == username>
                     <form action="/reviews" method="post">
                         <input type="hidden" name="orderDetailsId" value="${order.orderDetailsId}">
                         <input type="hidden" name="authorName" value="${order.authorName}">

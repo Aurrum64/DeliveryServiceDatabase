@@ -3,6 +3,7 @@ let isOrderDeliveryPage = document.getElementById("activeOrdersListForUser");
 let isLogisticsPage = document.getElementById("activeOrdersListForLogisticPage");
 let isOrderDetailsHistoryPage = document.getElementById("allArchiveOrdersList");
 let isActiveOrderDetailsPage = document.getElementById("allActiveOrdersList");
+let isWaitingOrderDetailsPage = document.getElementById("waitingOrderDetailsList");
 
 if (isOrderDetailsPage !== null) {
     showOrderDetailsList();
@@ -32,6 +33,9 @@ if (isOrderDetailsHistoryPage !== null) {
 }
 if (isActiveOrderDetailsPage !== null) {
     showAllActiveOrdersList();
+}
+if (isWaitingOrderDetailsPage !== null) {
+    showWaitingOrdersList();
 }
 
 $(document).ready(function () {
@@ -150,6 +154,15 @@ function showAllActiveOrdersList() {
     let url = "/allActiveOrdersList";
     let htmlId = '#allActiveOrdersList';
     let emptyTableExpression = "У вас пока нет ни одного активного заказа";
+
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
+}
+
+function showWaitingOrdersList() {
+
+    let url = "/waitingOrdersList";
+    let htmlId = '#waitingOrderDetailsList';
+    let emptyTableExpression = "У вас пока нет ни одного заказа на определенное время";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }

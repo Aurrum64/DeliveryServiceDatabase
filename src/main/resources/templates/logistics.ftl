@@ -8,12 +8,16 @@
             </div>
             <div class="form-row">
                 <form>
-                    <input type="button" class="btn btn-blue-grey mr-3" value="История заказов"
-                           onClick='location.href="/orderDetailsHistory"'>
+                    <input type="button" class="btn btn-blue-grey" value="Полный список активных заказов"
+                           onClick='location.href="/activeOrderDetails"'>
                 </form>
                 <form>
-                    <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных заказов"
-                           onClick='location.href="/activeOrderDetails"'>
+                    <input type="button" class="btn btn-blue-grey ml-4" value="Заказы в ожидании"
+                           onClick='location.href="/waitingOrderDetails"'>
+                </form>
+                <form>
+                    <input type="button" class="btn btn-blue-grey ml-4" value="История заказов"
+                           onClick='location.href="/orderDetailsHistory"'>
                 </form>
             </div>
             <table class="table table-striped mt-3" style="width: 1200px">
@@ -36,16 +40,10 @@
             <div class="text py-4">
                 <h3>Курьеры, готовые принять заказ:</h3>
             </div>
-            <div class="form-row">
-                <#--<form>
-                    <input type="button" class="btn btn-blue-grey mr-3" value="Список выходных курьеров"
-                           onClick='location.href="/restCouriers"'>
-                </form>-->
-                <form>
-                    <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных курьеров"
-                           onClick='location.href="/activeCouriers"'>
-                </form>
-            </div>
+            <form>
+                <input type="button" class="btn btn-blue-grey mr-3" value="Полный список активных курьеров"
+                       onClick='location.href="/activeCouriers"'>
+            </form>
             <table class="table table-striped mt-3">
                 <thead>
                 <tr>
@@ -72,11 +70,6 @@
         <#include "parts/scriptsSources/orderDetailsScripts.ftl">
         <#include "parts/scriptsSources/couriersScripts.ftl">
     <#else>
-        <div class="container py-3 ml-4">
-            <div class="text mt-5 ml-2">
-                <h3>Логистическая карта</h3>
-            </div>
-        </div>
         <button id="buildRoute" type="button" class="btn btn-secondary ml-5 mt-3">
             Найти ближайший заказ и проложить маршрут
         </button>

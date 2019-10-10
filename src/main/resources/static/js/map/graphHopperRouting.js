@@ -106,7 +106,7 @@ function buildRoute() {
                     weight: 3
                 }).addTo(routesLayerGroup)
             };
-            firstAddressPolyline["order"] = {order: shortestRouteToFirstAddress.order.orderDetailsId};
+            firstAddressPolyline["order"] = {orderDetailsId: shortestRouteToFirstAddress.order.orderDetailsId};
 
             secondAddressPolyline = {
                 polyline: L.polyline(routeToSecondAddress.route._selectedRoute.coordinates, {
@@ -114,25 +114,33 @@ function buildRoute() {
                     weight: 3
                 }).addTo(routesLayerGroup)
             };
-            secondAddressPolyline["order"] = {order: routeToSecondAddress.order.order.orderDetailsId};
+            secondAddressPolyline["order"] = {orderDetailsId: routeToSecondAddress.order.order.orderDetailsId};
+            console.log(firstAddressPolyline);
+            console.log(secondAddressPolyline);
         }, (1500));
     }
 }
 
 $(document).ready((function () {
     $("#move").click(function () {
-            if (routesToFirstAddress[0] === undefined) {
+            if (firstAddressPolyline === undefined || secondAddressPolyline === undefined) {
                 alert("Сперва вы должны получить от системы ближайший к вам заказ!");
             } else {
+                console.log(firstAddressPolyline);
+                console.log(secondAddressPolyline);
                 orderDeliveredByCourier = JSON.stringify(
                     {
                         courierId: couriersInfos[0].courierId,
-                        orderDetailsId: firstAddressPolyline.order.order.orderDetailsId
+                        orderDetailsId: firstAddressPolyline.order.orderDetailsId
                     });
                 assignCourierToOrder(orderDeliveredByCourier);
 
+                console.log(orderDeliveredByCourier);
+
                 let i = 0;
                 let howManyTimesFirstAddress = firstAddressPolyline.polyline._latlngs.length;
+
+                console.log(howManyTimesFirstAddress);
 
                 function moveToFirstAddress() {
 
@@ -141,8 +149,9 @@ $(document).ready((function () {
                         lat: firstAddressPolyline.polyline._latlngs[i].lat,
                         lng: firstAddressPolyline.polyline._latlngs[i].lng,
                         courierId: couriersInfos[0].courierId,
-                        orderId: firstAddressPolyline.order.order.orderDetailsId
+                        orderId: firstAddressPolyline.order.orderDetailsId
                     });
+                    console.log(currentCourierInfo);
                     sendMovingCoordinates(currentCourierInfo);
                     showCourierOnMap();
                     i++;
@@ -173,13 +182,13 @@ function moveToSecondAddress() {
             lat: secondAddressPolyline.polyline._latlngs[j].lat,
             lng: secondAddressPolyline.polyline._latlngs[j].lng,
             courierId: couriersInfos[0].courierId,
-            orderId: secondAddressPolyline.order.order.orderDetailsId
+            orderId: secondAddressPolyline.order.orderDetailsId
         });
         sendMovingCoordinates(currentCourierInfo);
         showCourierOnMap();
         j++;
         if (j === secondAddressPolyline.polyline._latlngs.length) {
-            let currentOrderInfo = JSON.stringify({orderDetailsId: secondAddressPolyline.order.order.orderDetailsId});
+            let currentOrderInfo = JSON.stringify({orderDetailsId: secondAddressPolyline.order.orderDetailsId});
             changeDeliveryStatus(currentOrderInfo);
             hideCouriersMarkers();
             /*setDeliveredMarkers();*/

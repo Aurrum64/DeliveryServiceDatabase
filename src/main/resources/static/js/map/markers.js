@@ -9,20 +9,12 @@ showCourierOnMap();
     setTimeout(arguments.callee, 4000);
 })();
 
-/*$(document).ready((function () {
-    $("#couriersCoordinates").click(function () {
-
-        showCourierOnMap();
-    });
-}));*/
-
 function showCourierOnMap() {
     $.ajax({
         url: "/currentCourier",
         type: "GET",
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             couriersMarkersLayerGroup.clearLayers();
             if (data.result !== null) {
                 for (let i = 0; i < data.result.length; i++) {
@@ -45,13 +37,6 @@ let firstOrderPointMarkers = [];
 let secondOrderPointMarkers = [];
 let deliveryInfos = [];
 
-/*$(document).ready((function () {
-    $("#deliveryCoordinates").click(function () {
-
-        setNotDeliveredMarkers();
-    });
-}));*/
-
 function setNotDeliveredMarkers() {
     $.ajax({
         url: "/activeOrdersListForMap",
@@ -70,7 +55,6 @@ function setNotDeliveredMarkers() {
                         .run((err, results) => {
                             let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
                             let longitude = parseFloat(results.results[0].latlng.lng.toFixed(4));
-                            /*deliveryInfos[i] = data.result[i];*/
                             let deliveryMarker = L.marker([latitude, longitude],
                                 {icon: notDeliveredFirstOrderPoint}).addTo(firstOrderPointMarkersLayerGroup);
                             deliveryMarker.bindPopup("<b>Заказ №" + data.result[i].orderDetailsId + "</b><br>" +
@@ -84,7 +68,6 @@ function setNotDeliveredMarkers() {
                             let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
                             let longitude = parseFloat(results.results[0].latlng.lng.toFixed(4));
                             deliveryInfos[i] = data.result[i];
-                            console.log(deliveryInfos[i]);
                             let deliveryMarker = L.marker([latitude, longitude],
                                 {icon: notDeliveredSecondOrderPoint}).addTo(secondOrderPointMarkersLayerGroup);
                             deliveryMarker.bindPopup("<b>Заказ №" + data.result[i].orderDetailsId + "</b><br>" +
@@ -100,13 +83,6 @@ function setNotDeliveredMarkers() {
 
 let deliveredMarkersLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
 let deliveredMarkers = [];
-
-/*$(document).ready((function () {
-    $("#showDeliveredOrders").click(function () {
-
-        setDeliveredMarkers();
-    });
-}));*/
 
 function setDeliveredMarkers() {
     $.ajax({

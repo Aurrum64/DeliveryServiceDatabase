@@ -7,6 +7,10 @@ let routesToFirstAddress = [];
 let routesToSecondAddress = [];
 let firstAddressPolyline;
 let secondAddressPolyline;
+let shortestDistance;
+let shortestRouteToFirstAddress;
+let routeToSecondAddress;
+let secondAddressRouteSolution;
 
 $(document).ready((function () {
     $("#buildRoute").click(function () {
@@ -41,63 +45,83 @@ function buildRoute() {
             routesToFirstAddress[i]["order"] = {
                 order: deliveryInfos[i]
             };
+            routesToFirstAddress[i].route.addTo(myDeliveryServiceMap);
         }
-        for (let i = 0; i < secondOrderPointMarkers.length; i++) {
-            routesToSecondAddress[i] = {
-                route: L.Routing.control(
-                    {
-                        waypoints: [
-                            L.latLng(firstOrderPointMarkers[i]._latlng),
-                            L.latLng(secondOrderPointMarkers[i]._latlng)
-                        ],
-                        lineOptions: {
-                            styles: [{color: 'green', opacity: 5, weight: 0}]
-                        },
-                        createMarker: function () {
-                            return null;
-                        },
-                        show: false,
-                        router: L.Routing.graphHopper('585def41-7ae7-4420-a2b3-b71c919bc166'),
-                        routeWhileDragging: true
-                    })
-            };
-            routesToSecondAddress[i]["order"] = {
-                order: deliveryInfos[i]
-            };
+        for (let i = 0; i < routesToFirstAddress.length; i++) {
+
+            routesToFirstAddress[i].route.on('routesfound', function (e) {
+                solutionsInfos[i] = {
+                    route: L.Routing.line(e.routes[0])
+                };
+                solutionsInfos[i]["order"] = {
+                    orderDetailsId: routesToFirstAddress[i].order.order.orderDetailsId
+                };
+            });
         }
-        routesToFirstAddress[0].route.addTo(myDeliveryServiceMap);
-        routesToSecondAddress[0].route.addTo(myDeliveryServiceMap);
-
-        routesToFirstAddress[0].route.on('routesfound', function (e) {
-
-            solutionsInfos[0] = L.Routing.line(e.routes[0]);
+        setTimeout(function () {
+            for (let i = 0; i < solutionsInfos.length; i++) {
+                if (i === 0) {
+                    shortestDistance = solutionsInfos[0].route._route.summary.totalDistance;
+                    shortestRouteToFirstAddress = solutionsInfos[0];
+                } else {
+                    if (shortestDistance > solutionsInfos[i].route._route.summary.totalDistance) {
+                        shortestDistance = solutionsInfos[i].route._route.summary.totalDistance;
+                        shortestRouteToFirstAddress = solutionsInfos[i];
+                    }
+                }
+            }
+        }, (500));
+        setTimeout(function () {
+            for (let i = 0; i < secondOrderPointMarkers.length; i++) {
+                if (deliveryInfos[i].orderDetailsId === shortestRouteToFirstAddress.order.orderDetailsId) {
+                    routeToSecondAddress = {
+                        route: L.Routing.control(
+                            {
+                                waypoints: [
+                                    L.latLng(firstOrderPointMarkers[i]._latlng),
+                                    L.latLng(secondOrderPointMarkers[i]._latlng)
+                                ],
+                                lineOptions: {
+                                    styles: [{color: 'green', opacity: 5, weight: 0}]
+                                },
+                                createMarker: function () {
+                                    return null;
+                                },
+                                show: false,
+                                router: L.Routing.graphHopper('585def41-7ae7-4420-a2b3-b71c919bc166'),
+                                routeWhileDragging: true
+                            })
+                    };
+                    routeToSecondAddress["order"] = {
+                        order: deliveryInfos[i]
+                    };
+                }
+            }
+            routeToSecondAddress.route.addTo(myDeliveryServiceMap);
+        }, (1000));
+        setTimeout(function () {
             firstAddressPolyline = {
-                polyline: L.polyline(e.routes[0].coordinates, {
+                polyline: L.polyline(shortestRouteToFirstAddress.route._route.coordinates, {
                     color: 'red',
                     weight: 3
                 }).addTo(routesLayerGroup)
             };
-            firstAddressPolyline["order"] = {order: routesToFirstAddress[0].order.order};
-            console.log(firstAddressPolyline);
-        });
-        routesToSecondAddress[0].route.on('routesfound', function (e) {
+            firstAddressPolyline["order"] = {order: shortestRouteToFirstAddress.order.orderDetailsId};
 
-            solutionsInfos[0] = L.Routing.line(e.routes[0]);
             secondAddressPolyline = {
-                polyline: L.polyline(e.routes[0].coordinates, {
+                polyline: L.polyline(routeToSecondAddress.route._selectedRoute.coordinates, {
                     color: 'red',
                     weight: 3
                 }).addTo(routesLayerGroup)
             };
-            secondAddressPolyline["order"] = {order: routesToSecondAddress[0].order.order};
-            console.log(secondAddressPolyline);
-        });
+            secondAddressPolyline["order"] = {order: routeToSecondAddress.order.order.orderDetailsId};
+        }, (1500));
     }
 }
 
 $(document).ready((function () {
     $("#move").click(function () {
-            if (routesToFirstAddress[0] === undefined || routesToSecondAddress[0] === undefined) {
+            if (routesToFirstAddress[0] === undefined) {
                 alert("Сперва вы должны получить от системы ближайший к вам заказ!");
             } else {
                 orderDeliveredByCourier = JSON.stringify(

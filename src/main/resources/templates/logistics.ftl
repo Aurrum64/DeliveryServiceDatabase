@@ -70,6 +70,7 @@
         <#include "parts/scriptsSources/orderDetailsScripts.ftl">
         <#include "parts/scriptsSources/couriersScripts.ftl">
     <#else>
+        <div class="container" style="height: 50px"></div>
         <button id="buildRoute" type="button" class="btn btn-secondary ml-5 mt-3">
             Найти ближайший заказ и проложить маршрут
         </button>

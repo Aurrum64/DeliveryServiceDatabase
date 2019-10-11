@@ -47,4 +47,11 @@ public class OrderSpecificationEntity {
     public boolean isOrderConfirmed() {
         return orderConfirmed;
     }
+
+    @Column(name = "route_blocked")
+    private Boolean routeBlocked;
+
+    public boolean isRouteBlocked() {
+        return routeBlocked;
+    }
 }

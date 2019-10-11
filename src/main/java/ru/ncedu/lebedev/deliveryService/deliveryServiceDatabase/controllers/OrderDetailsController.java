@@ -101,6 +101,7 @@ public class OrderDetailsController {
         specification.setOrderPickedUp(false);
         specification.setOrderDelivered(false);
         specification.setOrderConfirmed(false);
+        specification.setRouteBlocked(false);
         orderSpecificationsRepository.save(specification);
 
         orderDetail.setOrderSpecification(specification);
@@ -217,6 +218,41 @@ public class OrderDetailsController {
         specification.setOrderPickedUp(true);
         orderSpecificationsRepository.save(specification);
 
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/blockSelectedRoute",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax blockSelectedRoute(@RequestBody ChangeStatusForOrderDetailsId message) {
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+
+        CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
+        order.setCourier(courier);
+        orderDetailsRepository.save(order);
+
+        OrderSpecificationEntity specification = order.getOrderSpecification();
+        specification.setRouteBlocked(true);
+        orderSpecificationsRepository.save(specification);
+
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/unblockRoute",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax unblockRoute(@AuthenticationPrincipal UsersEntity user) {
+
+        List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
+
+        OrderDetailsEntity blockedOrderRoute = orderDetailsRepository.findByOrderSpecification_RouteBlocked(true);
+        if (blockedOrderRoute != null) {
+            if (currentCourier.get(0).getCourierId().equals(blockedOrderRoute.getCourier().getCourierId())) {
+                blockedOrderRoute.setCourier(null);
+                blockedOrderRoute.getOrderSpecification().setRouteBlocked(false);
+                orderDetailsRepository.save(blockedOrderRoute);
+            }
+        }
         return new ControllerAnswerToAjax("OK", "");
     }
 }

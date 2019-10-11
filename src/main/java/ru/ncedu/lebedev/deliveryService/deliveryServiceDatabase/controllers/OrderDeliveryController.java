@@ -121,10 +121,12 @@ public class OrderDeliveryController {
         final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 5;
 
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
-        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatusAndAlreadyInProgress("Заказ доставляется", false);
+        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.
+                findAllByStatusAndAlreadyInProgressAndOrderSpecification_RouteBlocked("Заказ доставляется", false, false);
 
         List<CouriersEntity> thisCourier = couriersRepository.findByFirstName(user.getUsername());
-        List<OrderDetailsEntity> ordersOfThisCourier = orderDetailsRepository.findAllByCourierFirstNameAndStatus(thisCourier.get(0).getFirstName(), "Заказ доставляется");
+        List<OrderDetailsEntity> ordersOfThisCourier = orderDetailsRepository.
+                findAllByCourierFirstNameAndStatusAndOrderSpecification_RouteBlocked(thisCourier.get(0).getFirstName(), "Заказ доставляется", true);
         if (!ordersOfThisCourier.isEmpty()) {
             activeOrders.addAll(ordersOfThisCourier);
         }

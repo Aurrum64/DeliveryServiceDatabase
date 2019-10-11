@@ -1,16 +1,14 @@
 let routesLayerGroup = L.layerGroup().addTo(myDeliveryServiceMap);
-let routes = [];
 let solutionsInfos = [];
-let polylines = [];
 let orderDeliveredByCourier;
 let routesToFirstAddress = [];
-let routesToSecondAddress = [];
 let firstAddressPolyline;
 let secondAddressPolyline;
 let shortestDistance;
 let shortestRouteToFirstAddress;
 let routeToSecondAddress;
-let secondAddressRouteSolution;
+
+unblockRoute();
 
 $(document).ready((function () {
     $("#buildRoute").click(function () {
@@ -72,6 +70,7 @@ function buildRoute() {
             }
         }, (500));
         setTimeout(function () {
+            blockSelectedRoute(shortestRouteToFirstAddress.order.orderDetailsId);
             for (let i = 0; i < secondOrderPointMarkers.length; i++) {
                 if (deliveryInfos[i].orderDetailsId === shortestRouteToFirstAddress.order.orderDetailsId) {
                     routeToSecondAddress = {
@@ -115,8 +114,6 @@ function buildRoute() {
                 }).addTo(routesLayerGroup)
             };
             secondAddressPolyline["order"] = {orderDetailsId: routeToSecondAddress.order.order.orderDetailsId};
-            console.log(firstAddressPolyline);
-            console.log(secondAddressPolyline);
         }, (1500));
     }
 }
@@ -258,5 +255,41 @@ function changeOrderPickedUpStatus(orderDeliveredByCourier) {
     });
 }
 
+function blockSelectedRoute(orderDetailsId) {
+
+    let message = {
+        orderDetailsId: orderDetailsId,
+        courierId: couriersInfos[0].courierId
+    };
+    $.ajax({
+        type: "POST",
+        url: "blockSelectedRoute",
+        data: JSON.stringify(message),
+        contentType: 'application/json',
+        success: function (data) {
+            if (data.status === 'OK') {
+                console.log('Route successfully blocked!');
+            } else {
+                console.log('Can\'t block route!: ' + data.status + ', ' + data.errorMessage);
+            }
+        }
+    });
+}
+
+function unblockRoute() {
+
+    $.ajax({
+        type: "POST",
+        url: "unblockRoute",
+        contentType: 'application/json',
+        success: function (data) {
+            if (data.status === 'OK') {
+                console.log('Route successfully unblocked!');
+            } else {
+                console.log('Can\'t unblock route!: ' + data.status + ', ' + data.errorMessage);
+            }
+        }
+    });
+}
 
 

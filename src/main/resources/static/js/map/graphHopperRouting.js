@@ -126,8 +126,6 @@ $(document).ready((function () {
             if (firstAddressPolyline === undefined || secondAddressPolyline === undefined) {
                 alert("Сперва вы должны получить от системы ближайший к вам заказ!");
             } else {
-                console.log(firstAddressPolyline);
-                console.log(secondAddressPolyline);
                 orderDeliveredByCourier = JSON.stringify(
                     {
                         courierId: couriersInfos[0].courierId,
@@ -135,12 +133,8 @@ $(document).ready((function () {
                     });
                 assignCourierToOrder(orderDeliveredByCourier);
 
-                console.log(orderDeliveredByCourier);
-
                 let i = 0;
                 let howManyTimesFirstAddress = firstAddressPolyline.polyline._latlngs.length;
-
-                console.log(howManyTimesFirstAddress);
 
                 function moveToFirstAddress() {
 
@@ -151,7 +145,6 @@ $(document).ready((function () {
                         courierId: couriersInfos[0].courierId,
                         orderId: firstAddressPolyline.order.orderDetailsId
                     });
-                    console.log(currentCourierInfo);
                     sendMovingCoordinates(currentCourierInfo);
                     showCourierOnMap();
                     i++;

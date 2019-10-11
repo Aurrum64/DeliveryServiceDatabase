@@ -125,7 +125,7 @@
             <div class="card-body">
                 <h5 class="card-title ml-2">Заказ доставлен!</h5>
                 <p class="card-text ml-2">Остался последний шаг, вам необходимо подтвердить, что вы получили заказ.</p>
-                <#if order.status == "Заказ не доставлен" && order.authorName == username>
+                <#if order.status == "Заказ доставляется" && order.authorName == username>
                     <form action="/order/orderConfirmation" method="post">
                         <input type="hidden" name="orderDetailsId" value="${order.orderDetailsId}">
                         <button type="submit" class="btn btn-primary">Подтверждаю, что получил(а) заказ</button>

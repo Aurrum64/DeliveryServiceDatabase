@@ -92,7 +92,11 @@
             <#list archiveOrdersListForCurrentUser as archiveOrder>
                 <tr>
                     <th scope="row">${archiveOrder.orderDetailsId}</th>
-                    <td>${archiveOrder.orderDate}</td>
+                    <#if archiveOrder.orderDate??>
+                        <td>${archiveOrder.orderDate}</td>
+                    <#else>
+                        <td>Дата не указана</td>
+                    </#if>
                     <td>${archiveOrder.firstOrderAddressPoint}</td>
                     <td>${archiveOrder.secondOrderAddressPoint}</td>
                     <td>${archiveOrder.comment}</td>

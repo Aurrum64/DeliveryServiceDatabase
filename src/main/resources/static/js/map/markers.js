@@ -50,18 +50,20 @@ function setNotDeliveredMarkers() {
                 for (let i = 0; i < data.result.length; i++) {
                     let firstOrderAddressPoint = data.result[i].firstOrderAddressPoint;
                     let secondOrderAddressPoint = data.result[i].secondOrderAddressPoint;
-                    L.esri.Geocoding.geocode()
-                        .text(firstOrderAddressPoint)
-                        .run((err, results) => {
-                            let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
-                            let longitude = parseFloat(results.results[0].latlng.lng.toFixed(4));
-                            let deliveryMarker = L.marker([latitude, longitude],
-                                {icon: notDeliveredFirstOrderPoint}).addTo(firstOrderPointMarkersLayerGroup);
-                            deliveryMarker.bindPopup("<b>Заказ №" + data.result[i].orderDetailsId + "</b><br>" +
-                                "<b>Забрать заказ по адресу:</b> " + firstOrderAddressPoint + "<br>" +
-                                "<b>Комментарий заказчика:</b> " + data.result[i].comment);
-                            firstOrderPointMarkers[i] = deliveryMarker;
-                        });
+                    if (!data.result[i].orderSpecification.orderPickedUp) {
+                        L.esri.Geocoding.geocode()
+                            .text(firstOrderAddressPoint)
+                            .run((err, results) => {
+                                let latitude = parseFloat(results.results[0].latlng.lat.toFixed(4));
+                                let longitude = parseFloat(results.results[0].latlng.lng.toFixed(4));
+                                let deliveryMarker = L.marker([latitude, longitude],
+                                    {icon: notDeliveredFirstOrderPoint}).addTo(firstOrderPointMarkersLayerGroup);
+                                deliveryMarker.bindPopup("<b>Заказ №" + data.result[i].orderDetailsId + "</b><br>" +
+                                    "<b>Забрать заказ по адресу:</b> " + firstOrderAddressPoint + "<br>" +
+                                    "<b>Комментарий заказчика:</b> " + data.result[i].comment);
+                                firstOrderPointMarkers[i] = deliveryMarker;
+                            });
+                    }
                     L.esri.Geocoding.geocode()
                         .text(secondOrderAddressPoint)
                         .run((err, results) => {

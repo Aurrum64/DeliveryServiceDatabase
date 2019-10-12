@@ -1,8 +1,8 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Все активные заказы" heightTop=95 heightBottom=600>
+<@defaultPage.defaultPageTemplate pageName="Заказы в ожидании" heightTop=95 heightBottom=600>
     <div class="container mt-5 ml-5">
         <div class="text mt-5 mb-3">
-            <h4>Все активные заказы:</h4>
+            <h4>Заказы на определенное время:</h4>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -22,7 +22,6 @@
                                    style="width: 300px">
                             <label for="searchSecondOrderAddressPoint">Найти по адресу доставки...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
@@ -44,7 +43,7 @@
                 <th scope="col"></th>
             </tr>
             </thead>
-            <tbody id="allActiveOrdersList">
+            <tbody id="waitingOrderDetailsList">
             </tbody>
         </table>
     </div>

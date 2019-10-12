@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.*;
@@ -19,10 +21,13 @@ import java.util.*;
 public class CouriersController {
 
     private CouriersRepository couriersRepository;
+    private OrderSpecificationsRepository orderSpecificationsRepository;
 
     @Autowired
-    public CouriersController(CouriersRepository couriersRepository) {
+    public CouriersController(CouriersRepository couriersRepository,
+                              OrderSpecificationsRepository orderSpecificationsRepository) {
         this.couriersRepository = couriersRepository;
+        this.orderSpecificationsRepository = orderSpecificationsRepository;
     }
 
     @GetMapping("/couriers")
@@ -186,11 +191,15 @@ public class CouriersController {
     }
 
     @Transactional
-    @RequestMapping(value = "/movingCourierCoordinates",
-            method = RequestMethod.POST,
+    @PostMapping(value = "/movingCourierCoordinates",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax courierMove(@RequestBody CourierCoordinateAfterMove courier) {
+
+        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(courier.getOrderId());
+        if (!specification.getCourierWent()) {
+            specification.setCourierWent(true);
+        }
         couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
         couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
         return new ControllerAnswerToAjax("OK", "");
@@ -254,13 +263,13 @@ public class CouriersController {
     public ResponseEntity<?> sendRestCouriersList() {
 
         SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(false, false);
-        if (activeCouriers.isEmpty()) {
+        List<CouriersEntity> restCouriers = couriersRepository.findAllByReadinessAndFired(false, false);
+        if (restCouriers.isEmpty()) {
             couriersList.setMsg("Rest couriers list is empty!");
         } else {
             couriersList.setMsg("success");
         }
-        couriersList.setResult(activeCouriers);
+        couriersList.setResult(restCouriers);
         return ResponseEntity.ok(couriersList);
     }
 
@@ -268,14 +277,29 @@ public class CouriersController {
     @ResponseBody
     public ResponseEntity<?> sendActiveCouriersList() {
 
-        SendCouriersToAjax couriersList = new SendCouriersToAjax();
+        SendCouriersToAjax activeCouriersList = new SendCouriersToAjax();
         List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
         if (activeCouriers.isEmpty()) {
-            couriersList.setMsg("Active couriers list is empty!");
+            activeCouriersList.setMsg("Rest couriers list is empty!");
         } else {
-            couriersList.setMsg("success");
+            activeCouriersList.setMsg("success");
         }
-        couriersList.setResult(activeCouriers);
-        return ResponseEntity.ok(couriersList);
+        activeCouriersList.setResult(activeCouriers);
+        return ResponseEntity.ok(activeCouriersList);
+    }
+
+    @GetMapping(value = "/currentCourier", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendCurrentCourier(@AuthenticationPrincipal UsersEntity user) {
+
+        SendCouriersToAjax listWithCurrentCourier = new SendCouriersToAjax();
+        List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
+        if (currentCourier.isEmpty() || !currentCourier.get(0).isReadiness() || currentCourier.get(0).isFired()) {
+            listWithCurrentCourier.setMsg("Current courier don't ready to take orders!");
+        } else {
+            listWithCurrentCourier.setMsg("success");
+            listWithCurrentCourier.setResult(currentCourier);
+        }
+        return ResponseEntity.ok(listWithCurrentCourier);
     }
 }

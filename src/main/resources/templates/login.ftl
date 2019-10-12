@@ -1,5 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Authorization" heightTop=0 heightBottom=0>
+<@defaultPage.defaultPageTemplate pageName="Авторизация" heightTop=0 heightBottom=0>
     <div class="view" onClick=false>
         <img src="https://images.wallpaperscraft.ru/image/nochnoj_gorod_vid_sverkhu_zdaniya_zheleznaya_doroga_118814_1920x1080.jpg"
              class="img-fluid"
@@ -7,7 +7,7 @@
         <div class="mask pattern-1 flex-center waves-effect waves-light">
             <div class="card" style="width: 420px">
                 <h3 class="card-header info-color white-text text-center py-4">
-                    <strong>Authorization</strong>
+                    <strong>Авторизация</strong>
                 </h3>
                 <div class="card-body">
                     <#if successMessage??>
@@ -55,25 +55,24 @@
                         <div class="md-form">
                             <i class="fa fa-user prefix grey-text"></i>
                             <input type="text" name="username" id="materialFormCardNameEx" class="form-control">
-                            <label for="materialFormCardNameEx" class="font-weight-light">Your name...</label>
+                            <label for="materialFormCardNameEx" class="font-weight-light">Ваш логин...</label>
                         </div>
 
                         <div class="md-form">
                             <i class="fa fa-lock prefix grey-text"></i>
                             <input type="password" name="password" id="materialFormCardPasswordEx"
                                    class="form-control">
-                            <label for="materialFormCardPasswordEx" class="font-weight-light">Your
-                                password...</label>
+                            <label for="materialFormCardPasswordEx" class="font-weight-light">Ваш пароль...</label>
                         </div>
 
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="text-center py-4 mt-3">
-                            <button class="btn btn-outline-info" type="submit">Sign In</button>
+                            <button class="btn btn-outline-info" type="submit">Войти</button>
                         </div>
 
                         <div class="text-center">
-                            <p>Not a member?
-                                <a href="/registration">Register</a>
+                            <p>У вас еще нет учетной записи?
+                                <a href="/registration">Зарегистрироваться</a>
                             </p>
                         </div>
                     </form>

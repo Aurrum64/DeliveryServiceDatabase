@@ -1,13 +1,10 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Profile" heightTop=65 heightBottom=200>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Profile">
-    </@jumbotron.jumbotron>
+<@defaultPage.defaultPageTemplate pageName="Профиль" heightTop=65 heightBottom=200>
     <#include "parts/interface/security.ftl">
     <div class="container ml-5 mt-5" style="width: 600px">
-        <h2>Личный кабинет пользователя:${username!}</h2>
-
+        <div class="text py-4">
+            <h3>Личный кабинет пользователя:${username!}</h3>
+        </div>
         <#if !isAccountActivated>
             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert"
                  style="width: 460px">
@@ -21,12 +18,12 @@
         </#if>
 
         <#if avatar??>
-            <div class="text mt-5 mb-3">
+            <div class="text mt-2 mb-3">
                 <h4>Ваш аватар:</h4>
             </div>
             <img src="/img/${avatar}" alt="">
         <#else>
-            <div class="text mt-5 mb-3">
+            <div class="text mt-2 mb-3">
                 <h4>Базовый аватар:</h4>
             </div>
             <img src="https://i.ibb.co/Xk93fQh/avatar1.png" alt="">
@@ -44,7 +41,6 @@
                         <select id="professionChoice" class="browser-default custom-select">
                             <option selected>Кем вы хотите работать в нашей компании?</option>
                             <option value="courierRequest">Курьером</option>
-                            <option value="managerRequest">Менеджером</option>
                         </select>
                         <div class="text-center mt-4">
                             <#if !user.wasFired>

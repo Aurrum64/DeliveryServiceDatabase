@@ -22,3 +22,15 @@ var cargo = L.icon({
     iconUrl: 'http://tavr.pro/images/dostavka.svg',
     iconSize: [50, 50]
 });
+
+var deliveryService = L.icon({
+    iconUrl: 'https://i.ibb.co/LzwQ6cx/delivery-Service.png',
+    iconSize: [80, 80],
+    popupAnchor: [0, -30]
+});
+
+var underground = L.icon({
+    iconUrl: 'https://trashbox.ru/apk_icons/801426_192.png',
+    iconSize: [80, 80],
+    popupAnchor: [0, -30]
+});

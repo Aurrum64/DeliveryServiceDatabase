@@ -13,6 +13,8 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     OrderDetailsEntity findByOrderDetailsId(Integer id);
 
+    OrderDetailsEntity findByOrderSpecification_RouteBlocked(Boolean blocked);
+
     List<OrderDetailsEntity> findAllByOrderDetailsId(Integer id);
 
     List<OrderDetailsEntity> findByOrderDetailsIdAndOrderDate(Integer id, Date orderDate);
@@ -30,6 +32,10 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
     List<OrderDetailsEntity> findAll();
 
     List<OrderDetailsEntity> findAllByStatus(String status);
+
+    List<OrderDetailsEntity> findAllByStatusAndAlreadyInProgressAndOrderSpecification_RouteBlocked(String status, Boolean alreadyInProgress, Boolean blocked);
+
+    List<OrderDetailsEntity> findAllByCourierFirstNameAndStatusAndOrderSpecification_RouteBlocked(String firstName, String status, Boolean blocked);
 
     void deleteByOrderDetailsId(Integer id);
 

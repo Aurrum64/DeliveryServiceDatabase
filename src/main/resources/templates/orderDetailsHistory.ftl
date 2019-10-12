@@ -1,14 +1,14 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Order details" heightTop=65 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="История заказов" heightTop=95 heightBottom=600>
     <div class="container mt-5 ml-5">
-        <div class="text mt-5 mb-3">
+        <div class="text mt-5">
             <h4>История заказов:</h4>
         </div>
-        <div class="form-row">
+        <div class="form-row mt-4">
             <div class="form-group col-md-6">
                 <form id="searchOrderDetails" class="form-inline">
                     <div class="form-group row">
-                        <div class="md-form form-lg ml-4">
+                        <div class="md-form form-lg ml-3">
                             <input type="text" id="searchOrderDetailsId"
                                    class="form-control form-control-lg">
                             <label for="searchOrderDetailsId">Найти по ID...</label>
@@ -41,6 +41,7 @@
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Курьер</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody id="allArchiveOrdersList">

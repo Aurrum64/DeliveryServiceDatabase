@@ -15,8 +15,10 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnti
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.List;
@@ -26,12 +28,15 @@ public class OrderDetailsController {
 
     private OrderDetailsRepository orderDetailsRepository;
     private CouriersRepository couriersRepository;
+    private OrderSpecificationsRepository orderSpecificationsRepository;
 
     @Autowired
     public OrderDetailsController(OrderDetailsRepository orderDetailsRepository,
-                                  CouriersRepository couriersRepository) {
+                                  CouriersRepository couriersRepository,
+                                  OrderSpecificationsRepository orderSpecificationsRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.couriersRepository = couriersRepository;
+        this.orderSpecificationsRepository = orderSpecificationsRepository;
     }
 
     @GetMapping("/orderDetails")
@@ -70,17 +75,38 @@ public class OrderDetailsController {
     public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
                                                   @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
+        System.out.println(order.getOrderDate());
         orderDetail.setOrderDate(order.getOrderDate());
         orderDetail.setFirstOrderAddressPoint(order.getFirstOrderAddressPoint());
         orderDetail.setSecondOrderAddressPoint(order.getSecondOrderAddressPoint());
         if (order.getComment().isEmpty()) {
-            orderDetail.setComment("Доставить как можно скорее");
-        } else {
-            orderDetail.setComment(order.getComment());
+            if (order.getOrderDate() == null) {
+                orderDetail.setComment("Доставить как можно скорее");
+            } else {
+                orderDetail.setComment("Доставить в указанное время");
+            }
         }
-        orderDetail.setStatus("Заказ не доставлен");
+        if (order.getOrderDate() == null) {
+            orderDetail.setStatus("Заказ доставляется");
+        } else {
+            orderDetail.setStatus("Заказ в ожидании");
+        }
         orderDetail.setAuthor(user);
+        orderDetail.setReviewWritten(false);
+        orderDetail.setAlreadyInProgress(false);
+
+        OrderSpecificationEntity specification = new OrderSpecificationEntity();
+        specification.setCourierFound(false);
+        specification.setCourierWent(false);
+        specification.setOrderPickedUp(false);
+        specification.setOrderDelivered(false);
+        specification.setOrderConfirmed(false);
+        specification.setRouteBlocked(false);
+        orderSpecificationsRepository.save(specification);
+
+        orderDetail.setOrderSpecification(specification);
         orderDetailsRepository.save(orderDetail);
+
         return new ControllerAnswerToAjax("OK", "");
     }
 
@@ -155,12 +181,13 @@ public class OrderDetailsController {
         }
     }
 
-    @Transactional
     @PostMapping(value = "/changeDeliveryStatus",
             headers = {"Content-type=application/json"})
     @ResponseBody
     public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {
-        orderDetailsRepository.setStatusFor("Заказ доставлен", order.getOrderDetailsId());
+        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(order.getOrderDetailsId());
+        specification.setOrderDelivered(true);
+        orderSpecificationsRepository.save(specification);
         return new ControllerAnswerToAjax("OK", "");
     }
 
@@ -169,9 +196,63 @@ public class OrderDetailsController {
     @ResponseBody
     public ControllerAnswerToAjax assignCourierToOrder(@RequestBody ChangeStatusForOrderDetailsId message) {
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+
+        OrderSpecificationEntity specification = order.getOrderSpecification();
+        specification.setCourierFound(true);
+        orderSpecificationsRepository.save(specification);
+
+        CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
+        order.setCourier(courier);
+        order.setAlreadyInProgress(true);
+        orderDetailsRepository.save(order);
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/changeOrderPickedUpStatus",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax changeOrderPickedUpStatus(@RequestBody ChangeStatusForOrderDetailsId message) {
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+
+        OrderSpecificationEntity specification = order.getOrderSpecification();
+        specification.setOrderPickedUp(true);
+        orderSpecificationsRepository.save(specification);
+
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/blockSelectedRoute",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax blockSelectedRoute(@RequestBody ChangeStatusForOrderDetailsId message) {
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
+
         CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
         order.setCourier(courier);
         orderDetailsRepository.save(order);
+
+        OrderSpecificationEntity specification = order.getOrderSpecification();
+        specification.setRouteBlocked(true);
+        orderSpecificationsRepository.save(specification);
+
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "/unblockRoute",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax unblockRoute(@AuthenticationPrincipal UsersEntity user) {
+
+        List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
+
+        OrderDetailsEntity blockedOrderRoute = orderDetailsRepository.findByOrderSpecification_RouteBlocked(true);
+        if (blockedOrderRoute != null) {
+            if (currentCourier.get(0).getCourierId().equals(blockedOrderRoute.getCourier().getCourierId())) {
+                blockedOrderRoute.setCourier(null);
+                blockedOrderRoute.getOrderSpecification().setRouteBlocked(false);
+                orderDetailsRepository.save(blockedOrderRoute);
+            }
+        }
         return new ControllerAnswerToAjax("OK", "");
     }
 }

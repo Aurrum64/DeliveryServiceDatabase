@@ -6,10 +6,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ReviewMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendReviewsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
@@ -19,6 +17,8 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Co
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ReviewsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
+
+import java.util.Map;
 
 @Controller
 public class ReviewsController {
@@ -40,7 +40,21 @@ public class ReviewsController {
     }
 
     @GetMapping("/reviews")
-    public String orderDetailsView() {
+    public String reviewsView() {
+        return "reviews";
+    }
+
+    @GetMapping("/reviewsList")
+    public String reviewsList() {
+        return "reviewsList";
+    }
+
+    @PostMapping("/reviews")
+    public String reviewsView(@RequestParam Integer orderDetailsId,
+                              @RequestParam String authorName,
+                              Map<String, Object> model) {
+        model.put("orderDetailsId", orderDetailsId);
+        model.put("authorName", authorName);
         return "reviews";
     }
 
@@ -59,26 +73,30 @@ public class ReviewsController {
         return ResponseEntity.ok(reviewsList);
     }
 
-    @PostMapping(value = "/addReviews",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax addReviews(@AuthenticationPrincipal UsersEntity user,
-                                             @RequestBody ReviewMessage reviewMessage) {
+    @PostMapping(value = "/addReviews")
+    public String addReviews(@AuthenticationPrincipal UsersEntity user,
+                             @RequestParam Integer orderDetailsId,
+                             @RequestParam String authorName,
+                             @RequestParam Integer ratingFromClient,
+                             @RequestParam String reviewFromClient) {
 
-        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(reviewMessage.getOrderId());
+        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
+
+        order.setReviewWritten(true);
+        orderDetailsRepository.save(order);
 
         CouriersEntity courier = couriersRepository.findByCourierId(order.getCourier().getCourierId());
 
-        couriersRating.setCourierRating(courier, reviewMessage.getRating());
+        couriersRating.setCourierRating(courier, ratingFromClient);
 
         ReviewsEntity review = new ReviewsEntity();
-        review.setOrderId(reviewMessage.getOrderId());
-        review.setClientName(reviewMessage.getClientName());
-        review.setRating(reviewMessage.getRating());
-        review.setReviewSubject(reviewMessage.getReviewSubject());
-        review.setReview(reviewMessage.getReview());
+        review.setOrderId(orderDetailsId);
+        review.setClientName(authorName);
+        review.setRating(ratingFromClient);
+        review.setReview(reviewFromClient);
         review.setAuthor(user);
         reviewsRepository.save(review);
-        return new ControllerAnswerToAjax("OK", "");
+
+        return "redirect:/orderDelivery";
     }
 }

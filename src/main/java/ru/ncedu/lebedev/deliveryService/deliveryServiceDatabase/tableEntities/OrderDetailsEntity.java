@@ -29,8 +29,12 @@ public class OrderDetailsEntity {
     @JoinColumn(name = "courier_id")
     private CouriersEntity courier;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "order_date", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "specification_id")
+    private OrderSpecificationEntity orderSpecification;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "order_date")
     private Date orderDate;
 
     @Column(name = "fist_order_address_point", nullable = false)
@@ -44,4 +48,18 @@ public class OrderDetailsEntity {
 
     @Column(name = "delivery_status")
     private String status;
+
+    @Column(name = "review_written")
+    private Boolean reviewWritten;
+
+    public boolean isReviewWritten() {
+        return reviewWritten;
+    }
+
+    @Column(name = "already_in_progress")
+    private Boolean alreadyInProgress;
+
+    public boolean isAlreadyInProgress() {
+        return alreadyInProgress;
+    }
 }

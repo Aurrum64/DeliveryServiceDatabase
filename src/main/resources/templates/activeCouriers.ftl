@@ -1,15 +1,14 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Couriers" heightTop=65 heightBottom=500>
+<@defaultPage.defaultPageTemplate pageName="Все активные курьеры" heightTop=95 heightBottom=600>
     <div class="container mt-5 ml-5">
-        <div class="text mt-5 mb-3">
+        <div class="text mt-5">
             <h3>Полный список активных курьеров:</h3>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form id="searchCouriers" class="form-inline">
                     <div class="form-group row">
-                        <div class="md-form form-lg ml-4">
+                        <div class="md-form form-lg ml-3">
                             <input type="text" id="searchCourierId" class="form-control form-control-lg">
                             <label for="searchCourierId">Найти по ID...</label>
                         </div>

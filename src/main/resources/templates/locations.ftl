@@ -1,9 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Locations" heightTop=65 heightBottom=200>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Locations management page">
-    </@jumbotron.jumbotron>
+<@defaultPage.defaultPageTemplate pageName="Локации" heightTop=65 heightBottom=400>
     <div class="container mt-5 ml-5">
         <#if filterCheck??>
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
@@ -124,6 +120,9 @@
         </div>
     </div>
     <div class="container mt-5 ml-5">
+        <div class="text mt-5 mb-3">
+            <h3>Локации:</h3>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>

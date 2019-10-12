@@ -1,10 +1,6 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Order details" heightTop=65 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Подробности заказов" heightTop=65 heightBottom=400>
     <#include "parts/interface/security.ftl">
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Order details management page">
-    </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -127,7 +123,7 @@
     </#if>
     <div class="container mt-5 ml-5">
         <div class="text mt-5 mb-3">
-            <h4>Заказы:</h4>
+            <h3>Детальные сведения о заказах:</h3>
         </div>
         <table class="table table-striped">
             <thead>

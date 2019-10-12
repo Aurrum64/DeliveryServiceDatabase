@@ -1,9 +1,5 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Заказ доставки" heightTop=65 heightBottom=200>
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Заказ доставки">
-    </@jumbotron.jumbotron>
+<@defaultPage.defaultPageTemplate pageName="Сделать заказ" heightTop=85 heightBottom=600>
     <div class="container mt-5 ml-5">
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
            aria-controls="collapseExample">
@@ -13,8 +9,8 @@
             <div class="form-group mt-3">
                 <form id="addOrderDetails">
                     <div class="md-form form-lg ml-2">
-                        <input type="text" id="addOrderDate" class="form-control form-control-lg">
-                        <label for="orderDate">Введите дату доставки...</label>
+                        <input type="datetime-local" id="addOrderDate" class="form-control form-control-lg">
+                        <label for="orderDate"></label>
                     </div>
                     <div class="md-form form-lg ml-2">
                         <input type="text" id="addFirstOrderAddressPoint" class="form-control form-control-lg">
@@ -38,7 +34,7 @@
     </div>
     <div class="container mt-5 ml-5">
         <h4>Ваши активные заказы:</h4>
-        <table class="table table-striped">
+        <table class="table table-striped" style="width: 1250px">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -49,6 +45,7 @@
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Курьер</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody id="activeOrdersListForUser">
@@ -56,8 +53,8 @@
         </table>
     </div>
     <div class="container mt-5 ml-5">
-        <h4>История ваших заказов:</h4>
-        <table class="table table-striped">
+        <h4>Заказы на определенное время:</h4>
+        <table class="table table-striped" style="width: 1250px">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -68,9 +65,69 @@
                 <th scope="col">Статус доставки</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Курьер</th>
+                <th scope="col"></th>
             </tr>
             </thead>
-            <tbody id="archiveOrdersListForUser">
+            <tbody id="waitingOrdersListForUser">
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-5 ml-5">
+        <h4>История ваших заказов:</h4>
+        <table class="table table-striped" style="width: 1250px">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Дата доставки</th>
+                <th scope="col">Откуда</th>
+                <th scope="col">Куда</th>
+                <th scope="col">Комментарий</th>
+                <th scope="col">Статус доставки</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Курьер</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list archiveOrdersListForCurrentUser as archiveOrder>
+                <tr>
+                    <th scope="row">${archiveOrder.orderDetailsId}</th>
+                    <#if archiveOrder.orderDate??>
+                        <td>${archiveOrder.orderDate}</td>
+                    <#else>
+                        <td>Дата не указана</td>
+                    </#if>
+                    <td>${archiveOrder.firstOrderAddressPoint}</td>
+                    <td>${archiveOrder.secondOrderAddressPoint}</td>
+                    <td>${archiveOrder.comment}</td>
+                    <td>${archiveOrder.status}</td>
+                    <td>${archiveOrder.authorName}</td>
+                    <td>${archiveOrder.courier.firstName}</td>
+                    <td><a href="/order/${archiveOrder.orderDetailsId}">Подробнее</a></td>
+                    <#if !archiveOrder.isReviewWritten()>
+                        <td>
+                            <form action="/reviews" method="post">
+                                <input type="hidden" name="orderDetailsId" value="${archiveOrder.orderDetailsId}">
+                                <input type="hidden" name="authorName" value="${archiveOrder.authorName}">
+                                <button type="submit" class="btn btn-info ml-3">Оставить отзыв</button>
+                            </form>
+                        </td>
+                    </#if>
+                </tr>
+            <#else>
+                <tr>
+                    <th scope="row">В вашей истории заказов пока нет ни одного заказа :(</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </#list>
             </tbody>
         </table>
     </div>

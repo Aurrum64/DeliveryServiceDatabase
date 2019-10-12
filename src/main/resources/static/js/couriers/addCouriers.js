@@ -5,6 +5,11 @@ showActiveCouriersList();
 showActiveCouriersListForLogisticsPage();
 showRestCouriersList();
 
+(function () {
+    showActiveCouriersListForLogisticsPage();
+    setTimeout(arguments.callee, 5000);
+})();
+
 $(document).ready(function () {
     $("#addCouriers").submit(function (event) {
 
@@ -161,6 +166,12 @@ function showActiveCouriersListForLogisticsPage() {
                 $('#activeCouriersListForLogisticsPage').html(view);
             } else {
                 for (let i = 0; i < data.result.length; i++) {
+                    let readiness;
+                    if (data.result[i].readiness === true) {
+                        readiness = "Готов";
+                    } else {
+                        readiness = "Не готов";
+                    }
                     let newLine =
                         "<tr>" +
                         "            <th scope=\"row\">" + data.result[i].courierId + "</th>\n" +
@@ -176,7 +187,7 @@ function showActiveCouriersListForLogisticsPage() {
                         "            <td>" + data.result[i].latitude + "</td>\n" +
                         "            <td>" + data.result[i].longitude + "</td>\n" +
                         "            <td>" + data.result[i].authorName + "</td>\n" +
-                        "            <td>" + data.result[i].readiness + "</td>\n" +
+                        "            <td>" + readiness + "</td>\n" +
                         "</tr>";
                     if (view === undefined) {
                         view = "" + newLine;

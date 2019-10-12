@@ -8,22 +8,6 @@ import javax.persistence.*;
 @Data
 public class OrdersEntity {
 
-    //Это связь Many to One с таблицей Couriers
-    //http://javastudy.ru/hibernate/hibernate-one-to-many/ пример брал отсюда, завести не удалось
-    //Можете попробовать еще над этим поколдовать
-
-/*    private Couriers couriers;
-
-    @ManyToOne
-    @JoinColumn(name = "courier_id")
-    public Couriers getCourier() {
-        return this.couriers;
-    }
-
-    public void setCourier(Couriers couriers) {
-        this.couriers = couriers;
-    }*/
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")

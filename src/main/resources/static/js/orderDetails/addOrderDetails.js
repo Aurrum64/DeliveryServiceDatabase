@@ -3,22 +3,39 @@ let isOrderDeliveryPage = document.getElementById("activeOrdersListForUser");
 let isLogisticsPage = document.getElementById("activeOrdersListForLogisticPage");
 let isOrderDetailsHistoryPage = document.getElementById("allArchiveOrdersList");
 let isActiveOrderDetailsPage = document.getElementById("allActiveOrdersList");
+let isWaitingOrderDetailsPage = document.getElementById("waitingOrderDetailsList");
 
 if (isOrderDetailsPage !== null) {
     showOrderDetailsList();
 }
 if (isOrderDeliveryPage !== null) {
     showActiveOrdersListForUser();
-    showArchiveOrdersListForUser();
+    showWaitingOrdersListForUser();
+    /*showArchiveOrdersListForUser();*/
+    (function () {
+        showActiveOrdersListForUser();
+        setTimeout(arguments.callee, 5000);
+    })();
+    (function () {
+        showWaitingOrdersListForUser();
+        setTimeout(arguments.callee, 5000);
+    })();
 }
 if (isLogisticsPage !== null) {
-    showActiveOrdersListForLogisticPage();
+    showActiveOrdersListForLogisticsPage();
+    (function () {
+        showActiveOrdersListForLogisticsPage();
+        setTimeout(arguments.callee, 5000);
+    })();
 }
 if (isOrderDetailsHistoryPage !== null) {
     showAllArchiveOrdersList();
 }
 if (isActiveOrderDetailsPage !== null) {
     showAllActiveOrdersList();
+}
+if (isWaitingOrderDetailsPage !== null) {
+    showWaitingOrdersList();
 }
 
 $(document).ready(function () {
@@ -37,9 +54,14 @@ function addOrderDetails() {
     orderDetailsInput["secondOrderAddressPoint"] = $("#addSecondOrderAddressPoint").val();
     orderDetailsInput["comment"] = $("#addComment").val();
 
+    let inputDate = new Date(orderDetailsInput.orderDate.toLocaleString());
+    let now = new Date();
+
     if (orderDetailsInput.orderDate === "" && orderDetailsInput.firstOrderAddressPoint === ""
         && orderDetailsInput.secondOrderAddressPoint === "" && orderDetailsInput.comment === "") {
         alert("Должны быть заполнены все поля формы!");
+    } else if (inputDate < now) {
+        alert("Указанное вами время выезда курьера уже прошло!");
     } else {
         saveOrderDetailsInDb(orderDetailsInput);
 
@@ -90,18 +112,27 @@ function showActiveOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
-function showArchiveOrdersListForUser() {
+function showWaitingOrdersListForUser() {
+
+    let url = "/waitingOrdersListForUser";
+    let htmlId = '#waitingOrdersListForUser';
+    let emptyTableExpression = "У вас пока нет ни одного заказа на определенное время";
+
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
+}
+
+/*function showArchiveOrdersListForUser() {
 
     let url = "/archiveOrdersListForUser";
     let htmlId = '#archiveOrdersListForUser';
     let emptyTableExpression = "В вашей истории заказов пока нет ни одного заказа";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
-}
+}*/
 
-function showActiveOrdersListForLogisticPage() {
+function showActiveOrdersListForLogisticsPage() {
 
-    let url = "/activeOrdersListForLogisticPage";
+    let url = "/activeOrdersListForLogisticsPage";
     let htmlId = '#activeOrdersListForLogisticPage';
     let emptyTableExpression = "У вас пока нет ни одного активного заказа";
 
@@ -117,11 +148,21 @@ function showAllArchiveOrdersList() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
+
 function showAllActiveOrdersList() {
 
     let url = "/allActiveOrdersList";
     let htmlId = '#allActiveOrdersList';
     let emptyTableExpression = "У вас пока нет ни одного активного заказа";
+
+    takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
+}
+
+function showWaitingOrdersList() {
+
+    let url = "/waitingOrdersList";
+    let htmlId = '#waitingOrderDetailsList';
+    let emptyTableExpression = "У вас пока нет ни одного заказа на определенное время";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
@@ -156,10 +197,28 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             "            <td></td>\n" +
             "            <td></td>\n" +
             "            <td></td>\n" +
+            "            <td></td>\n" +
             "</tr>";
         $(htmlId).html(view);
     } else {
         for (let i = 0; i < data.result.length; i++) {
+            let simplifiedOrderDate;
+            let orderDate = new Date(data.result[i].orderDate);
+            if (orderDate.toLocaleDateString() === "01.01.1970") {
+                simplifiedOrderDate = "Без указания даты";
+            } else {
+                let utcOrderDate = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes());
+                let options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'long',
+                    timezone: 'UTC',
+                    hour: 'numeric',
+                    minute: 'numeric'
+                };
+                simplifiedOrderDate = utcOrderDate.toLocaleString("ru", options);
+            }
             let courier;
             if (data.result[i].courier === undefined ||
                 data.result[i].courier === null) {
@@ -170,13 +229,14 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             let newLine =
                 "<tr>" +
                 "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
-                "            <td>" + data.result[i].orderDate + "</td>\n" +
+                "            <td>" + simplifiedOrderDate + "</td>\n" +
                 "            <td>" + data.result[i].firstOrderAddressPoint + "</td>\n" +
                 "            <td>" + data.result[i].secondOrderAddressPoint + "</td>\n" +
                 "            <td>" + data.result[i].comment + "</td>\n" +
                 "            <td>" + data.result[i].status + "</td>\n" +
                 "            <td>" + data.result[i].authorName + "</td>\n" +
                 "            <td>" + courier + "</td>\n" +
+                "<td><a href=\"/order/" + data.result[i].orderDetailsId + "\">Подробнее</a></td>" +
                 "</tr>";
             if (view === undefined) {
                 view = "" + newLine;

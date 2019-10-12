@@ -1,10 +1,6 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<#import "parts/interface/jumbotron.ftl" as jumbotron>
-<@defaultPage.defaultPageTemplate pageName="Couriers" heightTop=65 heightBottom=200>
+<@defaultPage.defaultPageTemplate pageName="Курьеры" heightTop=65 heightBottom=400>
     <#include "parts/interface/security.ftl">
-    <@jumbotron.jumbotron image="https://mdbootstrap.com/img/Photos/Others/gradient1.jpg"
-    pageName="Couriers management page">
-    </@jumbotron.jumbotron>
     <div class="container mt-5 ml-5">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -107,7 +103,7 @@
         <div class="container mt-5 ml-5">
             <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
                aria-controls="collapse2">
-                Открыть меню подтверждения готовности к работе
+                Открыть меню добавления нового курьера в систему
             </a>
             <div class="collapse" id="collapse2">
                 <div class="form-group mt-3">
@@ -150,7 +146,7 @@
                         </div>
                         <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Подтвердить готовность к работе</button>
+                            <button type="submit" class="btn btn-primary">Добавить</button>
                         </div>
                     </form>
                 </div>

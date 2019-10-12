@@ -7,60 +7,56 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">На главную</a>
-            </li>
+            <#if !isEnabled>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">На главную</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ourLocation">Расположение</a>
+                </li>
+            </#if>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/user">Пользователи</a>
                 </li>
             </#if>
-            <li class="nav-item">
-                <a class="nav-link" href="/reviews">Отзывы</a>
-            </li>
             <#if isAdmin || isManager>
                 <li class="nav-item">
                     <a class="nav-link" href="/requests">Заявки</a>
                 </li>
+            </#if>
+            <#if isAdmin || isManager || isCourier>
                 <li class="nav-item">
                     <a class="nav-link" href="/notifications">Уведомления</a>
                 </li>
+            </#if>
+            <#if isAdmin || isManager>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logistics">Логистика</a>
+                    <a class="nav-link" href="/logistics">Делопроизводство</a>
+                </li>
+            </#if>
+            <#if isCourier>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logistics">Карта заказов</a>
                 </li>
             </#if>
             <#if isAccountActivated>
-                <#if isAdmin || isManager || isCourier>
+                <#if isAdmin>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Управление
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <#if isAdmin || isCourier || isManager>
-                                <a class="dropdown-item" href="/couriers">Курьеры</a>
-                            </#if>
-                            <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/managers">Менеджеры</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/orders">Заказы</a>
-                            </#if>
-                            <#if isAdmin || isManager>
-                                <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/callcentre">Кол-центр</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/clients">Клиенты</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/products">Продукты</a>
-                            </#if>
-                            <#if isAdmin>
-                                <a class="dropdown-item" href="/locations">Локации</a>
-                            </#if>
+                            <a class="dropdown-item" href="/couriers">Курьеры</a>
+                            <a class="dropdown-item" href="/managers">Менеджеры</a>
+                            <#--<a class="dropdown-item" href="/orders">Заказы</a>-->
+                            <a class="dropdown-item" href="/orderDetails">Информация о заказах</a>
+                            <#--<a class="dropdown-item" href="/callcentre">Департаменты</a>
+                            <a class="dropdown-item" href="/clients">Клиенты</a>
+                            <a class="dropdown-item" href="/products">Продукты</a>
+                            <a class="dropdown-item" href="/locations">Локации</a>-->
+                            <a class="dropdown-item" href="/reviewsList">Отзывы</a>
                         </div>
                     </li>
                 </#if>
@@ -85,12 +81,12 @@
                 </div>
             </div>
         <#else>
-            <div class="navbar-text mr-3">Hi, guest!</div>
+            <div class="navbar-text mr-3">Привет!</div>
             <form>
-                <input type="button" class="btn btn-outline-info mr-3" value="Sign In" onClick='location.href="/login"'>
+                <input type="button" class="btn btn-outline-info mr-3" value="Вход" onClick='location.href="/login"'>
             </form>
             <form>
-                <input type="button" class="btn btn-outline-info mr-2" value="Sign Up"
+                <input type="button" class="btn btn-outline-info mr-2" value="Регистрация"
                        onClick='location.href="/registration"'>
             </form>
         </#if>

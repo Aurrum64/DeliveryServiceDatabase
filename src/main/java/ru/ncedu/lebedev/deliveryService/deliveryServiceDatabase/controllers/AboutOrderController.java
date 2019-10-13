@@ -53,13 +53,18 @@ public class AboutOrderController {
 
     @Transactional
     @PostMapping(value = "orderConfirmation")
-    public String orderConfirmation(@RequestParam Integer orderDetailsId) {
+    public String orderConfirmation(@RequestParam Integer orderDetailsId,
+                                    @RequestParam String source) {
         OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(orderDetailsId);
         specification.setOrderConfirmed(true);
         orderSpecificationsRepository.save(specification);
 
         orderDetailsRepository.setStatusFor("Заказ доставлен", orderDetailsId);
-        return "redirect:/order/" + orderDetailsId;
+        if (source.equals("orderDeliveryPage")) {
+            return "redirect:/orderDelivery";
+        } else {
+            return "redirect:/order/" + orderDetailsId;
+        }
     }
 
     @PostMapping("orderTracking/{orderDetailsId}")

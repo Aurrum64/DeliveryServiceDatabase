@@ -231,15 +231,25 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
                 courier = data.result[i].courier.firstName;
             }
             console.log(data.result[i]);
-            let reviewButton;
-            if (data.result[i].reviewWritten === true) {
-                reviewButton = "";
+            let acceptButton;
+            if (data.result[i].orderSpecification.orderDelivered === true && data.result[i].status === "Заказ доставляется") {
+                acceptButton = "<td><form action=\"/order/orderConfirmation\" method=\"post\">\n" +
+                    "                        <input type=\"hidden\" name=\"source\" value=\"orderDeliveryPage\">\n" +
+                    "                        <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId + "\">\n" +
+                    "                        <button type=\"submit\" class=\"btn btn-info ml-3\">Подтвердить получение</button>\n" +
+                    "                    </form></td>";
             } else {
+                acceptButton = "";
+            }
+            let reviewButton;
+            if (data.result[i].reviewWritten === false && data.result[i].status === "Заказ доставлен") {
                 reviewButton = "<td><form action=\"/reviews\" method=\"post\">\n" +
-                    "                                <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId  + "\">\n" +
+                    "                                <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId + "\">\n" +
                     "                                <input type=\"hidden\" name=\"authorName\" value=\"" + data.result[i].author.username + "\">\n" +
                     "                                <button type=\"submit\" class=\"btn btn-info ml-3\">Оставить отзыв</button>\n" +
                     "                            </form></td>";
+            } else {
+                reviewButton = "";
             }
             let newLine =
                 "<tr>" +
@@ -252,6 +262,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
                 "            <td>" + data.result[i].authorName + "</td>\n" +
                 "            <td>" + courier + "</td>\n" +
                 "<td><a href=\"/order/" + data.result[i].orderDetailsId + "\">Подробнее</a></td>" +
+                acceptButton +
                 reviewButton +
                 "</tr>";
             if (view === undefined) {

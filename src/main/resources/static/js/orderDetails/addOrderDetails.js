@@ -11,13 +11,17 @@ if (isOrderDetailsPage !== null) {
 if (isOrderDeliveryPage !== null) {
     showActiveOrdersListForUser();
     showWaitingOrdersListForUser();
-    /*showArchiveOrdersListForUser();*/
+    showArchiveOrdersListForUser();
     (function () {
         showActiveOrdersListForUser();
         setTimeout(arguments.callee, 5000);
     })();
     (function () {
         showWaitingOrdersListForUser();
+        setTimeout(arguments.callee, 5000);
+    })();
+    (function () {
+        showArchiveOrdersListForUser();
         setTimeout(arguments.callee, 5000);
     })();
 }
@@ -121,14 +125,14 @@ function showWaitingOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
-/*function showArchiveOrdersListForUser() {
+function showArchiveOrdersListForUser() {
 
     let url = "/archiveOrdersListForUser";
     let htmlId = '#archiveOrdersListForUser';
     let emptyTableExpression = "В вашей истории заказов пока нет ни одного заказа";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
-}*/
+}
 
 function showActiveOrdersListForLogisticsPage() {
 
@@ -226,6 +230,17 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             } else {
                 courier = data.result[i].courier.firstName;
             }
+            console.log(data.result[i]);
+            let reviewButton;
+            if (data.result[i].reviewWritten === true) {
+                reviewButton = "";
+            } else {
+                reviewButton = "<td><form action=\"/reviews\" method=\"post\">\n" +
+                    "                                <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId  + "\">\n" +
+                    "                                <input type=\"hidden\" name=\"authorName\" value=\"" + data.result[i].author.username + "\">\n" +
+                    "                                <button type=\"submit\" class=\"btn btn-info ml-3\">Оставить отзыв</button>\n" +
+                    "                            </form></td>";
+            }
             let newLine =
                 "<tr>" +
                 "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
@@ -237,6 +252,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
                 "            <td>" + data.result[i].authorName + "</td>\n" +
                 "            <td>" + courier + "</td>\n" +
                 "<td><a href=\"/order/" + data.result[i].orderDetailsId + "\">Подробнее</a></td>" +
+                reviewButton +
                 "</tr>";
             if (view === undefined) {
                 view = "" + newLine;

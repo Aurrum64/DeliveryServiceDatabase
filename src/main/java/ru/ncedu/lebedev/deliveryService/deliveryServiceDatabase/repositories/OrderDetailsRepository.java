@@ -13,7 +13,7 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     OrderDetailsEntity findByOrderDetailsId(Integer id);
 
-    OrderDetailsEntity findByOrderSpecification_RouteBlocked(Boolean blocked);
+    List<OrderDetailsEntity> findAllByOrderSpecification_RouteBlocked(Boolean blocked);
 
     List<OrderDetailsEntity> findAllByOrderDetailsId(Integer id);
 

@@ -250,12 +250,12 @@ public class OrderDetailsController {
 
         List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
 
-        OrderDetailsEntity blockedOrderRoute = orderDetailsRepository.findByOrderSpecification_RouteBlocked(true);
-        if (blockedOrderRoute != null) {
-            if (currentCourier.get(0).getCourierId().equals(blockedOrderRoute.getCourier().getCourierId())) {
-                blockedOrderRoute.setCourier(null);
-                blockedOrderRoute.getOrderSpecification().setRouteBlocked(false);
-                orderDetailsRepository.save(blockedOrderRoute);
+        List<OrderDetailsEntity> blockedOrderRoutes = orderDetailsRepository.findAllByOrderSpecification_RouteBlocked(true);
+        for (OrderDetailsEntity blockedOrder : blockedOrderRoutes) {
+            if (currentCourier.get(0).getCourierId().equals(blockedOrder.getCourier().getCourierId())) {
+                blockedOrder.setCourier(null);
+                blockedOrder.getOrderSpecification().setRouteBlocked(false);
+                orderDetailsRepository.save(blockedOrder);
             }
         }
         return new ControllerAnswerToAjax("OK", "");

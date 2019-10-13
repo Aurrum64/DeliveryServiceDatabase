@@ -232,7 +232,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             }
             console.log(data.result[i]);
             let acceptButton;
-            if (data.result[i].orderSpecification.orderDelivered === true && data.result[i].status === "Заказ доставляется") {
+            if (data.result[i].orderSpecification.orderDelivered === true && data.result[i].status === "Заказ доставляется" && isOrderDeliveryPage !== null) {
                 acceptButton = "<td><form action=\"/order/orderConfirmation\" method=\"post\">\n" +
                     "                        <input type=\"hidden\" name=\"source\" value=\"orderDeliveryPage\">\n" +
                     "                        <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId + "\">\n" +
@@ -242,7 +242,7 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
                 acceptButton = "";
             }
             let reviewButton;
-            if (data.result[i].reviewWritten === false && data.result[i].status === "Заказ доставлен") {
+            if (data.result[i].reviewWritten === false && data.result[i].status === "Заказ доставлен" && isOrderDeliveryPage !== null) {
                 reviewButton = "<td><form action=\"/reviews\" method=\"post\">\n" +
                     "                                <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId + "\">\n" +
                     "                                <input type=\"hidden\" name=\"authorName\" value=\"" + data.result[i].author.username + "\">\n" +

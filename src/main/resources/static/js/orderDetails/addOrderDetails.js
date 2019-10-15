@@ -11,13 +11,17 @@ if (isOrderDetailsPage !== null) {
 if (isOrderDeliveryPage !== null) {
     showActiveOrdersListForUser();
     showWaitingOrdersListForUser();
-    /*showArchiveOrdersListForUser();*/
+    showArchiveOrdersListForUser();
     (function () {
         showActiveOrdersListForUser();
         setTimeout(arguments.callee, 5000);
     })();
     (function () {
         showWaitingOrdersListForUser();
+        setTimeout(arguments.callee, 5000);
+    })();
+    (function () {
+        showArchiveOrdersListForUser();
         setTimeout(arguments.callee, 5000);
     })();
 }
@@ -121,14 +125,14 @@ function showWaitingOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
-/*function showArchiveOrdersListForUser() {
+function showArchiveOrdersListForUser() {
 
     let url = "/archiveOrdersListForUser";
     let htmlId = '#archiveOrdersListForUser';
     let emptyTableExpression = "В вашей истории заказов пока нет ни одного заказа";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
-}*/
+}
 
 function showActiveOrdersListForLogisticsPage() {
 
@@ -226,6 +230,27 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
             } else {
                 courier = data.result[i].courier.firstName;
             }
+            console.log(data.result[i]);
+            let acceptButton;
+            if (data.result[i].orderSpecification.orderDelivered === true && data.result[i].status === "Заказ доставляется" && isOrderDeliveryPage !== null) {
+                acceptButton = "<td><form action=\"/order/orderConfirmation\" method=\"post\">\n" +
+                    "                        <input type=\"hidden\" name=\"source\" value=\"orderDeliveryPage\">\n" +
+                    "                        <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId + "\">\n" +
+                    "                        <button type=\"submit\" class=\"btn btn-info ml-3\">Подтвердить получение</button>\n" +
+                    "                    </form></td>";
+            } else {
+                acceptButton = "";
+            }
+            let reviewButton;
+            if (data.result[i].reviewWritten === false && data.result[i].status === "Заказ доставлен" && isOrderDeliveryPage !== null) {
+                reviewButton = "<td><form action=\"/reviews\" method=\"post\">\n" +
+                    "                                <input type=\"hidden\" name=\"orderDetailsId\" value=\"" + data.result[i].orderDetailsId + "\">\n" +
+                    "                                <input type=\"hidden\" name=\"authorName\" value=\"" + data.result[i].author.username + "\">\n" +
+                    "                                <button type=\"submit\" class=\"btn btn-info ml-3\">Оставить отзыв</button>\n" +
+                    "                            </form></td>";
+            } else {
+                reviewButton = "";
+            }
             let newLine =
                 "<tr>" +
                 "            <th scope=\"row\">" + data.result[i].orderDetailsId + "</th>\n" +
@@ -237,6 +262,8 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
                 "            <td>" + data.result[i].authorName + "</td>\n" +
                 "            <td>" + courier + "</td>\n" +
                 "<td><a href=\"/order/" + data.result[i].orderDetailsId + "\">Подробнее</a></td>" +
+                acceptButton +
+                reviewButton +
                 "</tr>";
             if (view === undefined) {
                 view = "" + newLine;

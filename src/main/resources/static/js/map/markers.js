@@ -43,6 +43,9 @@ function setNotDeliveredMarkers() {
         type: "GET",
         dataType: 'json',
         success: function (data) {
+            firstOrderPointMarkers.length = 0;
+            secondOrderPointMarkers.length = 0;
+            deliveryInfos.length = 0;
 
             firstOrderPointMarkersLayerGroup.clearLayers();
             secondOrderPointMarkersLayerGroup.clearLayers();
@@ -98,19 +101,19 @@ function setDeliveredMarkers() {
                 for (let i = 0; i < data.result.length; i++) {
                     let firstOrderAddressPoint = data.result[i].firstOrderAddressPoint;
                     let secondOrderAddressPoint = data.result[i].secondOrderAddressPoint;
-/*                    L.esri.Geocoding.geocode()
-                        .text(firstOrderAddressPoint)
-                        .run((err, results) => {
-                            let latitude = results.results[0].latlng.lat;
-                            let longitude = results.results[0].latlng.lng;
-                            let deliveryMarker = L.marker([latitude, longitude],
-                                {icon: deliveredOrderPoint}).addTo(deliveredMarkersLayerGroup);
-                            deliveryMarker.bindPopup("<b>Заказ №" + data.result[i].orderDetailsId + "</b><br>" +
-                                "<b>Заказ забран по адресу:</b> " + firstOrderAddressPoint + "<br>" +
-                                "<b>Общее расстояние:</b> " + Math.round(solutionsInfos[i]._route.summary.totalDistance / 1000) + " километров<br>" +
-                                "<b>Время в пути:</b> " + Math.round(solutionsInfos[i]._route.summary.totalTime % 3600 / 60) + " минут");
-                            deliveredMarkers[i] = deliveryMarker;
-                        });*/
+                    /*                    L.esri.Geocoding.geocode()
+                                            .text(firstOrderAddressPoint)
+                                            .run((err, results) => {
+                                                let latitude = results.results[0].latlng.lat;
+                                                let longitude = results.results[0].latlng.lng;
+                                                let deliveryMarker = L.marker([latitude, longitude],
+                                                    {icon: deliveredOrderPoint}).addTo(deliveredMarkersLayerGroup);
+                                                deliveryMarker.bindPopup("<b>Заказ №" + data.result[i].orderDetailsId + "</b><br>" +
+                                                    "<b>Заказ забран по адресу:</b> " + firstOrderAddressPoint + "<br>" +
+                                                    "<b>Общее расстояние:</b> " + Math.round(solutionsInfos[i]._route.summary.totalDistance / 1000) + " километров<br>" +
+                                                    "<b>Время в пути:</b> " + Math.round(solutionsInfos[i]._route.summary.totalTime % 3600 / 60) + " минут");
+                                                deliveredMarkers[i] = deliveryMarker;
+                                            });*/
                     L.esri.Geocoding.geocode()
                         .text(secondOrderAddressPoint)
                         .run((err, results) => {

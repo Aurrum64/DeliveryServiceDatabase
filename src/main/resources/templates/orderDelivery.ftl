@@ -88,7 +88,9 @@
                 <th scope="col"></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="archiveOrdersListForUser">
+            </tbody>
+            <#--<tbody>
             <#list archiveOrdersListForCurrentUser as archiveOrder>
                 <tr>
                     <th scope="row">${archiveOrder.orderDetailsId}</th>
@@ -128,7 +130,7 @@
                     <td></td>
                 </tr>
             </#list>
-            </tbody>
+            </tbody>-->
         </table>
     </div>
     <#include "parts/scriptsSources/orderDetailsScripts.ftl">

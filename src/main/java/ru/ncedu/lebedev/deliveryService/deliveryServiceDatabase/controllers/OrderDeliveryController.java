@@ -98,6 +98,28 @@ public class OrderDeliveryController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping(value = "/archiveOrdersListForUser", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> sendArchiveOrdersListForUser(@AuthenticationPrincipal UsersEntity user) {
+
+        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
+        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
+        List<OrderDetailsEntity> archiveOrdersListForCurrentUser = new ArrayList<>();
+        for (OrderDetailsEntity element : orderDetails) {
+            if (user.getUsername().equals(element.getAuthorName()) &&
+                    element.getStatus().equals("Заказ доставлен")) {
+                archiveOrdersListForCurrentUser.add(element);
+            }
+        }
+        if (archiveOrdersListForCurrentUser.isEmpty()) {
+            result.setMsg("Active orders list is empty!");
+        } else {
+            result.setMsg("success");
+        }
+        result.setResult(archiveOrdersListForCurrentUser);
+        return ResponseEntity.ok(result);
+    }
+
 /*    @GetMapping(value = "/orderDelivery", produces = "application/json")
     public String sendArchiveOrdersListForUser(@AuthenticationPrincipal UsersEntity user,
                                                Map<String, Object> model) {

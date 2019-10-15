@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public interface OrderDetailsRepository extends CrudRepository<OrderDetailsEntit
 
     OrderDetailsEntity findByOrderDetailsId(Integer id);
 
-    OrderDetailsEntity findByOrderSpecification_RouteBlocked(Boolean blocked);
+    List<OrderDetailsEntity> findAllByOrderSpecification_RouteBlocked(Boolean blocked);
 
     List<OrderDetailsEntity> findAllByOrderDetailsId(Integer id);
 

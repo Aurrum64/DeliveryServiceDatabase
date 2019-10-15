@@ -45,6 +45,7 @@ function buildRoute() {
             };
             routesToFirstAddress[i].route.addTo(myDeliveryServiceMap);
         }
+        solutionsInfos.length = 0;
         for (let i = 0; i < routesToFirstAddress.length; i++) {
 
             routesToFirstAddress[i].route.on('routesfound', function (e) {

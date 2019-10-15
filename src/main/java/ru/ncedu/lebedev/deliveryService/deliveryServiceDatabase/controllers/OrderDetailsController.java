@@ -21,6 +21,8 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Or
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -75,8 +77,6 @@ public class OrderDetailsController {
     public ControllerAnswerToAjax addOrderDetails(@AuthenticationPrincipal UsersEntity user,
                                                   @RequestBody OrderDetailsMessage order) {
         OrderDetailsEntity orderDetail = new OrderDetailsEntity();
-        System.out.println(order.getOrderDate());
-        orderDetail.setOrderDate(order.getOrderDate());
         orderDetail.setFirstOrderAddressPoint(order.getFirstOrderAddressPoint());
         orderDetail.setSecondOrderAddressPoint(order.getSecondOrderAddressPoint());
         if (order.getComment().isEmpty()) {
@@ -88,8 +88,13 @@ public class OrderDetailsController {
         }
         if (order.getOrderDate() == null) {
             orderDetail.setStatus("Заказ доставляется");
+            Calendar orderDate = Calendar.getInstance();
+            orderDate.setTime(new Date());
+            orderDate.add(Calendar.HOUR, 3);
+            orderDetail.setOrderDate(orderDate.getTime());
         } else {
             orderDetail.setStatus("Заказ в ожидании");
+            orderDetail.setOrderDate(order.getOrderDate());
         }
         orderDetail.setAuthor(user);
         orderDetail.setReviewWritten(false);
@@ -245,12 +250,14 @@ public class OrderDetailsController {
 
         List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
 
-        OrderDetailsEntity blockedOrderRoute = orderDetailsRepository.findByOrderSpecification_RouteBlocked(true);
-        if (blockedOrderRoute != null) {
-            if (currentCourier.get(0).getCourierId().equals(blockedOrderRoute.getCourier().getCourierId())) {
-                blockedOrderRoute.setCourier(null);
-                blockedOrderRoute.getOrderSpecification().setRouteBlocked(false);
-                orderDetailsRepository.save(blockedOrderRoute);
+        List<OrderDetailsEntity> blockedOrderRoutes = orderDetailsRepository.findAllByOrderSpecification_RouteBlocked(true);
+        for (OrderDetailsEntity blockedOrder : blockedOrderRoutes) {
+            if (currentCourier.get(0).getCourierId().equals(blockedOrder.getCourier().getCourierId())) {
+                if (!blockedOrder.getOrderSpecification().getCourierWent()) {
+                    blockedOrder.setCourier(null);
+                    blockedOrder.getOrderSpecification().setRouteBlocked(false);
+                    orderDetailsRepository.save(blockedOrder);
+                }
             }
         }
         return new ControllerAnswerToAjax("OK", "");

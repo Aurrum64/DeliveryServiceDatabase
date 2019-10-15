@@ -32,7 +32,7 @@
                 <th scope="col"></th>
             </tr>
             </thead>
-            <tbody id="activeOrdersListForLogisticPage">
+            <tbody id="activeOrdersListForOfficeWorkPage">
             </tbody>
         </table>
         <div class="text py-4">
@@ -61,7 +61,7 @@
                 <th scope="col">Готовность</th>
             </tr>
             </thead>
-            <tbody id="activeCouriersListForLogisticsPage">
+            <tbody id="activeCouriersListForOfficeWorkPage">
             </tbody>
         </table>
     </div>

@@ -32,9 +32,9 @@ public class OfficeWorkController {
         return "officeWork";
     }
 
-    @GetMapping(value = "/activeOrdersListForLogisticsPage", produces = "application/json")
+    @GetMapping(value = "/activeOrdersListForOfficeWorkPage", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendActiveOrdersListForLogisticsPage() {
+    public ResponseEntity<?> sendActiveOrdersListForOfficeWorkPage() {
 
         final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 10;
 
@@ -59,9 +59,9 @@ public class OfficeWorkController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/activeCouriersListForLogisticsPage", produces = "application/json")
+    @GetMapping(value = "/activeCouriersListForOfficeWorkPage", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> sendActiveCouriersListForLogisticsPage() {
+    public ResponseEntity<?> sendActiveCouriersListForOfficeWorkPage() {
 
         final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
 
@@ -70,14 +70,14 @@ public class OfficeWorkController {
         if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
             List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
             if (firstActiveCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for logistics page is empty!");
+                couriersList.setMsg("Active couriers list for office work page is empty!");
             } else {
                 couriersList.setMsg("success");
             }
             couriersList.setResult(firstActiveCouriers);
         } else {
             if (activeCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for logistics page is empty!");
+                couriersList.setMsg("Active couriers list for office work page is empty!");
             } else {
                 couriersList.setMsg("success");
             }

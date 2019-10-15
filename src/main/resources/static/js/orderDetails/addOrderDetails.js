@@ -1,6 +1,6 @@
 let isOrderDetailsPage = document.getElementById("orderDetailsList");
 let isOrderDeliveryPage = document.getElementById("activeOrdersListForUser");
-let isLogisticsPage = document.getElementById("activeOrdersListForLogisticPage");
+let isOfficeWorkPage = document.getElementById("activeOrdersListForOfficeWorkPage");
 let isOrderDetailsHistoryPage = document.getElementById("allArchiveOrdersList");
 let isActiveOrderDetailsPage = document.getElementById("allActiveOrdersList");
 let isWaitingOrderDetailsPage = document.getElementById("waitingOrderDetailsList");
@@ -25,10 +25,10 @@ if (isOrderDeliveryPage !== null) {
         setTimeout(arguments.callee, 5000);
     })();
 }
-if (isLogisticsPage !== null) {
-    showActiveOrdersListForLogisticsPage();
+if (isOfficeWorkPage !== null) {
+    showActiveOrdersListForOfficeWorkPage();
     (function () {
-        showActiveOrdersListForLogisticsPage();
+        showActiveOrdersListForOfficeWorkPage();
         setTimeout(arguments.callee, 5000);
     })();
 }
@@ -134,10 +134,10 @@ function showArchiveOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
-function showActiveOrdersListForLogisticsPage() {
+function showActiveOrdersListForOfficeWorkPage() {
 
-    let url = "/activeOrdersListForLogisticsPage";
-    let htmlId = '#activeOrdersListForLogisticPage';
+    let url = "/activeOrdersListForOfficeWorkPage";
+    let htmlId = '#activeOrdersListForOfficeWorkPage';
     let emptyTableExpression = "У вас пока нет ни одного активного заказа";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);

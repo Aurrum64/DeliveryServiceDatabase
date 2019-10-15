@@ -153,33 +153,6 @@ public class LogisticsController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/activeOrdersListForLogisticsPage", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendActiveOrdersListForLogisticsPage() {
-
-        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 10;
-
-        SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
-        List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ доставляется");
-        if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
-            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE - 1);
-            if (firstActiveOrders.isEmpty()) {
-                result.setMsg("Active orders list is empty!");
-            } else {
-                result.setMsg("success");
-            }
-            result.setResult(firstActiveOrders);
-        } else {
-            if (activeOrders.isEmpty()) {
-                result.setMsg("Active orders list is empty!");
-            } else {
-                result.setMsg("success");
-            }
-            result.setResult(activeOrders);
-        }
-        return ResponseEntity.ok(result);
-    }
-
     @Transactional
     @PostMapping(value = "/movingCourierCoordinates",
             headers = {"Content-type=application/json"})
@@ -193,33 +166,6 @@ public class LogisticsController {
         couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
         couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
         return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @GetMapping(value = "/activeCouriersListForLogisticsPage", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendActiveCouriersListForLogisticsPage() {
-
-        final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
-
-        SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
-        if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
-            List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
-            if (firstActiveCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for logistics page is empty!");
-            } else {
-                couriersList.setMsg("success");
-            }
-            couriersList.setResult(firstActiveCouriers);
-        } else {
-            if (activeCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for logistics page is empty!");
-            } else {
-                couriersList.setMsg("success");
-            }
-            couriersList.setResult(activeCouriers);
-        }
-        return ResponseEntity.ok(couriersList);
     }
 
     @GetMapping(value = "/currentCourier", produces = "application/json")

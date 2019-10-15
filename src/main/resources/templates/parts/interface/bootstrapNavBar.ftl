@@ -32,7 +32,7 @@
             </#if>
             <#if isAdmin || isManager>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logistics">Делопроизводство</a>
+                    <a class="nav-link" href="/officeWork">Делопроизводство</a>
                 </li>
             </#if>
             <#if isCourier>

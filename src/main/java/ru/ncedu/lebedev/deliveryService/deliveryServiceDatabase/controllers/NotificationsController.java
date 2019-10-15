@@ -8,7 +8,6 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnti
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.*;
 
 import java.text.DateFormat;
@@ -22,7 +21,6 @@ public class NotificationsController {
 
     private OrderDetailsRepository orderDetailsRepository;
     private UsersRequestsRepository usersRequestsRepository;
-    private UserService userService;
     private UsersRepository usersRepository;
     private CouriersRepository couriersRepository;
     private ManagersRepository managersRepository;
@@ -30,13 +28,11 @@ public class NotificationsController {
     @Autowired
     public NotificationsController(OrderDetailsRepository orderDetailsRepository,
                                    UsersRequestsRepository usersRequestsRepository,
-                                   UserService userService,
                                    UsersRepository usersRepository,
                                    CouriersRepository couriersRepository,
                                    ManagersRepository managersRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.usersRequestsRepository = usersRequestsRepository;
-        this.userService = userService;
         this.usersRepository = usersRepository;
         this.couriersRepository = couriersRepository;
         this.managersRepository = managersRepository;
@@ -65,13 +61,6 @@ public class NotificationsController {
             model.put("recentRequests", usersRequests);
         }
         return "notifications";
-    }
-
-    @GetMapping("/requests")
-    public String usersRequestsList(Map<String, Object> model) {
-        Iterable<UsersRequestsEntity> usersRequests = usersRequestsRepository.findAll();
-        model.put("usersRequests", usersRequests);
-        return "requests";
     }
 
     @PostMapping(value = "/addUsersRequests",

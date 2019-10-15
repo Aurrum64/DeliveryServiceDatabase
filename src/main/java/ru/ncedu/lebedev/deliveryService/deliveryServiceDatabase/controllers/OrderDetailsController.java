@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ChangeStatusForOrderDetailsId;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.OrderDetailsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
@@ -29,31 +26,18 @@ import java.util.List;
 public class OrderDetailsController {
 
     private OrderDetailsRepository orderDetailsRepository;
-    private CouriersRepository couriersRepository;
     private OrderSpecificationsRepository orderSpecificationsRepository;
 
     @Autowired
     public OrderDetailsController(OrderDetailsRepository orderDetailsRepository,
-                                  CouriersRepository couriersRepository,
                                   OrderSpecificationsRepository orderSpecificationsRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
-        this.couriersRepository = couriersRepository;
         this.orderSpecificationsRepository = orderSpecificationsRepository;
     }
 
     @GetMapping("/orderDetails")
     public String orderDetailsView() {
         return "orderDetails";
-    }
-
-    @GetMapping("/orderDetailsHistory")
-    public String orderDetailsHistory() {
-        return "orderDetailsHistory";
-    }
-
-    @GetMapping("/activeOrderDetails")
-    public String activeOrderDetails() {
-        return "activeOrderDetails";
     }
 
     @GetMapping(value = "/orderDetailsList", produces = "application/json")
@@ -184,82 +168,5 @@ public class OrderDetailsController {
             }
             return new ControllerAnswerToAjax("OK", "");
         }
-    }
-
-    @PostMapping(value = "/changeDeliveryStatus",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody ChangeStatusForOrderDetailsId order) {
-        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(order.getOrderDetailsId());
-        specification.setOrderDelivered(true);
-        orderSpecificationsRepository.save(specification);
-        return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @PostMapping(value = "/assignCourierToOrder",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax assignCourierToOrder(@RequestBody ChangeStatusForOrderDetailsId message) {
-        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
-
-        OrderSpecificationEntity specification = order.getOrderSpecification();
-        specification.setCourierFound(true);
-        orderSpecificationsRepository.save(specification);
-
-        CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
-        order.setCourier(courier);
-        order.setAlreadyInProgress(true);
-        orderDetailsRepository.save(order);
-        return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @PostMapping(value = "/changeOrderPickedUpStatus",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax changeOrderPickedUpStatus(@RequestBody ChangeStatusForOrderDetailsId message) {
-        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
-
-        OrderSpecificationEntity specification = order.getOrderSpecification();
-        specification.setOrderPickedUp(true);
-        orderSpecificationsRepository.save(specification);
-
-        return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @PostMapping(value = "/blockSelectedRoute",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax blockSelectedRoute(@RequestBody ChangeStatusForOrderDetailsId message) {
-        OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(message.getOrderDetailsId());
-
-        CouriersEntity courier = couriersRepository.findByCourierId(message.getCourierId());
-        order.setCourier(courier);
-        orderDetailsRepository.save(order);
-
-        OrderSpecificationEntity specification = order.getOrderSpecification();
-        specification.setRouteBlocked(true);
-        orderSpecificationsRepository.save(specification);
-
-        return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @PostMapping(value = "/unblockRoute",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax unblockRoute(@AuthenticationPrincipal UsersEntity user) {
-
-        List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
-
-        List<OrderDetailsEntity> blockedOrderRoutes = orderDetailsRepository.findAllByOrderSpecification_RouteBlocked(true);
-        for (OrderDetailsEntity blockedOrder : blockedOrderRoutes) {
-            if (currentCourier.get(0).getCourierId().equals(blockedOrder.getCourier().getCourierId())) {
-                if (!blockedOrder.getOrderSpecification().getCourierWent()) {
-                    blockedOrder.setCourier(null);
-                    blockedOrder.getOrderSpecification().setRouteBlocked(false);
-                    orderDetailsRepository.save(blockedOrder);
-                }
-            }
-        }
-        return new ControllerAnswerToAjax("OK", "");
     }
 }

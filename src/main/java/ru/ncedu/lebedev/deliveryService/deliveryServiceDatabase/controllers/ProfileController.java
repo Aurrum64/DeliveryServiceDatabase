@@ -1,12 +1,15 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CouriersMessage;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendCouriersToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
@@ -51,5 +54,31 @@ public class ProfileController {
                                 @RequestParam("file") MultipartFile avatar) throws IOException {
         userService.updateProfile(user, password, email, avatar);
         return "redirect:/profile";
+    }
+
+    @Transactional
+    @PostMapping(value = "/changeCourierReadiness",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CouriersMessage couriersMessage) {
+        boolean readiness = couriersMessage.getReadiness().equals("true");
+        couriersRepository.setReadinessFor(readiness, couriersMessage.getCourierId());
+        return new ControllerAnswerToAjax("OK", "");
+    }
+
+    @PostMapping(value = "findCourierProfileOwner",
+            headers = {"Content-type=application/json"})
+    @ResponseBody
+    public ResponseEntity<?> findCourierProfileOwner(@RequestBody CouriersMessage couriersMessage) {
+
+        SendCouriersToAjax couriersSearchList = new SendCouriersToAjax();
+        List<CouriersEntity> courier = couriersRepository.findAllByCourierId(couriersMessage.getCourierId());
+        if (courier.isEmpty()) {
+            couriersSearchList.setMsg("Nothing found!");
+        } else {
+            couriersSearchList.setMsg("success");
+        }
+        couriersSearchList.setResult(courier);
+        return ResponseEntity.ok(couriersSearchList);
     }
 }

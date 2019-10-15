@@ -1,48 +1,37 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.CouriersMessage;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendCouriersToAjax;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
-import java.util.*;
+import java.util.List;
 
 @Controller
 public class CouriersController {
 
     private CouriersRepository couriersRepository;
-    private OrderSpecificationsRepository orderSpecificationsRepository;
 
     @Autowired
-    public CouriersController(CouriersRepository couriersRepository,
-                              OrderSpecificationsRepository orderSpecificationsRepository) {
+    public CouriersController(CouriersRepository couriersRepository) {
         this.couriersRepository = couriersRepository;
-        this.orderSpecificationsRepository = orderSpecificationsRepository;
     }
 
     @GetMapping("/couriers")
     public String couriersView() {
         return "couriers";
-    }
-
-    @GetMapping("/activeCouriers")
-    public String activeCouriers() {
-        return "activeCouriers";
-    }
-
-    @GetMapping("/restCouriers")
-    public String restCouriers() {
-        return "restCouriers";
     }
 
     @GetMapping(value = "/couriersList", produces = "application/json")
@@ -188,118 +177,5 @@ public class CouriersController {
             }
         }
         return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @Transactional
-    @PostMapping(value = "/movingCourierCoordinates",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax courierMove(@RequestBody CourierCoordinateAfterMove courier) {
-
-        OrderSpecificationEntity specification = orderSpecificationsRepository.findByOrderSpecificationId(courier.getOrderId());
-        if (!specification.getCourierWent()) {
-            specification.setCourierWent(true);
-        }
-        couriersRepository.setLatitudeFor(courier.getLat(), courier.getCourierId());
-        couriersRepository.setLongitudeFor(courier.getLng(), courier.getCourierId());
-        return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @Transactional
-    @PostMapping(value = "/changeCourierReadiness",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ControllerAnswerToAjax changeDeliveryStatus(@RequestBody CouriersMessage couriersMessage) {
-        boolean readiness = couriersMessage.getReadiness().equals("true");
-        couriersRepository.setReadinessFor(readiness, couriersMessage.getCourierId());
-        return new ControllerAnswerToAjax("OK", "");
-    }
-
-    @PostMapping(value = "findCourierProfileOwner",
-            headers = {"Content-type=application/json"})
-    @ResponseBody
-    public ResponseEntity<?> findCourierProfileOwner(@RequestBody CouriersMessage couriersMessage) {
-
-        SendCouriersToAjax couriersSearchList = new SendCouriersToAjax();
-        List<CouriersEntity> courier = couriersRepository.findAllByCourierId(couriersMessage.getCourierId());
-        if (courier.isEmpty()) {
-            couriersSearchList.setMsg("Nothing found!");
-        } else {
-            couriersSearchList.setMsg("success");
-        }
-        couriersSearchList.setResult(courier);
-        return ResponseEntity.ok(couriersSearchList);
-    }
-
-    @GetMapping(value = "/activeCouriersListForLogisticsPage", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendActiveCouriersListForLogisticsPage() {
-
-        final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
-
-        SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
-        if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
-            List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
-            if (firstActiveCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for logistics page is empty!");
-            } else {
-                couriersList.setMsg("success");
-            }
-            couriersList.setResult(firstActiveCouriers);
-        } else {
-            if (activeCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for logistics page is empty!");
-            } else {
-                couriersList.setMsg("success");
-            }
-            couriersList.setResult(activeCouriers);
-        }
-        return ResponseEntity.ok(couriersList);
-    }
-
-    @GetMapping(value = "/restCouriersList", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendRestCouriersList() {
-
-        SendCouriersToAjax couriersList = new SendCouriersToAjax();
-        List<CouriersEntity> restCouriers = couriersRepository.findAllByReadinessAndFired(false, false);
-        if (restCouriers.isEmpty()) {
-            couriersList.setMsg("Rest couriers list is empty!");
-        } else {
-            couriersList.setMsg("success");
-        }
-        couriersList.setResult(restCouriers);
-        return ResponseEntity.ok(couriersList);
-    }
-
-    @GetMapping(value = "/activeCouriersList", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendActiveCouriersList() {
-
-        SendCouriersToAjax activeCouriersList = new SendCouriersToAjax();
-        List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
-        if (activeCouriers.isEmpty()) {
-            activeCouriersList.setMsg("Rest couriers list is empty!");
-        } else {
-            activeCouriersList.setMsg("success");
-        }
-        activeCouriersList.setResult(activeCouriers);
-        return ResponseEntity.ok(activeCouriersList);
-    }
-
-    @GetMapping(value = "/currentCourier", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> sendCurrentCourier(@AuthenticationPrincipal UsersEntity user) {
-
-        SendCouriersToAjax listWithCurrentCourier = new SendCouriersToAjax();
-        List<CouriersEntity> currentCourier = couriersRepository.findByFirstName(user.getUsername());
-        if (currentCourier.isEmpty() || !currentCourier.get(0).isReadiness() || currentCourier.get(0).isFired()) {
-            listWithCurrentCourier.setMsg("Current courier don't ready to take orders!");
-        } else {
-            listWithCurrentCourier.setMsg("success");
-            listWithCurrentCourier.setResult(currentCourier);
-        }
-        return ResponseEntity.ok(listWithCurrentCourier);
     }
 }

@@ -33,7 +33,7 @@ public class ManagersController {
         return "managers";
     }
 
-    @PostMapping("/managers")
+    @PostMapping("/addManagers")
     public String addManager(@AuthenticationPrincipal UsersEntity user,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
@@ -55,7 +55,7 @@ public class ManagersController {
         return "redirect:/managers";
     }
 
-    @PostMapping("/managersFilter")
+    @PostMapping("/searchManagers")
     public String findCourier(@RequestParam(required = false) Integer managerId,
                               @RequestParam(required = false) String firstName,
                               @RequestParam(required = false) String lastName,
@@ -88,7 +88,7 @@ public class ManagersController {
     }
 
     @Transactional
-    @PostMapping("/managersDelete")
+    @PostMapping("/deleteManagers")
     public String deleteManager(@RequestParam Integer managerId, Map<String, Object> model) {
         List<ManagersEntity> manager = managersRepository.findByManagerId(managerId);
         if (manager.isEmpty()) {
@@ -101,7 +101,7 @@ public class ManagersController {
     }
 
     @Transactional
-    @PostMapping("/managersUpdate")
+    @PostMapping("/updateManagers")
     public String updateCourier(@RequestParam Integer managerId,
                                 @RequestParam(required = false) String firstName,
                                 @RequestParam(required = false) String lastName,

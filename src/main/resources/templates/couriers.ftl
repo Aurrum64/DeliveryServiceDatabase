@@ -18,7 +18,6 @@
                             <input type="text" id="searchCourierLastName" class="form-control form-control-lg">
                             <label for="searchCourierLastName">Найти по фамилии...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
@@ -36,7 +35,6 @@
                             <input type="text" id="deleteCourierId" class="form-control form-control-lg">
                             <label for="deleteCourierId">Удалить по ID...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                     </div>
                 </form>
@@ -91,7 +89,6 @@
                         <input type="text" id="updateCourierDepartmentId" class="form-control form-control-lg">
                         <label for="updateCourierDepartmentId">Изменить департамент курьера...</label>
                     </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Изменить</button>
                     </div>
@@ -144,7 +141,6 @@
                             <input type="text" id="addCourierDepartmentId" class="form-control form-control-lg">
                             <label for="addCourierDepartmentId">Добавить департамент курьера...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Добавить</button>
                         </div>

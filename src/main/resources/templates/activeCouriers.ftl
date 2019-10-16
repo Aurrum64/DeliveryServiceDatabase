@@ -20,7 +20,6 @@
                             <input type="text" id="searchCourierLastName" class="form-control form-control-lg">
                             <label for="searchCourierLastName">Найти по фамилии...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>

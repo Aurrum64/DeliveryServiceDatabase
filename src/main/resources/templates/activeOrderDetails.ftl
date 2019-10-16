@@ -22,7 +22,6 @@
                                    style="width: 300px">
                             <label for="searchSecondOrderAddressPoint">Найти по адресу доставки...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>

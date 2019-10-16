@@ -13,6 +13,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Co
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class OfficeWorkController {
@@ -36,26 +37,16 @@ public class OfficeWorkController {
     @ResponseBody
     public ResponseEntity<?> sendActiveOrdersListForOfficeWorkPage() {
 
-        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 10;
-
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         List<OrderDetailsEntity> activeOrders = orderDetailsRepository.findAllByStatus("Заказ доставляется");
-        if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
-            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE - 1);
-            if (firstActiveOrders.isEmpty()) {
-                result.setMsg("Active orders list is empty!");
-            } else {
-                result.setMsg("success");
-            }
-            result.setResult(firstActiveOrders);
+        List<OrderDetailsEntity> firstActiveOrders = activeOrders.stream().limit(10).collect(Collectors.toList());
+        if (firstActiveOrders.isEmpty()) {
+            result.setMsg("Active orders list is empty!");
         } else {
-            if (activeOrders.isEmpty()) {
-                result.setMsg("Active orders list is empty!");
-            } else {
-                result.setMsg("success");
-            }
-            result.setResult(activeOrders);
+            result.setMsg("success");
         }
+        result.setResult(firstActiveOrders);
+
         return ResponseEntity.ok(result);
     }
 
@@ -63,26 +54,16 @@ public class OfficeWorkController {
     @ResponseBody
     public ResponseEntity<?> sendActiveCouriersListForOfficeWorkPage() {
 
-        final int FIRST_ACTIVE_COURIERS_LIST_SIZE = 3;
-
         SendCouriersToAjax couriersList = new SendCouriersToAjax();
         List<CouriersEntity> activeCouriers = couriersRepository.findAllByReadinessAndFired(true, false);
-        if (couriersRepository.count() > FIRST_ACTIVE_COURIERS_LIST_SIZE) {
-            List<CouriersEntity> firstActiveCouriers = activeCouriers.subList(0, FIRST_ACTIVE_COURIERS_LIST_SIZE);
-            if (firstActiveCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for office work page is empty!");
-            } else {
-                couriersList.setMsg("success");
-            }
-            couriersList.setResult(firstActiveCouriers);
+        List<CouriersEntity> firstActiveCouriers = activeCouriers.stream().limit(3).collect(Collectors.toList());
+        if (firstActiveCouriers.isEmpty()) {
+            couriersList.setMsg("Active couriers list for office work page is empty!");
         } else {
-            if (activeCouriers.isEmpty()) {
-                couriersList.setMsg("Active couriers list for office work page is empty!");
-            } else {
-                couriersList.setMsg("success");
-            }
-            couriersList.setResult(activeCouriers);
+            couriersList.setMsg("success");
         }
+        couriersList.setResult(firstActiveCouriers);
+
         return ResponseEntity.ok(couriersList);
     }
 }

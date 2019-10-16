@@ -20,7 +20,6 @@
                                    style="width: 300px">
                             <label for="searchSecondOrderAddressPoint">Найти по адресу доставки...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
@@ -40,7 +39,6 @@
                                        class="form-control form-control-lg">
                                 <label for="deleteOrderDetailsId">Удалить по ID...</label>
                             </div>
-                            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                             <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                         </div>
                     </form>
@@ -78,7 +76,6 @@
                             <input type="text" id="updateComment" class="form-control form-control-lg">
                             <label for="updateComment">Изменить комментарий...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Изменить</button>
                         </div>
@@ -112,7 +109,6 @@
                             <input type="text" id="addComment" class="form-control form-control-lg">
                             <label for="comment">Введите комментарий...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Добавить</button>
                         </div>

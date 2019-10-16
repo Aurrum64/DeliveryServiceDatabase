@@ -1,18 +1,9 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
 <@defaultPage.defaultPageTemplate pageName="Отслеживание заказа" heightTop=100 heightBottom=0>
     <div class="text-white text-center py-5 px-4">
-        <div>
-            <h1 class="pink-text"><i class="fas fa-chart-pie"></i>Отслеживание заказа</h1>
-        </div>
-<#--    </div>
-    <div class="text-white text-center py-5 px-4">
-        <button id="buildRoute" type="button" class="btn btn-secondary ml-5 mt-3">
-            Найти ближайший заказ и проложить маршрут
-        </button>
-        <button id="move" type="button" class="btn btn-secondary ml-5 mt-3">
-            Берусь доставить предложенный системой заказ
-        </button>
-    </div>-->
+    <div>
+        <h1 class="pink-text"><i class="fas fa-chart-pie"></i>Отслеживание заказа</h1>
+    </div>
     <input type="hidden" id="courierId" value="${courierId}">
     <input type="hidden" id="orderDetailsId" value="${orderDetailsId}">
     <div id="map" class="z-depth-1-half map-container ml-5" style="width: 94%; height: 600px">

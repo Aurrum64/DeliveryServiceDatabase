@@ -19,6 +19,8 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Or
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class LogisticsController {
@@ -122,8 +124,6 @@ public class LogisticsController {
     @ResponseBody
     public ResponseEntity<?> sendActiveOrdersListForCurrentCourier(@AuthenticationPrincipal UsersEntity user) {
 
-        final int FIRST_ACTIVE_ORDERS_LIST_SIZE = 5;
-
         SendOrderDetailsToAjax result = new SendOrderDetailsToAjax();
         List<OrderDetailsEntity> activeOrders = orderDetailsRepository.
                 findAllByStatusAndAlreadyInProgressAndOrderSpecification_RouteBlocked("Заказ доставляется", false, false);
@@ -131,25 +131,16 @@ public class LogisticsController {
         List<CouriersEntity> thisCourier = couriersRepository.findByFirstName(user.getUsername());
         List<OrderDetailsEntity> ordersOfThisCourier = orderDetailsRepository.
                 findAllByCourierFirstNameAndStatusAndOrderSpecification_RouteBlocked(thisCourier.get(0).getFirstName(), "Заказ доставляется", true);
-        if (!ordersOfThisCourier.isEmpty()) {
-            activeOrders.addAll(ordersOfThisCourier);
-        }
-        if (orderDetailsRepository.count() > FIRST_ACTIVE_ORDERS_LIST_SIZE) {
-            List<OrderDetailsEntity> firstActiveOrders = activeOrders.subList(0, FIRST_ACTIVE_ORDERS_LIST_SIZE - 1);
-            if (firstActiveOrders.isEmpty()) {
-                result.setMsg("Active orders list is empty!");
-            } else {
-                result.setMsg("success");
-            }
-            result.setResult(firstActiveOrders);
+
+        List<OrderDetailsEntity> firstActiveOrders = Stream.concat(activeOrders.stream(), ordersOfThisCourier.stream())
+                .limit(6)
+                .collect(Collectors.toList());
+        if (firstActiveOrders.isEmpty()) {
+            result.setMsg("Active orders list is empty!");
         } else {
-            if (activeOrders.isEmpty()) {
-                result.setMsg("Active orders list is empty!");
-            } else {
-                result.setMsg("success");
-            }
-            result.setResult(activeOrders);
+            result.setMsg("success");
         }
+        result.setResult(firstActiveOrders);
         return ResponseEntity.ok(result);
     }
 

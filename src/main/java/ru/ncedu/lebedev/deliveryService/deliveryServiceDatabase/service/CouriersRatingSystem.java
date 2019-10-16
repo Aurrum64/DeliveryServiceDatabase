@@ -2,7 +2,6 @@ package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
@@ -19,15 +18,12 @@ import java.util.stream.Collectors;
 public class CouriersRatingSystem {
 
     private CouriersRepository couriersRepository;
-    private MailSender mailSender;
     private UsersRepository usersRepository;
 
     @Autowired
     public CouriersRatingSystem(CouriersRepository couriersRepository,
-                                MailSender mailSender,
                                 UsersRepository usersRepository) {
         this.couriersRepository = couriersRepository;
-        this.mailSender = mailSender;
         this.usersRepository = usersRepository;
     }
 
@@ -51,21 +47,8 @@ public class CouriersRatingSystem {
         couriersRepository.save(courier);
 
         if (courier.getRating() <= 0) {
-            /*sendFiredEmail(courier);*/
+            /*mailSender.sendFiredEmail(courier);*/
             takeBackCourierAuthorities(courier);
-        }
-    }
-
-    private void sendFiredEmail(CouriersEntity courier) {
-        if (!StringUtils.isEmpty(courier.getEmail())) {
-            String message = String.format(
-                    "Привет, %s!\n" +
-                            "Твой рейтинг опустился ниже плинтуса и ты позоришь нашу компанию, нахер тебя!\n" +
-                            "Можешь оставить плаксивый отзыв о нашей компании на:\n" +
-                            "http://localhost:8080/reviews.",
-                    courier.getFirstName()
-            );
-            mailSender.send(courier.getEmail(), "Уведомление об увольнении из Delivery Service!", message);
         }
     }
 

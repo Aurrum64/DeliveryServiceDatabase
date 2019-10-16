@@ -56,14 +56,11 @@ public class ReviewsController {
                              @RequestParam String authorName,
                              @RequestParam Integer ratingFromClient,
                              @RequestParam String reviewFromClient) {
-
         OrderDetailsEntity order = orderDetailsRepository.findByOrderDetailsId(orderDetailsId);
-
         order.setReviewWritten(true);
         orderDetailsRepository.save(order);
 
         CouriersEntity courier = couriersRepository.findByCourierId(order.getCourier().getCourierId());
-
         couriersRating.setCourierRating(courier, ratingFromClient);
 
         ReviewsEntity review = new ReviewsEntity();

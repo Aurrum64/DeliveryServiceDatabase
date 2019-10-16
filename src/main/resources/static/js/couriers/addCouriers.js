@@ -2,8 +2,6 @@ let isCouriersPage = document.getElementById("couriersList");
 let isActiveCouriersPage = document.getElementById("activeCouriersList");
 let isOfficeWorkPageCouriers = document.getElementById("activeCouriersListForOfficeWorkPage");
 
-//let addedCouriers = [];
-
 if (isCouriersPage != null) {
     showCouriersList();
 }
@@ -63,7 +61,6 @@ function saveCouriersInDb(couriersInput) {
         success: function (data) {
             if (data.status === 'OK') {
                 console.log('Couriers data saved!');
-//                addedCouriers.push(couriersInput);
             } else {
                 console.log('Data not saved!: ' + data.status + ', ' + data.errorMessage);
             }

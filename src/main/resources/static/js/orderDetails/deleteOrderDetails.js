@@ -11,21 +11,17 @@ function deleteOrderDetails() {
     let orderDetailsInput = {};
     orderDetailsInput["orderDetailsId"] = $("#deleteOrderDetailsId").val();
 
-/*    if (addedRecords[0] === undefined) {
-        alert("You haven’t added any order details yet!");
-    } else {*/
-        if (orderDetailsInput.orderDetailsId === "") {
-            alert("Please, enter order details ID, which need to delete!");
-        } else {
-            deleteOrderDetailsInDb(orderDetailsInput);
+    if (orderDetailsInput.orderDetailsId === "") {
+        alert("Please, enter order details ID, which need to delete!");
+    } else {
+        deleteOrderDetailsInDb(orderDetailsInput);
 
-            setTimeout(function () {
-                showOrderDetailsList();
-            }, (300));
+        setTimeout(function () {
+            showOrderDetailsList();
+        }, (300));
 
-            document.getElementById('deleteOrderDetails').reset();
-        }
-//    }
+        document.getElementById('deleteOrderDetails').reset();
+    }
 }
 
 function deleteOrderDetailsInDb(orderDetailsInput) {

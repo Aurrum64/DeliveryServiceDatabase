@@ -15,25 +15,20 @@ function updateOrderDetails() {
     orderDetailsInput["secondOrderAddressPoint"] = $("#updateSecondOrderAddressPoint").val();
     orderDetailsInput["comment"] = $("#updateComment").val();
 
-    if (addedRecords[0] === undefined) {
-        alert("You haven’t added any order details yet!");
+    if (orderDetailsInput.orderDetailsId === "") {
+        alert("Please, enter order details ID, which need to be update!");
+    } else if (orderDetailsInput.firstOrderAddressPoint === ""
+        & orderDetailsInput.secondOrderAddressPoint === ""
+        & orderDetailsInput.comment === "") {
+        alert("Fill in at least one field!");
     } else {
-        if (orderDetailsInput.orderDetailsId === "") {
-            alert("Please, enter order details ID, which need to be update!");
-        } else if (orderDetailsInput.orderAddress === ""
-            & orderDetailsInput.firstOrderAddressPoint === ""
-            & orderDetailsInput.secondOrderAddressPoint === ""
-            & orderDetailsInput.comment === "") {
-            alert("Fill in at least one field!");
-        } else {
-            updateOrderDetailsInDb(orderDetailsInput);
+        updateOrderDetailsInDb(orderDetailsInput);
 
-            setTimeout(function () {
-                showOrderDetailsList();
-            }, (300));
+        setTimeout(function () {
+            showOrderDetailsList();
+        }, (300));
 
-            document.getElementById('updateOrderDetails').reset();
-        }
+        document.getElementById('updateOrderDetails').reset();
     }
 }
 

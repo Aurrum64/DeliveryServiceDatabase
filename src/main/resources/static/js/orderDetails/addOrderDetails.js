@@ -1,6 +1,6 @@
 let isOrderDetailsPage = document.getElementById("orderDetailsList");
 let isOrderDeliveryPage = document.getElementById("activeOrdersListForUser");
-let isOfficeWorkPage = document.getElementById("activeOrdersListForOfficeWorkPage");
+let isOfficeWorkPageOrders = document.getElementById("activeOrdersListForOfficeWorkPage");
 let isOrderDetailsHistoryPage = document.getElementById("allArchiveOrdersList");
 let isActiveOrderDetailsPage = document.getElementById("allActiveOrdersList");
 let isWaitingOrderDetailsPage = document.getElementById("waitingOrderDetailsList");
@@ -25,7 +25,7 @@ if (isOrderDeliveryPage !== null) {
         setTimeout(arguments.callee, 5000);
     })();
 }
-if (isOfficeWorkPage !== null) {
+if (isOfficeWorkPageOrders !== null) {
     showActiveOrdersListForOfficeWorkPage();
     (function () {
         showActiveOrdersListForOfficeWorkPage();
@@ -78,7 +78,7 @@ function addOrderDetails() {
     }
 }
 
-let addedRecords = [];
+//let addedRecords = [];
 
 function saveOrderDetailsInDb(orderDetailsInput) {
 
@@ -90,7 +90,7 @@ function saveOrderDetailsInDb(orderDetailsInput) {
         success: function (data) {
             if (data.status === 'OK') {
                 console.log('Order details data saved!');
-                addedRecords.push(orderDetailsInput);
+//                addedRecords.push(orderDetailsInput);
             } else {
                 console.log('Data not saved!: ' + data.status + ', ' + data.errorMessage);
             }

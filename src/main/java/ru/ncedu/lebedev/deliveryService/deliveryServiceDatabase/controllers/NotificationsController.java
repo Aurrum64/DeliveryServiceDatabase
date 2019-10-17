@@ -6,40 +6,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.ControllerAnswerToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.UsersRequestsMessage;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.*;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.UserService;
-import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.*;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.UsersRequestsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RequestsHandler;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.RequestsStatutesEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersRequestsEntity;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class NotificationsController {
 
     private OrderDetailsRepository orderDetailsRepository;
     private UsersRequestsRepository usersRequestsRepository;
-    private UserService userService;
     private UsersRepository usersRepository;
-    private CouriersRepository couriersRepository;
-    private ManagersRepository managersRepository;
+    private RequestsHandler requestsHandler;
 
     @Autowired
     public NotificationsController(OrderDetailsRepository orderDetailsRepository,
                                    UsersRequestsRepository usersRequestsRepository,
-                                   UserService userService,
                                    UsersRepository usersRepository,
-                                   CouriersRepository couriersRepository,
-                                   ManagersRepository managersRepository) {
+                                   RequestsHandler requestsHandler) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.usersRequestsRepository = usersRequestsRepository;
-        this.userService = userService;
         this.usersRepository = usersRepository;
-        this.couriersRepository = couriersRepository;
-        this.managersRepository = managersRepository;
+        this.requestsHandler = requestsHandler;
     }
 
     @GetMapping("/notifications")
@@ -65,13 +62,6 @@ public class NotificationsController {
             model.put("recentRequests", usersRequests);
         }
         return "notifications";
-    }
-
-    @GetMapping("/requests")
-    public String usersRequestsList(Map<String, Object> model) {
-        Iterable<UsersRequestsEntity> usersRequests = usersRequestsRepository.findAll();
-        model.put("usersRequests", usersRequests);
-        return "requests";
     }
 
     @PostMapping(value = "/addUsersRequests",
@@ -101,90 +91,12 @@ public class NotificationsController {
                                  @RequestParam String source,
                                  @RequestParam String authorName) throws ParseException {
         UsersEntity user = usersRepository.findByUsername(authorName);
-
-        Set<String> roles = Arrays.stream(RolesEntity.values())
-                .map(RolesEntity::name)
-                .collect(Collectors.toSet());
-
-        Map<String, String> newRoles = new HashMap<>();
-
-        if (user.getRoles().contains(RolesEntity.ADMIN)) {
-            newRoles.put("ADMIN", "");
-        } else if (user.getRoles().contains(RolesEntity.USER)) {
-            newRoles.put("USER", "");
-        } else if (user.getRoles().contains(RolesEntity.COURIER)) {
-            newRoles.put("COURIER", "");
-        } else if (user.getRoles().contains(RolesEntity.MANAGER)) {
-            newRoles.put("MANAGER", "");
-        }
-
-        if (professionChoice.equals("courier") &&
-                !user.getRoles().contains(RolesEntity.COURIER)) {
-            newRoles.put("COURIER", "");
-        } else if (professionChoice.equals("manager") &&
-                !user.getRoles().contains(RolesEntity.MANAGER)) {
-            newRoles.put("MANAGER", "");
-        }
-
-        for (String key : newRoles.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(RolesEntity.valueOf(key));
-            }
-        }
-        usersRepository.save(user);
+        requestsHandler.handleAndSetUserRoles(user, professionChoice);
 
         UsersRequestsEntity userRequest = usersRequestsRepository.findByRequestId(requestId);
-        userRequest.getRequestStatuses().clear();
+        requestsHandler.setRequestStatus("APPROVED", userRequest);
 
-        Set<String> requestStatuses = Arrays.stream(RequestsStatutesEntity.values())
-                .map(RequestsStatutesEntity::name)
-                .collect(Collectors.toSet());
-
-        Map<String, String> newRequestStatus = new HashMap<>();
-        newRequestStatus.put("APPROVED", "");
-
-        for (String key : newRequestStatus.keySet()) {
-            if (requestStatuses.contains(key)) {
-                userRequest.getRequestStatuses().add(RequestsStatutesEntity.valueOf(key));
-            }
-        }
-        usersRequestsRepository.save(userRequest);
-
-        /*userService.sendHiredEmail(user, professionChoice);*/
-
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        Date currentDate = format.parse(currentDateString);
-
-        if (professionChoice.equals("courier")) {
-            CouriersEntity courier = new CouriersEntity();
-            courier.setFirstName(user.getUsername());
-            courier.setLastName("");
-            courier.setEmail(user.getEmail());
-            courier.setHireDate(currentDate);
-            courier.setAuthor(whoApprovedRequest);
-            courier.setReadiness(false);
-            courier.setFired(false);
-            courier.setPhoneNumber("");
-            courier.setPremium(0);
-            courier.setSalary(19_351);
-            courier.setDepartmentId(1);
-            courier.setRating(10);
-            courier.setLatitude(RandomCoordinates.getRandomLatitude());
-            courier.setLongitude(RandomCoordinates.getRandomLongitude());
-            couriersRepository.save(courier);
-
-            user.setCourier(courier);
-            usersRepository.save(user);
-        } else {
-            ManagersEntity manager = new ManagersEntity();
-            manager.setFirstName(user.getUsername());
-            manager.setLastName("");
-            manager.setEmail(user.getEmail());
-            manager.setHireDate(currentDate);
-            manager.setAuthor(whoApprovedRequest);
-            managersRepository.save(manager);
-        }
+        requestsHandler.createCourierBasedOnUser(whoApprovedRequest, user, professionChoice);
 
         if (source.equals("notifications")) {
             return "redirect:/notifications";
@@ -199,24 +111,9 @@ public class NotificationsController {
                                 @RequestParam String source,
                                 @RequestParam String authorName) {
         UsersRequestsEntity userRequest = usersRequestsRepository.findByRequestId(requestId);
-        userRequest.getRequestStatuses().clear();
-
-        Set<String> requestStatuses = Arrays.stream(RequestsStatutesEntity.values())
-                .map(RequestsStatutesEntity::name)
-                .collect(Collectors.toSet());
-
-        Map<String, String> newRequestStatus = new HashMap<>();
-        newRequestStatus.put("REJECTED", "");
-
-        for (String key : newRequestStatus.keySet()) {
-            if (requestStatuses.contains(key)) {
-                userRequest.getRequestStatuses().add(RequestsStatutesEntity.valueOf(key));
-            }
-        }
-        usersRequestsRepository.save(userRequest);
+        requestsHandler.setRequestStatus("REJECTED", userRequest);
 
         UsersEntity user = usersRepository.findByUsername(authorName);
-
         /*userService.sendRejectedEmail(user, professionChoice);*/
 
         if (source.equals("notifications")) {

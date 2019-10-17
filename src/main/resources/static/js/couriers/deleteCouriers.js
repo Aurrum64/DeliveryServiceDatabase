@@ -11,9 +11,6 @@ function deleteCouriers() {
     let couriersInput = {};
     couriersInput["courierId"] = $("#deleteCourierId").val();
 
-/*    if (addedCouriers[0] === undefined) {
-        alert("You haven’t added any couriers yet!");
-    } else {*/
         if (couriersInput.courierId === "") {
             alert("Please, enter courier ID, which need to delete!");
         } else {
@@ -25,7 +22,6 @@ function deleteCouriers() {
 
             document.getElementById('deleteCouriers').reset();
         }
-//    }
 }
 
 function deleteCourierFromDb(couriersInput) {

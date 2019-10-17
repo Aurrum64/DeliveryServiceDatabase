@@ -16,7 +16,6 @@
                 </button>
             </div>
         </#if>
-
         <#if avatar??>
             <div class="text mt-2 mb-3">
                 <h4>Ваш аватар:</h4>
@@ -28,7 +27,6 @@
             </div>
             <img src="https://i.ibb.co/Xk93fQh/avatar1.png" alt="">
         </#if>
-
         <div class="container">
             <a class="btn btn-primary mt-4 ml-4" data-toggle="collapse" href="#collapse2" role="button"
                aria-expanded="false"
@@ -44,7 +42,6 @@
                         </select>
                         <div class="text-center mt-4">
                             <#if !user.wasFired>
-                            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                                 <button type="submit" class="btn btn-primary">Отправить заявку</button>
                             <#else>
                                 <button type="submit" class="btn btn-primary" disabled>Отправить заявку</button>
@@ -75,7 +72,6 @@
             </tr>
             </tbody>
         </table>
-
         <#if isCourier>
             <div class="text mt-5">
                 <h4>Вы находитесь на должности курьера:</h4>
@@ -164,12 +160,10 @@
                 </div>
             </#if>
         </#if>
-
         <div class="text mt-5">
             <h4>Редактирование:</h4>
         </div>
         <form method="post" enctype="multipart/form-data">
-
             <div class="input-group mt-5">
                 <div class="custom-file">
                     <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
@@ -177,7 +171,6 @@
                     <label class="custom-file-label" for="inputGroupFile01">Установить свой аватар...</label>
                 </div>
             </div>
-
             <div class="md-form mt-5">
                 <i class="fa fa-envelope prefix grey-text"></i>
                 <input type="email" name="email" value="${email!''}" id="materialFormCardEmailEx"
@@ -185,14 +178,11 @@
                 <label for="materialFormCardEmailEx" class="font-weight-light">Изменить почтовый
                     адрес...</label>
             </div>
-
             <div class="md-form mt-4">
                 <i class="fa fa-lock prefix grey-text"></i>
                 <input type="password" name="password" id="materialFormCardPasswordEx" class="form-control">
                 <label for="materialFormCardPasswordEx" class="font-weight-light">Изменить пароль...</label>
             </div>
-
-            <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
             <div class="text-center py-4 mt-4">
                 <button class="btn btn-outline-info" type="submit">Сохранить</button>
             </div>

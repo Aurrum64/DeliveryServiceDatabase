@@ -11,7 +11,7 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/managersFilter" method="post" class="form-inline">
+                <form action="/searchManagers" method="post" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
                             <input type="text" name="managerId" id="input" class="form-control form-control-lg">
@@ -25,7 +25,6 @@
                             <input type="text" name="lastName" id="inp" class="form-control form-control-lg">
                             <label for="inp">Найти по фамилии...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
@@ -45,13 +44,12 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/managersDelete" method="post" class="form-inline">
+                <form action="/deleteManagers" method="post" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
                             <input type="text" name="managerId" id="in" class="form-control form-control-lg">
                             <label for="in">Удалить по ID...</label>
                         </div>
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                     </div>
                 </form>
@@ -73,7 +71,7 @@
         </a>
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
-                <form action="/managersUpdate" method="post">
+                <form action="/updateManagers" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" name="managerId"
                                placeholder="Введите ID менеджера, информацию о котором нужно изменить..."/>
@@ -106,7 +104,6 @@
                         <input type="text" class="form-control" name="premium"
                                placeholder="Изменить размер премии менеджера..."/>
                     </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Изменить</button>
                     </div>
@@ -121,7 +118,7 @@
         </a>
         <div class="collapse" id="collapse2">
             <div class="form-group mt-3">
-                <form action="/managers" method="post">
+                <form action="/addManagers" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" name="firstName"
                                placeholder="Введите имя менеджера..."/>
@@ -149,7 +146,6 @@
                         <input type="text" class="form-control" name="premium"
                                placeholder="Введите размер премии менеджера..."/>
                     </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
@@ -190,7 +186,7 @@
                 </tr>
             <#else>
                 <tr>
-                    <th scope="row">List of managers is empty yet!</th>
+                    <th scope="row">Список менеджеров пока пуст!</th>
                     <td></td>
                     <td></td>
                     <td></td>

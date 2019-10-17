@@ -54,13 +54,11 @@ function showCourierReadiness(readinessInput) {
         success: function (data) {
 
             let readiness = data.result[0].readiness;
-
             if (data.result[0].readiness === true) {
                 readiness = "Готов";
             } else {
                 readiness = "Не готов"
             }
-            console.log(readiness);
             $('#readinessStatus').html(readiness);
         }
     });

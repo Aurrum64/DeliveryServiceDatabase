@@ -51,25 +51,20 @@
                     </#if>
 
                     <form action="/login" method="post">
-
                         <div class="md-form">
                             <i class="fa fa-user prefix grey-text"></i>
                             <input type="text" name="username" id="materialFormCardNameEx" class="form-control">
                             <label for="materialFormCardNameEx" class="font-weight-light">Ваш логин...</label>
                         </div>
-
                         <div class="md-form">
                             <i class="fa fa-lock prefix grey-text"></i>
                             <input type="password" name="password" id="materialFormCardPasswordEx"
                                    class="form-control">
                             <label for="materialFormCardPasswordEx" class="font-weight-light">Ваш пароль...</label>
                         </div>
-
-                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div class="text-center py-4 mt-3">
                             <button class="btn btn-outline-info" type="submit">Войти</button>
                         </div>
-
                         <div class="text-center">
                             <p>У вас еще нет учетной записи?
                                 <a href="/registration">Зарегистрироваться</a>

@@ -43,7 +43,6 @@ public class UserService implements UserDetailsService {
         if (userFromDb != null) {
             return false;
         }
-
         user.setActive(true);
         user.setVerified(false);
         user.setWasFired(false);
@@ -57,66 +56,8 @@ public class UserService implements UserDetailsService {
         user.setActivationCode(UUID.randomUUID().toString());
         usersRepository.save(user);
 
-        sendEmailForActivation(user);
+        mailSender.sendEmailForActivation(user);
         return true;
-    }
-
-    private void sendEmailForActivation(UsersEntity user) {
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            String message = String.format(
-                    "Привет, %s!\n" +
-                            "Добро пожаловать в нашу службу доставки Delivery Service!\n" +
-                            "Пожалуйста, перейдите по следующей ссылке:\n" +
-                            "http://localhost:8080/activate/%s,\n" +
-                            "чтобы активировать вашу учётную запись!",
-                    user.getUsername(),
-                    user.getActivationCode()
-            );
-            mailSender.send(user.getEmail(), "Активация учётной записи Delivery Service!", message);
-        }
-    }
-
-    public void sendHiredEmail(UsersEntity user, String professionChoice) {
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            String job;
-            if (professionChoice.equals("courier")) {
-                job = "курьера";
-            } else {
-                job = "менеджера";
-            }
-            String message = String.format(
-                    "Привет, %s!\n" +
-                            "Наши поздравления! Мы принимаем вас на должность %s в нашу службу доставки.\n" +
-                            "Мы добавили вас в нашу базу курьеров, теперь вы можете приступать к работе\n" +
-                            "в любое удобное для вас время.\n" +
-                            "Для этого подтвердите готовность работать в своём профиле:\n" +
-                            "http://localhost:8080/profile.",
-                    user.getUsername(),
-                    job
-            );
-            mailSender.send(user.getEmail(), "О принятии на работу в Delivery Service!", message);
-        }
-    }
-
-    public void sendRejectedEmail(UsersEntity user, String professionChoice) {
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            String job;
-            if (professionChoice.equals("courier")) {
-                job = "курьера";
-            } else {
-                job = "менеджера";
-            }
-            String message = String.format(
-                    "Привет, %s :(\n" +
-                            "Мы вынуждены отказать вам в принятии на должность %s.\n" +
-                            "Если вы считаете, что мы отказали вам неправомерно,\n" +
-                            "вы можете оставить еще одну заявку в своем профиле:\n" +
-                            "http://localhost:8080/profile для повторного рассмотрения.",
-                    user.getUsername(),
-                    job
-            );
-            mailSender.send(user.getEmail(), "О принятии на работу в Delivery Service :(", message);
-        }
     }
 
     public boolean activateUser(String code) {
@@ -155,13 +96,11 @@ public class UserService implements UserDetailsService {
     public void updateProfile(UsersEntity user, String password,
                               String email, MultipartFile avatar) throws IOException {
         String userEmail = user.getEmail();
-
         boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
                 (userEmail != null && !userEmail.equals(email));
 
         if (isEmailChanged) {
             user.setEmail(email);
-
             if (!StringUtils.isEmpty(email)) {
                 user.setActivationCode(UUID.randomUUID().toString());
             }
@@ -169,7 +108,6 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(password);
         }
-
         if (avatar != null && !avatar.getOriginalFilename().isEmpty()) {
             File uploadDirectory = new File(uploadPath);
 
@@ -185,7 +123,7 @@ public class UserService implements UserDetailsService {
         usersRepository.save(user);
 
         if (isEmailChanged) {
-            sendEmailForActivation(user);
+            mailSender.sendEmailForActivation(user);
         }
     }
 }

@@ -1,6 +1,6 @@
 let isOrderDetailsPage = document.getElementById("orderDetailsList");
 let isOrderDeliveryPage = document.getElementById("activeOrdersListForUser");
-let isLogisticsPage = document.getElementById("activeOrdersListForLogisticPage");
+let isOfficeWorkPageOrders = document.getElementById("activeOrdersListForOfficeWorkPage");
 let isOrderDetailsHistoryPage = document.getElementById("allArchiveOrdersList");
 let isActiveOrderDetailsPage = document.getElementById("allActiveOrdersList");
 let isWaitingOrderDetailsPage = document.getElementById("waitingOrderDetailsList");
@@ -25,10 +25,10 @@ if (isOrderDeliveryPage !== null) {
         setTimeout(arguments.callee, 5000);
     })();
 }
-if (isLogisticsPage !== null) {
-    showActiveOrdersListForLogisticsPage();
+if (isOfficeWorkPageOrders !== null) {
+    showActiveOrdersListForOfficeWorkPage();
     (function () {
-        showActiveOrdersListForLogisticsPage();
+        showActiveOrdersListForOfficeWorkPage();
         setTimeout(arguments.callee, 5000);
     })();
 }
@@ -78,8 +78,6 @@ function addOrderDetails() {
     }
 }
 
-let addedRecords = [];
-
 function saveOrderDetailsInDb(orderDetailsInput) {
 
     $.ajax({
@@ -90,7 +88,6 @@ function saveOrderDetailsInDb(orderDetailsInput) {
         success: function (data) {
             if (data.status === 'OK') {
                 console.log('Order details data saved!');
-                addedRecords.push(orderDetailsInput);
             } else {
                 console.log('Data not saved!: ' + data.status + ', ' + data.errorMessage);
             }
@@ -134,10 +131,10 @@ function showArchiveOrdersListForUser() {
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
 }
 
-function showActiveOrdersListForLogisticsPage() {
+function showActiveOrdersListForOfficeWorkPage() {
 
-    let url = "/activeOrdersListForLogisticsPage";
-    let htmlId = '#activeOrdersListForLogisticPage';
+    let url = "/activeOrdersListForOfficeWorkPage";
+    let htmlId = '#activeOrdersListForOfficeWorkPage';
     let emptyTableExpression = "У вас пока нет ни одного активного заказа";
 
     takeOrderDetailsDataFromDb(url, htmlId, emptyTableExpression);
@@ -206,23 +203,18 @@ function orderDetailsTableView(data, htmlId, emptyTableExpression) {
         $(htmlId).html(view);
     } else {
         for (let i = 0; i < data.result.length; i++) {
-            let simplifiedOrderDate;
             let orderDate = new Date(data.result[i].orderDate);
-            if (orderDate.toLocaleDateString() === "01.01.1970") {
-                simplifiedOrderDate = "Без указания даты";
-            } else {
-                let utcOrderDate = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes());
-                let options = {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    weekday: 'long',
-                    timezone: 'UTC',
-                    hour: 'numeric',
-                    minute: 'numeric'
-                };
-                simplifiedOrderDate = utcOrderDate.toLocaleString("ru", options);
-            }
+            let utcOrderDate = new Date(orderDate.getUTCFullYear(), orderDate.getUTCMonth(), orderDate.getUTCDate(), orderDate.getUTCHours(), orderDate.getUTCMinutes());
+            let options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+                timezone: 'UTC',
+                hour: 'numeric',
+                minute: 'numeric'
+            };
+            let simplifiedOrderDate = utcOrderDate.toLocaleString("ru", options);
             let courier;
             if (data.result[i].courier === undefined ||
                 data.result[i].courier === null) {

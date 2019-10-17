@@ -20,30 +20,26 @@ function updateCouriers() {
     couriersInput["premium"] = $("#updateCourierPremium").val();
     couriersInput["departmentId"] = $("#updateCourierDepartmentId").val();
 
-    if (addedCouriers[0] === undefined) {
-        alert("You haven’t added any couriers yet!");
+    if (couriersInput.courierId === "") {
+        alert("Please, enter courier ID, which need to be update!");
+    } else if (couriersInput.firstName === ""
+        & couriersInput.lastName === ""
+        & couriersInput.email === ""
+        & couriersInput.phoneNumber === ""
+        & couriersInput.rating === ""
+        & couriersInput.salary === ""
+        & couriersInput.hireDate === ""
+        & couriersInput.premium === ""
+        & couriersInput.departmentId === "") {
+        alert("Fill in at least one field!");
     } else {
-        if (couriersInput.courierId === "") {
-            alert("Please, enter courier ID, which need to be update!");
-        } else if (couriersInput.firstName === ""
-            & couriersInput.lastName === ""
-            & couriersInput.email === ""
-            & couriersInput.phoneNumber === ""
-            & couriersInput.rating === ""
-            & couriersInput.salary === ""
-            & couriersInput.hireDate === ""
-            & couriersInput.premium === ""
-            & couriersInput.departmentId === "") {
-            alert("Fill in at least one field!");
-        } else {
-            updateCouriersInDb(couriersInput);
+        updateCouriersInDb(couriersInput);
 
-            setTimeout(function () {
-                showCouriersList();
-            }, (300));
+        setTimeout(function () {
+            showCouriersList();
+        }, (300));
 
-            document.getElementById('updateCouriers').reset();
-        }
+        document.getElementById('updateCouriers').reset();
     }
 }
 

@@ -24,7 +24,6 @@
                         <input type="text" id="addComment" class="form-control form-control-lg">
                         <label for="comment">Введите комментарий...</label>
                     </div>
-                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Подтвердить</button>
                     </div>
@@ -90,47 +89,6 @@
             </thead>
             <tbody id="archiveOrdersListForUser">
             </tbody>
-            <#--<tbody>
-            <#list archiveOrdersListForCurrentUser as archiveOrder>
-                <tr>
-                    <th scope="row">${archiveOrder.orderDetailsId}</th>
-                    <#if archiveOrder.orderDate??>
-                        <td>${archiveOrder.orderDate}</td>
-                    <#else>
-                        <td>Дата не указана</td>
-                    </#if>
-                    <td>${archiveOrder.firstOrderAddressPoint}</td>
-                    <td>${archiveOrder.secondOrderAddressPoint}</td>
-                    <td>${archiveOrder.comment}</td>
-                    <td>${archiveOrder.status}</td>
-                    <td>${archiveOrder.authorName}</td>
-                    <td>${archiveOrder.courier.firstName}</td>
-                    <td><a href="/order/${archiveOrder.orderDetailsId}">Подробнее</a></td>
-                    <#if !archiveOrder.isReviewWritten()>
-                        <td>
-                            <form action="/reviews" method="post">
-                                <input type="hidden" name="orderDetailsId" value="${archiveOrder.orderDetailsId}">
-                                <input type="hidden" name="authorName" value="${archiveOrder.authorName}">
-                                <button type="submit" class="btn btn-info ml-3">Оставить отзыв</button>
-                            </form>
-                        </td>
-                    </#if>
-                </tr>
-            <#else>
-                <tr>
-                    <th scope="row">В вашей истории заказов пока нет ни одного заказа :(</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </#list>
-            </tbody>-->
         </table>
     </div>
     <#include "parts/scriptsSources/orderDetailsScripts.ftl">

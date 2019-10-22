@@ -1,5 +1,6 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,19 +17,21 @@ public class UsersEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String googleId;
+    private Long id;
     private String username;
     private String email;
+    private String imageUrl;
     private String emailVerification;
     private String password;
     private String activationCode;
     private boolean active;
     private boolean verified;
     private String filename;
-    private String gender;
-    private LocalDateTime lastVisit;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
 
+    private String providerId;
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

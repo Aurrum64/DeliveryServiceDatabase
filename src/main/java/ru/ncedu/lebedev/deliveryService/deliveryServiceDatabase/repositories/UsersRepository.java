@@ -5,11 +5,12 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Pr
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UsersRepository extends JpaRepository<UsersEntity, Integer> {
+public interface UsersRepository extends JpaRepository<UsersEntity, Long> {
 
-
+    Boolean existsByEmail(String email);
+    Optional<UsersEntity> findByEmail(String email);
     UsersEntity findByUsername(String username);
-    UsersEntity findByGoogleId(String googleId);
     UsersEntity findByActivationCode(String code);
 }

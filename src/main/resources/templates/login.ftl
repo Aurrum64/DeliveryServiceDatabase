@@ -33,7 +33,7 @@
                     <#if error??>
                         <div class="alert alert-danger alert-dismissible fade show mt-3 ml-2" role="alert"
                              style="width: 363px">
-                    <span>  Invalid username or password. Please, <a href="/registration"
+                    <span>  Invalid username or password. Please, <a href="/signup"
                                                                      class="alert-link">register</a>, if you haven’t done so yet.</span>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -71,11 +71,12 @@
                             <button class="btn btn-outline-info" type="submit">Sign In</button>
                         </div>
                         <div align="center">
-                            <a href="/login">Войти через Google</a>
+                            <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
+                                <img src={googleLogo} alt="Google" /> Log in with Google</a>
                         </div>
                         <div class="text-center">
                             <p>Not a member?
-                                <a href="/registration">Register</a>
+                                <a href="/signup">Register</a>
                             </p>
                         </div>
                     </form>

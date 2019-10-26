@@ -52,7 +52,13 @@
                     </div>
                 </li>
             </#if>
+            <#if isAdmin || isManager>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search">Search</a>
+                </li>
+            </#if>
         </ul>
+
         <#if isEnabled>
             <div class="navbar-text mr-3">Hi, ${name}!</div>
             <div>

@@ -56,7 +56,7 @@ public class ManagersController {
     }
 
     @PostMapping("/managersFilter")
-    public String findCourier(@RequestParam(required = false) Integer managerId,
+    public String findManager(@RequestParam(required = false) Integer managerId,
                               @RequestParam(required = false) String firstName,
                               @RequestParam(required = false) String lastName,
                               Map<String, Object> model) {
@@ -102,7 +102,7 @@ public class ManagersController {
 
     @Transactional
     @PostMapping("/managersUpdate")
-    public String updateCourier(@RequestParam Integer managerId,
+    public String updateManager(@RequestParam Integer managerId,
                                 @RequestParam(required = false) String firstName,
                                 @RequestParam(required = false) String lastName,
                                 @RequestParam(required = false) String email,

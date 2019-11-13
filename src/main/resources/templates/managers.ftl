@@ -1,6 +1,7 @@
 <#import "parts/defaultPageTemplate.ftl" as defaultPage>
-<@defaultPage.defaultPageTemplate pageName="Менеджеры" heightTop=65 heightBottom=400>
-    <div class="container mt-5 ml-5">
+
+<@defaultPage.defaultPageTemplate pageName="Managers" heightTop=65 heightBottom=200>
+    <div class="container mt-5 ml-5" xmlns:th="http://www.w3.org/1999/xhtml">
         <#if filterCheck??>
             <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 736px">
                 ${filterCheck!}
@@ -11,7 +12,7 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/searchManagers" method="post" class="form-inline">
+                <form action="/managersFilter" method="post" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
                             <input type="text" name="managerId" id="input" class="form-control form-control-lg">
@@ -25,6 +26,7 @@
                             <input type="text" name="lastName" id="inp" class="form-control form-control-lg">
                             <label for="inp">Найти по фамилии...</label>
                         </div>
+                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <div>
                             <button type="submit" class="btn btn-primary ml-3">Найти</button>
                         </div>
@@ -44,12 +46,13 @@
         </#if>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <form action="/deleteManagers" method="post" class="form-inline">
+                <form action="/managersDelete" method="post" class="form-inline">
                     <div class="form-group row">
                         <div class="md-form form-lg ml-4">
                             <input type="text" name="managerId" id="in" class="form-control form-control-lg">
                             <label for="in">Удалить по ID...</label>
                         </div>
+                        <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                         <button type="submit" class="btn btn-primary ml-3">Удалить</button>
                     </div>
                 </form>
@@ -71,7 +74,7 @@
         </a>
         <div class="collapse" id="collapse1">
             <div class="form-group mt-3">
-                <form action="/updateManagers" method="post">
+                <form action="/managersUpdate" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" name="managerId"
                                placeholder="Введите ID менеджера, информацию о котором нужно изменить..."/>
@@ -104,6 +107,7 @@
                         <input type="text" class="form-control" name="premium"
                                placeholder="Изменить размер премии менеджера..."/>
                     </div>
+                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Изменить</button>
                     </div>
@@ -118,7 +122,7 @@
         </a>
         <div class="collapse" id="collapse2">
             <div class="form-group mt-3">
-                <form action="/addManagers" method="post">
+                <form action="/managers" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" name="firstName"
                                placeholder="Введите имя менеджера..."/>
@@ -146,17 +150,20 @@
                         <input type="text" class="form-control" name="premium"
                                placeholder="Введите размер премии менеджера..."/>
                     </div>
+                    <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
+
+    <script src="js/managers/highcharts.js"></script>
+    <script src="js/managers/index.js"></script>
+    <div id="container">Placeholder for chart</div>
     <div class="container mt-5 ml-5">
-        <div class="text mt-5 mb-3">
-            <h3>Менеджеры:</h3>
-        </div>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -171,33 +178,9 @@
                 <th scope="col">Автор</th>
             </tr>
             </thead>
-            <tbody>
-            <#list managers as manager>
-                <tr>
-                    <th scope="row">${manager.managerId}</th>
-                    <td>${manager.firstName}</td>
-                    <td>${manager.lastName}</td>
-                    <td>${manager.email}</td>
-                    <td>${manager.phoneNumber}</td>
-                    <td>${manager.salary}</td>
-                    <td>${manager.hireDate}</td>
-                    <td>${manager.premium}</td>
-                    <td>${manager.authorName}</td>
-                </tr>
-            <#else>
-                <tr>
-                    <th scope="row">Список менеджеров пока пуст!</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </#list>
+            <tbody id="managersList">
             </tbody>
         </table>
     </div>
+
 </@defaultPage.defaultPageTemplate>

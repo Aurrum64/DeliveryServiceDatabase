@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/user">Пользователи</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/managers">Менеджеры</a>
+                </li>
             </#if>
             <#if isAdmin || isManager>
                 <li class="nav-item">

@@ -31,8 +31,7 @@ public class ManagersController {
 
     @GetMapping("/managers")
     public String managersView(Map<String, Object> model) {
-        Iterable<ManagersEntity> managers = managersRepository.findAll();
-        model.put("managers", managers);
+        managersService.initializer(model);
         return "managers";
     }
 
@@ -63,7 +62,7 @@ public class ManagersController {
                               @RequestParam(required = false) String firstName,
                               @RequestParam(required = false) String lastName,
                               Map<String, Object> model) {
-        Iterable<ManagersEntity> managers = managersService.search(managersRepository, managerId, firstName, lastName);
+        Iterable<ManagersEntity> managers = managersService.search(managerId, firstName, lastName);
         if (!managers.iterator().hasNext()) {
             model.put("filterCheck", "No manager with such index!");
             return "managers";

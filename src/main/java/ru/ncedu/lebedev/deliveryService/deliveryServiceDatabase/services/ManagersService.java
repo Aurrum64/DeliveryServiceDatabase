@@ -1,13 +1,18 @@
 package ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.ManagersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ManagersEntity;
 
+import java.util.Map;
+
 @Service
 public class ManagersService {
+    @Autowired
+    private ManagersRepository managersRepository;
 
-    public Iterable<ManagersEntity> search(ManagersRepository managersRepository, Integer managerId, String firstName, String lastName){
+    public Iterable<ManagersEntity> search(Integer managerId, String firstName, String lastName){
         Iterable<ManagersEntity> managers;
         if (managerId != null & firstName.isEmpty() & lastName.isEmpty()) {
             managers = managersRepository.findByManagerId(managerId);
@@ -27,5 +32,10 @@ public class ManagersService {
             managers = managersRepository.findAll();
         }
         return managers;
+    }
+
+    public void initializer(Map<String, Object> model){
+        Iterable<ManagersEntity> managers = managersRepository.findAll();
+        model.put("managers", managers);
     }
 }

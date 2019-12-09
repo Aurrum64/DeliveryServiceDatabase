@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.SearchService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ManagersEntity;
 
+import java.text.ParseException;
 import java.util.Map;
 
 @Controller
 public class SearchController {
+    private SearchService searchService;
 
     @Autowired
-    private SearchService searchService;
+    public SearchController(SearchService searchService){
+        this.searchService = searchService;
+    }
 
     @PostMapping("/search")
     String searchInTable(@RequestParam(required = true) String table, Map<String, Object> model){
@@ -26,7 +30,7 @@ public class SearchController {
     @PostMapping("/searchFilter")
     String searchFilter(@RequestParam(required = true) Integer id,
                         @RequestParam(required = false) String secondParam,
-                        @RequestParam(required = false) String thirdParam,Map<String, Object> model){
+                        @RequestParam(required = false) String thirdParam,Map<String, Object> model) throws ParseException {
         searchService.search(id,secondParam,thirdParam,model);
         return "searchResult";
     }
@@ -35,11 +39,4 @@ public class SearchController {
     String searchPage(){
         return "search";
     }
-
-
-    /*String search(Map<String, Object> model){
-        System.out.println(mc.findManager(1,"a","s", model));
-        System.out.println(model.toString());
-        return "managers";
-    }*/
 }

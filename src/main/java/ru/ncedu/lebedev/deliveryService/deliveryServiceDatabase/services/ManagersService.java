@@ -9,8 +9,12 @@ import java.util.Map;
 
 @Service
 public class ManagersService {
-    @Autowired
     private ManagersRepository managersRepository;
+
+    @Autowired
+    public ManagersService(ManagersRepository managersRepository){
+        this.managersRepository = managersRepository;
+    }
 
     public Iterable<ManagersEntity> search(Integer managerId, String firstName, String lastName){
         Iterable<ManagersEntity> managers;

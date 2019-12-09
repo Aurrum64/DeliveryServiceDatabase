@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.*;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.service.RandomCoordinates;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.CouriersService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.CouriersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.CouriersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
@@ -19,16 +20,17 @@ import java.util.*;
 public class CouriersController {
 
     private CouriersRepository couriersRepository;
+    private CouriersService couriersService;
 
     @Autowired
-    public CouriersController(CouriersRepository couriersRepository) {
+    public CouriersController(CouriersRepository couriersRepository, CouriersService couriersService) {
         this.couriersRepository = couriersRepository;
+        this.couriersService = couriersService;
     }
 
     @GetMapping("/couriers")
     public String couriersView(Map<String, Object> model) {
-        Iterable<CouriersEntity> couriers = couriersRepository.findAll();
-        model.put("couriers", couriers);
+        couriersService.initializer(model);
         return "couriers";
     }
 

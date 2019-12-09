@@ -14,6 +14,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnti
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.OrderDetailsMessage;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.OrderDetailsService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
 
@@ -24,16 +25,18 @@ import java.util.Map;
 public class OrderDetailsController {
 
     private OrderDetailsRepository orderDetailsRepository;
+    private OrderDetailsService orderDetailsService;
 
     @Autowired
-    public OrderDetailsController(OrderDetailsRepository orderDetailsRepository) {
+    public OrderDetailsController(OrderDetailsRepository orderDetailsRepository,
+                                  OrderDetailsService orderDetailsService) {
         this.orderDetailsRepository = orderDetailsRepository;
+        this.orderDetailsService = orderDetailsService;
     }
 
     @GetMapping("/orderDetails")
     public String orderDetailsView(Map<String, Object> model) {
-        Iterable<OrderDetailsEntity> orderDetails = orderDetailsRepository.findAll();
-        model.put("orderDetails", orderDetails);
+        orderDetailsService.initializer(model);
         return "orderDetails";
     }
 

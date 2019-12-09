@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.ManagersService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ManagersEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.ManagersRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
@@ -20,16 +21,17 @@ import java.util.Map;
 public class ManagersController {
 
     private ManagersRepository managersRepository;
+    private ManagersService managersService;
 
     @Autowired
-    public ManagersController(ManagersRepository managersRepository) {
+    public ManagersController(ManagersRepository managersRepository, ManagersService managersService) {
         this.managersRepository = managersRepository;
+        this.managersService = managersService;
     }
 
     @GetMapping("/managers")
     public String managersView(Map<String, Object> model) {
-        Iterable<ManagersEntity> managers = managersRepository.findAll();
-        model.put("managers", managers);
+        managersService.initializer(model);
         return "managers";
     }
 
@@ -56,28 +58,11 @@ public class ManagersController {
     }
 
     @PostMapping("/searchManagers")
-    public String findCourier(@RequestParam(required = false) Integer managerId,
+    public String findManager(@RequestParam(required = false) Integer managerId,
                               @RequestParam(required = false) String firstName,
                               @RequestParam(required = false) String lastName,
                               Map<String, Object> model) {
-        Iterable<ManagersEntity> managers;
-        if (managerId != null & firstName.isEmpty() & lastName.isEmpty()) {
-            managers = managersRepository.findByManagerId(managerId);
-        } else if (managerId == null & !firstName.isEmpty() & !lastName.isEmpty()) {
-            managers = managersRepository.findByFirstNameAndLastName(firstName, lastName);
-        } else if (managerId == null & !firstName.isEmpty() & lastName.isEmpty()) {
-            managers = managersRepository.findByFirstName(firstName);
-        } else if (managerId != null & !firstName.isEmpty() & lastName.isEmpty()) {
-            managers = managersRepository.findByManagerIdAndFirstName(managerId, firstName);
-        } else if (managerId != null & firstName.isEmpty() & !lastName.isEmpty()) {
-            managers = managersRepository.findByManagerIdAndLastName(managerId, lastName);
-        } else if (managerId == null & firstName.isEmpty() & !lastName.isEmpty()) {
-            managers = managersRepository.findByLastName(lastName);
-        } else if (managerId != null & !firstName.isEmpty() & !lastName.isEmpty()) {
-            managers = managersRepository.findByManagerIdAndFirstNameAndLastName(managerId, firstName, lastName);
-        } else {
-            managers = managersRepository.findAll();
-        }
+        Iterable<ManagersEntity> managers = managersService.search(managerId, firstName, lastName);
         if (!managers.iterator().hasNext()) {
             model.put("filterCheck", "No manager with such index!");
             return "managers";
@@ -102,7 +87,7 @@ public class ManagersController {
 
     @Transactional
     @PostMapping("/updateManagers")
-    public String updateCourier(@RequestParam Integer managerId,
+    public String updateManager(@RequestParam Integer managerId,
                                 @RequestParam(required = false) String firstName,
                                 @RequestParam(required = false) String lastName,
                                 @RequestParam(required = false) String email,

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.LocationService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.LocationsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.LocationsRepository;
 
@@ -15,14 +16,17 @@ import java.util.Map;
 @Controller
 public class LocationsController {
     private LocationsRepository locationsRepository;
+    private LocationService locationService;
 
     @Autowired
-    LocationsController(LocationsRepository locationsRepository){this.locationsRepository = locationsRepository;}
+    LocationsController(LocationsRepository locationsRepository, LocationService locationService){
+        this.locationsRepository = locationsRepository;
+        this.locationService = locationService;
+    }
 
     @GetMapping("/locations")
     String locationsView(Map<String, Object> model){
-        Iterable<LocationsEntity> locations = locationsRepository.findAll();
-        model.put("locations", locations);
+        locationService.initializer(model);
         return "locations";
     }
     
@@ -31,24 +35,8 @@ public class LocationsController {
                               @RequestParam(required = false) String street,
                               @RequestParam(required = false) Integer building,
                               Map<String, Object> model) {
-        Iterable<LocationsEntity> locations;
-        if (locationId != null & street.isEmpty() & building == null) {
-            locations = locationsRepository.findByLocationId(locationId);
-        } else if (locationId == null & !street.isEmpty() & building != null) {
-            locations = locationsRepository.findByStreetAndBuilding(street, building);
-        } else if (locationId == null & !street.isEmpty() & building == null) {
-            locations = locationsRepository.findByStreet(street);
-        } else if (locationId != null & !street.isEmpty() & building == null) {
-            locations = locationsRepository.findByLocationIdAndStreet(locationId, street);
-        } else if (locationId != null & street.isEmpty() & building != null) {
-            locations = locationsRepository.findByLocationIdAndBuilding(locationId, building);
-        } else if (locationId == null & street.isEmpty() & building != null) {
-            locations = locationsRepository.findByBuilding(building);
-        } else if (locationId != null & !street.isEmpty() & building != null) {
-            locations = locationsRepository.findByLocationIdAndStreetAndBuilding(locationId, street, building);
-        } else {
-            locations = locationsRepository.findAll();
-        }
+        Iterable<LocationsEntity> locations = locationService.search(locationId, street, building);
+
         if (!locations.iterator().hasNext()) {
             model.put("filterCheck", "No location with such index!");
             return "locations";

@@ -14,6 +14,7 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEnti
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.jsonMessagesEntities.SendOrderDetailsToAjax;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderDetailsRepository;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.OrderSpecificationsRepository;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.OrderDetailsService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderDetailsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.OrderSpecificationEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.UsersEntity;
@@ -21,12 +22,14 @@ import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.Us
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class OrderDetailsController {
 
     private OrderDetailsRepository orderDetailsRepository;
     private OrderSpecificationsRepository orderSpecificationsRepository;
+    private OrderDetailsService orderDetailsService;
 
     @Autowired
     public OrderDetailsController(OrderDetailsRepository orderDetailsRepository,

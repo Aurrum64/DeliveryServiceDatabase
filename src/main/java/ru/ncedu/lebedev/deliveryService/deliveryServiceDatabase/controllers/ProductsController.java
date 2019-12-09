@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.services.ProductsService;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.tableEntities.ProductsEntity;
 import ru.ncedu.lebedev.deliveryService.deliveryServiceDatabase.repositories.ProductsRepository;
 
@@ -15,14 +16,17 @@ import java.util.Map;
 @Controller
 public class ProductsController {
     private ProductsRepository productsRepository;
+    private ProductsService productsService;
 
     @Autowired
-    ProductsController(ProductsRepository productsRepository){this.productsRepository = productsRepository;}
+    ProductsController(ProductsRepository productsRepository, ProductsService productsService){
+        this.productsRepository = productsRepository;
+        this.productsService = productsService;
+    }
 
     @GetMapping("/products")
     String productsView(Map<String, Object> model){
-        Iterable<ProductsEntity> products = productsRepository.findAll();
-        model.put("products", products);
+        productsService.initializer(model);
         return "products";
     }
 
@@ -31,24 +35,7 @@ public class ProductsController {
                               @RequestParam(required = false) String title,
                               @RequestParam(required = false) Integer price,
                               Map<String, Object> model) {
-        Iterable<ProductsEntity> products;
-        if (productId != null & title.isEmpty() & price == null) {
-            products = productsRepository.findByProductId(productId);
-        } else if (productId == null & !title.isEmpty() & price != null) {
-            products = productsRepository.findByPriceAndTitle(price, title);
-        } else if (productId == null & !title.isEmpty() & price == null) {
-            products = productsRepository.findByTitle(title);
-        } else if (productId != null & !title.isEmpty() & price == null) {
-            products = productsRepository.findByProductIdAndTitle(productId, title);
-        } else if (productId != null & title.isEmpty() & price != null) {
-            products = productsRepository.findByProductIdAndPrice(productId, price);
-        } else if (productId == null & title.isEmpty() & price != null) {
-            products = productsRepository.findByPrice(price);
-        } else if (productId != null & !title.isEmpty() & price != null) {
-            products = productsRepository.findByProductIdAndPriceAndTitle(productId, price, title);
-        } else {
-            products = productsRepository.findAll();
-        }
+        Iterable<ProductsEntity> products = productsService.search(productId, title, price);
         if (!products.iterator().hasNext()) {
             model.put("filterCheck", "No product with such index!");
             return "products";

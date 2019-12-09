@@ -61,7 +61,13 @@
                     </li>
                 </#if>
             </#if>
+            <#if isAdmin || isManager>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search">Search</a>
+                </li>
+            </#if>
         </ul>
+
         <#if isEnabled>
             <div class="navbar-text mr-3">Привет, ${name}!</div>
             <div class="btn-group" role="group">
